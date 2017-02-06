@@ -1,4 +1,4 @@
-package tickettoride;
+package tickettoride.ICommand;
 import tickettoride.Server.Game;
 import tickettoride.Server.ServerFacade;
 class AddGameToServerCommand implements ICommand{
