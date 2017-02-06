@@ -1,4 +1,5 @@
 package tickettoride.ICommand;
+import tickettoride.Client.ClientFacade;
 import tickettoride.Server.Game;
 public class AddGameToClientCommand implements ICommand{ // sent after changes from what List... commands sent
   private final Game game;
