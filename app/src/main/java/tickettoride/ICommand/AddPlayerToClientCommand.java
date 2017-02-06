@@ -1,7 +1,7 @@
 package tickettoride.ICommand;
 import tickettoride.Client.ClientFacade;
 import tickettoride.UserInfo.Username;
-class AddPlayerToClientCommand implements ICommand{ // sent after changes from what List... commands sent
+public class AddPlayerToClientCommand implements ICommand{ // sent after changes from what List... commands sent
   private final Username username;
   private final String str_game_id;
   private AddPlayerToClientCommand(){}
