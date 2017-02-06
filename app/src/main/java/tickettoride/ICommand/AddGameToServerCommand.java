@@ -1,7 +1,7 @@
 package tickettoride.ICommand;
 import tickettoride.Server.Game;
 import tickettoride.Server.ServerFacade;
-class AddGameToServerCommand implements ICommand{
+public class AddGameToServerCommand implements ICommand{
   private final Game game;
   private final int int_authentication_code;
   private AddGameToServerCommand(){}
