@@ -33,9 +33,13 @@ public class Game implements Cloneable{
     public void set_s_game_id(String _s_game_id) {
         this._s_game_id = _s_game_id;
     }
-    
+
+    @Override
     public Game clone(){
-        return (Game)super.clone();
+        Game game = new Game();
+        game.setPlayers(players);
+        game.set_s_game_id(_s_game_id);
+        return game;
     }
 }
 
