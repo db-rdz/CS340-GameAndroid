@@ -23,7 +23,7 @@ import com.example.ryanblaser.tickettoride.UserInfo.User;
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements ILoginView{
 
     private OnFragmentInteractionListener mListener; //Probably don't need this
 
@@ -49,6 +49,8 @@ public class LoginFragment extends Fragment {
      * Will hold the typed in password for login
      */
     private static String string_password;
+
+    private ILoginPresenter presenter;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -85,6 +87,8 @@ public class LoginFragment extends Fragment {
             user.setUsername(getArguments().getString(string_username));
             user.setPassword(getArguments().getString(string_password));
         }
+
+        presenter = new LoginPresenter(this);
     }
 
     @Override
@@ -104,13 +108,8 @@ public class LoginFragment extends Fragment {
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    onLoginButtonPressed();
-                } catch (IClient.InvalidPassword invalidPassword) {
-                    Toast.makeText(getContext(), "Bad password!", Toast.LENGTH_SHORT).show();
-                } catch (IClient.InvalidUsername invalidUsername) {
-                    Toast.makeText(getContext(), "Bad username!", Toast.LENGTH_SHORT).show();
-                }
+                showMessage("Logging in...");
+                presenter.login(getUserInfo());
             }
         });
 
@@ -118,15 +117,8 @@ public class LoginFragment extends Fragment {
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    onRegisterButtonPressed();
-                } catch (IClient.InvalidPassword invalidPassword) {
-                    Toast.makeText(getContext(), "Bad password!", Toast.LENGTH_SHORT).show();
-                } catch (IClient.InvalidUsername invalidUsername) {
-                    Toast.makeText(getContext(), "Bad username!", Toast.LENGTH_SHORT).show();
-                } catch (IClient.UsernameAlreadyExists usernameAlreadyExists) {
-                    Toast.makeText(getContext(), "This username is taken.", Toast.LENGTH_SHORT).show();
-                }
+                showMessage("Registering new user...");
+                presenter.register(getUserInfo());
             }
         });
 
@@ -146,27 +138,8 @@ public class LoginFragment extends Fragment {
         return user;
     }
 
-    /*
-     * This method will contact the server, send the login info for the user to the server to check it,
-     * the server will send back an authorization code if the login info is valid, and the user logs in.
-     */
-    public void onLoginButtonPressed() throws IClient.InvalidPassword, IClient.InvalidUsername {
-        Toast.makeText(getContext(), "Logging in...", Toast.LENGTH_SHORT).show();
-
-        ClientFacade.SINGLETON.login(getUserInfo());
-    }
-
-    /*
-     * This method will contact the server, send the register info for the user to the server
-     * the server will check if the username already exists in the database and if the password is valid, then it
-     * sends back an authorization code if the login info is valid, and the user logs in.
-     *
-     * If the username is already in the server database, then the server throws a UsernameAlreadyExists exception.
-     */
-    public void onRegisterButtonPressed() throws IClient.InvalidPassword, IClient.InvalidUsername, IClient.UsernameAlreadyExists {
-        Toast.makeText(getContext(), "Registering new user...", Toast.LENGTH_SHORT).show();
-
-        ClientFacade.SINGLETON.register(getUserInfo());
+    public void showMessage(String s){
+        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
     }
 
 //    TODO: check if we need callback functionality
