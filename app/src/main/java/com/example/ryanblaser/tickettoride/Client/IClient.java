@@ -34,8 +34,6 @@ public interface IClient {
     public void removeGame(String gameId);
     public void startGame(Game game, int authorizationCode);
     public void addPlayer(Username username, String gameId);
-    public void attachObserver(/* Observer object */);
-    public void detachObserver(/* Observer object */);
     public void logout(int int_authentication_code);
     public void listJoinableGames(List<Game> listJoinableGames);
     public void listResumableGames(Set<Game> listResumableGames);
