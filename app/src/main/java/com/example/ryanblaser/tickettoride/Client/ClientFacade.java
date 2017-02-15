@@ -110,7 +110,7 @@ public class ClientFacade implements IClient {
     }
 
     public void logout() {
-        ServerProxy.SINGLETON.logout(clientmodel.attachLobbyObserver(f););
+        ServerProxy.SINGLETON.logout(clientmodel.getAuthenticationKey());
     }
 
     @Override
