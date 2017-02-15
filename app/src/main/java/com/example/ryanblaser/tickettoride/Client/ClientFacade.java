@@ -1,7 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import com.example.ryanblaser.tickettoride.Server.Game;
-import com.example.ryanblaser.tickettoride.UserInfo.Password;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
