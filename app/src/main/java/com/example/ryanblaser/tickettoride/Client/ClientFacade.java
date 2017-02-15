@@ -3,7 +3,7 @@ package com.example.ryanblaser.tickettoride.Client;
 import com.example.ryanblaser.tickettoride.GUI.LobbyFragment;
 import com.example.ryanblaser.tickettoride.Server.Game;
 import com.example.ryanblaser.tickettoride.Server.IServer;
-import com.example.ryanblaser.tickettoride.Server.ServerProxy;
+import com.example.ryanblaser.tickettoride.Client.ServerProxy;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
@@ -88,13 +88,11 @@ public class ClientFacade implements IClient {
     }
 
     public void startGame(Game game) { // just gameId?
-        //clientmodel gets authentication code
-        ServerProxy.SINGLETON.startGame(game, authenticationCode);
+        ServerProxy.SINGLETON.startGame(game, clientmodel.getAuthenticationKey());
     }
 
     public void addPlayer(String gameId) throws IServer.GameIsFullException {
-        //clientmodel gets authentication code
-        ServerProxy.SINGLETON.addPlayer(int_authentication_code, gameId); //server will get username
+        ServerProxy.SINGLETON.addPlayer(clientmodel.getAuthenticationKey(), gameId); //server will get username
         //lobbypresenter
     }
 
@@ -112,8 +110,7 @@ public class ClientFacade implements IClient {
     }
 
     public void logout() {
-        //clientmodel gets authentication code
-        ServerProxy.SINGLETON.logout(authenticationCode);
+        ServerProxy.SINGLETON.logout(clientmodel.attachLobbyObserver(f););
     }
 
     @Override
