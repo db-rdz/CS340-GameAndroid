@@ -107,9 +107,9 @@ public class LoginFragment extends Fragment {
                 try {
                     onLoginButtonPressed();
                 } catch (IClient.InvalidPassword invalidPassword) {
-                    Toast.makeText(getContext(), "Password needs 5-10 characters.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Bad password!", Toast.LENGTH_SHORT).show();
                 } catch (IClient.InvalidUsername invalidUsername) {
-                    Toast.makeText(getContext(), "Username needs 3-10 characters.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Bad username!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -121,9 +121,9 @@ public class LoginFragment extends Fragment {
                 try {
                     onRegisterButtonPressed();
                 } catch (IClient.InvalidPassword invalidPassword) {
-                    Toast.makeText(getContext(), "Password needs 5-10 characters.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Bad password!", Toast.LENGTH_SHORT).show();
                 } catch (IClient.InvalidUsername invalidUsername) {
-                    Toast.makeText(getContext(), "Username needs 3-10 characters.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Bad username!", Toast.LENGTH_SHORT).show();
                 } catch (IClient.UsernameAlreadyExists usernameAlreadyExists) {
                     Toast.makeText(getContext(), "This username is taken.", Toast.LENGTH_SHORT).show();
                 }
