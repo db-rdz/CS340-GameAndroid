@@ -1,6 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import com.example.ryanblaser.tickettoride.GUI.LobbyFragment;
+import com.example.ryanblaser.tickettoride.GUI.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.Server.Game;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.example.ryanblaser.tickettoride.Client.ServerProxy;
@@ -10,7 +10,7 @@ import com.example.ryanblaser.tickettoride.UserInfo.Username;
 import java.util.Set;
 
 /**
- * This class accesses the data in the Client Holder/Model.
+ * This class accesses the data in the ClientModel.
  * The ClientFacade talks to the ServerProxy class to use these methods.
  * The ClientFacade allows us to communicate to the server from the client side.
  *
@@ -41,18 +41,23 @@ public class ClientFacade implements IClient {
         clientmodel = new ClientModel();
     }
 
+    private void triggerLoginRegisterSucceeded() {
+        loginRegisterSucceeded(new User(), "668");
+    }
+
     public void login(User user) throws InvalidUsername, InvalidPassword {
         if(!checkUsername(user))
             throw new InvalidUsername();
         if(!checkPassword(user))
             throw new InvalidPassword();
-        try {
+        triggerLoginRegisterSucceeded();
+/*        try {
             ServerProxy.SINGLETON.login(user);
         } catch (InvalidUsername e) {
             throw new InvalidUsername();
         } catch (InvalidPassword e) {
             throw new InvalidPassword();
-        }
+        }*/
     }
 
     public void register(User user) throws InvalidUsername, InvalidPassword, UsernameAlreadyExists {
@@ -60,13 +65,15 @@ public class ClientFacade implements IClient {
             throw new InvalidUsername();
         if(!checkPassword(user))
             throw new InvalidPassword();
-        try {
+        triggerLoginRegisterSucceeded();
+/*        try {
             ServerProxy.SINGLETON.register(user);
+
         } catch (InvalidUsername e) {
             throw new InvalidUsername();
         } catch (InvalidPassword e) {
             throw new InvalidPassword();
-        }
+        }*/
     }
 
     @Override
@@ -90,11 +97,11 @@ public class ClientFacade implements IClient {
     }
 
     public void startGame(Game game) { // just gameId?
-        ServerProxy.SINGLETON.startGame(game, clientmodel.getAuthenticationKey());
+//        ServerProxy.SINGLETON.startGame(game, clientmodel.getAuthenticationKey());
     }
 
     public void addPlayer(String gameId) throws IServer.GameIsFullException {
-        ServerProxy.SINGLETON.addPlayer(clientmodel.getAuthenticationKey(), gameId); //server will get username
+//        ServerProxy.SINGLETON.addPlayer(clientmodel.getAuthenticationKey(), gameId); //server will get username
         //lobbypresenter
     }
 
@@ -103,7 +110,7 @@ public class ClientFacade implements IClient {
         clientmodel.addPlayer(username, gameId);
     }
 
-    public void attachLobbyObserver(LobbyFragment f) {
+    public void attachLobbyObserver(LobbyPresenter f) {
         clientmodel.attachLobbyObserver(f);
     }
 
@@ -112,7 +119,7 @@ public class ClientFacade implements IClient {
     }
 
     public void logout() {
-        ServerProxy.SINGLETON.logout(clientmodel.getAuthenticationKey());
+//        ServerProxy.SINGLETON.logout(clientmodel.getAuthenticationKey());
     }
 
     @Override
