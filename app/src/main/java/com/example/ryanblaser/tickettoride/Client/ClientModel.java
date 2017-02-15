@@ -117,22 +117,22 @@ class ClientModel{
         Game game;
         GameType type = getGameType(gameId);
         if(type == GameType.JOINABLE){
-//            game = list_joinable.get(gameId).clone(); //TODO: Java doesn't like .clone()
-//            list_joinable.remove(gameId);
-//            addPlayerToGameObject(username, game);
-//            list_joinable.put(gameId, game);
+            game = list_joinable.get(gameId).clone(); //TODO: Java doesn't like .clone()
+            list_joinable.remove(gameId);
+            addPlayerToGameObject(username, game);
+            list_joinable.put(gameId, game);
         }
         else if(type == GameType.WAITING){
-//            game = list_waiting.get(gameId).clone();
-//            list_waiting.remove(gameId);
-//            addPlayerToGameObject(username, game);
-//            list_waiting.put(gameId, game);
+            game = list_waiting.get(gameId).clone();
+            list_waiting.remove(gameId);
+            addPlayerToGameObject(username, game);
+            list_waiting.put(gameId, game);
         }
         else{
-//            game = list_resumable.get(gameId).clone();
-//            list_resumable.remove(gameId);
-//            addPlayerToGameObject(username, game);
-//            list_resumable.put(gameId, game);
+            game = list_resumable.get(gameId).clone();
+            list_resumable.remove(gameId);
+            addPlayerToGameObject(username, game);
+            list_resumable.put(gameId, game);
         }
 
     }
