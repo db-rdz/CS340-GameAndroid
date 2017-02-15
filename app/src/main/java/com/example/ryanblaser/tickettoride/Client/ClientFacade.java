@@ -48,9 +48,10 @@ public class ClientFacade implements IClient {
             throw new InvalidPassword();
         try {
             ServerProxy.SINGLETON.login(user);
-
-        } catch (Exception e) { //Catches exception if the login failed.
-            e.printStackTrace();
+        } catch (InvalidUsername e) {
+            throw new InvalidUsername();
+        } catch (InvalidPassword e) {
+            throw new InvalidPassword();
         }
     }
 
@@ -61,9 +62,10 @@ public class ClientFacade implements IClient {
             throw new InvalidPassword();
         try {
             ServerProxy.SINGLETON.register(user);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (InvalidUsername e) {
+            throw new InvalidUsername();
+        } catch (InvalidPassword e) {
+            throw new InvalidPassword();
         }
     }
 
