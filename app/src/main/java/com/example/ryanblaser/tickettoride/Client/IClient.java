@@ -31,9 +31,7 @@ public interface IClient {
     public void addJoinableGame(Game game);
     public void addWaitingGame(Game game);
     public void removeGame(String gameId);
-    public void startGame(Game game, int authorizationCode);
     public void addPlayer(Username username, String gameId);
-    public void logout(int int_authentication_code);
     public void listJoinableGames(Set<Game> listJoinableGames);
     public void listResumableGames(Set<Game> listResumableGames);
     public void listWaitingGames(Set<Game> listWaitingGames);
