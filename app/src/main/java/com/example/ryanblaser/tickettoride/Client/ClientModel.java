@@ -20,11 +20,17 @@ class ClientModel{
     private Hashtable<String, Game> list_joinable, list_waiting, list_resumable;
     private Hashtable<String, GameType> hashtable_id_to_list;
 
+    private LobbyFragment lobbyPresenter = null;
+
     public ClientModel(){
         list_joinable = new Hashtable<String, Game>();
         list_waiting = new Hashtable<String, Game>();
         list_resumable = new Hashtable<String, Game>();
         hashtable_id_to_list = new Hashtable<String, GameType>();
+    }
+
+    public void attachLobbyObserver(LobbyFragment f){
+        lobbyPresenter = f;
     }
 
     public void setAuthenticationKey(String k){
