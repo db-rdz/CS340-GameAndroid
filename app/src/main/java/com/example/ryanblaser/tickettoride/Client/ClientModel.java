@@ -117,7 +117,7 @@ class ClientModel{
         Game game;
         GameType type = getGameType(gameId);
         if(type == GameType.JOINABLE){
-            game = list_joinable.get(gameId).clone(); //TODO: Java doesn't like .clone()
+            game = list_joinable.get(gameId).clone();
             list_joinable.remove(gameId);
             addPlayerToGameObject(username, game);
             list_joinable.put(gameId, game);
