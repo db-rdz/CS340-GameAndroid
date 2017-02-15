@@ -50,6 +50,10 @@ public class User implements iUser {
         return true;
     }
 
+    public static List<User> get_L_listOfAllUsers() {
+        return _L_listOfAllUsers;
+    }
+
     //________________________________________________________________________________________________________//
 
 

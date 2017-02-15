@@ -10,8 +10,8 @@ public class DeleteGameCommand implements ICommand{
     str_game_id = gameId;}
 
   @Override
-  public int getAuthenticationCode() {
-    return 0;
+  public String getAuthenticationCode() {
+    return null;
   }
 
   @Override
@@ -20,5 +20,7 @@ public class DeleteGameCommand implements ICommand{
   }
   
   @Override
-  public void execute(){
-    ClientFacade.SINGLETON.removeGame(str_game_id);}}
+  public CommandContainer execute(){
+    ClientFacade.SINGLETON.removeGame(str_game_id);
+    return null; //TODO: stub
+  }}

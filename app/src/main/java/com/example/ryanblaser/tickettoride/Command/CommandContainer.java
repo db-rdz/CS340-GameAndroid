@@ -1,8 +1,11 @@
 package com.example.ryanblaser.tickettoride.Command;
+
+import java.util.List;
+
 public class CommandContainer{
-  public String str_type;
-  public ICommand icommand;
+  public List<String> str_type;
+  public List<ICommand> icommand;
   private CommandContainer(){}
-  public CommandContainer(String type, ICommand cmd){
+  public CommandContainer(List<String> type, List<ICommand> cmd){
     str_type = type;
     icommand = cmd;}}

@@ -10,8 +10,8 @@ public class AddWaitingToClientCommand implements ICommand{ // sent after change
     game = g;}
 
   @Override
-  public int getAuthenticationCode() {
-    return 0;
+  public String getAuthenticationCode() {
+    return null;
   }
 
   @Override
@@ -20,5 +20,7 @@ public class AddWaitingToClientCommand implements ICommand{ // sent after change
   }
 
   @Override
-  public void execute(){
-    ClientFacade.SINGLETON.addWaitingGame(game);}}
+  public CommandContainer execute(){
+    ClientFacade.SINGLETON.addWaitingGame(game);
+    return null;
+  }}

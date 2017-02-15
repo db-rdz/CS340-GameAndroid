@@ -5,11 +5,11 @@ import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 public class AddPlayerToServerCommand implements ICommand{
   private String str_game_id;
-  private int int_authentication_code;
+  private String str_authentication_code;
   private AddPlayerToServerCommand(){}
-  public AddPlayerToServerCommand(String gameId, int k){
+  public AddPlayerToServerCommand(String gameId, String k){
     str_game_id = gameId;
-    int_authentication_code = k;}
+    str_authentication_code = k;}
 
   @Override
   public User getUser() {
@@ -17,8 +17,10 @@ public class AddPlayerToServerCommand implements ICommand{
   }
 
   @Override
-  public void execute(){ // auth key must be changed to Username somewhere
-    ServerFacade.SINGLETON.addPlayer(int_authentication_code, str_game_id);}
+  public CommandContainer execute(){ // auth key must be changed to Username somewhere
+    ServerFacade.SINGLETON.addPlayer(str_authentication_code, str_game_id);
+    return null; //TODO: stub
+  }
   @Override
-  public int getAuthenticationCode(){
-    return int_authentication_code;}}
+  public String getAuthenticationCode(){
+    return str_authentication_code;}}

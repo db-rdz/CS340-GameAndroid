@@ -4,7 +4,6 @@ import com.example.ryanblaser.tickettoride.Server.Game;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +15,7 @@ class ClientModel{
         JOINABLE, WAITING, RESUMABLE
     }
 
-    private int int_authentication_code;
+    private String str_authentication_code;
     private User user;
     private Hashtable<String, Game> list_joinable, list_waiting, list_resumable;
     private Hashtable<String, GameType> hashtable_id_to_list;
@@ -28,12 +27,12 @@ class ClientModel{
         hashtable_id_to_list = new Hashtable<String, GameType>();
     }
 
-    public void setAuthenticationKey(int k){
-        int_authentication_code = k;
+    public void setAuthenticationKey(String k){
+        str_authentication_code = k;
     }
 
-    public int getAuthenticationKey(){
-        return int_authentication_code;
+    public String getAuthenticationKey(){
+        return str_authentication_code;
     }
 
     public void setUser(User u){
@@ -112,22 +111,22 @@ class ClientModel{
         Game game;
         GameType type = getGameType(gameId);
         if(type == GameType.JOINABLE){
-            game = list_joinable.get(gameId).clone(); //TODO: Java doesn't like .clone()
-            list_joinable.remove(gameId);
-            addPlayerToGameObject(username, game);
-            list_joinable.put(gameId, game);
+//            game = list_joinable.get(gameId).clone(); //TODO: Java doesn't like .clone()
+//            list_joinable.remove(gameId);
+//            addPlayerToGameObject(username, game);
+//            list_joinable.put(gameId, game);
         }
         else if(type == GameType.WAITING){
-            game = list_waiting.get(gameId).clone();
-            list_waiting.remove(gameId);
-            addPlayerToGameObject(username, game);
-            list_waiting.put(gameId, game);
+//            game = list_waiting.get(gameId).clone();
+//            list_waiting.remove(gameId);
+//            addPlayerToGameObject(username, game);
+//            list_waiting.put(gameId, game);
         }
         else{
-            game = list_resumable.get(gameId).clone();
-            list_resumable.remove(gameId);
-            addPlayerToGameObject(username, game);
-            list_resumable.put(gameId, game);
+//            game = list_resumable.get(gameId).clone();
+//            list_resumable.remove(gameId);
+//            addPlayerToGameObject(username, game);
+//            list_resumable.put(gameId, game);
         }
 
     }

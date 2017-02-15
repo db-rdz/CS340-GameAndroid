@@ -3,17 +3,17 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Server.Game;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 
-import java.util.Set;
+import java.util.List;
 
 public class ListResumableCommand implements ICommand{ // sent to clients after login/registration
-  private Set<Game> set_game_list;
+  private List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> list_game_list;
   private ListResumableCommand(){}
-  public ListResumableCommand(Set<Game> list){
-    set_game_list = list;}
+  public ListResumableCommand(List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> list){
+    list_game_list = list;}
 
   @Override
-  public int getAuthenticationCode() {
-    return 0;
+  public String getAuthenticationCode() {
+    return null;
   }
 
   @Override
@@ -22,5 +22,7 @@ public class ListResumableCommand implements ICommand{ // sent to clients after 
   }
   
   @Override
-  public void execute(){
-    ClientFacade.SINGLETON.listResumableGames(set_game_list);}}
+  public CommandContainer execute(){
+    ClientFacade.SINGLETON.listResumableGames(list_game_list); //TODO: Decide which Game class to use
+    return null; //TODO:stub
+  }}

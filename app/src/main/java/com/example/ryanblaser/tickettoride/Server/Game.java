@@ -9,7 +9,7 @@ import java.util.List;
  * Created by RyanBlaser on 2/5/17.
  */
 
-public class Game implements Cloneable{
+public class Game {
     private final int MAX_NUM_OF_PLAYERS = 5;
     List<Username> players;
     String _s_game_id;
@@ -32,14 +32,6 @@ public class Game implements Cloneable{
 
     public void set_s_game_id(String _s_game_id) {
         this._s_game_id = _s_game_id;
-    }
-
-    @Override
-    public Game clone(){
-        Game game = new Game();
-        game.setPlayers(players);
-        game.set_s_game_id(_s_game_id);
-        return game;
     }
 }
 

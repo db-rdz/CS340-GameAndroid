@@ -13,7 +13,7 @@ public class RegisterCommand implements ICommand {
     }
 
     @Override
-    public void execute() {
+    public CommandContainer execute() {
         try {
             ServerFacade.SINGLETON.register(user);
         } catch (com.example.ryanblaser.tickettoride.Client.IClient.UsernameAlreadyExists usernameAlreadyExists) {
@@ -22,8 +22,8 @@ public class RegisterCommand implements ICommand {
     }
 
     @Override
-    public int getAuthenticationCode() {
-        return 0;
+    public String getAuthenticationCode() {
+        return null;
     }
 
     @Override

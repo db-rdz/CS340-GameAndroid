@@ -81,79 +81,81 @@ public class ClientCommunicator {
                     try {
                         InputStreamReader isr = new InputStreamReader(http.getInputStream());
                         CommandContainer respondData = gson.fromJson(isr, CommandContainer.class); //Receive a serialized CommandContainer
-
                         ICommand cmd;
-                        switch (respondData.str_type) { //Make the corresponding command depending on the type of command.
-                            case "LoginCommand":
-                                cmd = (LoginCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
 
-                            case "RegisterCommand":
-                                cmd = (RegisterCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                        //TODO: CommandContainer will contain Lists now. So this switch will be in a loop now.
+                        for (int i = 0; i < respondData.str_type.size(); i++) {
+                            switch (respondData.str_type.get(i)) { //Make the corresponding command depending on the type of command.
+                                case "LoginCommand":
+                                    cmd = (LoginCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            case "AddJoinable":
-                                cmd = (AddJoinableToClientCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                                case "RegisterCommand":
+                                    cmd = (RegisterCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            case "AddResumable":
-                                cmd = (AddResumableToClientCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                                case "AddJoinable":
+                                    cmd = (AddJoinableToClientCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            case "AddWaiting":
-                                cmd = (AddWaitingToClientCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                                case "AddResumable":
+                                    cmd = (AddResumableToClientCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            case "StartGame":
-                                cmd = (StartGameCommand) respondData.icommand;
-                                cmd.execute();
+                                case "AddWaiting":
+                                    cmd = (AddWaitingToClientCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            case "AddPlayer":
-                                cmd = (AddPlayerToClientCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                                case "StartGame":
+                                    cmd = (StartGameCommand) respondData.icommand;
+                                    cmd.execute();
 
-                            case "Logout":
-                                cmd = (LogoutCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                                case "AddPlayer":
+                                    cmd = (AddPlayerToClientCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            case "ListJoinable":
-                                cmd = (ListJoinableCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                                case "Logout":
+                                    cmd = (LogoutCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            case "ListResumable":
-                                cmd = (ListResumableCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                                case "ListJoinable":
+                                    cmd = (ListJoinableCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            case "ListWaiting":
-                                cmd = (ListWaitingCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                                case "ListResumable":
+                                    cmd = (ListResumableCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            case "LoginRegisterResponse":
-                                cmd = (LoginRegisterResponseCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                                case "ListWaiting":
+                                    cmd = (ListWaitingCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            case "LogoutResponse":
-                                cmd = (LogoutResponseCommand) respondData.icommand;
-                                cmd.execute();
-                                break;
+                                case "LoginRegisterResponse":
+                                    cmd = (LoginRegisterResponseCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
 
-                            default:
-                                cmd = null; //If nothing was received
-                                break;
+                                case "LogoutResponse":
+                                    cmd = (LogoutResponseCommand) respondData.icommand;
+                                    cmd.execute();
+                                    break;
+
+                                default:
+                                    cmd = null; //If nothing was received
+                                    break;
+                            }
                         }
-
-                        return cmd;
+                        return null;
 
                     }
                     catch (Exception e) //InputStreamReader

@@ -5,11 +5,11 @@ import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 public class StartGameCommand implements ICommand {
     private Game game;
-    private int int_authentication_code;
+    private String str_authentication_code;
     private StartGameCommand(){}
-    public StartGameCommand(Game g, int k){
+    public StartGameCommand(Game g, String k){
         game = g;
-        int_authentication_code = k;}
+        str_authentication_code = k;}
 
     @Override
     public User getUser() {
@@ -17,8 +17,8 @@ public class StartGameCommand implements ICommand {
     }
 
     @Override
-    public void execute(){
-        ServerFacade.SINGLETON.startGame(game, int_authentication_code);}
+    public CommandContainer execute(){
+        ServerFacade.SINGLETON.startGame(game, str_authentication_code);}
     @Override
-    public int getAuthenticationCode(){
-        return int_authentication_code;}}
+    public String getAuthenticationCode(){
+        return str_authentication_code;}}

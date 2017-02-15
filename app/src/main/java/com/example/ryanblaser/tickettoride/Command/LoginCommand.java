@@ -13,7 +13,7 @@ public class LoginCommand implements ICommand {
     }
 
     @Override
-    public void execute() {
+    public CommandContainer execute() {
         try {
             ServerFacade.SINGLETON.login(user);
         } catch (com.example.ryanblaser.tickettoride.Client.IClient.InvalidUsername invalidUsername) {
@@ -24,8 +24,8 @@ public class LoginCommand implements ICommand {
     }
 
     @Override
-    public int getAuthenticationCode() {
-        return 0;
+    public String getAuthenticationCode() {
+        return null;
     }
 
     @Override

@@ -11,8 +11,8 @@ public class AddResumableToClientCommand implements ICommand{ // sent after chan
     game = g;}
 
   @Override
-  public int getAuthenticationCode() {
-    return 0;
+  public String getAuthenticationCode() {
+    return null;
   }
 
   @Override
@@ -21,5 +21,7 @@ public class AddResumableToClientCommand implements ICommand{ // sent after chan
   }
 
   @Override
-  public void execute(){
-    ClientFacade.SINGLETON.addResumableGame(game);}}
+  public CommandContainer execute(){
+    ClientFacade.SINGLETON.addResumableGame(game);
+    return null; //TODO:stub
+  }}

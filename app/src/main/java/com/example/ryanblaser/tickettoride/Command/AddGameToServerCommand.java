@@ -5,19 +5,19 @@ import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 public class AddGameToServerCommand implements ICommand {
     private Game game;
-    private int int_authentication_code;
+    private String str_authentication_code;
 
     private AddGameToServerCommand() {
     }
 
-    public AddGameToServerCommand(Game g, int k) {
+    public AddGameToServerCommand(Game g, String k) {
         game = g;
-        int_authentication_code = k;
+        str_authentication_code = k;
     }
 
     @Override
-    public int getAuthenticationCode() {
-        return int_authentication_code;
+    public String getAuthenticationCode() {
+        return str_authentication_code;
     }
 
     @Override
@@ -26,9 +26,10 @@ public class AddGameToServerCommand implements ICommand {
     }
     //
     @Override
-    public void execute() {
+    public CommandContainer execute() {
 //    ServerFacade.SINGLETON.addGame(game);
+        return null; //TODO: Stub
     }
 //  public int getAuthenticationCode(){
-//    return int_authentication_code;}}
+//    return str_authentication_code;}}
 }

@@ -91,6 +91,10 @@ public class Game implements iGame {
     /** updates the Server Game model */
     public static void update(){}
 
+    public Map<Integer, Game> get_M_idToGame() {
+        return _M_idToGame;
+    }
+
     //-----------------------------------------SETTER AND GETTERS-------------------------------------//
     public int get_numberOfPlayers() { return _i_numberOfPlayers; }
     public void set_numberOfPlayers(int _i_numberOfPlayers) { this._i_numberOfPlayers = _i_numberOfPlayers; }

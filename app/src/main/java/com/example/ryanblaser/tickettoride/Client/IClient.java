@@ -4,6 +4,7 @@ import com.example.ryanblaser.tickettoride.Server.Game;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,6 +25,7 @@ public interface IClient {
     public static class UsernameAlreadyExists extends Exception {
     }
 
+    //TODO: Should we change the return type to CommandContainer to match IServer?
     public void login(User user) throws InvalidUsername, InvalidPassword;
     public void register(User user) throws UsernameAlreadyExists;
     public void addResumableGame(Game game);
@@ -35,10 +37,10 @@ public interface IClient {
     public void attachObserver(/* Observer object */);
     public void detachObserver(/* Observer object */);
     public void logout(int int_authentication_code);
-    public void listJoinableGames(Set<Game> listJoinableGames);
+    public void listJoinableGames(List<Game> listJoinableGames);
     public void listResumableGames(Set<Game> listResumableGames);
     public void listWaitingGames(Set<Game> listWaitingGames);
-    public void loginRegisterSucceeded(User user, int authenticationCode);
+    public void loginRegisterSucceeded(User user, String authenticationCode);
     public void logoutSucceeded();
 
 }

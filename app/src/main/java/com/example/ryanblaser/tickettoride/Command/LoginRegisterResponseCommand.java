@@ -5,11 +5,11 @@ import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 public class LoginRegisterResponseCommand implements ICommand{
   private User user;
-  private int int_authentication_code;
+  private String str_authentication_code;
   private LoginRegisterResponseCommand(){}
-  public LoginRegisterResponseCommand(User u, int k){
+  public LoginRegisterResponseCommand(User u, String k){
     user = u;
-    int_authentication_code = k;}
+    str_authentication_code = k;}
 
 
   @Override
@@ -18,8 +18,8 @@ public class LoginRegisterResponseCommand implements ICommand{
   }
   
   @Override
-  public void execute(){
-    ClientFacade.SINGLETON.loginRegisterSucceeded(user, int_authentication_code);}
+  public CommandContainer execute(){
+    ClientFacade.SINGLETON.loginRegisterSucceeded(user, str_authentication_code);}
   @Override
-  public int getAuthenticationCode(){
-    return int_authentication_code;}}
+  public String getAuthenticationCode(){
+    return str_authentication_code;}}

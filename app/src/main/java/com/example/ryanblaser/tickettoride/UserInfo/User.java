@@ -9,7 +9,7 @@ public class User {
     //Data members
     private Username username;
     private Password password;
-    private int int_authentication_code;
+    private String str_authentication_code;
 
     //Constructor
     public User() {
@@ -18,7 +18,7 @@ public class User {
 
         username.setUsername("");
         password.setPassword("");
-        int_authentication_code = -1; //initialize to -1 for debugging purposes.
+        str_authentication_code = null; //initialize to -1 for debugging purposes.
     }
 
     //Getters
@@ -36,8 +36,8 @@ public class User {
         this.username.setUsername(username);
     }
 
-    public int getInt_authentication_code() {
-        return int_authentication_code;
+    public String getStr_authentication_code() {
+        return str_authentication_code;
     }
 
     //Setters
@@ -55,7 +55,7 @@ public class User {
         this.password.setPassword(password);
     }
 
-    public void setInt_authentication_code(int int_authentication_code) {
-        this.int_authentication_code = int_authentication_code;
+    public void setStr_authentication_code(String str_authentication_code) {
+        this.str_authentication_code = str_authentication_code;
     }
 }

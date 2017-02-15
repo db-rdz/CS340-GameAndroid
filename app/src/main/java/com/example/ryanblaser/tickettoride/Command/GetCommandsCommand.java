@@ -1,5 +1,7 @@
 package com.example.ryanblaser.tickettoride.Command;
+import com.example.ryanblaser.tickettoride.Server.ClientProxy;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
+import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
 import java.util.List;
 public class GetCommandsCommand implements ICommand{
@@ -9,8 +11,8 @@ public class GetCommandsCommand implements ICommand{
     list_icommands = list;}
 
   @Override
-  public int getAuthenticationCode() {
-    return 0;
+  public String getAuthenticationCode() {
+    return null;
   }
 
   @Override
@@ -19,6 +21,6 @@ public class GetCommandsCommand implements ICommand{
   }
 
   @Override
-  public void execute(){
-    for(ICommand command : list_icommands)
-      command.execute();}}
+  public CommandContainer execute(){
+    return ClientProxy.SINGLETON.getUserCommands(new Username(getUser().getUsername()));
+  }}

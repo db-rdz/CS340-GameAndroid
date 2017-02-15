@@ -10,8 +10,8 @@ public class LogoutCommand implements ICommand{
     int_authentication_code = k;}
 
   @Override
-  public int getAuthenticationCode() {
-    return 0;
+  public String getAuthenticationCode() {
+    return null;
   }
 
   @Override
@@ -20,5 +20,5 @@ public class LogoutCommand implements ICommand{
   }
   
   @Override
-  public void execute(){
+  public CommandContainer execute(){
     ServerFacade.SINGLETON.logout(int_authentication_code);}}

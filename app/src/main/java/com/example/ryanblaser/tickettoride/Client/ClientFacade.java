@@ -1,9 +1,11 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import com.example.ryanblaser.tickettoride.Server.Game;
+import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,21 +29,7 @@ public class ClientFacade implements IClient {
     //private LoginPresenter loginpresenter;
     //private LobbyPresenter lobbypresenter;
 
-    private boolean checkUsername(User u) { // must be 3-10 characters (from our Android keyboard locale)
-        int length = u.getUsername().length();
-        return length >= 3 && length <= 10;
-    }
-
-    private boolean checkPassword(User u) { // must be 5-10 characters (from our Android keyboard locale)
-        int length = u.getPassword().length();
-        return length >= 5 && length <= 10;
-    }
-
     public void login(User user) throws InvalidUsername, InvalidPassword {
-        if(!checkUsername(user))
-            throw new InvalidUsername();
-        if(!checkPassword(user))
-            throw new InvalidPassword();
         try {
             ServerProxy.SINGLETON.login(user);
 
@@ -50,11 +38,7 @@ public class ClientFacade implements IClient {
         }
     }
 
-    public void register(User user) throws InvalidUsername, InvalidPassword, UsernameAlreadyExists {
-        if(!checkUsername(user))
-            throw new InvalidUsername();
-        if(!checkPassword(user))
-            throw new InvalidPassword();
+    public void register(User user) throws UsernameAlreadyExists {
         try {
             ServerProxy.SINGLETON.register(user);
 
@@ -93,7 +77,7 @@ public class ClientFacade implements IClient {
         //lobbypresenter
     }
 
-    public void addPlayer(int int_authentication_code, String gameId) { // which exception?
+    public void addPlayer(int int_authentication_code, String gameId) throws IServer.GameIsFullException { // which exception?
         ServerProxy.SINGLETON.addPlayer(int_authentication_code, gameId); //server will get username
         //lobbypresenter
     }
@@ -117,7 +101,7 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void listJoinableGames(Set<Game> listJoinableGames) {
+    public void listJoinableGames(List<Game> listJoinableGames) {
         clientmodel.setJoinableGames(listJoinableGames);
         //lobbypresenter
     }
@@ -135,7 +119,7 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void loginRegisterSucceeded(User user, int authenticationCode) {
+    public void loginRegisterSucceeded(User user, String authenticationCode) {
         clientmodel = new ClientModel();
         clientmodel.setAuthenticationKey(authenticationCode);
         clientmodel.setUser(user);

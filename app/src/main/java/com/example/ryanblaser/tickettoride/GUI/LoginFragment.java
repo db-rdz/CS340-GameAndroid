@@ -107,9 +107,9 @@ public class LoginFragment extends Fragment {
                 try {
                     onLoginButtonPressed();
                 } catch (IClient.InvalidPassword invalidPassword) {
-                    Toast.makeText(getContext(), "Password needs 5-10 characters.", Toast.LENGTH_SHORT).show();
+                    invalidPassword.printStackTrace();
                 } catch (IClient.InvalidUsername invalidUsername) {
-                    Toast.makeText(getContext(), "Username needs 3-10 characters.", Toast.LENGTH_SHORT).show();
+                    invalidUsername.printStackTrace();
                 }
             }
         });
@@ -120,12 +120,8 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     onRegisterButtonPressed();
-                } catch (IClient.InvalidPassword invalidPassword) {
-                    Toast.makeText(getContext(), "Password needs 5-10 characters.", Toast.LENGTH_SHORT).show();
-                } catch (IClient.InvalidUsername invalidUsername) {
-                    Toast.makeText(getContext(), "Username needs 3-10 characters.", Toast.LENGTH_SHORT).show();
                 } catch (IClient.UsernameAlreadyExists usernameAlreadyExists) {
-                    Toast.makeText(getContext(), "This username is taken.", Toast.LENGTH_SHORT).show();
+                    usernameAlreadyExists.printStackTrace();
                 }
             }
         });
@@ -141,7 +137,7 @@ public class LoginFragment extends Fragment {
      */
     public User getUserInfo() {
         user.setUsername(editText_username.getText().toString());
-        user.setPassword(editText_password.getText().toString());
+        user.setUsername(editText_password.getText().toString());
 
         return user;
     }
@@ -153,7 +149,9 @@ public class LoginFragment extends Fragment {
     public void onLoginButtonPressed() throws IClient.InvalidPassword, IClient.InvalidUsername {
         Toast.makeText(getContext(), "Logging in...", Toast.LENGTH_SHORT).show();
 
-        ClientFacade.SINGLETON.login(getUserInfo());
+        //Gets the user login info from ClientModel and tries logging into the Server.
+        ClientFacade.SINGLETON.setCurrentUser(user); //Should set the fragment user object to the ClientModel user object.
+        ClientFacade.SINGLETON.login(user); //Guessing how it'll work right now
     }
 
     /*
@@ -163,10 +161,12 @@ public class LoginFragment extends Fragment {
      *
      * If the username is already in the server database, then the server throws a UsernameAlreadyExists exception.
      */
-    public void onRegisterButtonPressed() throws IClient.InvalidPassword, IClient.InvalidUsername, IClient.UsernameAlreadyExists {
+    public void onRegisterButtonPressed() throws IClient.UsernameAlreadyExists {
         Toast.makeText(getContext(), "Registering new user...", Toast.LENGTH_SHORT).show();
 
-        ClientFacade.SINGLETON.register(getUserInfo());
+        //Checks the server database if the username has been taken.
+        ClientFacade.SINGLETON.setCurrentUser(user);
+        ClientFacade.SINGLETON.register(user); //Guessing how it'll work right now
     }
 
 //    TODO: check if we need callback functionality

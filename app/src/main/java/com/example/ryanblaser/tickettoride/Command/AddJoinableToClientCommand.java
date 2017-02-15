@@ -11,8 +11,8 @@ public class AddJoinableToClientCommand implements ICommand{ // sent after chang
     game = g;}
 
   @Override
-  public int getAuthenticationCode() {
-    return 0;
+  public String getAuthenticationCode() {
+    return null;
   }
 
   @Override
@@ -21,5 +21,8 @@ public class AddJoinableToClientCommand implements ICommand{ // sent after chang
   }
 
   @Override
-  public void execute(){
-    ClientFacade.SINGLETON.addJoinableGame(game);}}
+  public CommandContainer execute() {
+//    ClientFacade.SINGLETON.addJoinableGame(game);} //TODO:fix the return type
+    return null;
+  }
+}
