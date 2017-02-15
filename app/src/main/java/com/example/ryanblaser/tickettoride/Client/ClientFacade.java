@@ -50,7 +50,7 @@ public class ClientFacade implements IClient {
             throw new InvalidUsername();
         if(!checkPassword(user))
             throw new InvalidPassword();
-        triggerLoginRegisterSucceeded();
+        //triggerLoginRegisterSucceeded();
         try {
             ServerProxy.SINGLETON.login(user);
         } catch (InvalidUsername e) {
@@ -65,7 +65,7 @@ public class ClientFacade implements IClient {
             throw new InvalidUsername();
         if(!checkPassword(user))
             throw new InvalidPassword();
-        triggerLoginRegisterSucceeded();
+        //triggerLoginRegisterSucceeded();
         try {
             ServerProxy.SINGLETON.register(user);
 
