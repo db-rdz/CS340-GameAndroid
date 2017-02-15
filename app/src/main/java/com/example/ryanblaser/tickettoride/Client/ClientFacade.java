@@ -1,11 +1,11 @@
 package com.example.ryanblaser.tickettoride.Client;
 
+import com.example.ryanblaser.tickettoride.GUI.LobbyFragment;
 import com.example.ryanblaser.tickettoride.Server.Game;
-import com.example.ryanblaser.tickettoride.Server.IServer;
+import com.example.ryanblaser.tickettoride.Server.ServerProxy;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,10 +26,26 @@ public class ClientFacade implements IClient {
     public static ClientFacade SINGLETON = new ClientFacade();
     private Set<User> set_users;
     private ClientModel clientmodel;
-    //private LoginPresenter loginpresenter;
-    //private LobbyPresenter lobbypresenter;
+
+    private boolean checkUsername(User u) { // must be 3-10 characters (from our Android keyboard locale)
+        int length = u.getUsername().length();
+        return length >= 3 && length <= 10;
+    }
+
+    private boolean checkPassword(User u) { // must be 5-10 characters (from our Android keyboard locale)
+        int length = u.getPassword().length();
+        return length >= 5 && length <= 10;
+    }
+    
+    private ClientFacade(){
+        clientmodel = new ClientModel();
+    }
 
     public void login(User user) throws InvalidUsername, InvalidPassword {
+        if(!checkUsername(user))
+            throw new InvalidUsername();
+        if(!checkPassword(user))
+            throw new InvalidPassword();
         try {
             ServerProxy.SINGLETON.login(user);
 
@@ -38,7 +54,11 @@ public class ClientFacade implements IClient {
         }
     }
 
-    public void register(User user) throws UsernameAlreadyExists {
+    public void register(User user) throws InvalidUsername, InvalidPassword, UsernameAlreadyExists {
+        if(!checkUsername(user))
+            throw new InvalidUsername();
+        if(!checkPassword(user))
+            throw new InvalidPassword();
         try {
             ServerProxy.SINGLETON.register(user);
 
@@ -50,34 +70,30 @@ public class ClientFacade implements IClient {
     @Override
     public void addResumableGame(Game game) {
         clientmodel.addResumableGame(game);
-        //lobbypresenter
     }
 
     @Override
     public void addJoinableGame(Game game) {
         clientmodel.addJoinableGame(game);
-        //lobbypresenter
     }
 
     @Override
     public void addWaitingGame(Game game) {
         clientmodel.addWaitingGame(game);
-        //lobbypresenter
     }
 
     @Override
     public void removeGame(String gameId) {
         clientmodel.deleteGame(gameId);
-        //lobbypresenter
     }
 
-    @Override
-    public void startGame(Game game, int authenticationCode) { // just gameId?
+    public void startGame(Game game) { // just gameId?
+        //clientmodel gets authentication code
         ServerProxy.SINGLETON.startGame(game, authenticationCode);
-        //lobbypresenter
     }
 
-    public void addPlayer(int int_authentication_code, String gameId) throws IServer.GameIsFullException { // which exception?
+    public void addPlayer(String gameId) throws IServer.GameIsFullException {
+        //clientmodel gets authentication code
         ServerProxy.SINGLETON.addPlayer(int_authentication_code, gameId); //server will get username
         //lobbypresenter
     }
@@ -85,42 +101,38 @@ public class ClientFacade implements IClient {
     @Override
     public void addPlayer(Username username, String gameId){
         clientmodel.addPlayer(username, gameId);
-        //lobbypresenter
     }
 
-    public void attachObserver() { //necessary?
-        //loginpresenter, lobbypresenter
+    public void attachLobbyObserver(LobbyFragment f) {
+        clientmodel.attachLobbyObserver(f);
     }
 
     public void detachObserver() { // necessary?
-        //loginpresenter, lobbypresenter
+        //lobbypresenter
     }
 
-    public void logout(int authenticationCode) {
+    public void logout() {
+        //clientmodel gets authentication code
         ServerProxy.SINGLETON.logout(authenticationCode);
     }
 
     @Override
-    public void listJoinableGames(List<Game> listJoinableGames) {
+    public void listJoinableGames(Set<Game> listJoinableGames) {
         clientmodel.setJoinableGames(listJoinableGames);
-        //lobbypresenter
     }
 
     @Override
     public void listResumableGames(Set<Game> listResumableGames) {
         clientmodel.setResumableGames(listResumableGames);
-        //lobbypresenter
     }
 
     @Override
     public void listWaitingGames(Set<Game> listWaitingGames) {
         clientmodel.setWaitingGames(listWaitingGames);
-        //lobbypresenter
     }
 
     @Override
     public void loginRegisterSucceeded(User user, String authenticationCode) {
-        clientmodel = new ClientModel();
         clientmodel.setAuthenticationKey(authenticationCode);
         clientmodel.setUser(user);
         //change view/presenter
