@@ -27,7 +27,7 @@ public interface IClient {
 
     //TODO: Should we change the return type to CommandContainer to match IServer?
     public void login(User user) throws InvalidUsername, InvalidPassword;
-    public void register(User user) throws UsernameAlreadyExists;
+    public void register(User user) throws InvalidUsername, InvalidPassword, UsernameAlreadyExists;
     public void addResumableGame(Game game);
     public void addJoinableGame(Game game);
     public void addWaitingGame(Game game);
@@ -35,7 +35,7 @@ public interface IClient {
     public void startGame(Game game, int authorizationCode);
     public void addPlayer(Username username, String gameId);
     public void logout(int int_authentication_code);
-    public void listJoinableGames(List<Game> listJoinableGames);
+    public void listJoinableGames(Set<Game> listJoinableGames);
     public void listResumableGames(Set<Game> listResumableGames);
     public void listWaitingGames(Set<Game> listWaitingGames);
     public void loginRegisterSucceeded(User user, String authenticationCode);
