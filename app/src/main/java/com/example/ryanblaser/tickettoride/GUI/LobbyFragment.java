@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.R;
 
 /**
@@ -17,8 +18,11 @@ import com.example.ryanblaser.tickettoride.R;
 
 public class LobbyFragment extends Fragment {
 
+    private Button button_logout, button_new_game;
+    // list views
+
     public LobbyFragment() {
-        // Required empty public constructor
+        ClientFacade.SINGLETON.attachLobbyObserver(this); // does this belong in onCreate?
     }
 
     public static LobbyFragment newInstance() {
@@ -41,7 +45,16 @@ public class LobbyFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lobby, container, false); //Sets the view to grab from the lobby fragment
 
+        //This part links the buttons to the code.
+        button_logout = (Button) view.findViewById(R.id.button_logout);
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClientFacade.SINGLETON.logout();
+            }
+        });
 
+        // button_new_game, list views
 
         return view;
     }
