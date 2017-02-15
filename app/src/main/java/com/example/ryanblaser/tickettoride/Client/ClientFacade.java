@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import com.example.ryanblaser.tickettoride.Server.Game;
+import com.example.ryanblaser.tickettoride.UserInfo.Password;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
@@ -27,7 +28,21 @@ public class ClientFacade implements IClient {
     //private LoginPresenter loginpresenter;
     //private LobbyPresenter lobbypresenter;
 
+    private boolean checkUsername(User u) { // must be 3-10 characters (from our Android keyboard locale)
+        int length = u.getUsername().length();
+        return length >= 3 && length <= 10;
+    }
+
+    private boolean checkPassword(User u) { // must be 5-10 characters (from our Android keyboard locale)
+        int length = u.getPassword().length();
+        return length >= 5 && length <= 10;
+    }
+
     public void login(User user) throws InvalidUsername, InvalidPassword {
+        if(!checkUsername(user))
+            throw new InvalidUsername();
+        if(!checkPassword(user))
+            throw new InvalidPassword();
         try {
             ServerProxy.SINGLETON.login(user);
 
@@ -36,7 +51,11 @@ public class ClientFacade implements IClient {
         }
     }
 
-    public void register(User user) throws UsernameAlreadyExists {
+    public void register(User user) throws InvalidUsername, InvalidPassword, UsernameAlreadyExists {
+        if(!checkUsername(user))
+            throw new InvalidUsername();
+        if(!checkPassword(user))
+            throw new InvalidPassword();
         try {
             ServerProxy.SINGLETON.register(user);
 
