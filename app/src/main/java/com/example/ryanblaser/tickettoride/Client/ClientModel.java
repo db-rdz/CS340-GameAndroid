@@ -1,6 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import com.example.ryanblaser.tickettoride.GUI.LobbyFragment;
+import com.example.ryanblaser.tickettoride.GUI.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.Server.Game;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 import com.example.ryanblaser.tickettoride.UserInfo.Username;
@@ -21,7 +21,7 @@ class ClientModel{
     private Hashtable<String, Game> list_joinable, list_waiting, list_resumable;
     private Hashtable<String, GameType> hashtable_id_to_list;
 
-    private LobbyFragment lobbyPresenter = null;
+    private LobbyPresenter lobbyPresenter = null;
 
     public ClientModel(){
         list_joinable = new Hashtable<String, Game>();
@@ -30,8 +30,8 @@ class ClientModel{
         hashtable_id_to_list = new Hashtable<String, GameType>();
     }
 
-    public void attachLobbyObserver(LobbyFragment f){
-        lobbyPresenter = f;
+    public void attachLobbyObserver(LobbyPresenter p){
+        lobbyPresenter = p;
     }
 
     public void setAuthenticationKey(String k){
