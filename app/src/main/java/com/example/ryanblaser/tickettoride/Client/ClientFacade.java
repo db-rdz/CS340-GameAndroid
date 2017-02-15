@@ -25,7 +25,6 @@ public class ClientFacade implements IClient {
 
 
     public static ClientFacade SINGLETON = new ClientFacade();
-    private Set<User> set_users;
     private ClientModel clientmodel;
 
     private boolean checkUsername(User u) { // must be 3-10 characters (from our Android keyboard locale)
@@ -142,16 +141,6 @@ public class ClientFacade implements IClient {
     @Override
     public void logoutSucceeded() {
         //change view/presenter
-    }
-
-    public User find(User user) {
-        for (User userSearch : set_users) { //Searches all the users in the set.
-            if (userSearch.equals(user)) { //If the username is in the set,
-                return userSearch; //return the user found
-            }
-        }
-
-        return user; //Otherwise return the user that was initially searched for.
     }
 
     public User getCurrentUser() { return clientmodel.getUser(); }
