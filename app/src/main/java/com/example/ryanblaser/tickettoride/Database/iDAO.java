@@ -1,12 +1,10 @@
 package com.example.ryanblaser.tickettoride.Database;
 
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
-import com.example.ryanblaser.tickettoride.ServerModel.Models.GameModel;
-import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
-
 import java.sql.SQLException;
 import java.util.List;
 
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
 
 /**
  * Created by benjamin on 10/02/17.
@@ -31,8 +29,10 @@ public interface iDAO {
 
     public void initializeDB();
 
-    public List<GameModel> getGamesByUserName(String userName) throws SQLException;
+    public List<Game> getGamesByUserName(String userName) throws SQLException;
 
-    public List<GameModel> getAllGames()  throws SQLException;
+    public List<Game> getAllGames()  throws SQLException;
+
+    public List<User> getAllUsers() throws SQLException;
 
 }

@@ -1,8 +1,9 @@
 package com.example.ryanblaser.tickettoride.Server;
 import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.Command.CommandContainer;
-import com.example.ryanblaser.tickettoride.UserInfo.User;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.UserInfo.Username;
+import com.example.ryanblaser.tickettoride.ServerModel.UserModel.*;
 
 import java.util.List;
 
@@ -15,18 +16,14 @@ public interface IServer {
     public static class GameIsFullException extends Exception {
     }
 
-    CommandContainer login(User user) throws IClient.InvalidUsername, IClient.InvalidPassword;
-    CommandContainer register(User user) throws IClient.UsernameAlreadyExists;
+    CommandContainer login(String username, String password, String authoritzationCode) throws IClient.InvalidUsername, IClient.InvalidPassword;
+    CommandContainer register(String username, String password, String authorizationCode) throws IClient.UsernameAlreadyExists;
     CommandContainer addGame(Game game);
+    public CommandContainer addResumableGame(int gameId);
+    public CommandContainer addJoinableGame(int gameId);
+    public CommandContainer addWaitingGame(int gameId);
     CommandContainer removeGame(Game game);
-    CommandContainer startGame(Game game, String str_authentication_code);
-    CommandContainer addPlayer(Username username, String gameId) throws GameIsFullException;
-
-    CommandContainer addPlayer(int intAuthenticationCode, String sGameId) throws GameIsFullException;
-
-    public CommandContainer addResumableGame(Game game);
-    public CommandContainer addJoinableGame(Game game);
-    public CommandContainer addWaitingGame(Game game);
-    public CommandContainer addPlayer(String str_authentication_code, String gameId);
-    public CommandContainer logout(int int_authentication_code);
+    CommandContainer startGame(int gameId, String str_authentication_code);
+    public CommandContainer addPlayer(String str_authentication_code, int gameId) throws GameIsFullException;
+    public CommandContainer logout(String str_authentication_code);
 }

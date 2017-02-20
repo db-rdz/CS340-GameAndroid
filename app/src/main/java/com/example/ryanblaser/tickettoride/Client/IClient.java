@@ -1,11 +1,11 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import com.example.ryanblaser.tickettoride.Server.Game;
-import com.example.ryanblaser.tickettoride.UserInfo.User;
-import com.example.ryanblaser.tickettoride.UserInfo.Username;
+import UserInfo.User;
+import UserInfo.Username;
 
 import java.util.List;
-import java.util.Set;
+
+import Command.CommandContainer;
 
 /**
  * Created by natha on 2/1/2017.
@@ -26,21 +26,21 @@ public interface IClient {
     }
 
     //TODO: Should we change the return type to CommandContainer to match IServer?
-    public void login(User user) throws InvalidUsername, InvalidPassword;
-    public void register(User user) throws UsernameAlreadyExists;
-    public void addResumableGame(Game game);
-    public void addJoinableGame(Game game);
-    public void addWaitingGame(Game game);
-    public void removeGame(String gameId);
-    public void startGame(Game game, int authorizationCode);
-    public void addPlayer(Username username, String gameId);
+    public CommandContainer login(String username, String password, String authenticationCode) throws InvalidUsername, InvalidPassword;
+    public CommandContainer register(String username, String password, String authorizationCode) throws UsernameAlreadyExists;
+    public CommandContainer addResumableGame(int gameId);
+    public CommandContainer addJoinableGame(int gameId);
+    public CommandContainer addWaitingGame(int gameId);
+    public CommandContainer removeGame(int gameId);
+    public CommandContainer startGame(int gameId, String authorizationCode);
+    public CommandContainer addPlayer(Username username, int gameId);
+    public CommandContainer logout(String str_authentication_code);
+    public CommandContainer listJoinableGames(List<Integer> listJoinableGames);
+    public CommandContainer listResumableGames(List<Integer> listResumableGames);
+    public CommandContainer listWaitingGames(List<Integer> listWaitingGames);
+    public CommandContainer loginRegisterSucceeded(User user, String authenticationCode);
+    public CommandContainer logoutSucceeded();
+
     public void attachObserver(/* Observer object */);
     public void detachObserver(/* Observer object */);
-    public void logout(int int_authentication_code);
-    public void listJoinableGames(List<Game> listJoinableGames);
-    public void listResumableGames(Set<Game> listResumableGames);
-    public void listWaitingGames(Set<Game> listWaitingGames);
-    public void loginRegisterSucceeded(User user, String authenticationCode);
-    public void logoutSucceeded();
-
 }

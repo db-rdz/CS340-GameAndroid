@@ -15,10 +15,11 @@ public class RegisterCommand implements ICommand {
     @Override
     public CommandContainer execute() {
         try {
-            ServerFacade.SINGLETON.register(user);
+            return ServerFacade.SINGLETON.register(user);
         } catch (com.example.ryanblaser.tickettoride.Client.IClient.UsernameAlreadyExists usernameAlreadyExists) {
             usernameAlreadyExists.printStackTrace();
         }
+        return null;
     }
 
     @Override

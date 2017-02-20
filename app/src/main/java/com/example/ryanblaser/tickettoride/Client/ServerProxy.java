@@ -1,26 +1,25 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import com.example.ryanblaser.tickettoride.Command.AddJoinableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.AddResumableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.AddWaitingToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.CommandContainer;
-import com.example.ryanblaser.tickettoride.Command.DeleteGameCommand;
-import com.example.ryanblaser.tickettoride.Command.GetCommandsCommand;
-import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Command.ListJoinableCommand;
-import com.example.ryanblaser.tickettoride.Command.ListResumableCommand;
-import com.example.ryanblaser.tickettoride.Command.ListWaitingCommand;
-import com.example.ryanblaser.tickettoride.Command.LoginCommand;
-import com.example.ryanblaser.tickettoride.Command.LoginRegisterResponseCommand;
-import com.example.ryanblaser.tickettoride.Command.LogoutCommand;
-import com.example.ryanblaser.tickettoride.Command.LogoutResponseCommand;
-import com.example.ryanblaser.tickettoride.Command.RegisterCommand;
-import com.example.ryanblaser.tickettoride.Command.StartGameCommand;
-import com.example.ryanblaser.tickettoride.Server.Game;
-import com.example.ryanblaser.tickettoride.Server.IServer;
-import com.example.ryanblaser.tickettoride.UserInfo.User;
-import com.example.ryanblaser.tickettoride.UserInfo.Username;
+import Command.AddJoinableToClientCommand;
+import Command.AddPlayerToClientCommand;
+import Command.AddResumableToClientCommand;
+import Command.AddWaitingToClientCommand;
+import Command.CommandContainer;
+import Command.DeleteGameCommand;
+import Command.GetCommandsCommand;
+import Command.ICommand;
+import Command.ListJoinableCommand;
+import Command.ListResumableCommand;
+import Command.ListWaitingCommand;
+import Command.LoginCommand;
+import Command.LoginRegisterResponseCommand;
+import Command.LogoutCommand;
+import Command.LogoutResponseCommand;
+import Command.RegisterCommand;
+import Command.StartGameCommand;
+import GameModels.Game;
+import Server.IServer;
+import UserInfo.Username;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,15 +39,21 @@ public class ServerProxy implements IServer {
 
 
     @Override
-    public CommandContainer login(User user) throws IClient.InvalidUsername, IClient.InvalidPassword {
+    public CommandContainer login(String username, String password, String authoritzationCode) throws IClient.InvalidUsername, IClient.InvalidPassword {
         String urlSuffix = "/command";
 
         List<String> types = new ArrayList<>();
         types.add("LoginCommand");
 
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new LoginCommand(user));
+        List<Object> commands = new ArrayList<>();
+//        commands.add(new LoginCommand(username));
+        commands.add(username);
+        commands.add(password);
+        commands.add(authoritzationCode);
+        
+//        System.out.println("Object type: " + commands.get(0).getClass());
 
+//        CommandContainer loginCommand = new CommandContainer("hello");
         CommandContainer loginCommand = new CommandContainer(types, commands);
 
         try {
@@ -61,15 +66,19 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public CommandContainer register(User user) throws IClient.UsernameAlreadyExists {
+    public CommandContainer register(String username, String password, String authorizationCode) throws IClient.UsernameAlreadyExists {
         String urlSuffix = "/command";
 
         List<String> types = new ArrayList<>();
         types.add("RegisterCommand");
 
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new RegisterCommand(user));
+        List<Object> commands = new ArrayList<>();
+//        commands.add(new RegisterCommand(username));
+        commands.add(username);
+        commands.add(password);
+        commands.add(authorizationCode);
 
+//        CommandContainer registerCommand = new CommandContainer("hello");
         CommandContainer registerCommand = new CommandContainer(types, commands);
 
         try {
@@ -81,91 +90,88 @@ public class ServerProxy implements IServer {
         return registerCommand;
     }
 
+
     @Override
-    public CommandContainer addGame(Game game) {
+    public CommandContainer addResumableGame(int gameId) {
+//        String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("AddResumable");
+//
+//        List<Object> commands = new ArrayList<>();
+//        commands.add(new AddResumableToClientCommand(game));
+//
+////        CommandContainer addGameCommand = new CommandContainer("hello");
+//        CommandContainer addGameCommand = new CommandContainer(types, commands);
+//
+//        try {
+//            ClientCommunicator.SINGLETON.send(urlSuffix, addGameCommand);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return addGameCommand;
         return null;
     }
+
+    @Override
+    public CommandContainer addJoinableGame(int gameId) {
+//        String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("AddJoinable");
+//
+//        List<Object> commands = new ArrayList<>();
+//        commands.add(new AddJoinableToClientCommand(game));
+//
+////        CommandContainer addGameCommand = new CommandContainer("hello");
+//        CommandContainer addGameCommand = new CommandContainer(types, commands);
+//
+//        try {
+//            ClientCommunicator.SINGLETON.send(urlSuffix, addGameCommand);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return addGameCommand;
+        return null;
+    }
+
+    @Override
+    public CommandContainer addWaitingGame(int gameId) {
+//        String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("AddWaiting");
+//
+//        List<Object> commands = new ArrayList<>();
+//        commands.add(new AddWaitingToClientCommand(game.get_S_gameName()));
+//
+////        CommandContainer addGameCommand = new CommandContainer("hello");
+//        CommandContainer addGameCommand = new CommandContainer(types, commands);
+//
+//        try {
+//            ClientCommunicator.SINGLETON.send(urlSuffix, addGameCommand);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return addGameCommand;
+        return null;
+    }
+
 
     @Override
     public CommandContainer removeGame(Game game) {
-        return null;
-    }
-
-
-    @Override
-    public CommandContainer addResumableGame(Game game) {
-        String urlSuffix = "/command";
-
-        List<String> types = new ArrayList<>();
-        types.add("AddResumable");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new AddResumableToClientCommand(game));
-
-        CommandContainer addGameCommand = new CommandContainer(types, commands);
-
-        try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, addGameCommand);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return addGameCommand;
-    }
-
-    @Override
-    public CommandContainer addJoinableGame(Game game) {
-        String urlSuffix = "/command";
-
-        List<String> types = new ArrayList<>();
-        types.add("AddJoinable");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new AddJoinableToClientCommand(game));
-
-        CommandContainer addGameCommand = new CommandContainer(types, commands);
-
-        try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, addGameCommand);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return addGameCommand;
-    }
-
-    @Override
-    public CommandContainer addWaitingGame(Game game) {
-        String urlSuffix = "/command";
-
-        List<String> types = new ArrayList<>();
-        types.add("AddWaiting");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new AddWaitingToClientCommand(game));
-
-        CommandContainer addGameCommand = new CommandContainer(types, commands);
-
-        try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, addGameCommand);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return addGameCommand;
-    }
-
-
-    //    @Override
-    public void removeGame(String gameId) {
         String urlSuffix = "/command";
 
         List<String> types = new ArrayList<>();
         types.add("DeleteGame");
 
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new DeleteGameCommand(gameId));
+        List<Object> commands = new ArrayList<>();
+        commands.add(new DeleteGameCommand(game.get_i_gameId()));
 
+//        CommandContainer removeGameCommand = new CommandContainer("hello");
         CommandContainer removeGameCommand = new CommandContainer(types, commands);
 
         try {
@@ -174,18 +180,20 @@ public class ServerProxy implements IServer {
         } catch (Exception e) {
             e.printStackTrace();
         }
+		return null;
     }
 
     @Override
-    public CommandContainer startGame(Game game, String authorizationCode) {
+    public CommandContainer startGame(int gameId, String authorizationCode) {
         String urlSuffix = "/command";
 
         List<String> types = new ArrayList<>();
         types.add("StartGame");
 
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new StartGameCommand(game, authorizationCode));
+        List<Object> commands = new ArrayList<>();
+        commands.add(new StartGameCommand(gameId, authorizationCode));
 
+//        CommandContainer startGameCommand = new CommandContainer("hello");
         CommandContainer startGameCommand = new CommandContainer(types, commands);
 
         try {
@@ -198,25 +206,16 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public CommandContainer addPlayer(Username username, String gameId) throws GameIsFullException {
-        return null;
-    }
-
-    @Override
-    public CommandContainer addPlayer(int intAuthenticationCode, String sGameId) throws GameIsFullException {
-        return null;
-    }
-
-    @Override
-    public CommandContainer addPlayer(String authenticationCode, String gameId) {
+    public CommandContainer addPlayer(String authenticationCode, int gameId) {
         String urlSuffix = "/command";
 
         List<String> types = new ArrayList<>();
         types.add("AddPlayer");
 
-        List<ICommand> commands = new ArrayList<>();
+        List<Object> commands = new ArrayList<>();
         commands.add(new AddPlayerToClientCommand(authenticationCode, gameId));
 
+//        CommandContainer addPlayerCommand = new CommandContainer("hello");
         CommandContainer addPlayerCommand = new CommandContainer(types, commands);
 
         try {
@@ -229,120 +228,120 @@ public class ServerProxy implements IServer {
     }
 
     //Added these functions after seeing the Command package
-    public CommandContainer logout(int int_authentication_code) {
-        String urlSuffix = "/command";
-
-        List<String> types = new ArrayList<>();
-        types.add("Logout");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new LogoutCommand(int_authentication_code));
-
-        CommandContainer logoutCommand = new CommandContainer(types, commands);
-
-        try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, logoutCommand);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return logoutCommand;
-    }
-
-    public void listJoinableGames(Set<Game> listJoinableGames) {
-        String urlSuffix = "/command";
-
-        List<String> types = new ArrayList<>();
-        types.add("ListJoinable");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new ListJoinableCommand(listJoinableGames));
-
-        CommandContainer listJoinableCommand = new CommandContainer(types, commands);
-
-        try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, listJoinableCommand);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void listResumableGames(Set<Game> listResumableGames) {
-        String urlSuffix = "/command";
-
-        List<String> types = new ArrayList<>();
-        types.add("ListResumable");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new ListResumableCommand(listResumableGames));
-
-        CommandContainer listResumableCommand = new CommandContainer(types, commands);
-
-        try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, listResumableCommand);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void listWaitingGames(Set<Game> listWaitingGames) {
-        String urlSuffix = "/command";
-
-        List<String> types = new ArrayList<>();
-        types.add("ListWaiting");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new ListWaitingCommand(listWaitingGames));
-
-        CommandContainer listWaitingCommand = new CommandContainer(types, commands);
-
-        try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, listWaitingCommand);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void loginRegisterSucceeded(User user, String authenticationCode) {
-        String urlSuffix = "/command";
-
-        List<String> types = new ArrayList<>();
-        types.add("LoginRegisterResponse");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new LoginRegisterResponseCommand(user, authenticationCode));
-
-        CommandContainer loginRegisterResponseCommand = new CommandContainer(types, commands);
-
-        try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, loginRegisterResponseCommand);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void logoutSucceeded() {
-        String urlSuffix = "/command";
-
-        List<String> types = new ArrayList<>();
-        types.add("LogoutResponse");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new LogoutResponseCommand());
-
-        CommandContainer logoutResponseCommand = new CommandContainer(types, commands);
-
-        try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, logoutResponseCommand);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public CommandContainer logout(String authenticationCode) {
+//        String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("Logout");
+//
+//        List<Object> commands = new ArrayList<>();
+//        commands.add(new LogoutCommand(authenticationCode));
+//
+//        CommandContainer logoutCommand = new CommandContainer(types, commands);
+//
+//        try {
+//            ClientCommunicator.SINGLETON.send(urlSuffix, logoutCommand);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return logoutCommand;
+//    }
+//
+//    public void listJoinableGames(Set<Game> listJoinableGames) {
+//        String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("ListJoinable");
+//
+//        List<Object> commands = new ArrayList<>();
+////        commands.add(new ListJoinableCommand(listJoinableGames));
+//
+//        CommandContainer listJoinableCommand = new CommandContainer(types, commands);
+//
+//        try {
+//            ClientCommunicator.SINGLETON.send(urlSuffix, listJoinableCommand);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void listResumableGames(Set<Game> listResumableGames) {
+//        String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("ListResumable");
+//
+//        List<Object> commands = new ArrayList<>();
+////        commands.add(new ListResumableCommand(listResumableGames));
+//
+//        CommandContainer listResumableCommand = new CommandContainer(types, commands);
+//
+//        try {
+//            ClientCommunicator.SINGLETON.send(urlSuffix, listResumableCommand);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void listWaitingGames(Set<Game> listWaitingGames) {
+//        String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("ListWaiting");
+//
+//        List<Object> commands = new ArrayList<>();
+////        commands.add(new ListWaitingCommand(listWaitingGames));
+//
+//        CommandContainer listWaitingCommand = new CommandContainer(types, commands);
+//
+//        try {
+//            ClientCommunicator.SINGLETON.send(urlSuffix, listWaitingCommand);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void loginRegisterSucceeded(User user, String authenticationCode) {
+//        String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("LoginRegisterResponse");
+//
+//        List<Object> commands = new ArrayList<>();
+//        commands.add(new LoginRegisterResponseCommand(user, authenticationCode));
+//
+//        CommandContainer loginRegisterResponseCommand = new CommandContainer(types, commands);
+//
+//        try {
+//            ClientCommunicator.SINGLETON.send(urlSuffix, loginRegisterResponseCommand);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void logoutSucceeded() {
+//        String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("LogoutResponse");
+//
+//        List<Object> commands = new ArrayList<>();
+//        commands.add(new LogoutResponseCommand());
+//
+//        CommandContainer logoutResponseCommand = new CommandContainer(types, commands);
+//
+//        try {
+//            ClientCommunicator.SINGLETON.send(urlSuffix, logoutResponseCommand);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public CommandContainer checkForCommands()
     {
@@ -351,7 +350,7 @@ public class ServerProxy implements IServer {
         List<String> types = new ArrayList<>();
         types.add("GetCommandsCommand");
 
-        List<ICommand> commands = new ArrayList<>();
+        List<Object> commands = new ArrayList<>();
         commands.add(new GetCommandsCommand());
 
         CommandContainer checkForCommands = new CommandContainer(types, commands);
@@ -364,5 +363,84 @@ public class ServerProxy implements IServer {
         }
         return null;
     }
+
+
+	@Override
+	public CommandContainer addGame(Game game) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public CommandContainer logout(String str_authentication_code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+//	@Override
+//	public CommandContainer logout(String str_authentication_code) {
+//		String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("LogoutCommand");
+//
+//        List<Object> commands = new ArrayList<>();
+//        commands.add(str_authentication_code);
+//        
+//        CommandContainer logout = new CommandContainer(types, commands);
+//
+//        try {
+//            return ClientCommunicator.SINGLETON.send(urlSuffix, logout);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//		return null;
+//	}
+//	
+//	public ICommand createGame(String authenticationCode)
+//	{
+//		String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("AddGameToServerCommand");
+//
+//        List<Object> commands = new ArrayList<>();
+//        commands.add(authenticationCode);
+//        
+//        CommandContainer createGame = new CommandContainer(types, commands);
+//
+//        try {
+//            return ClientCommunicator.SINGLETON.send(urlSuffix, createGame);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//	}
+//	
+//	public ICommand joinGame(String authenticationCode, int gameId)
+//	{
+//		String urlSuffix = "/command";
+//
+//        List<String> types = new ArrayList<>();
+//        types.add("AddPlayerToServerCommand");
+//
+//        List<Object> commands = new ArrayList<>();
+//        commands.add(authenticationCode);
+//        commands.add(gameId);
+//        
+//        CommandContainer joinGame = new CommandContainer(types, commands);
+//
+//        try {
+//            return ClientCommunicator.SINGLETON.send(urlSuffix, joinGame);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//		return null;
+//	}
 
 }

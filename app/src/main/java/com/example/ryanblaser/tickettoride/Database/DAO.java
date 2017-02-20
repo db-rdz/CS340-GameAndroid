@@ -1,7 +1,7 @@
 package com.example.ryanblaser.tickettoride.Database;
 
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
-import com.example.ryanblaser.tickettoride.ServerModel.Models.GameModel;
+import com.example.ryanblaser.tickettoride.ServerModel.ServerModel;
 import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
 
 import java.sql.PreparedStatement;
@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 /**
@@ -43,7 +44,7 @@ public class DAO implements iDAO {
         User dbUser = getUserByUserName(userName);
         if(dbUser == null)
             return false;
-        if(password.equals(dbUser.get_S_password()))
+        if(password.equals(dbUser.get_Password()))
         {
             updateUserToken(userName);
             return true;
@@ -76,9 +77,9 @@ public class DAO implements iDAO {
             while(resultSet.next())
             {
                 readUser = new User();
-                readUser.set_S_userName(resultSet.getString(1));
-                readUser.set_S_password(resultSet.getString(2));
-                readUser.set_S_token(resultSet.getString(3));
+                readUser.set_Username(resultSet.getString(1));
+                readUser.set_Password(resultSet.getString(2));
+                readUser.set_Token(resultSet.getString(3));
             }
         }
         catch(SQLException e)
@@ -109,9 +110,9 @@ public class DAO implements iDAO {
             while(rs.next())
             {
                 readUser = new User();
-                readUser.set_S_userName(rs.getString(1));
-                readUser.set_S_password(rs.getString(2));
-                readUser.set_S_token(rs.getString(3));
+                readUser.set_Username(rs.getString(1));
+                readUser.set_Password(rs.getString(2));
+                readUser.set_Token(rs.getString(3));
             }
         }
         catch(SQLException e)
@@ -165,10 +166,10 @@ public class DAO implements iDAO {
     }
 
     @Override
-    public List<GameModel> getGamesByUserName(String userName) throws SQLException {
+    public List<Game> getGamesByUserName(String userName) throws SQLException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<GameModel> gamesList = new ArrayList<GameModel>();
+        List<Game> gamesList = new ArrayList<Game>();
         try {
             String getGamesSQL = "select * from Games where Games.id in " +
                     "(select gameId from UserGames where UserGames.userName = ?)";
@@ -177,10 +178,10 @@ public class DAO implements iDAO {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                GameModel game = new GameModel();
-                game._gameName = resultSet.getString(1);
-                game._numberOfPlayers = resultSet.getInt(2);
-                game._active = resultSet.getBoolean(3);
+                Game game = new Game();
+                game.set_S_gameName(resultSet.getString(1));
+                game.set_numberOfPlayers(resultSet.getInt(2));
+                game.set_S_active(resultSet.getBoolean(3));
                 gamesList.add(game);
             }
 
@@ -197,10 +198,10 @@ public class DAO implements iDAO {
     }
 
     @Override
-    public List<GameModel> getAllGames() throws SQLException {
+    public List<Game> getAllGames() throws SQLException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<GameModel> gamesList = new ArrayList<GameModel>();
+        List<Game> gamesList = new ArrayList<Game>();
 
         try {
             String getGamesSQL = "select * from Games";
@@ -208,10 +209,11 @@ public class DAO implements iDAO {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                GameModel game = new GameModel();
-                game._gameName = resultSet.getString(1);
-                game._numberOfPlayers = resultSet.getInt(2);
-                game._active = resultSet.getBoolean(3);
+                Game game = new Game();
+                game.set_i_gameId(resultSet.getInt(1)); //Grabs the gameId
+                game.set_S_gameName(resultSet.getString(2)); //Grabs the game name
+                game.set_numberOfPlayers(resultSet.getInt(3)); //Grabs the current number of players in the game
+                game.set_S_active(resultSet.getBoolean(4)); //Grabs the boolean value if it's active or not.
                 gamesList.add(game);
             }
 
@@ -225,6 +227,36 @@ public class DAO implements iDAO {
                 statement.close();
         }
         return gamesList;
+    }
+
+    @Override
+    public List<User> getAllUsers() throws SQLException {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<User> userList = new ArrayList<User>();
+        try {
+            String getUsersSQL = "select * from Users";
+            statement = _db.connection.prepareStatement(getUsersSQL);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User();
+                user.set_Username(resultSet.getString(1));
+                user.set_Password(resultSet.getString(2));
+                user.set_Token(resultSet.getString(3));
+                userList.add(user);
+            }
+
+        } catch (SQLException e ){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (statement != null)
+                statement.close();
+            if (resultSet != null)
+                statement.close();
+        }
+        return userList;
     }
 
     @Override

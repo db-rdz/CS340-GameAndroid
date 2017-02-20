@@ -10,12 +10,9 @@ import java.util.Map;
 /**
  * Created by benjamin on 10/02/17.
  */
-public class Game implements iGame {
+public class Game implements iGame, Cloneable {
 
 
-    public Game(){
-
-    }
 
     //-----------------------------------------STATIC VARIABLES----------------------------------------//
     /** _M_idToGame maps a game id to a game. */
@@ -24,30 +21,40 @@ public class Game implements iGame {
     private static List<Game> _L_listOfAvailableGames = new ArrayList<>();
     /**  These are all the games that have already started */
     private static List<Game> _L_listOfStartedGames = new ArrayList<>();
-
+    /**  The max number of players */
+    public static int _MAX_PLAYERS = 5;
     /** Not sure if I should still use this var */
     public static int modelNextGameIndex = 0;
 
 
     //-----------------------------------------CLASS VARIABLES-----------------------------------------//
-    /** _M_idToUserInGame maps a user id to a User. It only maps the user's of the people in the game */
-    private Map<Integer, User> _M_idToUserInGame = new HashMap<>();
+    /** _M_idToUserInGame maps a username string to a User. It only maps the user's of the people in the game */
+    private Map<String, User> _M_idToUserInGame = new HashMap<>();
+    
     /** _i_numberOfPlayers are the current number of users in the game */
     private int _i_numberOfPlayers = 0;
+    
+    /** _i_gameId is the id of a game in the database */
+    private int _i_gameId = -1;
+    
+    /** This is the user id of the person that created the game. */
+    private int _i_gameOwner = -1;
 
+    private String _S_gameName;
 
+    private Boolean _S_active = true;
 
     //-----------------------------------------STATIC FUNCTIONS----------------------------------------//
 
-    /**  */
+    /** Gets the corresponding game mapped to the specified id.  */
     public static Game getGameWithId(int gameId){
         return _M_idToGame.get(gameId);
     }
 
     /** Tells if an specific user is in the game */
-    public static Boolean isUserInGame( int userId, int gameId ){
+    public static Boolean isUserInGame( String username, int gameId ){
         // Will get user if user in game. If not it will return false.
-        User result = _M_idToGame.get(gameId).getUserInGame(userId);
+        User result = _M_idToGame.get(gameId).getUserInGame(username);
         //Check for the result and return false if the result is null
         if(result == null){ return false; }
         //If the function made it this far means that the user is in the game.
@@ -56,7 +63,7 @@ public class Game implements iGame {
 
     /** Tells if a game is full or not  */
     public static Boolean isGameFull(int gameId){
-        if(_M_idToGame.get(gameId).get_numberOfPlayers() > 3){
+        if(_M_idToGame.get(gameId).get_numberOfPlayers() > _MAX_PLAYERS){
             return true;
         }
         return false;
@@ -91,10 +98,6 @@ public class Game implements iGame {
     /** updates the Server Game model */
     public static void update(){}
 
-    public Map<Integer, Game> get_M_idToGame() {
-        return _M_idToGame;
-    }
-
     //-----------------------------------------SETTER AND GETTERS-------------------------------------//
     public int get_numberOfPlayers() { return _i_numberOfPlayers; }
     public void set_numberOfPlayers(int _i_numberOfPlayers) { this._i_numberOfPlayers = _i_numberOfPlayers; }
@@ -105,17 +108,45 @@ public class Game implements iGame {
     public static List<Game> get_allStartedGames() { return _L_listOfStartedGames; }
     public static void set_StartedGameList(List<Game> StartedGames) { _L_listOfStartedGames = StartedGames; }
 
+    public String get_S_gameName() {
+        return _S_gameName;
+    }
+
+    public void set_S_gameName(String _S_gameName) {
+        this._S_gameName = _S_gameName;
+    }
+    
+    public int get_i_gameId() {
+    	return _i_gameId;
+    }
+    
+    public void set_i_gameId(int _i_gameId) {
+    	this._i_gameId = _i_gameId;
+    }
+
+    public Boolean get_S_active() {
+        return _S_active;
+    }
+
+    public void set_S_active(Boolean _S_active) {
+        this._S_active = _S_active;
+    }
+    
+    public Map<String, User> get_M_idToUserInGame() {
+    	return _M_idToUserInGame;
+    }
+
 
     //-----------------------------------------CLASS FUNCTIONS----------------------------------------//
     /** Uses a map to return the User object associated with a user id (returns null if user is not in the game) */
-    private User getUserInGame( int userId ){
-        return _M_idToUserInGame.get(userId);
+    private User getUserInGame( String username ){
+        return _M_idToUserInGame.get(username);
     }
 
-    public Boolean removePlayer(int userId ){
-        User player = _M_idToUserInGame.get(userId);
+    public Boolean removePlayer(String username ){
+        User player = _M_idToUserInGame.get(username);
         if( player != null ){
-            _M_idToUserInGame.remove(userId);
+            _M_idToUserInGame.remove(username);
             return true;
         }
         return false;
@@ -125,12 +156,17 @@ public class Game implements iGame {
         _M_idToUserInGame = new HashMap<>();
     }
 
+    public Boolean addPlayerToGame( String username, User user){
+        _M_idToUserInGame.put(username, user);
+        return true;
+    }
 
 
-
-
-
-
-
-
+    @Override
+    public Game clone(){
+        Game game = new Game();
+//        game.setPlayers(players); //TODO: edit this
+        game.set_i_gameId(_i_gameId);
+        return game;
+    }
 }

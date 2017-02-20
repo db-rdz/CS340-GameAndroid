@@ -1,12 +1,13 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import com.example.ryanblaser.tickettoride.Command.AddJoinableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.AddResumableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.CommandContainer;
-import com.example.ryanblaser.tickettoride.Command.DeleteGameCommand;
-import com.example.ryanblaser.tickettoride.Command.GetCommandsCommand;
-import com.example.ryanblaser.tickettoride.Command.ICommand;
+import Command.AddJoinableToClientCommand;
+import Command.AddPlayerToClientCommand;
+import Command.AddResumableToClientCommand;
+import Command.CommandContainer;
+import Command.DeleteGameCommand;
+import Command.GetCommandsCommand;
+import Command.ICommand;
+import Server.IServer.GameIsFullException;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,7 +23,11 @@ public class Poller {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                checkForCommands();
+                try {
+					checkForCommands();
+				} catch (GameIsFullException e) {
+					e.printStackTrace();
+				}
             }
         };
 
@@ -31,7 +36,7 @@ public class Poller {
         timer.schedule(timerTask, delay);
     }
 
-    public CommandContainer checkForCommands()
+    public CommandContainer checkForCommands() throws GameIsFullException
     {
         CommandContainer result = ServerProxy.SINGLETON.checkForCommands();
         ICommand command;
