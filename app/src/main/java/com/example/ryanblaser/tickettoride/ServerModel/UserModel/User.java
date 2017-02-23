@@ -1,8 +1,7 @@
 package com.example.ryanblaser.tickettoride.ServerModel.UserModel;
 
-import Database.DAO;
-import GameModels.Game;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.example.ryanblaser.tickettoride.Database.DAO;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 
 import java.util.ArrayList;
 import java.util.HashMap;

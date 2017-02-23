@@ -1,11 +1,14 @@
 package com.example.ryanblaser.tickettoride.Client;
 
+import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.ryanblaser.tickettoride.Command.AddJoinableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.AddResumableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.AddWaitingToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.GetCommandsCommand;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.ListJoinableCommand;
 import com.example.ryanblaser.tickettoride.Command.ListResumableCommand;
@@ -19,184 +22,129 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
+import java.net.ProtocolException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.List;
 
-
 /**
- * Created by natha on 2/6/2017.
+ * Created by natha on 2/21/2017.
  */
 
-public class ClientCommunicator {
+public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
 
-    public static ClientCommunicator SINGLETON = new ClientCommunicator();
-    private Gson gson;
-//    private Gson other_gson;
-
-    private ClientCommunicator() {
-        gson = new Gson();
-//    	gson = StreamIO.getCommandContainerRWer();
-//    	other_gson = new Gson();
+    /**
+     * This is what will be used in the ServerProy class to set up ClientCommunicator objects.
+     */
+    public interface TaskListener
+    {
+        boolean onFinished(ICommand result);
     }
 
-    private static String port;
-    private static String host;
-    private static String other_host = "192.168.1.112";
+    private Gson gson;
+//    private final TaskListener taskListener;
+    private CommandContainer commandContainer;
+    private String string_urlSuffix;
+    private ICommand cmd; //Will return this at the end
+
+    public ClientCommunicator(String urlSuffix, CommandContainer commandContainer) {
+//        this.taskListener = taskListener;
+        this.commandContainer = commandContainer;
+        string_urlSuffix = urlSuffix;
+        gson = new Gson();
+        cmd = null;
+    }
 
 
-    public ICommand send(String urlSuffix , CommandContainer commandContainer) throws IOException
-    {
-        String urlString = "localhost";
-        port = ":8080"; //default port I'm using
-
-        //Grabs my computer ip address and allows other computers to access my server.
-        try {
-            host = InetAddress.getLocalHost().getHostAddress();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected ICommand doInBackground(URL... urls) {
 
 
-        try {
-    		
-        	URL url = new URL("http://" + other_host + port + urlSuffix);
-//			URL url = new URL("http://" + host + port + urlSuffix);
-//            URL url = new URL("http://" + urlString + port + urlSuffix); //if only want localhost
+        for (URL url : urls) {
+            try {
+                HttpURLConnection http = (HttpURLConnection)url.openConnection();
+                http.setRequestMethod("POST");
+                http.setConnectTimeout(5000);
+                http.setDoOutput(true);
 
-            HttpURLConnection http = (HttpURLConnection)url.openConnection();
-            http.setRequestMethod("POST");
-            http.setConnectTimeout(5000);
-            http.setDoOutput(true);
+                http.connect();
 
-            http.connect();
-
-            //ENCODES TO JSON
-            try
-            {
-            	/** gson */
                 OutputStreamWriter requestBody = new OutputStreamWriter(http.getOutputStream());
-                
+
                 //2-16-17 1:40am
                 //IT WORKS NOW
-        		String requestString = gson.toJson(commandContainer);
-//        		System.out.println("commandcontainerJson: " + requestString);
-        		
-//        		CommandContainer responsebody = other_gson.fromJson(requestString, CommandContainer.class);
-//        		System.out.println("responsebody: " + responsebody.str_type);
-//        		System.out.println("responsebody: " + responsebody.icommand);
-                
-                
+                String requestString = gson.toJson(commandContainer);
+
                 requestBody.write((requestString));
                 requestBody.close();
-            	
-            	/** Josh's code */
-//                OutputStreamWriter requestBody = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
-//                String requestString = gson.toJson(commandContainer); //Send a serialized CommandContainer
-//                System.out.println("requestString to Json: " + requestString);
-//                requestBody.write(requestString);
-//                requestBody.flush();
-//                requestBody.close();
 
                 if (http.getResponseCode() == HttpURLConnection.HTTP_OK)
                 {
                     //DECODES FROM JSON
                     try {
-//                    	System.out.println("past the responseCode");
                         InputStreamReader isr = new InputStreamReader(http.getInputStream());
                         CommandContainer respondData = gson.fromJson(isr, CommandContainer.class); //Receive a serialized CommandContainer
-//                        CommandContainer respondData = gson.fromJson(StreamIO.read(http.getInputStream()), CommandContainer.class); //Receive a serialized CommandContainer
-//                        System.out.println("past the responseCode & fromJson");
-//                    	System.out.println("input type: " + respondData.str_type);
-//                    	System.out.println("input command: " + respondData.icommand);
-//                    	for (int i = 0; i < respondData.icommand.size(); i++) {
-//                    		System.out.println(respondData.icommand.get(i));
-//                    	}
-
-                    	ICommand cmd = null;
 
                         //TODO: CommandContainer will contain Lists now. So this switch will be in a loop now.
                         for (int i = 0; i < respondData.str_type.size(); i++) {
                             switch (respondData.str_type.get(i)) { //Make the corresponding command depending on the type of command.
-//                                case "LoginCommand":
-//                                	User user = new User();
-//                            		user.setUsername((String) respondData.icommand.get(0));
-//                            		user.setPassword((String) respondData.icommand.get(1));
-//                            		user.setStr_authentication_code((String) respondData.icommand.get(2));
-//                            		respondData.icommand.remove(2);
-//                            		respondData.icommand.remove(1);
-//                            		respondData.icommand.remove(0);
-//                                    cmd = new LoginCommand(user.getUsername(), user.getPassword(), user.getStr_authentication_code());
-//                                    cmd.execute();
-//                                    break;
 
-//                                case "RegisterCommand":
-//                                    cmd = (RegisterCommand) respondData.icommand;
-//                                    cmd.execute();
-//                                    break;
+                                case "GetCommandsCommand":
+                                    cmd = new GetCommandsCommand(respondData.str_type);
+                                    cmd.execute();
+                                    break;
 
                                 case "AddJoinableCommand":
-                                	cmd = new AddJoinableToClientCommand((int)respondData.icommand.get(0));
-                                	respondData.icommand.remove(0); //Gets rid of the first object in the list to accomodate for the next command called
+                                    Number joinableSize = (Number) respondData.icommand.get(0);
+                                    cmd = new AddJoinableToClientCommand(joinableSize.intValue());
+                                    respondData.icommand.remove(0); //Gets rid of the first object in the list to accomodate for the next command called
                                     cmd.execute();
                                     break;
 
                                 case "AddResumableCommand":
-                                	cmd = new AddResumableToClientCommand((int)respondData.icommand.get(0));
-                                	respondData.icommand.remove(0);
+                                    cmd = new AddResumableToClientCommand((int)respondData.icommand.get(0));
+                                    respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
 
                                 case "AddWaitingCommand":
-                                	cmd = new AddWaitingToClientCommand((int)respondData.icommand.get(0));
-                                	respondData.icommand.remove(0);
+                                    Number waitingSize = (Number) respondData.icommand.get(0);
+                                    cmd = new AddWaitingToClientCommand(waitingSize.intValue());
+                                    respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
-
-//                                case "StartGame":
-//                                    cmd = (StartGameCommand) respondData.icommand;
-//                                    cmd.execute();
 
                                 case "AddPlayerCommand":
                                     cmd = (AddPlayerToClientCommand) respondData.icommand;
                                     cmd.execute();
                                     break;
 
-//                                case "Logout":
-//                                    cmd = (LogoutCommand) respondData.icommand;
-//                                    cmd.execute();
-//                                    break;
-
                                 case "ListJoinableCommand":
-                                	cmd = new ListJoinableCommand((List<Integer>) respondData.icommand.get(0));
-                                	respondData.icommand.remove(0);
-//                                    cmd = (ListJoinableCommand) respondData.icommand;
+                                    cmd = new ListJoinableCommand((List<Integer>) respondData.icommand.get(0));
+                                    respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
 
                                 case "ListResumableCommand":
-//                                    cmd = (ListResumableCommand) respondData.icommand;
-                                	cmd = new ListResumableCommand((List<Integer>) respondData.icommand.get(0));
-                                	respondData.icommand.remove(0);
+                                    cmd = new ListResumableCommand((List<Integer>) respondData.icommand.get(0));
+                                    respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
 
                                 case "ListWaitingCommand":
-//                                    cmd = (ListWaitingCommand) respondData.icommand;
-                                	cmd = new ListWaitingCommand((List<Integer>) respondData.icommand.get(0));
-                                	respondData.icommand.remove(0);
+                                    cmd = new ListWaitingCommand((List<Integer>) respondData.icommand.get(0));
+                                    respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
 
                                 case "LoginRegisterResponseCommand":
-                                	User user2 = new User();
-                            		user2.setUsername((String) respondData.icommand.get(0));
-                            		user2.setPassword((String) respondData.icommand.get(1));
-                            		user2.setStr_authentication_code((String) respondData.icommand.get(2));
-                            		respondData.icommand.remove(2);
-                            		respondData.icommand.remove(1);
-                            		respondData.icommand.remove(0);
+                                    User user2 = new User();
+                                    user2.setUsername((String) respondData.icommand.get(0));
+                                    user2.setPassword((String) respondData.icommand.get(1));
+                                    user2.setStr_authentication_code((String) respondData.icommand.get(2));
+                                    respondData.icommand.remove(2);
+                                    respondData.icommand.remove(1);
+                                    respondData.icommand.remove(0);
                                     cmd = new LoginRegisterResponseCommand(user2.getUsername(), user2.getPassword(), user2.getStr_authentication_code());
                                     cmd.execute();
                                     break;
@@ -217,27 +165,28 @@ public class ClientCommunicator {
                     catch (Exception e) //InputStreamReader
                     {
                         e.printStackTrace();
-
                     }
                 }
                 else
                 {
                     System.out.println("ERROR: " + http.getResponseMessage());
-//                    return "ERROR @ ClientCommunicator send()";
+//                    return "ERROR @ ClientCommunicator_old send()";
                 }
-            }
-            catch (Exception e) //OutputStreamWriter
-            {
+
+//                ClientCommunicator_old.SINGLETON.send(string_urlSuffix, commandContainer);
+            } catch (SocketTimeoutException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        catch (Exception e) //url
-        {
-            e.printStackTrace();
-        }
+
+
 
         return null;
-
     }
 
+    public ICommand getICommand() { return cmd; }
 }

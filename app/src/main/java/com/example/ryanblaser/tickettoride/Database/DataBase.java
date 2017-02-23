@@ -4,6 +4,8 @@ package com.example.ryanblaser.tickettoride.Database;
  * Created by raulbr on 2/12/17.
  */
 
+import com.example.ryanblaser.tickettoride.Database.DAO;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -118,32 +120,32 @@ public class DataBase {
     {
         String createUsersTableSQL =
                 "CREATE TABLE IF NOT EXISTS Users" +
-                 "(" +
-                    "userName primary key varchar(30)," +
-                    "password varchar(255)," +
-                    "token varchar(70)" +
-                 ");";
+                        "(" +
+                        "userName primary key varchar(30)," +
+                        "password varchar(255)," +
+                        "token varchar(70)" +
+                        ");";
         PreparedStatement UsersStatement = this.connection.prepareStatement(createUsersTableSQL);
         UsersStatement.executeUpdate();
 
         String createGamesTableSQL =
                 "CREATE TABLE IF NOT EXISTS Games" +
-                "(" +
-                    "id integer not null primary key autoincrement," +
-                    "gameName varchar(64)," +
-                    "numberOfPlayers integer" +
-                    "active bit" +
-                ");";
+                        "(" +
+                        "id integer not null primary key autoincrement," +
+                        "gameName varchar(64)," +
+                        "numberOfPlayers integer" +
+                        "active bit" +
+                        ");";
         PreparedStatement GamesStatement = this.connection.prepareStatement(createGamesTableSQL);
         GamesStatement.executeUpdate();
 
         String createUserGamesTable =
                 "CREATE TABLE IF NOT EXISTS UserGames"+
-                "(" +
-                    "id integer not null primary key autoincrement," +
-                    "userName varchar(30) not null," +
-                    "gameId integer not null," +
-                ");";
+                        "(" +
+                        "id integer not null primary key autoincrement," +
+                        "userName varchar(30) not null," +
+                        "gameId integer not null," +
+                        ");";
         PreparedStatement UserGamesStatement = this.connection.prepareStatement(createUserGamesTable);
         UserGamesStatement.executeUpdate();
     }

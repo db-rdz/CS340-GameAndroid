@@ -4,10 +4,10 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 public class DeleteGameCommand implements ICommand{
-  private String str_game_id;
+  private int int_game_id;
   private DeleteGameCommand(){}
-  public DeleteGameCommand(String gameId){
-    str_game_id = gameId;}
+  public DeleteGameCommand(int gameId){
+	  int_game_id = gameId;}
 
   @Override
   public String getAuthenticationCode() {
@@ -21,6 +21,6 @@ public class DeleteGameCommand implements ICommand{
   
   @Override
   public CommandContainer execute(){
-    ClientFacade.SINGLETON.removeGame(str_game_id);
+    ClientFacade.SINGLETON.removeGame(int_game_id);
     return null; //TODO: stub
   }}

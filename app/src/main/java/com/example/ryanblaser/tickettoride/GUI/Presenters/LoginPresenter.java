@@ -1,7 +1,9 @@
-package com.example.ryanblaser.tickettoride.GUI;
+package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.IClient;
+import com.example.ryanblaser.tickettoride.GUI.Views.ILoginView;
+import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 /**
@@ -10,22 +12,25 @@ import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 public class LoginPresenter implements ILoginPresenter{
 
-    private ILoginView view;
+    private static ILoginView view;
     public LoginPresenter(ILoginView v){
         view = v;
     }
-    public void login(User u) {
+    public static LoginPresenter SINGLETON = new LoginPresenter(view);
+
+
+    public void login(User user) {
         try {
-            ClientFacade.SINGLETON.login(u);
+            ClientFacade.SINGLETON.login(user.getUsername(), user.getPassword());
         } catch (IClient.InvalidPassword invalidPassword) {
             view.showMessage("Bad password!");
         } catch (IClient.InvalidUsername invalidUsername) {
             view.showMessage("Bad username!");
         }
     }
-    public void register(User u) {
+    public void register(User user) {
         try {
-            ClientFacade.SINGLETON.register(u);
+            ClientFacade.SINGLETON.register(user.getUsername(), user.getPassword());
         } catch (IClient.InvalidPassword invalidPassword) {
             view.showMessage("Bad password!");
         } catch (IClient.InvalidUsername invalidUsername) {
@@ -33,5 +38,14 @@ public class LoginPresenter implements ILoginPresenter{
         } catch (IClient.UsernameAlreadyExists usernameAlreadyExists) {
             view.showMessage("This username is taken.");
         }
+    }
+
+    public void switchToLobbyView() {
+        MainActivity.getLoginFragment().switchToLobbyView();
+    }
+
+    @Override
+    public void setCurrentUser(User user) {
+        ClientFacade.SINGLETON.setCurrentUser(user);
     }
 }

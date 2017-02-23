@@ -1,13 +1,13 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import Command.AddJoinableToClientCommand;
-import Command.AddPlayerToClientCommand;
-import Command.AddResumableToClientCommand;
-import Command.CommandContainer;
-import Command.DeleteGameCommand;
-import Command.GetCommandsCommand;
-import Command.ICommand;
-import Server.IServer.GameIsFullException;
+import com.example.ryanblaser.tickettoride.Command.AddJoinableToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.AddResumableToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.DeleteGameCommand;
+import com.example.ryanblaser.tickettoride.Command.GetCommandsCommand;
+import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.Server.IServer.GameIsFullException;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,22 +18,25 @@ import java.util.TimerTask;
 
 public class Poller {
     private final Timer timer = new Timer();
+    private TimerTask timerTask;
+
     public Poller()
     {
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-					checkForCommands();
-				} catch (GameIsFullException e) {
-					e.printStackTrace();
-				}
-            }
-        };
+//        TimerTask timerTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//                try {
+//					checkForCommands();
+//				} catch (GameIsFullException e) {
+//					e.printStackTrace();
+//				}
+//            }
+//        };
 
-        long delay = 60000; //counts in milisecs so 1min.
+        long delay = 10000; //10 seconds
+//        long delay = 60000; //counts in milisecs so 1min.
 
-        timer.schedule(timerTask, delay);
+//        timer.schedule(timerTask, delay);
     }
 
     public CommandContainer checkForCommands() throws GameIsFullException
@@ -43,16 +46,17 @@ public class Poller {
         for (int i = 0; i < result.str_type.size(); i++)
         {
             switch (result.str_type.get(i)) {
-                case "AddJoinableToClientCommand" :
-                    command = (AddJoinableToClientCommand) result.icommand.get(i);
+                case "AddJoinableCommand" :
+                    Number joinableSize = (Number) result.icommand.get(i);
+                    command = new AddJoinableToClientCommand(joinableSize.intValue());
                     break;
                 case "DeleteGameCommand" :
                     command = (DeleteGameCommand) result.icommand.get(i);
                     break;
-                case "AddResumableToClientCommand" :
+                case "AddResumableCommand" :
                     command = (AddResumableToClientCommand) result.icommand.get(i);
                     break;
-                case "AddPlayerToClientCommand" :
+                case "AddPlayerCommand" :
                     command = (AddPlayerToClientCommand) result.icommand.get(i);
                     break;
                 default:
@@ -63,4 +67,7 @@ public class Poller {
         }
         return result;
     }
+
+    public TimerTask getTimerTask() { return timerTask; }
+    public void setTimerTask(TimerTask timerTask) { this.timerTask = timerTask; }
 }

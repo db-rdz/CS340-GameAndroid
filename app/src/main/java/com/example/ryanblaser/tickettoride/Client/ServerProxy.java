@@ -1,29 +1,29 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import Command.AddJoinableToClientCommand;
-import Command.AddPlayerToClientCommand;
-import Command.AddResumableToClientCommand;
-import Command.AddWaitingToClientCommand;
-import Command.CommandContainer;
-import Command.DeleteGameCommand;
-import Command.GetCommandsCommand;
-import Command.ICommand;
-import Command.ListJoinableCommand;
-import Command.ListResumableCommand;
-import Command.ListWaitingCommand;
-import Command.LoginCommand;
-import Command.LoginRegisterResponseCommand;
-import Command.LogoutCommand;
-import Command.LogoutResponseCommand;
-import Command.RegisterCommand;
-import Command.StartGameCommand;
-import GameModels.Game;
-import Server.IServer;
-import UserInfo.Username;
+import com.example.ryanblaser.tickettoride.Command.*;
+import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
+//import Command.AddResumableToClientCommand;
+//import Command.AddWaitingToClientCommand;
+//import Commandcom.example.ryanblaser.tickettoride.CommandContainer;
+//import Command.DeleteGameCommand;
+//import Command.GetCommandsCommand;
+//import Command.ICommand;
+//import Command.ListJoinableCommand;
+//import Command.ListResumableCommand;
+//import Command.ListWaitingCommand;
+//import Command.LoginCommand;
+//import Command.LoginRegisterResponseCommand;
+//import Command.LogoutCommand;
+//import Command.LogoutResponseCommand;
+//import Command.RegisterCommand;
+//import Command.StartGameCommand;
+import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import com.example.ryanblaser.tickettoride.Server.IServer;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by natha on 2/7/2017.
@@ -39,7 +39,7 @@ public class ServerProxy implements IServer {
 
 
     @Override
-    public CommandContainer login(String username, String password, String authoritzationCode) throws IClient.InvalidUsername, IClient.InvalidPassword {
+    public CommandContainer login(String username, String password) throws IClient.InvalidUsername, IClient.InvalidPassword {
         String urlSuffix = "/command";
 
         List<String> types = new ArrayList<>();
@@ -49,15 +49,15 @@ public class ServerProxy implements IServer {
 //        commands.add(new LoginCommand(username));
         commands.add(username);
         commands.add(password);
-        commands.add(authoritzationCode);
-        
+
 //        System.out.println("Object type: " + commands.get(0).getClass());
 
-//        CommandContainer loginCommand = new CommandContainer("hello");
         CommandContainer loginCommand = new CommandContainer(types, commands);
 
         try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, loginCommand);
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, loginCommand);
+            clientCommunicator.execute(url);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +66,7 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public CommandContainer register(String username, String password, String authorizationCode) throws IClient.UsernameAlreadyExists {
+    public CommandContainer register(String username, String password) throws IClient.UsernameAlreadyExists {
         String urlSuffix = "/command";
 
         List<String> types = new ArrayList<>();
@@ -76,13 +76,13 @@ public class ServerProxy implements IServer {
 //        commands.add(new RegisterCommand(username));
         commands.add(username);
         commands.add(password);
-        commands.add(authorizationCode);
 
-//        CommandContainer registerCommand = new CommandContainer("hello");
         CommandContainer registerCommand = new CommandContainer(types, commands);
 
         try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, registerCommand);
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, registerCommand);
+            clientCommunicator.execute(url);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,7 +105,7 @@ public class ServerProxy implements IServer {
 //        CommandContainer addGameCommand = new CommandContainer(types, commands);
 //
 //        try {
-//            ClientCommunicator.SINGLETON.send(urlSuffix, addGameCommand);
+//            ClientCommunicator_old.SINGLETON.send(urlSuffix, addGameCommand);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -115,26 +115,29 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public CommandContainer addJoinableGame(int gameId) {
-//        String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("AddJoinable");
-//
-//        List<Object> commands = new ArrayList<>();
-//        commands.add(new AddJoinableToClientCommand(game));
-//
-////        CommandContainer addGameCommand = new CommandContainer("hello");
-//        CommandContainer addGameCommand = new CommandContainer(types, commands);
-//
-//        try {
-//            ClientCommunicator.SINGLETON.send(urlSuffix, addGameCommand);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return addGameCommand;
-        return null;
+    public int addJoinableGame() {
+        String urlSuffix = "/command";
+
+        List<String> types = new ArrayList<>();
+        types.add("AddJoinableCommand");
+
+        List<Object> commands = new ArrayList<>();
+//        commands.add(new AddJoinableToClientCommand(gameId));
+//        commands.add();
+
+//        CommandContainer addGameCommand = new CommandContainer("hello");
+        CommandContainer addGameCommand = new CommandContainer(types, commands);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, addGameCommand);
+            ICommand cmd = clientCommunicator.execute(url).get();
+//            cmd = new AddJoinableToClientCommand();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override
@@ -151,7 +154,7 @@ public class ServerProxy implements IServer {
 //        CommandContainer addGameCommand = new CommandContainer(types, commands);
 //
 //        try {
-//            ClientCommunicator.SINGLETON.send(urlSuffix, addGameCommand);
+//            ClientCommunicator_old.SINGLETON.send(urlSuffix, addGameCommand);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -175,8 +178,9 @@ public class ServerProxy implements IServer {
         CommandContainer removeGameCommand = new CommandContainer(types, commands);
 
         try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, removeGameCommand);
-
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, removeGameCommand);
+            clientCommunicator.execute(url);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -197,8 +201,9 @@ public class ServerProxy implements IServer {
         CommandContainer startGameCommand = new CommandContainer(types, commands);
 
         try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, startGameCommand);
-
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, startGameCommand);
+            clientCommunicator.execute(url);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -219,8 +224,9 @@ public class ServerProxy implements IServer {
         CommandContainer addPlayerCommand = new CommandContainer(types, commands);
 
         try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, addPlayerCommand);
-
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, addPlayerCommand);
+            clientCommunicator.execute(url);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -228,25 +234,27 @@ public class ServerProxy implements IServer {
     }
 
     //Added these functions after seeing the Command package
-//    public CommandContainer logout(String authenticationCode) {
-//        String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("Logout");
-//
-//        List<Object> commands = new ArrayList<>();
+    public CommandContainer logout(String authenticationCode) {
+        String urlSuffix = "/command";
+
+        List<String> types = new ArrayList<>();
+        types.add("LogoutCommand");
+
+        List<Object> commands = new ArrayList<>();
 //        commands.add(new LogoutCommand(authenticationCode));
-//
-//        CommandContainer logoutCommand = new CommandContainer(types, commands);
-//
-//        try {
-//            ClientCommunicator.SINGLETON.send(urlSuffix, logoutCommand);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return logoutCommand;
-//    }
+        commands.add(authenticationCode);
+
+        CommandContainer logoutCommand = new CommandContainer(types, commands);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, logoutCommand);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return logoutCommand;
+    }
 //
 //    public void listJoinableGames(Set<Game> listJoinableGames) {
 //        String urlSuffix = "/command";
@@ -260,7 +268,7 @@ public class ServerProxy implements IServer {
 //        CommandContainer listJoinableCommand = new CommandContainer(types, commands);
 //
 //        try {
-//            ClientCommunicator.SINGLETON.send(urlSuffix, listJoinableCommand);
+//            ClientCommunicator_old.SINGLETON.send(urlSuffix, listJoinableCommand);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -279,7 +287,7 @@ public class ServerProxy implements IServer {
 //        CommandContainer listResumableCommand = new CommandContainer(types, commands);
 //
 //        try {
-//            ClientCommunicator.SINGLETON.send(urlSuffix, listResumableCommand);
+//            ClientCommunicator_old.SINGLETON.send(urlSuffix, listResumableCommand);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -298,7 +306,7 @@ public class ServerProxy implements IServer {
 //        CommandContainer listWaitingCommand = new CommandContainer(types, commands);
 //
 //        try {
-//            ClientCommunicator.SINGLETON.send(urlSuffix, listWaitingCommand);
+//            ClientCommunicator_old.SINGLETON.send(urlSuffix, listWaitingCommand);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -317,7 +325,7 @@ public class ServerProxy implements IServer {
 //        CommandContainer loginRegisterResponseCommand = new CommandContainer(types, commands);
 //
 //        try {
-//            ClientCommunicator.SINGLETON.send(urlSuffix, loginRegisterResponseCommand);
+//            ClientCommunicator_old.SINGLETON.send(urlSuffix, loginRegisterResponseCommand);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -336,7 +344,7 @@ public class ServerProxy implements IServer {
 //        CommandContainer logoutResponseCommand = new CommandContainer(types, commands);
 //
 //        try {
-//            ClientCommunicator.SINGLETON.send(urlSuffix, logoutResponseCommand);
+//            ClientCommunicator_old.SINGLETON.send(urlSuffix, logoutResponseCommand);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -351,13 +359,14 @@ public class ServerProxy implements IServer {
         types.add("GetCommandsCommand");
 
         List<Object> commands = new ArrayList<>();
-        commands.add(new GetCommandsCommand());
+//        commands.add(new GetCommandsCommand());
 
         CommandContainer checkForCommands = new CommandContainer(types, commands);
 
         try {
-            ClientCommunicator.SINGLETON.send(urlSuffix, checkForCommands);
-
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, checkForCommands);
+            clientCommunicator.execute(url);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -372,11 +381,11 @@ public class ServerProxy implements IServer {
 	}
 
 
-	@Override
-	public CommandContainer logout(String str_authentication_code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public CommandContainer logout(String str_authentication_code) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 
 //	@Override
@@ -388,11 +397,11 @@ public class ServerProxy implements IServer {
 //
 //        List<Object> commands = new ArrayList<>();
 //        commands.add(str_authentication_code);
-//        
+//
 //        CommandContainer logout = new CommandContainer(types, commands);
 //
 //        try {
-//            return ClientCommunicator.SINGLETON.send(urlSuffix, logout);
+//            return ClientCommunicator_old.SINGLETON.send(urlSuffix, logout);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -413,7 +422,7 @@ public class ServerProxy implements IServer {
 //        CommandContainer createGame = new CommandContainer(types, commands);
 //
 //        try {
-//            return ClientCommunicator.SINGLETON.send(urlSuffix, createGame);
+//            return ClientCommunicator_old.SINGLETON.send(urlSuffix, createGame);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -435,7 +444,7 @@ public class ServerProxy implements IServer {
 //        CommandContainer joinGame = new CommandContainer(types, commands);
 //
 //        try {
-//            return ClientCommunicator.SINGLETON.send(urlSuffix, joinGame);
+//            return ClientCommunicator_old.SINGLETON.send(urlSuffix, joinGame);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();

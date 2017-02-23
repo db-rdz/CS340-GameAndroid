@@ -1,27 +1,30 @@
 package com.example.ryanblaser.tickettoride.Server;
-import Client.IClient;
-import Command.AddJoinableToClientCommand;
-import Command.AddPlayerToClientCommand;
-import Command.AddResumableToClientCommand;
-import Command.AddWaitingToClientCommand;
-import Command.CommandContainer;
-import Command.DeleteGameCommand;
-import Command.ICommand;
-import Command.ListJoinableCommand;
-import Command.ListResumableCommand;
-import Command.ListWaitingCommand;
-import Command.LoginRegisterResponseCommand;
-import Command.LogoutResponseCommand;
-import Database.DAO;
-import GameModels.Game;
-import ServerModel.*;
-import UserInfo.Username;
+
+import com.example.ryanblaser.tickettoride.Command.*;
+import com.example.ryanblaser.tickettoride.Client.IClient;
+//import Command.AddJoinableToClientCommand;
+//import Command.AddPlayerToClientCommand;
+//import Command.AddResumableToClientCommand;
+//import Command.AddWaitingToClientCommand;
+//import Command.CommandContainer;
+//import Command.DeleteGameCommand;
+//import Command.ICommand;
+//import Command.ListJoinableCommand;
+//import Command.ListResumableCommand;
+//import Command.ListWaitingCommand;
+//import Command.LoginRegisterResponseCommand;
+//import Command.LogoutResponseCommand;
+import com.example.ryanblaser.tickettoride.Database.DAO;
+//import com.example.ryanblaser.tickettoride.GameModels.Game;
+import com.example.ryanblaser.tickettoride.ServerModel.*;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import com.example.ryanblaser.tickettoride.UserInfo.Username;
+import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 /**
  * DOESN'T DO ANYTHING IN CLIENT PACKAGE
@@ -33,20 +36,20 @@ public class ServerFacade implements IServer {
     public static ServerFacade SINGLETON = new ServerFacade();
 
     @Override
-    public CommandContainer login(String username, String password, String authoritzationCode) throws IClient.InvalidUsername, IClient.InvalidPassword {
+    public CommandContainer login(String username, String password) throws IClient.InvalidUsername, IClient.InvalidPassword {
         try {
             // tries to retrieve the user from the database
         	if (DAO._SINGLETON.login(username, password))
 //            if (DAO._SINGLETON.login(username.getUsername(), username.getPassword()))
             {
-                UserModel.User theUser = DAO._SINGLETON.getUserByUserName(username);
+                User theUser = DAO._SINGLETON.getUserByUserName(username);
 //                UserModel.User theUser = DAO._SINGLETON.getUserByUserName(username.getUsername());
 
                 ICommand success = new LoginRegisterResponseCommand(theUser.get_Username(), theUser.get_Password(), theUser.get_S_token());
 //                ICommand listJoinableCommand = new ListJoinableCommand(ServerModel.SINGLETON.getAvailableGames());
 //                ICommand listResumableCommand = new ListResumableCommand(ServerModel.SINGLETON.getStartedGames());
-//                ICommand listWaitingCommand = new ListWaitingCommand(theUser.getJoinedGames()); 
-                
+//                ICommand listWaitingCommand = new ListWaitingCommand(theUser.getJoinedGames());
+
                 List<String> types = new ArrayList<>();
                 types.add("LoginRegisterResponseCommand");
                 types.add("ListJoinableCommand");
@@ -76,23 +79,22 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public CommandContainer register(String username, String password, String authorizationCode) throws IClient.UsernameAlreadyExists {
+    public CommandContainer register(String username, String password) throws IClient.UsernameAlreadyExists {
         try {
 //        	if (!DAO._SINGLETON.registerUser(username, password)) {
 //                throw new IClient.UsernameAlreadyExists();
 //            }
 
-    		UserModel.User theUser = new UserModel.User();
+    		User theUser = new User();
     		theUser.set_Username(username);
     		theUser.set_Password(password);
-    		theUser.set_Token(authorizationCode);
 //            ServerModel.UserModel.User theUser = DAO._SINGLETON.getUserByUserName(user.getUsername());
 
             LoginRegisterResponseCommand success = new LoginRegisterResponseCommand(theUser.get_Username(), theUser.get_Password(), theUser.get_Token());
 
-//            ICommand listJoinableCommand = new ListJoinableCommand(ServerModel.SINGLETON.getAvailableGames()); 
-//            ICommand listResumableCommand = new ListResumableCommand(ServerModel.SINGLETON.getStartedGames()); 
-//            ICommand listWaitingCommand = new ListWaitingCommand(theUser.getJoinedGames()); 
+//            ICommand listJoinableCommand = new ListJoinableCommand(ServerModel.SINGLETON.getAvailableGames());
+//            ICommand listResumableCommand = new ListResumableCommand(ServerModel.SINGLETON.getStartedGames());
+//            ICommand listWaitingCommand = new ListWaitingCommand(theUser.getJoinedGames());
 
             List<String> types = new ArrayList<>();
             types.add("LoginRegisterResponseCommand");
@@ -105,7 +107,7 @@ public class ServerFacade implements IServer {
             commands.add(theUser.get_Username());
             commands.add(theUser.get_Password());
             commands.add(theUser.get_Token());
-            
+
             List<Game> games = ServerModel.SINGLETON.getAvailableGames();
             List<Integer> gameIds = new ArrayList<>();
             for (int i = 0; i < games.size(); i++)
@@ -113,7 +115,7 @@ public class ServerFacade implements IServer {
             	gameIds.add(games.get(i).get_i_gameId());
             }
             commands.add(gameIds);
-            
+
             List<Integer> startedGameIds = new ArrayList<>();
             List<Integer> waitingGameIds = new ArrayList<>();
             games = theUser.getJoinedGames();
@@ -173,16 +175,16 @@ public class ServerFacade implements IServer {
       CommandContainer response = new CommandContainer(types, commands);
         Username username = new Username();
 
-        for (int i = 0; i < UserModel.User.get_L_listOfAllUsers().size(); i++) {
-            username.setUsername(UserModel.User.get_L_listOfAllUsers().get(i).get_Username());
+        for (int i = 0; i < User.get_L_listOfAllUsers().size(); i++) {
+            username.setUsername(User.get_L_listOfAllUsers().get(i).get_Username());
             ClientProxy.SINGLETON.get_m_usersCommands().put(username, response);
         }
-        
+
         types.clear();
         types.add("AddWaiting");
-        
+
         response.str_type = types;
-        
+
         return response; //TODO: Check if this is right
     }
 
@@ -201,8 +203,8 @@ public class ServerFacade implements IServer {
       CommandContainer response = new CommandContainer(types, commands);
         Username username = new Username();
 
-        for (int i = 0; i < UserModel.User.get_L_listOfAllUsers().size(); i++) {
-            username.setUsername(UserModel.User.get_L_listOfAllUsers().get(i).get_Username());
+        for (int i = 0; i < User.get_L_listOfAllUsers().size(); i++) {
+            username.setUsername(User.get_L_listOfAllUsers().get(i).get_Username());
             ClientProxy.SINGLETON.get_m_usersCommands().put(username, response);
         } //TODO: Include this in the ServerCommunicator.
 
@@ -227,8 +229,8 @@ public class ServerFacade implements IServer {
       CommandContainer commandContainer = new CommandContainer(types, commands);
         Username username = new Username();
 
-        for (int i = 0; i < UserModel.User.get_L_listOfAllUsers().size(); i++) {
-            username.setUsername(UserModel.User.get_L_listOfAllUsers().get(i).get_Username());
+        for (int i = 0; i < User.get_L_listOfAllUsers().size(); i++) {
+            username.setUsername(User.get_L_listOfAllUsers().get(i).get_Username());
             ClientProxy.SINGLETON.get_m_usersCommands().put(username, commandContainer);
         }
 
@@ -247,7 +249,7 @@ public class ServerFacade implements IServer {
         commandContainer = new CommandContainer(types, commands);
 
         while (iter.hasNext()) {
-            UserModel.User user = (UserModel.User) iter.next();
+            User user = (User) iter.next();
             username.setUsername(user.get_Username());
             ClientProxy.SINGLETON.get_m_usersCommands().put(username, commandContainer);
         }
@@ -266,10 +268,10 @@ public class ServerFacade implements IServer {
             List<Object> commands = new ArrayList<>();
             commands.add(intGameId);
             CommandContainer commandContainer = new CommandContainer(types, commands);
-        	for (int i = 0; i < UserModel.User.get_L_listOfAllUsers().size(); i++) {
-                UserModel.User theUser = UserModel.User.get_L_listOfAllUsers().get(i);
+        	for (int i = 0; i < User.get_L_listOfAllUsers().size(); i++) {
+                User theUser = User.get_L_listOfAllUsers().get(i);
             	username.setUsername(theUser.get_Username());
-            	
+
                 if (!Game.isUserInGame(username.getUsername(), intGameId))
                 	ClientProxy.SINGLETON.get_m_usersCommands().put(username, commandContainer);
             }
@@ -284,8 +286,8 @@ public class ServerFacade implements IServer {
             types.add("AddPlayerToClientCommand");
 
             List<Object> commands = new ArrayList<>();
-            for (int i = 0; i < UserModel.User.get_L_listOfAllUsers().size(); i++) {
-                UserModel.User theUser = UserModel.User.get_L_listOfAllUsers().get(i);
+            for (int i = 0; i < User.get_L_listOfAllUsers().size(); i++) {
+                User theUser = User.get_L_listOfAllUsers().get(i);
             	if (theUser.get_Token() == strAuthenticationCode)
                 	commands.add(theUser.get_Username());
             }
@@ -295,10 +297,10 @@ public class ServerFacade implements IServer {
           CommandContainer commandContainer = new CommandContainer(types, commands);
             Username username = new Username();
 
-            for (int i = 0; i < UserModel.User.get_L_listOfAllUsers().size(); i++) {
-                UserModel.User theUser = UserModel.User.get_L_listOfAllUsers().get(i);
+            for (int i = 0; i < User.get_L_listOfAllUsers().size(); i++) {
+                User theUser = User.get_L_listOfAllUsers().get(i);
             	username.setUsername(theUser.get_Username());
-            	
+
                 if (theUser.get_Token() != strAuthenticationCode)
                 	ClientProxy.SINGLETON.get_m_usersCommands().put(username, commandContainer);
             }
@@ -339,9 +341,9 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public CommandContainer addJoinableGame(int gameId) {
+    public int addJoinableGame() {
         // send to all other users
-        ICommand addJoinableGameCommand = new AddJoinableToClientCommand(gameId);
+        ICommand addJoinableGameCommand = new AddJoinableToClientCommand(0);
 
         List<String> types = new ArrayList<>();
         types.add("AddJoinableToClientCommand");
@@ -352,11 +354,11 @@ public class ServerFacade implements IServer {
 //        CommandContainer commandContainer = new CommandContainer("hello");
         CommandContainer commandContainer = new CommandContainer(types, commands);
         Username username = new Username();
-        for (int i = 0; i < UserModel.User.get_L_listOfAllUsers().size(); i++) {
-            username.setUsername(UserModel.User.get_L_listOfAllUsers().get(i).get_Username());
+        for (int i = 0; i < User.get_L_listOfAllUsers().size(); i++) {
+            username.setUsername(User.get_L_listOfAllUsers().get(i).get_Username());
             ClientProxy.SINGLETON.get_m_usersCommands().put(username, commandContainer);
         }
-        return commandContainer;
+        return 0;
     }
 
     @Override
@@ -374,7 +376,7 @@ public class ServerFacade implements IServer {
         commands.add(addWaitingToClientCommand);
 
 //        CommandContainer response = new CommandContainer("hello");
-      CommandContainer response = new CommandContainer(types, commands);      
+      CommandContainer response = new CommandContainer(types, commands);
         return response;
     }
 

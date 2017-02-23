@@ -1,14 +1,16 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import Server.IServer;
-import UserInfo.User;
-import UserInfo.Username;
+import com.example.ryanblaser.tickettoride.GUI.Views.LobbyFragment;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
+import com.example.ryanblaser.tickettoride.Server.IServer;
+import com.example.ryanblaser.tickettoride.UserInfo.User;
+import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
 import java.util.List;
-import java.util.Set;
 
-import Command.CommandContainer;
-import Command.ICommand;
+import com.example.ryanblaser.tickettoride.Command.CommandContainer;
 
 /**
  * This class accesses the data in the Client Holder/Model.
@@ -26,25 +28,40 @@ public class ClientFacade implements IClient {
 
 
     public static ClientFacade SINGLETON = new ClientFacade();
-    private Set<User> set_users;
     private ClientModel clientmodel;
-    //private LoginPresenter loginpresenter;
-    //private LobbyPresenter lobbypresenter;
+    private LoginPresenter loginpresenter;
+    private LobbyPresenter lobbypresenter;
+    private Poller poller;
 
-    public CommandContainer login(String username, String password, String authenticationCode) throws InvalidUsername, InvalidPassword {
-        try {
-            return ServerProxy.SINGLETON.login(username, password, authenticationCode);
-
-        } catch (Exception e) { //Catches exception if the login failed.
-            e.printStackTrace();
-        }
-        
-        return null;
+    private ClientFacade() {
+        attachLoginObserver(LoginPresenter.SINGLETON);
+        attachLobbyObserver(LobbyPresenter.SINGLETON);
+        poller = new Poller();
     }
 
-    public CommandContainer register(String username, String password, String authorizationCode) throws UsernameAlreadyExists {
+    /**
+     * ClientModel is initilized in the MainActivity so no need to reinitialize it in the constructor
+     */
+    public void initilizeClientModel(MainActivity mainActivity) {
+        this.clientmodel = new ClientModel(mainActivity);
+    }
+
+
+    public CommandContainer login(String username, String password) throws InvalidUsername, InvalidPassword {
         try {
-            return ServerProxy.SINGLETON.register(username, password, authorizationCode);
+            return ServerProxy.SINGLETON.login(username, password);
+
+        } catch (InvalidPassword e) { //Catches exception if the login failed.
+            throw new InvalidPassword();
+        } catch (InvalidUsername e) {
+            throw new InvalidUsername();
+        }
+        
+    }
+
+    public CommandContainer register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists {
+        try {
+            return ServerProxy.SINGLETON.register(username, password);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,8 +78,8 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public CommandContainer addJoinableGame(int gameId) {
-        clientmodel.addJoinableGame(gameId);
+    public CommandContainer addJoinableGame() {
+        ServerProxy.SINGLETON.addJoinableGame();
         //lobbypresenter
 		return null;
     }
@@ -94,18 +111,27 @@ public class ClientFacade implements IClient {
     }
 
     @Override
+    public void attachObserver() {
+
+    }
+
+    @Override
+    public void detachObserver() {
+
+    }
+
+    @Override
     public CommandContainer addPlayer(Username username, int gameId){
         clientmodel.addPlayer(username, gameId);
         //lobbypresenter
 		return null;
     }
 
-    public void attachObserver() { //necessary?
-        //loginpresenter, lobbypresenter
+    public void attachLobbyObserver(LobbyPresenter lobbyPresenter) { //necessary?
+        this.lobbypresenter = lobbyPresenter;
     }
-
-    public void detachObserver() { // necessary?
-        //loginpresenter, lobbypresenter
+    public void attachLoginObserver(LoginPresenter loginPresenter) { //necessary?
+        this.loginpresenter = loginPresenter;
     }
 
     public CommandContainer logout(String authenticationCode) {
@@ -135,27 +161,20 @@ public class ClientFacade implements IClient {
 
     @Override
     public CommandContainer loginRegisterSucceeded(User user, String authenticationCode) {
-        clientmodel = new ClientModel();
+//        clientmodel = new ClientModel();
         clientmodel.setAuthenticationKey(authenticationCode);
         clientmodel.setUser(user);
+        loginpresenter.switchToLobbyView();
         //change view/presenter
 		return null;
     }
 
     @Override
     public CommandContainer logoutSucceeded() {
-        //change view/presenter
+
+        clientmodel.setAuthenticationKey(null);
+        clientmodel.setUser(null);
     	return null;
-    }
-
-    public User find(User user) {
-        for (User userSearch : set_users) { //Searches all the users in the set.
-            if (userSearch.equals(user)) { //If the username is in the set,
-                return userSearch; //return the user found
-            }
-        }
-
-        return user; //Otherwise return the user that was initially searched for.
     }
     
 
@@ -164,4 +183,8 @@ public class ClientFacade implements IClient {
     
     public ClientModel getClientModel() { return clientmodel; }
 
+    public void attachLobbyObserver(LobbyFragment lobbyFragment) {
+    }
+
+    public Poller getPoller() { return poller; }
 }

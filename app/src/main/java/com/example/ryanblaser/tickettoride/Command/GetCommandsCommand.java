@@ -5,9 +5,9 @@ import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
 import java.util.List;
 public class GetCommandsCommand implements ICommand{
-  private List<ICommand> list_icommands;
+  private List<String> list_icommands;
   public GetCommandsCommand(){}
-  public GetCommandsCommand(List<ICommand> list){
+  public GetCommandsCommand(List<String> list){
     list_icommands = list;}
 
   @Override

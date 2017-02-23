@@ -1,13 +1,13 @@
 package com.example.ryanblaser.tickettoride.Command;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Server.Game;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 public class AddWaitingToClientCommand implements ICommand{ // sent after changes from what List... commands sent
-  private Game game;
+  private int gameId;
   private AddWaitingToClientCommand(){}
-  public AddWaitingToClientCommand(Game g){
-    game = g;}
+  public AddWaitingToClientCommand(int g){
+	  gameId = g;}
 
   @Override
   public String getAuthenticationCode() {
@@ -21,6 +21,5 @@ public class AddWaitingToClientCommand implements ICommand{ // sent after change
 
   @Override
   public CommandContainer execute(){
-    ClientFacade.SINGLETON.addWaitingGame(game);
-    return null;
+    return ClientFacade.SINGLETON.addWaitingGame(gameId);
   }}

@@ -1,13 +1,11 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import GameModels.Game;
-import UserInfo.User;
-import UserInfo.Username;
+import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
+import com.example.ryanblaser.tickettoride.UserInfo.User;
+import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.Hashtable; // HashMap but hopefully throws exceptions if concurrently modified
 
 public class ClientModel implements Cloneable{
@@ -19,10 +17,12 @@ public class ClientModel implements Cloneable{
     private String str_authentication_code;
     private User user;
     private List<Integer> list_joinable, list_waiting, list_resumable;
-    private Hashtable<Integer, GameType> hashtable_id_to_list;
+    private Hashtable<Integer, GameType> hashtable_id_to_list; //Each gameId key has their own GameType value.
     private Hashtable<Integer, List<Username>> gameId_to_usernames;
+    private MainActivity mainActivity;
 
-    public ClientModel(){
+    public ClientModel(MainActivity mainActivity1){
+        mainActivity = mainActivity1;
         list_joinable = new ArrayList<Integer>();
         list_waiting = new ArrayList<Integer>();
         list_resumable = new ArrayList<Integer>();
@@ -121,4 +121,7 @@ public class ClientModel implements Cloneable{
         }
 
     }
+
+    public MainActivity getMainActivity() { return mainActivity; }
+
 }

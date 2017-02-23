@@ -1,14 +1,14 @@
 package com.example.ryanblaser.tickettoride.Command;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Server.Game;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 import java.util.List;
 
 public class ListWaitingCommand implements ICommand{ // sent to clients after login/registration
-  private List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> list_game_list;
+  private List<Integer> list_game_list;
   private ListWaitingCommand(){}
-  public ListWaitingCommand(List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> list){
+  public ListWaitingCommand(List<Integer> list){
     list_game_list = list;}
 
   @Override

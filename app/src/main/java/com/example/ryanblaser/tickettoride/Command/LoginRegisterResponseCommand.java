@@ -7,19 +7,25 @@ public class LoginRegisterResponseCommand implements ICommand{
   private User user;
   private String str_authentication_code;
   private LoginRegisterResponseCommand(){}
-  public LoginRegisterResponseCommand(User u, String k){
-    user = u;
-    str_authentication_code = k;}
+  public LoginRegisterResponseCommand(String username, String password, String k){
+	  user = new User();
+    user.setUsername(username);
+    user.setPassword(password);
+    str_authentication_code = k;
+    user.setStr_authentication_code(k);
+    }
 
 
   @Override
   public User getUser() {
-    return null;
+    return user;
   }
   
   @Override
   public CommandContainer execute(){
-    ClientFacade.SINGLETON.loginRegisterSucceeded(user, str_authentication_code);}
+    ClientFacade.SINGLETON.loginRegisterSucceeded(user, str_authentication_code);
+    return null;
+    }
   @Override
   public String getAuthenticationCode(){
     return str_authentication_code;}}

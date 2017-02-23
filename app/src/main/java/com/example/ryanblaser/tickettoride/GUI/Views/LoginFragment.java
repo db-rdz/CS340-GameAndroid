@@ -1,8 +1,9 @@
-package com.example.ryanblaser.tickettoride.GUI;
+package com.example.ryanblaser.tickettoride.GUI.Views;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,15 @@ import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.IClient;
+import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
 import com.example.ryanblaser.tickettoride.R;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LoginFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -40,6 +43,10 @@ public class LoginFragment extends Fragment {
     //User data member will contain all the info of the user trying to log in.
     private User user;
 
+    public static String string_server_address;
+
+    public static String string_server_port;
+
     /**
      * Will hold the typed in username for login
      */
@@ -49,6 +56,10 @@ public class LoginFragment extends Fragment {
      * Will hold the typed in password for login
      */
     private static String string_password;
+
+    private String string_ipAddress = "";
+
+    private String string_port = "";
 
     public LoginFragment() {
         // Required empty public constructor
@@ -84,6 +95,7 @@ public class LoginFragment extends Fragment {
             user = new User();
             user.setUsername(getArguments().getString(string_username));
             user.setPassword(getArguments().getString(string_password));
+            user.setStr_authentication_code("0");
         }
     }
 
@@ -98,6 +110,13 @@ public class LoginFragment extends Fragment {
         editText_password = (EditText) view.findViewById(R.id.editText_password);
         editText_server = (EditText) view.findViewById(R.id.editText_server);
         editText_port = (EditText) view.findViewById(R.id.editText_port);
+
+//        try {
+//            editText_server.setText(InetAddress.getLocalHost().getHostAddress());
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
+
 
         //This part links the buttons to the code.
         button_login = (Button) view.findViewById(R.id.button_login);
@@ -122,6 +141,10 @@ public class LoginFragment extends Fragment {
                     onRegisterButtonPressed();
                 } catch (IClient.UsernameAlreadyExists usernameAlreadyExists) {
                     usernameAlreadyExists.printStackTrace();
+                } catch (IClient.InvalidPassword e) {
+
+                } catch (IClient.InvalidUsername e) {
+
                 }
             }
         });
@@ -137,7 +160,7 @@ public class LoginFragment extends Fragment {
      */
     public User getUserInfo() {
         user.setUsername(editText_username.getText().toString());
-        user.setUsername(editText_password.getText().toString());
+        user.setPassword(editText_password.getText().toString());
 
         return user;
     }
@@ -147,11 +170,30 @@ public class LoginFragment extends Fragment {
      * the server will send back an authorization code if the login info is valid, and the user logs in.
      */
     public void onLoginButtonPressed() throws IClient.InvalidPassword, IClient.InvalidUsername {
-        Toast.makeText(getContext(), "Logging in...", Toast.LENGTH_SHORT).show();
 
-        //Gets the user login info from ClientModel and tries logging into the Server.
-        ClientFacade.SINGLETON.setCurrentUser(user); //Should set the fragment user object to the ClientModel user object.
-        ClientFacade.SINGLETON.login(user); //Guessing how it'll work right now
+        string_ipAddress = editText_server.getText().toString(); //Holder variables to check if field is empty.
+        string_port = editText_port.getText().toString();
+
+        if (getUserInfo().getUsername().equals("") || getUserInfo().getPassword().equals("") || string_ipAddress.equals("")
+                || string_port.equals("")) {
+            Toast.makeText(getContext(), "Please fill in empty fields", Toast.LENGTH_SHORT).show();
+        }
+        else { //Every field is filled in
+            string_server_address = string_ipAddress + ":"; //static is initialized now
+            string_server_port = string_port;
+
+            try {
+                Toast.makeText(getContext(), "Logging in...", Toast.LENGTH_SHORT).show();
+                //Gets the user login info from ClientModel and tries logging into the Server.
+                LoginPresenter.SINGLETON.setCurrentUser(getUserInfo());
+                LoginPresenter.SINGLETON.login(user);
+
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "ERROR", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
     }
 
     /*
@@ -161,12 +203,26 @@ public class LoginFragment extends Fragment {
      *
      * If the username is already in the server database, then the server throws a UsernameAlreadyExists exception.
      */
-    public void onRegisterButtonPressed() throws IClient.UsernameAlreadyExists {
+    public void onRegisterButtonPressed() throws IClient.InvalidPassword, IClient.InvalidUsername, IClient.UsernameAlreadyExists{
         Toast.makeText(getContext(), "Registering new user...", Toast.LENGTH_SHORT).show();
+        string_server_address = editText_server.getText().toString() + ":";
+        string_server_port = editText_port.getText().toString();
 
-        //Checks the server database if the username has been taken.
-        ClientFacade.SINGLETON.setCurrentUser(user);
-        ClientFacade.SINGLETON.register(user); //Guessing how it'll work right now
+        try {
+            //Checks the server database if the username has been taken.
+            LoginPresenter.SINGLETON.setCurrentUser(getUserInfo());
+            LoginPresenter.SINGLETON.register(user);
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void switchToLobbyView(){
+        MainActivity sudo_mainActivity = ClientFacade.SINGLETON.getClientModel().getMainActivity();
+        FragmentTransaction ft = sudo_mainActivity.getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.loginFragment, sudo_mainActivity.getLobbyFragment());
+        ft.commit();
     }
 
 //    TODO: check if we need callback functionality

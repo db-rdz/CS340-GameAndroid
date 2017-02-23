@@ -4,10 +4,10 @@ import com.example.ryanblaser.tickettoride.Server.ServerFacade;
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 
 public class LogoutCommand implements ICommand{
-  private int int_authentication_code;
+  private String str_authentication_code;
   private LogoutCommand(){}
-  public LogoutCommand(int k){
-    int_authentication_code = k;}
+  public LogoutCommand(String k){
+    str_authentication_code = k;}
 
   @Override
   public String getAuthenticationCode() {
@@ -21,4 +21,5 @@ public class LogoutCommand implements ICommand{
   
   @Override
   public CommandContainer execute(){
-    ServerFacade.SINGLETON.logout(int_authentication_code);}}
+    return ServerFacade.SINGLETON.logout(str_authentication_code);
+    }}

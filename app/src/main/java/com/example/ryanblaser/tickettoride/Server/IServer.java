@@ -16,11 +16,11 @@ public interface IServer {
     public static class GameIsFullException extends Exception {
     }
 
-    CommandContainer login(String username, String password, String authoritzationCode) throws IClient.InvalidUsername, IClient.InvalidPassword;
-    CommandContainer register(String username, String password, String authorizationCode) throws IClient.UsernameAlreadyExists;
+    CommandContainer login(String username, String password) throws IClient.InvalidUsername, IClient.InvalidPassword;
+    CommandContainer register(String username, String password) throws IClient.UsernameAlreadyExists;
     CommandContainer addGame(Game game);
     public CommandContainer addResumableGame(int gameId);
-    public CommandContainer addJoinableGame(int gameId);
+    public int addJoinableGame();
     public CommandContainer addWaitingGame(int gameId);
     CommandContainer removeGame(Game game);
     CommandContainer startGame(int gameId, String str_authentication_code);

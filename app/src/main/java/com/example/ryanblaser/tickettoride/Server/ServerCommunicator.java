@@ -1,16 +1,17 @@
 package com.example.ryanblaser.tickettoride.Server;
 
-import Command.AddGameToServerCommand;
-import Command.AddPlayerToServerCommand;
-import Command.CommandContainer;
-import Command.DeleteGameCommand;
-import Command.GetCommandsCommand;
-import Command.ICommand;
-import Command.LoginCommand;
-import Command.LogoutCommand;
-import Command.RegisterCommand;
-import Command.StartGameCommand;
-import Server.IServer.GameIsFullException;
+import com.example.ryanblaser.tickettoride.Command.*;
+//import Command.AddGameToServerCommand;
+//import Command.AddPlayerToServerCommand;
+//import Command.CommandContainer;
+//import Command.DeleteGameCommand;
+//import Command.GetCommandsCommand;
+//import Command.ICommand;
+//import Command.LoginCommand;
+//import Command.LogoutCommand;
+//import Command.RegisterCommand;
+//import Command.StartGameCommand;
+//import Server.IServer.GameIsFullException;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;

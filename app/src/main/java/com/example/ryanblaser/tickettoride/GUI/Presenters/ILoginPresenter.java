@@ -1,4 +1,4 @@
-package com.example.ryanblaser.tickettoride.GUI;
+package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
 import com.example.ryanblaser.tickettoride.UserInfo.User;
 
@@ -9,4 +9,5 @@ import com.example.ryanblaser.tickettoride.UserInfo.User;
 interface ILoginPresenter {
     public void login(User user);
     public void register(User user);
+    public void setCurrentUser(User user);
 }

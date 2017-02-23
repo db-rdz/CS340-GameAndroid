@@ -1,10 +1,10 @@
 package com.example.ryanblaser.tickettoride.ServerModel;
 
-import Database.DAO;
-import GameModels.Game;
-import GameModels.iGame;
-import UserModel.User;
-import UserModel.iUser;
+import com.example.ryanblaser.tickettoride.Database.DAO;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.iGame;
+import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
+import com.example.ryanblaser.tickettoride.ServerModel.UserModel.iUser;
 
 import java.util.HashMap;
 import java.util.List;

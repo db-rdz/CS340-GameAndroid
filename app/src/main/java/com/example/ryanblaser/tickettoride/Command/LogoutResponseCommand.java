@@ -7,7 +7,7 @@ public class LogoutResponseCommand implements ICommand{
   
   @Override
   public CommandContainer execute(){
-    ClientFacade.SINGLETON.logoutSucceeded();}
+    return ClientFacade.SINGLETON.logoutSucceeded();}
 
   @Override
   public String getAuthenticationCode() {

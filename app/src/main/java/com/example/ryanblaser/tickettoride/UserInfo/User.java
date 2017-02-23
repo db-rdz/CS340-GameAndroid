@@ -1,6 +1,5 @@
 package com.example.ryanblaser.tickettoride.UserInfo;
 
-import com.sun.org.apache.xml.internal.resolver.helpers.PublicId;
 
 /**
  * Created by RyanBlaser on 2/5/17.
@@ -23,10 +22,10 @@ public class User {
         str_authentication_code = "8923" ; //initialize to -1 for debugging purposes.
     }
     
-    @Override
-    public String toString() {
-    	return "Username: " + getUsername() + "\npassword: " + getPassword() + "\nauthentication: " + getStr_authentication_code() + "\n";
-    }
+//    @Override
+//    public String toString() {
+//    	return "Username: " + getUsername() + "\npassword: " + getPassword() + "\nauthentication: " + getStr_authentication_code() + "\n";
+//    }
 
     //Getters
     /*
