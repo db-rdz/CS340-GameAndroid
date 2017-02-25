@@ -31,7 +31,7 @@ import java.util.List;
 
 public class ServerProxy implements IServer {
 
-    public static ServerProxy SINGLETON = new ServerProxy();
+    public static com.example.ryanblaser.tickettoride.Client.ServerProxy SINGLETON = new com.example.ryanblaser.tickettoride.Client.ServerProxy();
 
     private ServerProxy() {
 
@@ -39,18 +39,14 @@ public class ServerProxy implements IServer {
 
 
     @Override
-    public CommandContainer login(String username, String password) throws IClient.InvalidUsername, IClient.InvalidPassword {
+    public CommandContainer login(User user) throws com.example.ryanblaser.tickettoride.Client.IClient.InvalidUsername, com.example.ryanblaser.tickettoride.Client.IClient.InvalidPassword {
         String urlSuffix = "/command";
 
         List<String> types = new ArrayList<>();
         types.add("LoginCommand");
 
-        List<Object> commands = new ArrayList<>();
-//        commands.add(new LoginCommand(username));
-        commands.add(username);
-        commands.add(password);
-
-//        System.out.println("Object type: " + commands.get(0).getClass());
+        List<ICommand> commands = new ArrayList<>();
+        commands.add(new LoginCommand(user));
 
         CommandContainer loginCommand = new CommandContainer(types, commands);
 
@@ -72,10 +68,8 @@ public class ServerProxy implements IServer {
         List<String> types = new ArrayList<>();
         types.add("RegisterCommand");
 
-        List<Object> commands = new ArrayList<>();
+        List<ICommand> commands = new ArrayList<>();
 //        commands.add(new RegisterCommand(username));
-        commands.add(username);
-        commands.add(password);
 
         CommandContainer registerCommand = new CommandContainer(types, commands);
 
@@ -98,7 +92,7 @@ public class ServerProxy implements IServer {
 //        List<String> types = new ArrayList<>();
 //        types.add("AddResumable");
 //
-//        List<Object> commands = new ArrayList<>();
+//        List<ICommand> commands = new ArrayList<>();
 //        commands.add(new AddResumableToClientCommand(game));
 //
 ////        CommandContainer addGameCommand = new CommandContainer("hello");
@@ -121,11 +115,9 @@ public class ServerProxy implements IServer {
         List<String> types = new ArrayList<>();
         types.add("AddJoinableCommand");
 
-        List<Object> commands = new ArrayList<>();
-//        commands.add(new AddJoinableToClientCommand(gameId));
-//        commands.add();
+        List<ICommand> commands = new ArrayList<>();
+        commands.add(new AddJoinableToClientCommand(new Game()));
 
-//        CommandContainer addGameCommand = new CommandContainer("hello");
         CommandContainer addGameCommand = new CommandContainer(types, commands);
 
         try {
@@ -147,7 +139,7 @@ public class ServerProxy implements IServer {
 //        List<String> types = new ArrayList<>();
 //        types.add("AddWaiting");
 //
-//        List<Object> commands = new ArrayList<>();
+//        List<ICommand> commands = new ArrayList<>();
 //        commands.add(new AddWaitingToClientCommand(game.get_S_gameName()));
 //
 ////        CommandContainer addGameCommand = new CommandContainer("hello");
@@ -171,7 +163,7 @@ public class ServerProxy implements IServer {
         List<String> types = new ArrayList<>();
         types.add("DeleteGame");
 
-        List<Object> commands = new ArrayList<>();
+        List<ICommand> commands = new ArrayList<>();
         commands.add(new DeleteGameCommand(game.get_i_gameId()));
 
 //        CommandContainer removeGameCommand = new CommandContainer("hello");
@@ -194,7 +186,7 @@ public class ServerProxy implements IServer {
         List<String> types = new ArrayList<>();
         types.add("StartGame");
 
-        List<Object> commands = new ArrayList<>();
+        List<ICommand> commands = new ArrayList<>();
         commands.add(new StartGameCommand(gameId, authorizationCode));
 
 //        CommandContainer startGameCommand = new CommandContainer("hello");
@@ -217,7 +209,7 @@ public class ServerProxy implements IServer {
         List<String> types = new ArrayList<>();
         types.add("AddPlayer");
 
-        List<Object> commands = new ArrayList<>();
+        List<ICommand> commands = new ArrayList<>();
         commands.add(new AddPlayerToClientCommand(authenticationCode, gameId));
 
 //        CommandContainer addPlayerCommand = new CommandContainer("hello");
@@ -240,9 +232,9 @@ public class ServerProxy implements IServer {
         List<String> types = new ArrayList<>();
         types.add("LogoutCommand");
 
-        List<Object> commands = new ArrayList<>();
+        List<ICommand> commands = new ArrayList<>();
 //        commands.add(new LogoutCommand(authenticationCode));
-        commands.add(authenticationCode);
+//        commands.add(authenticationCode);
 
         CommandContainer logoutCommand = new CommandContainer(types, commands);
 
@@ -262,7 +254,7 @@ public class ServerProxy implements IServer {
 //        List<String> types = new ArrayList<>();
 //        types.add("ListJoinable");
 //
-//        List<Object> commands = new ArrayList<>();
+//        List<ICommand> commands = new ArrayList<>();
 ////        commands.add(new ListJoinableCommand(listJoinableGames));
 //
 //        CommandContainer listJoinableCommand = new CommandContainer(types, commands);
@@ -281,7 +273,7 @@ public class ServerProxy implements IServer {
 //        List<String> types = new ArrayList<>();
 //        types.add("ListResumable");
 //
-//        List<Object> commands = new ArrayList<>();
+//        List<ICommand> commands = new ArrayList<>();
 ////        commands.add(new ListResumableCommand(listResumableGames));
 //
 //        CommandContainer listResumableCommand = new CommandContainer(types, commands);
@@ -300,7 +292,7 @@ public class ServerProxy implements IServer {
 //        List<String> types = new ArrayList<>();
 //        types.add("ListWaiting");
 //
-//        List<Object> commands = new ArrayList<>();
+//        List<ICommand> commands = new ArrayList<>();
 ////        commands.add(new ListWaitingCommand(listWaitingGames));
 //
 //        CommandContainer listWaitingCommand = new CommandContainer(types, commands);
@@ -319,7 +311,7 @@ public class ServerProxy implements IServer {
 //        List<String> types = new ArrayList<>();
 //        types.add("LoginRegisterResponse");
 //
-//        List<Object> commands = new ArrayList<>();
+//        List<ICommand> commands = new ArrayList<>();
 //        commands.add(new LoginRegisterResponseCommand(user, authenticationCode));
 //
 //        CommandContainer loginRegisterResponseCommand = new CommandContainer(types, commands);
@@ -338,7 +330,7 @@ public class ServerProxy implements IServer {
 //        List<String> types = new ArrayList<>();
 //        types.add("LogoutResponse");
 //
-//        List<Object> commands = new ArrayList<>();
+//        List<ICommand> commands = new ArrayList<>();
 //        commands.add(new LogoutResponseCommand());
 //
 //        CommandContainer logoutResponseCommand = new CommandContainer(types, commands);
@@ -358,7 +350,7 @@ public class ServerProxy implements IServer {
         List<String> types = new ArrayList<>();
         types.add("GetCommandsCommand");
 
-        List<Object> commands = new ArrayList<>();
+        List<ICommand> commands = new ArrayList<>();
 //        commands.add(new GetCommandsCommand());
 
         CommandContainer checkForCommands = new CommandContainer(types, commands);
@@ -395,7 +387,7 @@ public class ServerProxy implements IServer {
 //        List<String> types = new ArrayList<>();
 //        types.add("LogoutCommand");
 //
-//        List<Object> commands = new ArrayList<>();
+//        List<ICommand> commands = new ArrayList<>();
 //        commands.add(str_authentication_code);
 //
 //        CommandContainer logout = new CommandContainer(types, commands);
@@ -416,7 +408,7 @@ public class ServerProxy implements IServer {
 //        List<String> types = new ArrayList<>();
 //        types.add("AddGameToServerCommand");
 //
-//        List<Object> commands = new ArrayList<>();
+//        List<ICommand> commands = new ArrayList<>();
 //        commands.add(authenticationCode);
 //        
 //        CommandContainer createGame = new CommandContainer(types, commands);
@@ -437,7 +429,7 @@ public class ServerProxy implements IServer {
 //        List<String> types = new ArrayList<>();
 //        types.add("AddPlayerToServerCommand");
 //
-//        List<Object> commands = new ArrayList<>();
+//        List<ICommand> commands = new ArrayList<>();
 //        commands.add(authenticationCode);
 //        commands.add(gameId);
 //        

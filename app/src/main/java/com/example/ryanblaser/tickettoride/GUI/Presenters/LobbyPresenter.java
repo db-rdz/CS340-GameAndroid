@@ -8,10 +8,8 @@ import com.example.ryanblaser.tickettoride.Command.AddResumableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.CommandContainer;
 import com.example.ryanblaser.tickettoride.Command.DeleteGameCommand;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Database.DAO;
 import com.example.ryanblaser.tickettoride.GUI.Views.ILobbyView;
 import com.example.ryanblaser.tickettoride.Server.IServer;
-import com.example.ryanblaser.tickettoride.ServerModel.ServerModel;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ import java.util.List;
  * Created by 0joshuaolson1 on 2/15/17.
  */
 
-public class LobbyPresenter implements ILobbyPresenter{
+public class LobbyPresenter implements ILobbyPresenter {
 
     private static ILobbyView view;
     public LobbyPresenter(ILobbyView v){
@@ -27,7 +25,7 @@ public class LobbyPresenter implements ILobbyPresenter{
 //        ClientFacade.SINGLETON.attachLobbyObserver(this);
     }
 
-    public static LobbyPresenter SINGLETON = new LobbyPresenter(view);
+    public static com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter SINGLETON = new com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter(view);
 
     @Override
     public void logout(){
@@ -58,8 +56,7 @@ public class LobbyPresenter implements ILobbyPresenter{
         {
             switch (result.str_type.get(i)) {
                 case "AddJoinableCommand" :
-                    Number joinableSize = (Number) result.icommand.get(i);
-                    command = new AddJoinableToClientCommand(joinableSize.intValue());
+                    command = new AddJoinableToClientCommand(result.icommand.get(i).getGame());
                     break;
                 case "DeleteGameCommand" :
                     command = (DeleteGameCommand) result.icommand.get(i);

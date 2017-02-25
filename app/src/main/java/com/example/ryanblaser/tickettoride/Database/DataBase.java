@@ -4,8 +4,6 @@ package com.example.ryanblaser.tickettoride.Database;
  * Created by raulbr on 2/12/17.
  */
 
-import com.example.ryanblaser.tickettoride.Database.DAO;
-
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;

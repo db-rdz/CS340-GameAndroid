@@ -1,11 +1,9 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.example.ryanblaser.tickettoride.Command.AddJoinableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.AddResumableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.AddWaitingToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.CommandContainer;
 import com.example.ryanblaser.tickettoride.Command.GetCommandsCommand;
@@ -15,7 +13,8 @@ import com.example.ryanblaser.tickettoride.Command.ListResumableCommand;
 import com.example.ryanblaser.tickettoride.Command.ListWaitingCommand;
 import com.example.ryanblaser.tickettoride.Command.LoginRegisterResponseCommand;
 import com.example.ryanblaser.tickettoride.Command.LogoutResponseCommand;
-import com.example.ryanblaser.tickettoride.UserInfo.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -42,23 +41,23 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
     }
 
     private Gson gson;
-//    private final TaskListener taskListener;
+    private ObjectMapper objectMapper;
+    private SimpleModule module_login_register_response;
+    private SimpleModule module_add_joinable;
     private CommandContainer commandContainer;
     private String string_urlSuffix;
     private ICommand cmd; //Will return this at the end
 
     public ClientCommunicator(String urlSuffix, CommandContainer commandContainer) {
-//        this.taskListener = taskListener;
         this.commandContainer = commandContainer;
         string_urlSuffix = urlSuffix;
         gson = new Gson();
+        objectMapper = new ObjectMapper();
         cmd = null;
     }
 
-
     @Override
     protected ICommand doInBackground(URL... urls) {
-
 
         for (URL url : urls) {
             try {
@@ -73,8 +72,8 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
 
                 //2-16-17 1:40am
                 //IT WORKS NOW
-                String requestString = gson.toJson(commandContainer);
-
+//                String requestString = gson.toJson(commandContainer);
+                String requestString = objectMapper.writeValueAsString(commandContainer);
                 requestBody.write((requestString));
                 requestBody.close();
 
@@ -83,7 +82,9 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                     //DECODES FROM JSON
                     try {
                         InputStreamReader isr = new InputStreamReader(http.getInputStream());
-                        CommandContainer respondData = gson.fromJson(isr, CommandContainer.class); //Receive a serialized CommandContainer
+//                        CommandContainer respondData = gson.fromJson(isr, CommandContainer.class); //Receive a serialized CommandContainer
+                        CommandContainer respondData = objectMapper.readValue(http.getInputStream(), CommandContainer.class);
+
 
                         //TODO: CommandContainer will contain Lists now. So this switch will be in a loop now.
                         for (int i = 0; i < respondData.str_type.size(); i++) {
@@ -95,21 +96,19 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                     break;
 
                                 case "AddJoinableCommand":
-                                    Number joinableSize = (Number) respondData.icommand.get(0);
-                                    cmd = new AddJoinableToClientCommand(joinableSize.intValue());
+                                    cmd = new AddJoinableToClientCommand(respondData.icommand.get(0).getGame());
                                     respondData.icommand.remove(0); //Gets rid of the first object in the list to accomodate for the next command called
                                     cmd.execute();
                                     break;
 
                                 case "AddResumableCommand":
-                                    cmd = new AddResumableToClientCommand((int)respondData.icommand.get(0));
+//                                    cmd = new AddResumableToClientCommand((int)respondData.icommand.get(0));
                                     respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
 
                                 case "AddWaitingCommand":
-                                    Number waitingSize = (Number) respondData.icommand.get(0);
-                                    cmd = new AddWaitingToClientCommand(waitingSize.intValue());
+                                    cmd = new AddWaitingToClientCommand(respondData.icommand.get(0).getGame());
                                     respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
@@ -138,19 +137,14 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                     break;
 
                                 case "LoginRegisterResponseCommand":
-                                    User user2 = new User();
-                                    user2.setUsername((String) respondData.icommand.get(0));
-                                    user2.setPassword((String) respondData.icommand.get(1));
-                                    user2.setStr_authentication_code((String) respondData.icommand.get(2));
-                                    respondData.icommand.remove(2);
-                                    respondData.icommand.remove(1);
+                                    cmd = new LoginRegisterResponseCommand(respondData.icommand.get(0).getUser());
                                     respondData.icommand.remove(0);
-                                    cmd = new LoginRegisterResponseCommand(user2.getUsername(), user2.getPassword(), user2.getStr_authentication_code());
                                     cmd.execute();
                                     break;
 
                                 case "LogoutResponseCommand":
                                     cmd = new LogoutResponseCommand();
+                                    respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
 

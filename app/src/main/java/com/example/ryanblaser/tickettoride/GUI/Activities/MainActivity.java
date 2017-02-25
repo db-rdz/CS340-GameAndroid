@@ -1,7 +1,5 @@
 package com.example.ryanblaser.tickettoride.GUI.Activities;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +9,7 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.GUI.Views.LobbyFragment;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
 import com.example.ryanblaser.tickettoride.R;
-import com.example.ryanblaser.tickettoride.UserInfo.User;
+import com.example.ryanblaser.tickettoride.Client.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setLoginFragment(LoginFragment loginFragment) {
-        MainActivity.loginFragment = loginFragment;
+        com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity.loginFragment = loginFragment;
     }
 
     public static LobbyFragment getLobbyFragment() {
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setLobbyFragment(LobbyFragment lobbyFragment) {
-        MainActivity.lobbyFragment = lobbyFragment;
+        com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity.lobbyFragment = lobbyFragment;
     }
 
     public void messageInvalidUsername() {

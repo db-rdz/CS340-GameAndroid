@@ -9,12 +9,12 @@ public class RandomGenerator {
     static Random rand = new Random();
     final static String startOptions = "abcdefghijklmnopqrstuvwxyz012345678901234567890123456789";
     final static char[] options = startOptions.toCharArray();
-    public static RandomGenerator instance;
+    public static com.example.ryanblaser.tickettoride.Database.RandomGenerator instance;
 
-    public static RandomGenerator getInstance()
+    public static com.example.ryanblaser.tickettoride.Database.RandomGenerator getInstance()
     {
         if (instance == null)
-            instance = new RandomGenerator();
+            instance = new com.example.ryanblaser.tickettoride.Database.RandomGenerator();
 
         return instance;
     }

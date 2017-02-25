@@ -1,21 +1,17 @@
 package com.example.ryanblaser.tickettoride.ServerModel;
 
-import com.example.ryanblaser.tickettoride.Database.DAO;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.iGame;
 import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
-import com.example.ryanblaser.tickettoride.ServerModel.UserModel.iUser;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by benjamin on 10/02/17.
  */
 public class ServerModel implements iModel {
 	
-	public static ServerModel SINGLETON = new ServerModel();
+	public static com.example.ryanblaser.tickettoride.ServerModel.ServerModel SINGLETON = new com.example.ryanblaser.tickettoride.ServerModel.ServerModel();
 
     @Override
     public List<Game> getAvailableGames() {
@@ -33,7 +29,7 @@ public class ServerModel implements iModel {
     }
 
     @Override
-    public List<Game> getUserJoinedGames( String username ){
+    public List<Game> getUserJoinedGames(String username ){
         return User.getUserWithUsername(username).getJoinedGames();
     }
 

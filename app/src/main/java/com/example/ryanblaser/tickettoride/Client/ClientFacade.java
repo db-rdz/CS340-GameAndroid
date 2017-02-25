@@ -5,8 +5,6 @@ import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.Server.IServer;
-import com.example.ryanblaser.tickettoride.UserInfo.User;
-import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
 import java.util.List;
 
@@ -27,7 +25,7 @@ import com.example.ryanblaser.tickettoride.Command.CommandContainer;
 public class ClientFacade implements IClient {
 
 
-    public static ClientFacade SINGLETON = new ClientFacade();
+    public static com.example.ryanblaser.tickettoride.Client.ClientFacade SINGLETON = new com.example.ryanblaser.tickettoride.Client.ClientFacade();
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
@@ -46,10 +44,10 @@ public class ClientFacade implements IClient {
         this.clientmodel = new ClientModel(mainActivity);
     }
 
-
-    public CommandContainer login(String username, String password) throws InvalidUsername, InvalidPassword {
+    @Override
+    public CommandContainer login(User user) throws InvalidUsername, InvalidPassword {
         try {
-            return ServerProxy.SINGLETON.login(username, password);
+            return ServerProxy.SINGLETON.login(user);
 
         } catch (InvalidPassword e) { //Catches exception if the login failed.
             throw new InvalidPassword();
@@ -105,9 +103,10 @@ public class ClientFacade implements IClient {
         //lobbypresenter
     }
 
-    public void addPlayer(String str_authentication_code, int gameId) throws IServer.GameIsFullException { // which exception?
+    public CommandContainer addPlayerToModel(String str_authentication_code, int gameId) throws IServer.GameIsFullException { // which exception?
         ServerProxy.SINGLETON.addPlayer(str_authentication_code, gameId); //server will get username
         //lobbypresenter
+        return null;
     }
 
     @Override
@@ -121,7 +120,7 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public CommandContainer addPlayer(Username username, int gameId){
+    public CommandContainer addPlayer(String username, int gameId){
         clientmodel.addPlayer(username, gameId);
         //lobbypresenter
 		return null;
@@ -160,9 +159,8 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public CommandContainer loginRegisterSucceeded(User user, String authenticationCode) {
-//        clientmodel = new ClientModel();
-        clientmodel.setAuthenticationKey(authenticationCode);
+    public CommandContainer loginRegisterSucceeded(User user) {
+        clientmodel.setAuthenticationKey(user.getStr_authentication_code());
         clientmodel.setUser(user);
         loginpresenter.switchToLobbyView();
         //change view/presenter

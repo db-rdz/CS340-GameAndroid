@@ -2,7 +2,6 @@ package com.example.ryanblaser.tickettoride.GUI.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +18,9 @@ import com.example.ryanblaser.tickettoride.GUI.Activities.GameActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.R;
-import com.example.ryanblaser.tickettoride.Server.IServer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 
 /**
  * Created by 0joshuaolson1 on 2/15/17.
@@ -43,8 +40,8 @@ public class LobbyFragment extends Fragment {
         game_Id = 0;
     }
 
-    public static LobbyFragment newInstance() {
-        return new LobbyFragment();
+    public static com.example.ryanblaser.tickettoride.GUI.Views.LobbyFragment newInstance() {
+        return new com.example.ryanblaser.tickettoride.GUI.Views.LobbyFragment();
     }
 
     @Override
@@ -109,7 +106,7 @@ public class LobbyFragment extends Fragment {
 //            e.printStackTrace();
 //        }
 
-        List<Integer> listJoinableGames = LobbyPresenter.SINGLETON.getWaitingGames();
+        List<Integer> listJoinableGames = LobbyPresenter.SINGLETON.getJoinableGames();
         if (listJoinableGames.size() > 0) {
             ArrayList<String> gamesList = new ArrayList<>();
             for (int i = 0; i < listJoinableGames.size(); i++) {

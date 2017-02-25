@@ -29,18 +29,18 @@ public class User implements iUser {
     //-----------------------------------------STATIC VARIABLES------------------------------------------------//
     /**Maps a string () to a user*/
     /** Note: The function of finding a user with a determined id I think should be done here to keep us organized */
-    private static Map<String, User> _M_idToUser = new HashMap();
+    private static Map<String, com.example.ryanblaser.tickettoride.ServerModel.UserModel.User> _M_idToUser = new HashMap();
 
     //_________________________________________________________________________________________________________//
 
 
 
     //-----------------------------------------STATIC FUNCTIONS------------------------------------------------//
-    public static User getUserWithUsername(String username){ return _M_idToUser.get(username); }
+    public static com.example.ryanblaser.tickettoride.ServerModel.UserModel.User getUserWithUsername(String username){ return _M_idToUser.get(username); }
 
     public static Boolean addLoggedInUser(String username){
         try {
-            User loggedUser = DAO._SINGLETON.getUserByUserName(username);
+            com.example.ryanblaser.tickettoride.ServerModel.UserModel.User loggedUser = DAO._SINGLETON.getUserByUserName(username);
             mapIdToUser(username, loggedUser);
             return true;
         }
@@ -49,7 +49,7 @@ public class User implements iUser {
         }
     }
 
-    public static Boolean mapIdToUser(String username, User user){
+    public static Boolean mapIdToUser(String username, com.example.ryanblaser.tickettoride.ServerModel.UserModel.User user){
         _M_idToUser.put(username, user);
         return true;
     }
@@ -77,7 +77,7 @@ public class User implements iUser {
     public List<Game> getJoinedGames() { return _L_joinedGames; }
     public void setJoinedGameList(List<Game> _L_joinedGames) { this._L_joinedGames = _L_joinedGames; }
     
-	public static List<User> get_L_listOfAllUsers() { //TODO: Implement!
+	public static List<com.example.ryanblaser.tickettoride.ServerModel.UserModel.User> get_L_listOfAllUsers() { //TODO: Implement!
 		return null;
 	}
 

@@ -1,7 +1,6 @@
 package com.example.ryanblaser.tickettoride.Database;
 
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
-import com.example.ryanblaser.tickettoride.ServerModel.ServerModel;
 import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
 
 import java.sql.PreparedStatement;
@@ -11,12 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /**
  * Created by benjamin on 11/02/17.
  */
-public class DAO implements iDAO {
-    public static iDAO _SINGLETON = new DAO();
+public class DAO implements com.example.ryanblaser.tickettoride.Database.iDAO {
+    public static iDAO _SINGLETON = new com.example.ryanblaser.tickettoride.Database.DAO();
     private static DataBase _db;
     private int AUTH_TOKEN_LENGTH = 15;
 

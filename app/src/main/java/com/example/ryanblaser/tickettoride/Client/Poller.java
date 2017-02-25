@@ -5,7 +5,6 @@ import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.AddResumableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.CommandContainer;
 import com.example.ryanblaser.tickettoride.Command.DeleteGameCommand;
-import com.example.ryanblaser.tickettoride.Command.GetCommandsCommand;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer.GameIsFullException;
 
@@ -47,8 +46,7 @@ public class Poller {
         {
             switch (result.str_type.get(i)) {
                 case "AddJoinableCommand" :
-                    Number joinableSize = (Number) result.icommand.get(i);
-                    command = new AddJoinableToClientCommand(joinableSize.intValue());
+                    command = new AddJoinableToClientCommand(result.icommand.get(i).getGame());
                     break;
                 case "DeleteGameCommand" :
                     command = (DeleteGameCommand) result.icommand.get(i);

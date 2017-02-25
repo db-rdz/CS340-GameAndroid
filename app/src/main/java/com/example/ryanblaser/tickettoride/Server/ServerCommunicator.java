@@ -23,14 +23,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
 
 /**
  * Created by RyanBlaser on 2/6/17.
  */
 
 public class ServerCommunicator {
-    public static ServerCommunicator SINGLETON = new ServerCommunicator();
+    public static com.example.ryanblaser.tickettoride.Server.ServerCommunicator SINGLETON = new com.example.ryanblaser.tickettoride.Server.ServerCommunicator();
 
     private static final int MAX_WAITING_CONNECTION = 10;
     private HttpServer server;

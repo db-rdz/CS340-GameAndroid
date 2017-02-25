@@ -1,6 +1,6 @@
 package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
-import com.example.ryanblaser.tickettoride.UserInfo.User;
+import com.example.ryanblaser.tickettoride.Client.User;
 
 /**
  * Created by 0joshuaolson1 on 2/15/17.

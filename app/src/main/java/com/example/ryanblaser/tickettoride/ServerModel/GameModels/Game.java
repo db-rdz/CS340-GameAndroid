@@ -16,11 +16,11 @@ public class Game implements iGame, Cloneable {
 
     //-----------------------------------------STATIC VARIABLES----------------------------------------//
     /** _M_idToGame maps a game id to a game. */
-    private static Map<Integer, Game> _M_idToGame = new HashMap();
+    private static Map<Integer, com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> _M_idToGame = new HashMap();
     /**  These are all the games that haven't started */
-    private static List<Game> _L_listOfAvailableGames = new ArrayList<>();
+    private static List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> _L_listOfAvailableGames = new ArrayList<>();
     /**  These are all the games that have already started */
-    private static List<Game> _L_listOfStartedGames = new ArrayList<>();
+    private static List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> _L_listOfStartedGames = new ArrayList<>();
     /**  The max number of players */
     public static int _MAX_PLAYERS = 5;
     /** Not sure if I should still use this var */
@@ -47,7 +47,7 @@ public class Game implements iGame, Cloneable {
     //-----------------------------------------STATIC FUNCTIONS----------------------------------------//
 
     /** Gets the corresponding game mapped to the specified id.  */
-    public static Game getGameWithId(int gameId){
+    public static com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game getGameWithId(int gameId){
         return _M_idToGame.get(gameId);
     }
 
@@ -70,13 +70,13 @@ public class Game implements iGame, Cloneable {
     }
 
     /** Returns the list of all games */
-    public static List<Game> getAllGames(){
-        return (List<Game>) _M_idToGame.values();
+    public static List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> getAllGames(){
+        return (List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game>) _M_idToGame.values();
     }
 
 
     /** Adds an already created game in the available games list and maps it to its Id */
-    public static Boolean addGame(Game game, int gameId){
+    public static Boolean addGame(com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game game, int gameId){
         mapGameToId(game, gameId);
         insertInAvailableGames(game);
         return true;
@@ -84,13 +84,13 @@ public class Game implements iGame, Cloneable {
 
 
     /** Maps the game to its game id */
-    public static Boolean mapGameToId(Game game, int gameId){
+    public static Boolean mapGameToId(com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game game, int gameId){
         _M_idToGame.put(gameId, game);
         return true;
     }
 
     /** Adds the game to the available game list. */
-    public static Boolean insertInAvailableGames(Game game){
+    public static Boolean insertInAvailableGames(com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game game){
         _L_listOfAvailableGames.add(game);
         return true;
     }
@@ -102,11 +102,11 @@ public class Game implements iGame, Cloneable {
     public int get_numberOfPlayers() { return _i_numberOfPlayers; }
     public void set_numberOfPlayers(int _i_numberOfPlayers) { this._i_numberOfPlayers = _i_numberOfPlayers; }
 
-    public static List<Game> get_allAvailableGames() { return _L_listOfAvailableGames; }
-    public static void set_availableGameList(List<Game> AvailableGames) {_L_listOfAvailableGames = AvailableGames;}
+    public static List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> get_allAvailableGames() { return _L_listOfAvailableGames; }
+    public static void set_availableGameList(List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> AvailableGames) {_L_listOfAvailableGames = AvailableGames;}
 
-    public static List<Game> get_allStartedGames() { return _L_listOfStartedGames; }
-    public static void set_StartedGameList(List<Game> StartedGames) { _L_listOfStartedGames = StartedGames; }
+    public static List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> get_allStartedGames() { return _L_listOfStartedGames; }
+    public static void set_StartedGameList(List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> StartedGames) { _L_listOfStartedGames = StartedGames; }
 
     public String get_S_gameName() {
         return _S_gameName;
@@ -139,7 +139,7 @@ public class Game implements iGame, Cloneable {
 
     //-----------------------------------------CLASS FUNCTIONS----------------------------------------//
     /** Uses a map to return the User object associated with a user id (returns null if user is not in the game) */
-    private User getUserInGame( String username ){
+    private User getUserInGame(String username ){
         return _M_idToUserInGame.get(username);
     }
 
@@ -163,8 +163,8 @@ public class Game implements iGame, Cloneable {
 
 
     @Override
-    public Game clone(){
-        Game game = new Game();
+    public com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game clone(){
+        com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game game = new com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game();
 //        game.setPlayers(players); //TODO: edit this
         game.set_i_gameId(_i_gameId);
         return game;

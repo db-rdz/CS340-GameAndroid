@@ -2,7 +2,6 @@ package com.example.ryanblaser.tickettoride.ServerModel;
 
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.iGame;
-import com.example.ryanblaser.tickettoride.ServerModel.UserModel.iUser;
 
 import java.util.List;
 

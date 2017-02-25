@@ -9,11 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Database.DAO;
-import com.example.ryanblaser.tickettoride.Database.DataBase;
 import com.example.ryanblaser.tickettoride.R;
-import com.example.ryanblaser.tickettoride.ServerModel.ServerModel;
 import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
 
 import java.util.ArrayList;

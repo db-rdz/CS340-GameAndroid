@@ -1,8 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
-import com.example.ryanblaser.tickettoride.UserInfo.User;
-import com.example.ryanblaser.tickettoride.UserInfo.Username;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,7 @@ public class ClientModel implements Cloneable{
     private User user;
     private List<Integer> list_joinable, list_waiting, list_resumable;
     private Hashtable<Integer, GameType> hashtable_id_to_list; //Each gameId key has their own GameType value.
-    private Hashtable<Integer, List<Username>> gameId_to_usernames;
+    private Hashtable<Integer, List<String>> gameId_to_usernames;
     private MainActivity mainActivity;
 
     public ClientModel(MainActivity mainActivity1){
@@ -27,7 +25,7 @@ public class ClientModel implements Cloneable{
         list_waiting = new ArrayList<Integer>();
         list_resumable = new ArrayList<Integer>();
         hashtable_id_to_list = new Hashtable<Integer, GameType>();
-        gameId_to_usernames = new Hashtable<Integer, List<Username>>();
+        gameId_to_usernames = new Hashtable<Integer, List<String>>();
     }
 
     public void setAuthenticationKey(String k){
@@ -104,11 +102,11 @@ public class ClientModel implements Cloneable{
         return type;
     }
 
-    private void addPlayerToGameObject(Username username, int gameId){
+    private void addPlayerToGameObject(String username, int gameId){
     	gameId_to_usernames.get(gameId).add(username);
     }
 
-    public void addPlayer(Username username, int gameId){
+    public void addPlayer(String username, int gameId){
         GameType type = getGameType(gameId);
         if(type == GameType.JOINABLE){
             addPlayerToGameObject(username, gameId);

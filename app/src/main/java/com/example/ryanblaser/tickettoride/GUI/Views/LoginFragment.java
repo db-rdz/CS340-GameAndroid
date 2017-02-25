@@ -16,14 +16,14 @@ import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
 import com.example.ryanblaser.tickettoride.R;
-import com.example.ryanblaser.tickettoride.UserInfo.User;
+import com.example.ryanblaser.tickettoride.Client.User;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link LoginFragment#newInstance} factory method to
+ * Use the {@link com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class LoginFragment extends Fragment {
@@ -73,8 +73,8 @@ public class LoginFragment extends Fragment {
      *
      * @return A new instance of fragment LoginFragment.
      */
-    public static LoginFragment newInstance(User user) {
-        LoginFragment fragment = new LoginFragment();
+    public static com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment newInstance(User user) {
+        com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment fragment = new com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment();
         Bundle args = new Bundle();
         args.putString(string_username, user.getUsername());
         args.putString(string_password, user.getPassword());
