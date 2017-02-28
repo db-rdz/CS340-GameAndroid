@@ -1,12 +1,13 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.User;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 
 /**
+ * FROM SERVER -> CLIENT
  * Sets the order and color for each player in the game.
  * The order of players depends on when the player joined the game.
  * The color for each player is set by the program. Player can't choose their color.

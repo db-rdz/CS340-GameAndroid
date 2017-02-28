@@ -8,12 +8,12 @@ import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 
 /**
  * FROM SERVER -> CLIENT
- * Updates the points of a player.
+ * Notifies when it's a specific player's turn in the game.
  *
- * Created by natha on 2/27/2017.
+ * Created by natha on 2/28/2017.
  */
 
-public class UpdatePointsCommand implements ICommand {
+public class NotifyTurnCommand implements ICommand {
     @Override
     public CommandContainer execute() throws IServer.GameIsFullException {
         return null;

@@ -1,12 +1,13 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.User;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 
 /**
+ * FROM CLIENT -> SERVER
  * A player can grab a second train card from the deck.
  * If the player hasn't picked up a wild from the face up train cards on their first card pick.
  *
