@@ -1,6 +1,6 @@
 package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
-import com.example.ryanblaser.tickettoride.Command.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.example.ryanblaser.tickettoride.Server;
 
-import com.example.ryanblaser.tickettoride.Command.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

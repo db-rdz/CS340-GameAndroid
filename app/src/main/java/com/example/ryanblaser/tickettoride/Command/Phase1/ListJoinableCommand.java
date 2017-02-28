@@ -1,15 +1,16 @@
-package com.example.ryanblaser.tickettoride.Command;
+package com.example.ryanblaser.tickettoride.Command.Phase1;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.User;
+import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
-public class ListResumableCommand implements ICommand { // sent to clients after login/registration
+public class ListJoinableCommand implements ICommand { // sent to clients after login/registration
   private List<Integer> list_game_list;
-  private ListResumableCommand(){}
-  public ListResumableCommand(List<Integer> list){
+  private ListJoinableCommand(){}
+  public ListJoinableCommand(List<Integer> list){
     list_game_list = list;}
 
   @JsonIgnore
@@ -26,8 +27,8 @@ public class ListResumableCommand implements ICommand { // sent to clients after
   
   @Override
   public CommandContainer execute(){
-    ClientFacade.SINGLETON.listResumableGames(list_game_list); //TODO: Decide which Game class to use
-    return null; //TODO:stub
+    ClientFacade.SINGLETON.listJoinableGames(list_game_list);
+    return null;
   }
 
   @JsonIgnore

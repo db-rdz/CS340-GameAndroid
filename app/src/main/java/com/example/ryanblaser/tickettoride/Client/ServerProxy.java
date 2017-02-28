@@ -1,7 +1,8 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import com.example.ryanblaser.tickettoride.Command.*;
-import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.AddJoinableToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
 //import Command.AddResumableToClientCommand;
 //import Command.AddWaitingToClientCommand;
 //import Commandcom.example.ryanblaser.tickettoride.CommandContainer;
@@ -17,6 +18,10 @@ import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
 //import Command.LogoutResponseCommand;
 //import Command.RegisterCommand;
 //import Command.StartGameCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.Phase1.DeleteGameCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.LoginCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.StartGameCommand;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.Server.IServer;

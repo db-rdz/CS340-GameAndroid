@@ -2,7 +2,7 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import java.util.List;
 
-import com.example.ryanblaser.tickettoride.Command.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
 /**

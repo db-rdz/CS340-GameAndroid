@@ -1,15 +1,16 @@
-package com.example.ryanblaser.tickettoride.Command;
+package com.example.ryanblaser.tickettoride.Command.Phase1;
+
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.User;
+import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class AddWaitingToClientCommand implements ICommand { // sent after changes from what List... commands sent
-  private int gameId;
-  private Game game;
-  private AddWaitingToClientCommand(){}
-  public AddWaitingToClientCommand(Game g){
-	  game = g;}
+public class DeleteGameCommand implements ICommand {
+  private int int_game_id;
+  private DeleteGameCommand(){}
+  public DeleteGameCommand(int gameId){
+	  int_game_id = gameId;}
 
   @JsonIgnore
   @Override
@@ -22,14 +23,16 @@ public class AddWaitingToClientCommand implements ICommand { // sent after chang
   public User getUser() {
     return null;
   }
-
+  
   @Override
   public CommandContainer execute(){
-    return ClientFacade.SINGLETON.addWaitingGame(gameId);
+    ClientFacade.SINGLETON.removeGame(int_game_id);
+    return null; //TODO: stub
   }
 
+  @JsonIgnore
   @Override
   public Game getGame() {
-    return game;
+    return null;
   }
 }

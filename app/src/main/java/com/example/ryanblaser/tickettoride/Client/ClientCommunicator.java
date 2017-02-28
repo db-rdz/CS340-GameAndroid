@@ -2,17 +2,17 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import android.os.AsyncTask;
 
-import com.example.ryanblaser.tickettoride.Command.AddJoinableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.AddWaitingToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.CommandContainer;
-import com.example.ryanblaser.tickettoride.Command.GetCommandsCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.AddJoinableToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.AddWaitingToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.Phase1.GetCommandsCommand;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Command.ListJoinableCommand;
-import com.example.ryanblaser.tickettoride.Command.ListResumableCommand;
-import com.example.ryanblaser.tickettoride.Command.ListWaitingCommand;
-import com.example.ryanblaser.tickettoride.Command.LoginRegisterResponseCommand;
-import com.example.ryanblaser.tickettoride.Command.LogoutResponseCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.ListJoinableCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.ListResumableCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.ListWaitingCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.LoginRegisterResponseCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.LogoutResponseCommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;

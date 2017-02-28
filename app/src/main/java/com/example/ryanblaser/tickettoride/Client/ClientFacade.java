@@ -8,7 +8,7 @@ import com.example.ryanblaser.tickettoride.Server.IServer;
 
 import java.util.List;
 
-import com.example.ryanblaser.tickettoride.Command.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 
 /**
  * This class accesses the data in the Client Holder/Model.
