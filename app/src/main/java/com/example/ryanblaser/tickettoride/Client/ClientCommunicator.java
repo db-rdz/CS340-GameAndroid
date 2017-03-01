@@ -2,6 +2,7 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import android.os.AsyncTask;
 
+<<<<<<< HEAD
 import com.example.ryanblaser.tickettoride.Command.AddJoinableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.AddWaitingToClientCommand;
@@ -13,6 +14,14 @@ import com.example.ryanblaser.tickettoride.Command.ListResumableCommand;
 import com.example.ryanblaser.tickettoride.Command.ListWaitingCommand;
 import com.example.ryanblaser.tickettoride.Command.LoginRegisterResponseCommand;
 import com.example.ryanblaser.tickettoride.Command.LogoutResponseCommand;
+=======
+import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.ListResumableCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.ListWaitingCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.LogoutResponseCommand;
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;
@@ -53,6 +62,10 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
         string_urlSuffix = urlSuffix;
         gson = new Gson();
         objectMapper = new ObjectMapper();
+<<<<<<< HEAD
+=======
+        //objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
         cmd = null;
     }
 
@@ -83,13 +96,24 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                     try {
                         InputStreamReader isr = new InputStreamReader(http.getInputStream());
 //                        CommandContainer respondData = gson.fromJson(isr, CommandContainer.class); //Receive a serialized CommandContainer
+<<<<<<< HEAD
                         CommandContainer respondData = objectMapper.readValue(http.getInputStream(), CommandContainer.class);
+=======
+                        CommandContainer respondData = null;
+                        try {
+                             respondData = objectMapper.readValue(http.getInputStream(), CommandContainer.class);
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
 
                         //TODO: CommandContainer will contain Lists now. So this switch will be in a loop now.
                         for (int i = 0; i < respondData.str_type.size(); i++) {
                             switch (respondData.str_type.get(i)) { //Make the corresponding command depending on the type of command.
 
+<<<<<<< HEAD
                                 case "GetCommandsCommand":
                                     cmd = new GetCommandsCommand(respondData.str_type);
                                     cmd.execute();
@@ -97,6 +121,16 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
 
                                 case "AddJoinableCommand":
                                     cmd = new AddJoinableToClientCommand(respondData.icommand.get(0).getGame());
+=======
+//                                case "GetCommandsCommand":
+//                                    cmd = new GetCommandsCommand(respondData.str_type);
+//                                    cmd.execute();
+//                                    break;
+
+                                case "AddJoinableCommand":
+//                                    cmd = new AddJoinableToClientCommand(respondData.icommand.get(0).getGame());
+                                    cmd = respondData.icommand.get(0);
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
                                     respondData.icommand.remove(0); //Gets rid of the first object in the list to accomodate for the next command called
                                     cmd.execute();
                                     break;
@@ -108,7 +142,12 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                     break;
 
                                 case "AddWaitingCommand":
+<<<<<<< HEAD
                                     cmd = new AddWaitingToClientCommand(respondData.icommand.get(0).getGame());
+=======
+                                    //cmd = new AddWaitingToClientCommand(respondData.icommand.get(0).getGame());
+                                    cmd = respondData.icommand.get(0);
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
                                     respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
@@ -119,7 +158,12 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                     break;
 
                                 case "ListJoinableCommand":
+<<<<<<< HEAD
                                     cmd = new ListJoinableCommand((List<Integer>) respondData.icommand.get(0));
+=======
+                                    //cmd = new ListJoinableCommand((List<Integer>) respondData.icommand.get(0));
+                                    cmd = respondData.icommand.get(0);
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
                                     respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
@@ -137,7 +181,12 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                     break;
 
                                 case "LoginRegisterResponseCommand":
+<<<<<<< HEAD
                                     cmd = new LoginRegisterResponseCommand(respondData.icommand.get(0).getUser());
+=======
+//                                    cmd = new LoginRegisterResponseCommand(respondData.icommand.get(0).getUser());
+                                    cmd = respondData.icommand.get(0);
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
                                     respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;

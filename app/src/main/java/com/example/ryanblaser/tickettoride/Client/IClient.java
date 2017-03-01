@@ -2,7 +2,11 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import java.util.List;
 
+<<<<<<< HEAD
 import com.example.ryanblaser.tickettoride.Command.CommandContainer;
+=======
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
 /**
@@ -43,6 +47,19 @@ public interface IClient {
     public CommandContainer loginRegisterSucceeded(User user);
     public CommandContainer logoutSucceeded();
 
+<<<<<<< HEAD
+=======
+    // Phase 2 additions - Ryan Blaser
+    public CommandContainer broadcastToChat(String message);
+    public CommandContainer getDestinationCards();
+    public CommandContainer selectRequestedDestinationCard();
+    public CommandContainer showMessage(String message);
+    public CommandContainer updateCarCount();
+    public CommandContainer updateFaceUpTableTrainCards();
+    public CommandContainer updatePlayerDestinationCards();
+    public CommandContainer updatePlayerTrainCards();
+
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
     public void attachObserver(/* Observer object */);
     public void detachObserver(/* Observer object */);
 }

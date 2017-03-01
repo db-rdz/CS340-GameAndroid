@@ -2,12 +2,22 @@ package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ServerProxy;
+<<<<<<< HEAD
 import com.example.ryanblaser.tickettoride.Command.AddJoinableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.AddResumableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.CommandContainer;
 import com.example.ryanblaser.tickettoride.Command.DeleteGameCommand;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+=======
+import com.example.ryanblaser.tickettoride.Command.Phase1.AddJoinableToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.AddResumableToClientCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.Phase1.DeleteGameCommand;
+import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 import com.example.ryanblaser.tickettoride.GUI.Views.ILobbyView;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
@@ -75,4 +85,12 @@ public class LobbyPresenter implements ILobbyPresenter {
         }
         return result;
     }
+<<<<<<< HEAD
+=======
+
+    public void switchToWaitingView()
+    {
+        MainActivity.getLobbyFragment().switchToWaitingView();
+    }
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 }

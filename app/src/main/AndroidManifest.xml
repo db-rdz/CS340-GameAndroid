@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".GUI.Activities.MainActivity">
+<<<<<<< HEAD
 
         </activity>
         <activity android:name=".GUI.Activities.GameActivity" />
@@ -23,12 +24,18 @@
             android:name=".GUI.Activities.BoardActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_board">
+=======
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+=======
+        <activity android:name=".GUI.Activities.GameActivity"></activity>
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
     </application>
 
 </manifest>
