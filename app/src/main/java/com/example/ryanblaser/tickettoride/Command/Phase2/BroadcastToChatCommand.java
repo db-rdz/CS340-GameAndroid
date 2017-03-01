@@ -12,6 +12,8 @@ import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
  * At the very least, when a route is claimed this command will be called.
  * This tells everyone in the game what a player has done during their turn.
  *
+ * TEST
+ *
  * Created by natha on 2/28/2017.
  */
 
