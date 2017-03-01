@@ -8,6 +8,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.AddResumableToClientCo
 import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Command.Phase1.DeleteGameCommand;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Views.ILobbyView;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
@@ -74,5 +75,10 @@ public class LobbyPresenter implements ILobbyPresenter {
             command.execute();
         }
         return result;
+    }
+
+    public void switchToWaitingView()
+    {
+        MainActivity.getLobbyFragment().switchToWaitingView();
     }
 }

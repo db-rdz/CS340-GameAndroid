@@ -27,7 +27,7 @@ public class AddJoinableToClientCommand implements ICommand { // sent after chan
 
   @Override
   public CommandContainer execute() {
-    ClientFacade.SINGLETON.getClientModel().addJoinableGame(gameId);
+    ClientFacade.SINGLETON.getClientModel().addJoinableGame(game.get_i_gameId());
     return null;
   }
 

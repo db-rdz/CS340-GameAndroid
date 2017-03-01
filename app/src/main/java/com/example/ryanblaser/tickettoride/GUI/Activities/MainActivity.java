@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.GUI.Views.LobbyFragment;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
+import com.example.ryanblaser.tickettoride.GUI.Views.WaitingFragment;
 import com.example.ryanblaser.tickettoride.R;
 import com.example.ryanblaser.tickettoride.Client.User;
 
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static LoginFragment loginFragment;
     private static LobbyFragment lobbyFragment;
+    private static WaitingFragment waitingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        if (waitingFragment == null)
+            waitingFragment = WaitingFragment.newInstance("", "");
+
+
     }
 
 
@@ -67,4 +73,11 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getBaseContext(), "Invalid Username!", Toast.LENGTH_SHORT).show();
     }
 
+    public static WaitingFragment getWaitingFragment() {
+        return waitingFragment;
+    }
+
+    public static void setWaitingFragment(WaitingFragment waitingFragment) {
+        MainActivity.waitingFragment = waitingFragment;
+    }
 }

@@ -15,27 +15,26 @@ import java.util.TimerTask;
  * Created by RyanBlaser on 2/12/17.
  */
 
-public class Poller {
+public class Poller implements Runnable {
     private final Timer timer = new Timer();
     private TimerTask timerTask;
 
     public Poller()
     {
-//        TimerTask timerTask = new TimerTask() {
-//            @Override
-//            public void run() {
-//                try {
-//					checkForCommands();
-//				} catch (GameIsFullException e) {
-//					e.printStackTrace();
-//				}
-//            }
-//        };
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+					checkForCommands();
+				} catch (GameIsFullException e) {
+					e.printStackTrace();
+				}
+            }
+        };
 
         long delay = 10000; //10 seconds
-//        long delay = 60000; //counts in milisecs so 1min.
 
-//        timer.schedule(timerTask, delay);
+        timer.schedule(timerTask, delay);
     }
 
     public CommandContainer checkForCommands() throws GameIsFullException
@@ -68,4 +67,8 @@ public class Poller {
 
     public TimerTask getTimerTask() { return timerTask; }
     public void setTimerTask(TimerTask timerTask) { this.timerTask = timerTask; }
+
+    @Override
+    public void run() {
+    }
 }

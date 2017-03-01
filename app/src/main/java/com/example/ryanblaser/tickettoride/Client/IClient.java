@@ -43,6 +43,16 @@ public interface IClient {
     public CommandContainer loginRegisterSucceeded(User user);
     public CommandContainer logoutSucceeded();
 
+    // Phase 2 additions - Ryan Blaser
+    public CommandContainer broadcastToChat(String message);
+    public CommandContainer getDestinationCards();
+    public CommandContainer selectRequestedDestinationCard();
+    public CommandContainer showMessage(String message);
+    public CommandContainer updateCarCount();
+    public CommandContainer updateFaceUpTableTrainCards();
+    public CommandContainer updatePlayerDestinationCards();
+    public CommandContainer updatePlayerTrainCards();
+
     public void attachObserver(/* Observer object */);
     public void detachObserver(/* Observer object */);
 }

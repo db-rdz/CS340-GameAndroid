@@ -2,7 +2,9 @@ package com.example.ryanblaser.tickettoride.ServerModel.UserModel;
 
 import com.example.ryanblaser.tickettoride.Database.DAO;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,7 @@ public class User implements iUser {
     private String _S_password = null;
     private String _S_token = null;
 
+    @JsonProperty("userInGame")
     private Boolean _B_isInGame = false;
     private List<Game> _L_joinedGames = new ArrayList<>();
 
@@ -77,8 +80,8 @@ public class User implements iUser {
     public List<Game> getJoinedGames() { return _L_joinedGames; }
     public void setJoinedGameList(List<Game> _L_joinedGames) { this._L_joinedGames = _L_joinedGames; }
     
-	public static List<com.example.ryanblaser.tickettoride.ServerModel.UserModel.User> get_L_listOfAllUsers() { //TODO: Implement!
-		return null;
+	public static List<User> get_L_listOfAllUsers() throws SQLException {
+		return DAO._SINGLETON.getAllUsers();
 	}
 
 

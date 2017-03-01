@@ -3,6 +3,7 @@ package com.example.ryanblaser.tickettoride.GUI.Views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,4 +131,12 @@ public class LobbyFragment extends Fragment {
             startActivity(intent);
         }
     };
+
+    public void switchToWaitingView()
+    {
+        MainActivity sudo_mainActivity = ClientFacade.SINGLETON.getClientModel().getMainActivity();
+        FragmentTransaction ft = sudo_mainActivity.getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.lobbyFragment, sudo_mainActivity.getWaitingFragment());
+        ft.commit();
+    }
 }

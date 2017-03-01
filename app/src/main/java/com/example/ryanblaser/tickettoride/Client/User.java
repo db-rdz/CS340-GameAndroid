@@ -18,6 +18,12 @@ public class User {
     	password = "";
         str_authentication_code = "-1" ; //initialize to -1 for debugging purposes.
     }
+
+    public User(String u, String p)
+    {
+        username = u;
+        password = p;
+    }
     
     @Override
     public String toString() {

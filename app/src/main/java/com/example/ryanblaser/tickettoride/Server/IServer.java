@@ -17,7 +17,7 @@ public interface IServer {
     CommandContainer register(String username, String password) throws IClient.UsernameAlreadyExists;
     CommandContainer addGame(Game game);
     public CommandContainer addResumableGame(int gameId);
-    public int addJoinableGame();
+    public int addJoinableGame(String str_authentication_code);
     public CommandContainer addWaitingGame(int gameId);
     CommandContainer removeGame(Game game);
     CommandContainer startGame(int gameId, String str_authentication_code);

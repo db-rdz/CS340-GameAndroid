@@ -29,12 +29,12 @@ public class ClientFacade implements IClient {
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
-    private Poller poller;
+  //  private Poller poller;
 
     private ClientFacade() {
         attachLoginObserver(LoginPresenter.SINGLETON);
         attachLobbyObserver(LobbyPresenter.SINGLETON);
-        poller = new Poller();
+       // poller = new Poller();
     }
 
     /**
@@ -77,7 +77,7 @@ public class ClientFacade implements IClient {
 
     @Override
     public CommandContainer addJoinableGame() {
-        ServerProxy.SINGLETON.addJoinableGame();
+        ServerProxy.SINGLETON.addJoinableGame(clientmodel.getUser().getStr_authentication_code());
         //lobbypresenter
 		return null;
     }
@@ -85,6 +85,7 @@ public class ClientFacade implements IClient {
     @Override
     public CommandContainer addWaitingGame(int gameId) {
         clientmodel.addWaitingGame(gameId);
+        lobbypresenter.switchToWaitingView();
         //lobbypresenter
 		return null;
     }
@@ -174,7 +175,47 @@ public class ClientFacade implements IClient {
         clientmodel.setUser(null);
     	return null;
     }
-    
+
+    @Override
+    public CommandContainer broadcastToChat(String message) {
+        return ServerProxy.SINGLETON.broadcastToChat(message);
+    }
+
+    @Override
+    public CommandContainer getDestinationCards() {
+        return null;
+    }
+
+    @Override
+    public CommandContainer selectRequestedDestinationCard() {
+        return null;
+    }
+
+    @Override
+    public CommandContainer showMessage(String message) {
+        return null;
+    }
+
+    @Override
+    public CommandContainer updateCarCount() {
+        return null;
+    }
+
+    @Override
+    public CommandContainer updateFaceUpTableTrainCards() {
+        return null;
+    }
+
+    @Override
+    public CommandContainer updatePlayerDestinationCards() {
+        return null;
+    }
+
+    @Override
+    public CommandContainer updatePlayerTrainCards() {
+        return null;
+    }
+
 
     public User getCurrentUser() { return clientmodel.getUser(); }
     public void setCurrentUser(User user) { clientmodel.setUser(user);}
@@ -184,5 +225,5 @@ public class ClientFacade implements IClient {
     public void attachLobbyObserver(LobbyFragment lobbyFragment) {
     }
 
-    public Poller getPoller() { return poller; }
+  //  public Poller getPoller() { return poller; }
 }

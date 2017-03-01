@@ -2,16 +2,11 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import android.os.AsyncTask;
 
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddJoinableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddWaitingToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
-import com.example.ryanblaser.tickettoride.Command.Phase1.GetCommandsCommand;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.ListJoinableCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.ListResumableCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.ListWaitingCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.LoginRegisterResponseCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LogoutResponseCommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -53,6 +48,7 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
         string_urlSuffix = urlSuffix;
         gson = new Gson();
         objectMapper = new ObjectMapper();
+        //objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         cmd = null;
     }
 
@@ -83,20 +79,27 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                     try {
                         InputStreamReader isr = new InputStreamReader(http.getInputStream());
 //                        CommandContainer respondData = gson.fromJson(isr, CommandContainer.class); //Receive a serialized CommandContainer
-                        CommandContainer respondData = objectMapper.readValue(http.getInputStream(), CommandContainer.class);
+                        CommandContainer respondData = null;
+                        try {
+                             respondData = objectMapper.readValue(http.getInputStream(), CommandContainer.class);
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
 
                         //TODO: CommandContainer will contain Lists now. So this switch will be in a loop now.
                         for (int i = 0; i < respondData.str_type.size(); i++) {
                             switch (respondData.str_type.get(i)) { //Make the corresponding command depending on the type of command.
 
-                                case "GetCommandsCommand":
-                                    cmd = new GetCommandsCommand(respondData.str_type);
-                                    cmd.execute();
-                                    break;
+//                                case "GetCommandsCommand":
+//                                    cmd = new GetCommandsCommand(respondData.str_type);
+//                                    cmd.execute();
+//                                    break;
 
                                 case "AddJoinableCommand":
-                                    cmd = new AddJoinableToClientCommand(respondData.icommand.get(0).getGame());
+//                                    cmd = new AddJoinableToClientCommand(respondData.icommand.get(0).getGame());
+                                    cmd = respondData.icommand.get(0);
                                     respondData.icommand.remove(0); //Gets rid of the first object in the list to accomodate for the next command called
                                     cmd.execute();
                                     break;
@@ -108,7 +111,8 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                     break;
 
                                 case "AddWaitingCommand":
-                                    cmd = new AddWaitingToClientCommand(respondData.icommand.get(0).getGame());
+                                    //cmd = new AddWaitingToClientCommand(respondData.icommand.get(0).getGame());
+                                    cmd = respondData.icommand.get(0);
                                     respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
@@ -119,7 +123,8 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                     break;
 
                                 case "ListJoinableCommand":
-                                    cmd = new ListJoinableCommand((List<Integer>) respondData.icommand.get(0));
+                                    //cmd = new ListJoinableCommand((List<Integer>) respondData.icommand.get(0));
+                                    cmd = respondData.icommand.get(0);
                                     respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
@@ -137,7 +142,8 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                     break;
 
                                 case "LoginRegisterResponseCommand":
-                                    cmd = new LoginRegisterResponseCommand(respondData.icommand.get(0).getUser());
+//                                    cmd = new LoginRegisterResponseCommand(respondData.icommand.get(0).getUser());
+                                    cmd = respondData.icommand.get(0);
                                     respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;

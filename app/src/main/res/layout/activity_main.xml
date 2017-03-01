@@ -24,4 +24,9 @@
         android:id="@+id/loginFragment">
 
     </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/waitingFragment"></FrameLayout>
 </RelativeLayout>
