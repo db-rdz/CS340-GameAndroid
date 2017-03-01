@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/card_one"
+            android:layout_width="186dp"
+            android:layout_height="94dp"
+            android:src="@drawable/destination_card"
+            android:scaleType = "centerCrop"/>
+
+        <TextView
+            android:id="@+id/card_destination"
+            android:text="From here to there..."
+            android:textStyle="bold"
+            android:layout_height="95dp"
+            android:layout_width="181dp"
+            android:gravity="top|left"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/card_points"
+            android:text="Points!"
+            android:textStyle="bold"
+            android:layout_height="92dp"
+            android:layout_width="175dp"
+            android:gravity="bottom|right"
+            android:textColor="?android:attr/fastScrollTextColor"
+            android:textSize="18sp" />
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/completeCommand"
+            android:text="Yes"
+            android:layout_width="53dp"
+            android:layout_height="40dp"
+            android:elevation="1dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/reject"
+            android:text="No"
+            android:layout_width="53dp"
+            android:layout_height="40dp"
+            android:elevation="1dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:textSize="12sp" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </FrameLayout>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</FrameLayout>

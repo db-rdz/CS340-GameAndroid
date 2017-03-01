@@ -1,0 +1,131 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loginScreen">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/editText_username"
+            android:hint="enter username"
+            android:layout_alignParentRight="true"
+            android:text="test" />
+
+        <TextView
+            android:text="Server:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_server"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_alignBaseline="@+id/editText_server"
+            android:layout_alignBottom="@+id/editText_server"
+            android:layout_alignStart="@+id/textView_password"
+            android:layout_alignLeft="@+id/textView_password" />
+
+        <TextView
+            android:text="Password:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_alignBaseline="@+id/editText_password"
+            android:layout_alignBottom="@+id/editText_password"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="19dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="19dp" />
+
+        <TextView
+            android:text="Username:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_username"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_alignBaseline="@+id/editText_username"
+            android:layout_alignBottom="@+id/editText_username"
+            android:layout_alignStart="@+id/textView_password"
+            android:layout_alignLeft="@+id/textView_password" />
+
+        <TextView
+            android:text="Server Port:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_port"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_alignBaseline="@+id/editText_port"
+            android:layout_alignBottom="@+id/editText_port"
+            android:layout_alignStart="@+id/textView_server"
+            android:layout_alignLeft="@+id/textView_server" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText_server"
+            android:hint="e.g. 192.168.1.172"
+            android:layout_below="@+id/editText_password"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="10.14.183.82" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editText_port"
+            android:hint="e.g. 8080"
+            android:layout_below="@+id/editText_server"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="8011" />
+
+        <Button
+            android:text="LOG IN"
+            android:layout_width="150dp"
+            android:id="@+id/button_login"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:elevation="0dp"
+            android:contentDescription="Logs in the user to the app"
+            android:layout_below="@+id/editText_port"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/editText_password"
+            android:hint="enter password"
+            android:layout_below="@+id/editText_username"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="test" />
+
+        <Button
+            android:text="REGISTER"
+            android:layout_width="150dp"
+            android:id="@+id/button_register"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:elevation="0dp"
+            android:contentDescription="Logs in the user to the app"
+            android:layout_below="@+id/button_login"
+            android:layout_alignLeft="@+id/button_login"
+            android:layout_alignStart="@+id/button_login" />
+    </RelativeLayout>
+
+</FrameLayout>
