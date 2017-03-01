@@ -2,9 +2,13 @@ package com.example.ryanblaser.tickettoride.ServerModel.UserModel;
 
 import com.example.ryanblaser.tickettoride.Database.DAO;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+<<<<<<< HEAD
+
+=======
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.SQLException;
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +24,10 @@ public class User implements iUser {
     private String _S_password = null;
     private String _S_token = null;
 
+<<<<<<< HEAD
+=======
     @JsonProperty("userInGame")
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
     private Boolean _B_isInGame = false;
     private List<Game> _L_joinedGames = new ArrayList<>();
 
@@ -80,8 +87,13 @@ public class User implements iUser {
     public List<Game> getJoinedGames() { return _L_joinedGames; }
     public void setJoinedGameList(List<Game> _L_joinedGames) { this._L_joinedGames = _L_joinedGames; }
     
+<<<<<<< HEAD
+	public static List<com.example.ryanblaser.tickettoride.ServerModel.UserModel.User> get_L_listOfAllUsers() { //TODO: Implement!
+		return null;
+=======
 	public static List<User> get_L_listOfAllUsers() throws SQLException {
 		return DAO._SINGLETON.getAllUsers();
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 	}
 
 

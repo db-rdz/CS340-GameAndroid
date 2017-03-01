@@ -8,7 +8,11 @@ import com.example.ryanblaser.tickettoride.Server.IServer;
 
 import java.util.List;
 
+<<<<<<< HEAD
+import com.example.ryanblaser.tickettoride.Command.CommandContainer;
+=======
 import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
 /**
  * This class accesses the data in the Client Holder/Model.
@@ -29,12 +33,20 @@ public class ClientFacade implements IClient {
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
+<<<<<<< HEAD
+    private Poller poller;
+=======
   //  private Poller poller;
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
     private ClientFacade() {
         attachLoginObserver(LoginPresenter.SINGLETON);
         attachLobbyObserver(LobbyPresenter.SINGLETON);
+<<<<<<< HEAD
+        poller = new Poller();
+=======
        // poller = new Poller();
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
     }
 
     /**
@@ -77,7 +89,11 @@ public class ClientFacade implements IClient {
 
     @Override
     public CommandContainer addJoinableGame() {
+<<<<<<< HEAD
+        ServerProxy.SINGLETON.addJoinableGame();
+=======
         ServerProxy.SINGLETON.addJoinableGame(clientmodel.getUser().getStr_authentication_code());
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
         //lobbypresenter
 		return null;
     }
@@ -85,7 +101,10 @@ public class ClientFacade implements IClient {
     @Override
     public CommandContainer addWaitingGame(int gameId) {
         clientmodel.addWaitingGame(gameId);
+<<<<<<< HEAD
+=======
         lobbypresenter.switchToWaitingView();
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
         //lobbypresenter
 		return null;
     }
@@ -175,6 +194,9 @@ public class ClientFacade implements IClient {
         clientmodel.setUser(null);
     	return null;
     }
+<<<<<<< HEAD
+    
+=======
 
     @Override
     public CommandContainer broadcastToChat(String message) {
@@ -216,6 +238,7 @@ public class ClientFacade implements IClient {
         return null;
     }
 
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
     public User getCurrentUser() { return clientmodel.getUser(); }
     public void setCurrentUser(User user) { clientmodel.setUser(user);}
@@ -225,5 +248,9 @@ public class ClientFacade implements IClient {
     public void attachLobbyObserver(LobbyFragment lobbyFragment) {
     }
 
+<<<<<<< HEAD
+    public Poller getPoller() { return poller; }
+=======
   //  public Poller getPoller() { return poller; }
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 }

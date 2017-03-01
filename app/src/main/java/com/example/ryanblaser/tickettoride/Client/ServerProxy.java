@@ -1,8 +1,12 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import com.example.ryanblaser.tickettoride.Command.*;
+<<<<<<< HEAD
+import com.example.ryanblaser.tickettoride.Command.AddPlayerToClientCommand;
+=======
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToServerCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 //import Command.AddResumableToClientCommand;
 //import Command.AddWaitingToClientCommand;
 //import Commandcom.example.ryanblaser.tickettoride.CommandContainer;
@@ -18,12 +22,15 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientComma
 //import Command.LogoutResponseCommand;
 //import Command.RegisterCommand;
 //import Command.StartGameCommand;
+<<<<<<< HEAD
+=======
 import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Command.Phase1.DeleteGameCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.GetCommandsCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LoginCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.RegisterCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.StartGameCommand;
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -76,7 +83,11 @@ public class ServerProxy implements IServer {
         types.add("RegisterCommand");
 
         List<ICommand> commands = new ArrayList<>();
+<<<<<<< HEAD
+//        commands.add(new RegisterCommand(username));
+=======
         commands.add(new RegisterCommand(new User(username, password)));
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
         CommandContainer registerCommand = new CommandContainer(types, commands);
 
@@ -116,15 +127,23 @@ public class ServerProxy implements IServer {
     }
 
     @Override
+<<<<<<< HEAD
+    public int addJoinableGame() {
+=======
     public int addJoinableGame(String str_authentication_code) {
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
         String urlSuffix = "/command";
 
         List<String> types = new ArrayList<>();
         types.add("AddJoinableCommand");
 
         List<ICommand> commands = new ArrayList<>();
+<<<<<<< HEAD
+        commands.add(new AddJoinableToClientCommand(new Game()));
+=======
         commands.add(new AddGameToServerCommand(str_authentication_code));
 
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
         CommandContainer addGameCommand = new CommandContainer(types, commands);
 
@@ -359,13 +378,21 @@ public class ServerProxy implements IServer {
         types.add("GetCommandsCommand");
 
         List<ICommand> commands = new ArrayList<>();
+<<<<<<< HEAD
+//        commands.add(new GetCommandsCommand());
+=======
         commands.add(new GetCommandsCommand());
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
         CommandContainer checkForCommands = new CommandContainer(types, commands);
 
         try {
+<<<<<<< HEAD
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+=======
 //            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
             URL url = new URL("http://10.0.0.92:8080" + urlSuffix);
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, checkForCommands);
             clientCommunicator.execute(url);
         } catch (Exception e) {
@@ -453,7 +480,10 @@ public class ServerProxy implements IServer {
 //		return null;
 //	}
 
+<<<<<<< HEAD
+=======
     public CommandContainer broadcastToChat(String message) {
         return null;
     }
+>>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 }
