@@ -5,6 +5,7 @@ import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * FROM CLIENT -> SERVER
@@ -20,16 +21,19 @@ public class GetFirstDeckTrainCardCommand implements ICommand {
         return null;
     }
 
+    @JsonIgnore
     @Override
     public String getAuthenticationCode() {
         return null;
     }
 
+    @JsonIgnore
     @Override
     public User getUser() {
         return null;
     }
 
+    @JsonIgnore
     @Override
     public Game getGame() {
         return null;

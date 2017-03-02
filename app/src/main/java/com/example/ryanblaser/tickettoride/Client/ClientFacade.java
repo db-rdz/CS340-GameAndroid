@@ -224,6 +224,11 @@ public class ClientFacade implements IClient {
     }
 
     @Override
+    public CommandContainer updatePoints(int pointsToAdd) {
+        return null;
+    }
+
+    @Override
     public CommandContainer updateFaceUpTableTrainCards() {
         return null;
     }

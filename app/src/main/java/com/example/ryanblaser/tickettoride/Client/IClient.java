@@ -58,6 +58,7 @@ public interface IClient {
     public CommandContainer updateFaceUpTableTrainCards();
     public CommandContainer updatePlayerDestinationCards();
     public CommandContainer updatePlayerTrainCards();
+    public CommandContainer updatePoints(int pointsToAdd);
 
 >>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
     public void attachObserver(/* Observer object */);
