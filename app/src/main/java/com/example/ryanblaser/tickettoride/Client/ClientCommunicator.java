@@ -109,9 +109,9 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
 >>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
 
-                        //TODO: CommandContainer will contain Lists now. So this switch will be in a loop now.
-                        for (int i = 0; i < respondData.str_type.size(); i++) {
-                            switch (respondData.str_type.get(i)) { //Make the corresponding command depending on the type of command.
+                        if (respondData != null) {
+                            for (int i = 0; i < respondData.str_type.size(); i++) {
+                                switch (respondData.str_type.get(i)) { //Make the corresponding command depending on the type of command.
 
 <<<<<<< HEAD
                                 case "GetCommandsCommand":
@@ -127,16 +127,24 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
 //                                    cmd.execute();
 //                                    break;
 
-                                case "AddJoinableCommand":
+                                    case "AddJoinableCommand":
 //                                    cmd = new AddJoinableToClientCommand(respondData.icommand.get(0).getGame());
+<<<<<<< Updated upstream
                                     cmd = respondData.icommand.get(0);
 >>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
                                     respondData.icommand.remove(0); //Gets rid of the first object in the list to accomodate for the next command called
                                     cmd.execute();
                                     break;
+=======
+                                        cmd = respondData.icommand.get(0);
+                                        respondData.icommand.remove(0); //Gets rid of the first object in the list to accomodate for the next command called
+                                        cmd.execute();
+                                        break;
+>>>>>>> Stashed changes
 
-                                case "AddResumableCommand":
+                                    case "AddResumableCommand":
 //                                    cmd = new AddResumableToClientCommand((int)respondData.icommand.get(0));
+<<<<<<< Updated upstream
                                     respondData.icommand.remove(0);
                                     cmd.execute();
                                     break;
@@ -200,6 +208,60 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                 default:
                                     cmd = null; //If nothing was received
                                     break;
+=======
+                                        respondData.icommand.remove(0);
+                                        cmd.execute();
+                                        break;
+
+                                    case "AddWaitingCommand":
+                                        //cmd = new AddWaitingToClientCommand(respondData.icommand.get(0).getGame());
+                                        cmd = respondData.icommand.get(0);
+                                        respondData.icommand.remove(0);
+                                        cmd.execute();
+                                        break;
+
+                                    case "AddPlayerCommand":
+                                        cmd = respondData.icommand.get(0);
+                                        cmd.execute();
+                                        break;
+
+                                    case "ListJoinableCommand":
+                                        //cmd = new ListJoinableCommand((List<Integer>) respondData.icommand.get(0));
+                                        cmd = respondData.icommand.get(0);
+                                        respondData.icommand.remove(0);
+                                        cmd.execute();
+                                        break;
+
+                                    case "ListResumableCommand":
+                                        cmd = new ListResumableCommand((List<Integer>) respondData.icommand.get(0));
+                                        respondData.icommand.remove(0);
+                                        cmd.execute();
+                                        break;
+
+                                    case "ListWaitingCommand":
+                                        cmd = new ListWaitingCommand((List<Integer>) respondData.icommand.get(0));
+                                        respondData.icommand.remove(0);
+                                        cmd.execute();
+                                        break;
+
+                                    case "LoginRegisterResponseCommand":
+//                                    cmd = new LoginRegisterResponseCommand(respondData.icommand.get(0).getUser());
+                                        cmd = respondData.icommand.get(0);
+                                        respondData.icommand.remove(0);
+                                        cmd.execute();
+                                        break;
+
+                                    case "LogoutResponseCommand":
+                                        cmd = new LogoutResponseCommand();
+                                        respondData.icommand.remove(0);
+                                        cmd.execute();
+                                        break;
+
+                                    default:
+                                        cmd = null; //If nothing was received
+                                        break;
+                                }
+>>>>>>> Stashed changes
                             }
                         }
                         return cmd;

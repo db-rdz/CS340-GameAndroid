@@ -33,20 +33,28 @@ public class ClientFacade implements IClient {
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     private Poller poller;
 =======
   //  private Poller poller;
 >>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
+=======
+    private Poller poller;
+>>>>>>> Stashed changes
 
     private ClientFacade() {
         attachLoginObserver(LoginPresenter.SINGLETON);
         attachLobbyObserver(LobbyPresenter.SINGLETON);
+<<<<<<< Updated upstream
 <<<<<<< HEAD
         poller = new Poller();
 =======
        // poller = new Poller();
 >>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
+=======
+        poller = new Poller();
+>>>>>>> Stashed changes
     }
 
     /**
@@ -253,9 +261,13 @@ public class ClientFacade implements IClient {
     public void attachLobbyObserver(LobbyFragment lobbyFragment) {
     }
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     public Poller getPoller() { return poller; }
 =======
   //  public Poller getPoller() { return poller; }
 >>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
+=======
+    public Poller getPoller() { return poller; }
+>>>>>>> Stashed changes
 }

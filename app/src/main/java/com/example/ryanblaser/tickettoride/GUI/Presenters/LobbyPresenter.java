@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.ServerProxy;
 <<<<<<< HEAD
 import com.example.ryanblaser.tickettoride.Command.AddJoinableToClientCommand;
@@ -60,30 +61,31 @@ public class LobbyPresenter implements ILobbyPresenter {
 
     @Override
     public CommandContainer update() throws IServer.GameIsFullException {
-        CommandContainer result = ServerProxy.SINGLETON.checkForCommands();
-        ICommand command;
-        for (int i = 0; i < result.str_type.size(); i++)
-        {
-            switch (result.str_type.get(i)) {
-                case "AddJoinableCommand" :
-                    command = new AddJoinableToClientCommand(result.icommand.get(i).getGame());
-                    break;
-                case "DeleteGameCommand" :
-                    command = (DeleteGameCommand) result.icommand.get(i);
-                    break;
-                case "AddResumableToClientCommand" :
-                    command = (AddResumableToClientCommand) result.icommand.get(i);
-                    break;
-                case "AddPlayerToClientCommand" :
-                    command = (AddPlayerToClientCommand) result.icommand.get(i);
-                    break;
-                default:
-                    command = null;
-                    break;
-            }
-            command.execute();
-        }
-        return result;
+//        CommandContainer result = ServerProxy.SINGLETON.checkForCommands();
+//        ICommand command;
+//        for (int i = 0; i < result.str_type.size(); i++)
+//        {
+//            switch (result.str_type.get(i)) {
+//                case "AddJoinableCommand" :
+//                    command = new AddJoinableToClientCommand(result.icommand.get(i).getGame());
+//                    break;
+//                case "DeleteGameCommand" :
+//                    command = (DeleteGameCommand) result.icommand.get(i);
+//                    break;
+//                case "AddResumableToClientCommand" :
+//                    command = (AddResumableToClientCommand) result.icommand.get(i);
+//                    break;
+//                case "AddPlayerToClientCommand" :
+//                    command = (AddPlayerToClientCommand) result.icommand.get(i);
+//                    break;
+//                default:
+//                    command = null;
+//                    break;
+//            }
+//            command.execute();
+//        }
+//        return result;
+        return null;
     }
 <<<<<<< HEAD
 =======

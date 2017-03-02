@@ -370,7 +370,7 @@ public class ServerProxy implements IServer {
 //        }
 //    }
 
-    public CommandContainer checkForCommands()
+    public CommandContainer checkForCommands(String username)
     {
         String urlSuffix = "/update";
 
@@ -378,11 +378,15 @@ public class ServerProxy implements IServer {
         types.add("GetCommandsCommand");
 
         List<ICommand> commands = new ArrayList<>();
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 //        commands.add(new GetCommandsCommand());
 =======
         commands.add(new GetCommandsCommand());
 >>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
+=======
+        commands.add(new GetCommandsCommand(username));
+>>>>>>> Stashed changes
 
         CommandContainer checkForCommands = new CommandContainer(types, commands);
 
@@ -391,14 +395,18 @@ public class ServerProxy implements IServer {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
 =======
 //            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+<<<<<<< Updated upstream
             URL url = new URL("http://10.0.0.92:8080" + urlSuffix);
 >>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
+=======
+            URL url = new URL("http://"+ LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+>>>>>>> Stashed changes
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, checkForCommands);
             clientCommunicator.execute(url);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return checkForCommands;
     }
 
 

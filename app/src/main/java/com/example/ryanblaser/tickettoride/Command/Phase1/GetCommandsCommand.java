@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 public class GetCommandsCommand implements ICommand {
-  private List<String> list_icommands;
+  private String username;
   public GetCommandsCommand(){}
-  public GetCommandsCommand(List<String> list){
-    list_icommands = list;}
+  public GetCommandsCommand(String username){
+    this.username = username;}
 
   @JsonIgnore
   @Override
@@ -33,5 +33,10 @@ public class GetCommandsCommand implements ICommand {
   @Override
   public Game getGame() {
     return null;
+  }
+
+  public String getUsername()
+  {
+    return username;
   }
 }
