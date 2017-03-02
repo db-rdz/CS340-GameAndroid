@@ -1,6 +1,5 @@
 package com.example.ryanblaser.tickettoride.Server;
 
-import com.example.ryanblaser.tickettoride.Command.*;
 //import Command.AddGameToServerCommand;
 //import Command.AddPlayerToServerCommand;
 //import Command.CommandContainer;
@@ -13,10 +12,9 @@ import com.example.ryanblaser.tickettoride.Command.*;
 //import Command.StartGameCommand;
 //import Server.IServer.GameIsFullException;
 
-<<<<<<< HEAD
-=======
+
 import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
+import com.example.ryanblaser.tickettoride.Command.Phase1.ICommand;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

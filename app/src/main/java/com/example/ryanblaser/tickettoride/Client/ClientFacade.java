@@ -8,11 +8,9 @@ import com.example.ryanblaser.tickettoride.Server.IServer;
 
 import java.util.List;
 
-<<<<<<< HEAD
-import com.example.ryanblaser.tickettoride.Command.CommandContainer;
-=======
+
+
 import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
 /**
  * This class accesses the data in the Client Holder/Model.
@@ -33,28 +31,13 @@ public class ClientFacade implements IClient {
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
-<<<<<<< Updated upstream
-<<<<<<< HEAD
     private Poller poller;
-=======
-  //  private Poller poller;
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
-=======
-    private Poller poller;
->>>>>>> Stashed changes
+
 
     private ClientFacade() {
         attachLoginObserver(LoginPresenter.SINGLETON);
         attachLobbyObserver(LobbyPresenter.SINGLETON);
-<<<<<<< Updated upstream
-<<<<<<< HEAD
         poller = new Poller();
-=======
-       // poller = new Poller();
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
-=======
-        poller = new Poller();
->>>>>>> Stashed changes
     }
 
     /**
@@ -97,11 +80,7 @@ public class ClientFacade implements IClient {
 
     @Override
     public CommandContainer addJoinableGame() {
-<<<<<<< HEAD
-        ServerProxy.SINGLETON.addJoinableGame();
-=======
         ServerProxy.SINGLETON.addJoinableGame(clientmodel.getUser().getStr_authentication_code());
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
         //lobbypresenter
 		return null;
     }
@@ -109,10 +88,7 @@ public class ClientFacade implements IClient {
     @Override
     public CommandContainer addWaitingGame(int gameId) {
         clientmodel.addWaitingGame(gameId);
-<<<<<<< HEAD
-=======
         lobbypresenter.switchToWaitingView();
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
         //lobbypresenter
 		return null;
     }
@@ -127,8 +103,9 @@ public class ClientFacade implements IClient {
     
     @Override
     public CommandContainer startGame(int gameId, String authenticationCode) { // just gameId?
-        return ServerProxy.SINGLETON.startGame(gameId, authenticationCode);
+        ServerProxy.SINGLETON.startGame(gameId, authenticationCode);
         //lobbypresenter
+        return null;
     }
 
     public CommandContainer addPlayerToModel(String str_authentication_code, int gameId) throws IServer.GameIsFullException { // which exception?
@@ -202,9 +179,6 @@ public class ClientFacade implements IClient {
         clientmodel.setUser(null);
     	return null;
     }
-<<<<<<< HEAD
-    
-=======
 
     @Override
     public CommandContainer broadcastToChat(String message) {
@@ -251,8 +225,6 @@ public class ClientFacade implements IClient {
         return null;
     }
 
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
-
     public User getCurrentUser() { return clientmodel.getUser(); }
     public void setCurrentUser(User user) { clientmodel.setUser(user);}
     
@@ -261,13 +233,6 @@ public class ClientFacade implements IClient {
     public void attachLobbyObserver(LobbyFragment lobbyFragment) {
     }
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
     public Poller getPoller() { return poller; }
-=======
-  //  public Poller getPoller() { return poller; }
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
-=======
-    public Poller getPoller() { return poller; }
->>>>>>> Stashed changes
+
 }

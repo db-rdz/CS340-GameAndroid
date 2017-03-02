@@ -6,11 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Hashtable; // HashMap but hopefully throws exceptions if concurrently modified
 
-<<<<<<< HEAD
-public class ClientModel implements Cloneable{
-=======
+
 public class ClientModel{
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
     public enum GameType{
         JOINABLE, WAITING, RESUMABLE
@@ -74,10 +71,7 @@ public class ClientModel{
     public void addWaitingGame(int gameId){
         hashtable_id_to_list.put(gameId, GameType.WAITING);
         list_waiting.add(gameId);
-<<<<<<< HEAD
-=======
 
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
     }
 
     public void setResumableGames(List<Integer> list){

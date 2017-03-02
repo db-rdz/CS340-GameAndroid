@@ -1,10 +1,6 @@
 package com.example.ryanblaser.tickettoride.Server;
 
-<<<<<<< HEAD
-import com.example.ryanblaser.tickettoride.Command.CommandContainer;
-=======
 import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
->>>>>>> 960a86b1539ed8a6872c5df4b399c4b605bfe5a8
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +18,9 @@ public class ClientProxy
     public ClientProxy()
     {
         _m_usersCommands = new HashMap<>();
-        commandTypes = new ArrayList<>();
     }
 
     private Map<String, CommandContainer> _m_usersCommands;
-
-    private List<String> commandTypes;
 
     public Map<String, CommandContainer> get_m_usersCommands() {
         return _m_usersCommands;
