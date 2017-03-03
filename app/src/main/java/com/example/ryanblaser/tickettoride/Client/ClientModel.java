@@ -19,6 +19,8 @@ public class ClientModel{
     private Hashtable<Integer, GameType> hashtable_id_to_list; //Each gameId key has their own GameType value.
     private Hashtable<Integer, List<String>> gameId_to_usernames;
     private MainActivity mainActivity;
+    private int int_car_count;
+    private int int_total_points;
 
     public ClientModel(MainActivity mainActivity1){
         mainActivity = mainActivity1;
@@ -27,6 +29,8 @@ public class ClientModel{
         list_resumable = new ArrayList<Integer>();
         hashtable_id_to_list = new Hashtable<Integer, GameType>();
         gameId_to_usernames = new Hashtable<Integer, List<String>>();
+        int_car_count = 45; //Each player starts with 45 train cars
+        int_total_points = 0;
     }
 
     public void setAuthenticationKey(String k){
@@ -122,6 +126,40 @@ public class ClientModel{
 
     }
 
+    /**
+     * Nathan
+     * Simply adds points to the player's current points.
+     *
+     * @return
+     */
+    public void updatePoints(int pointsToAdd) {
+        int_total_points += pointsToAdd;
+    }
+
+    /**
+     * Nathan
+     * Subtracts the player's current train car amount from the amount of cars used.
+     * @param numOfCarsUsed
+     */
+    public void updateCarCount(int numOfCarsUsed) {
+        int_car_count -= numOfCarsUsed;
+    }
+
     public MainActivity getMainActivity() { return mainActivity; }
 
+    public int getInt_car_count() {
+        return int_car_count;
+    }
+
+    public void setInt_car_count(int int_car_count) {
+        this.int_car_count = int_car_count;
+    }
+
+    public int getInt_total_points() {
+        return int_total_points;
+    }
+
+    public void setInt_total_points(int int_total_points) {
+        this.int_total_points = int_total_points;
+    }
 }
