@@ -50,7 +50,7 @@ public interface IClient {
     public CommandContainer getDestinationCards();
     public CommandContainer selectRequestedDestinationCard();
     public CommandContainer showMessage(String message);
-    public CommandContainer updateCarCount();
+    public CommandContainer updateCarCount(int numOfCarsUsed);
     public CommandContainer updateFaceUpTableTrainCards();
     public CommandContainer updatePlayerDestinationCards();
     public CommandContainer updatePlayerTrainCards();

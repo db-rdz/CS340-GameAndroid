@@ -14,7 +14,7 @@ package com.example.ryanblaser.tickettoride.Server;
 
 
 import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
-import com.example.ryanblaser.tickettoride.Command.Phase1.ICommand;
+import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

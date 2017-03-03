@@ -27,7 +27,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 public class ClientFacade implements IClient {
 
 
-    public static com.example.ryanblaser.tickettoride.Client.ClientFacade SINGLETON = new com.example.ryanblaser.tickettoride.Client.ClientFacade();
+    public static ClientFacade SINGLETON = new com.example.ryanblaser.tickettoride.Client.ClientFacade();
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
@@ -201,12 +201,14 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public CommandContainer updateCarCount() {
+    public CommandContainer updateCarCount(int numOfCarsUsed) {
+        clientmodel.updateCarCount(numOfCarsUsed);
         return null;
     }
 
     @Override
     public CommandContainer updatePoints(int pointsToAdd) {
+        clientmodel.updatePoints(pointsToAdd);
         return null;
     }
 

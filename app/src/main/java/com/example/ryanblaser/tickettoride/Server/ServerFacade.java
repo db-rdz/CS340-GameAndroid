@@ -2,7 +2,7 @@ package com.example.ryanblaser.tickettoride.Server;
 
 import com.example.ryanblaser.tickettoride.Client.IClient;
 
-import com.example.ryanblaser.tickettoride.Command.Phase1.ICommand;
+import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Database.DAO;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.ServerModel.ServerModel;
