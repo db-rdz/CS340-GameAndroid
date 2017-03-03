@@ -1,4 +1,4 @@
-package com.example.ryanblaser.tickettoride.Command.Phase1;
+package com.example.ryanblaser.tickettoride.Command;
 
 import com.example.ryanblaser.tickettoride.Client.User;
 
