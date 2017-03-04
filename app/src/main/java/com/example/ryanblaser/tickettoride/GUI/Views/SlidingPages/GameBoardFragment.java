@@ -2,6 +2,8 @@ package com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +30,7 @@ public class GameBoardFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Canvas mCanvas;
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -151,9 +154,13 @@ public class GameBoardFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_game_board, container, false);
 
         mVisible = true;
+        mCanvas = new Canvas();
         mControlsView = v.findViewById(R.id.fullscreen_content_controls);
         mContentView = v.findViewById(R.id.fullscreen_content);
-
+        Paint mpaint = new Paint();
+        mpaint.setColor(9);
+        mpaint.setStrokeWidth(20);
+        mCanvas.drawLine(50, 50, 200, 200, mpaint);
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override

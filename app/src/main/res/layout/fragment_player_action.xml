@@ -5,62 +5,73 @@
     xmlns:http="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayerActionFragment">
 
+
+
     <android.support.v7.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+        android:layout_width="214dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
 
             <com.redbooth.SlidingDeck
                 android:id="@+id/slidingDeck"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="156dp"
+                android:layout_height="-5033213dp" />
 
-        </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v7.widget.LinearLayoutCompat>
 
-        <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_gravity="bottom|center">
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="354dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical|right">
 
-            <ImageView
-                android:id="@+id/pick_one"
-                android:layout_width="59dp"
-                android:layout_height="94dp"
-                android:src="@drawable/blackcard"
-                android:scaleType = "centerCrop"/>
-            <ImageView
-                android:id="@+id/pick_two"
-                android:layout_width="59dp"
-                android:layout_height="94dp"
-                android:src="@drawable/blackcard"
-                android:scaleType = "centerCrop"/>
-            <ImageView
-                android:id="@+id/pick_three"
-                android:layout_width="59dp"
-                android:layout_height="94dp"
-                android:src="@drawable/blackcard"
-                android:scaleType = "centerCrop"/>
-            <ImageView
-                android:id="@+id/pick_four"
-                android:layout_width="59dp"
-                android:layout_height="94dp"
-                android:src="@drawable/blackcard"
-                android:scaleType = "centerCrop"/>
+        <ImageView
+            android:id="@+id/pick_one"
+            android:layout_width="59dp"
+            android:layout_height="94dp"
+            android:src="@drawable/blackcard"
+            android:scaleType = "centerCrop"/>
+        <ImageView
+            android:id="@+id/pick_two"
+            android:layout_width="59dp"
+            android:layout_height="94dp"
+            android:src="@drawable/blackcard"
+            android:scaleType = "centerCrop"/>
+        <ImageView
+            android:id="@+id/pick_three"
+            android:layout_width="59dp"
+            android:layout_height="94dp"
+            android:src="@drawable/blackcard"
+            android:scaleType = "centerCrop"/>
+        <ImageView
+            android:id="@+id/pick_four"
+            android:layout_width="59dp"
+            android:layout_height="94dp"
+            android:src="@drawable/blackcard"
+            android:scaleType = "centerCrop"/>
 
-            <ImageView
-                android:id="@+id/pick_five"
-                android:layout_width="59dp"
-                android:layout_height="94dp"
-                android:src="@drawable/blackcard"
-                android:scaleType = "centerCrop"/>
+        <ImageView
+            android:id="@+id/pick_five"
+            android:layout_width="59dp"
+            android:layout_height="94dp"
+            android:src="@drawable/blackcard"
+            android:scaleType = "centerCrop"/>
 
-        </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="354dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|right">
+
+    <ImageView
+        android:id="@+id/pick_deck"
+        android:layout_width="203dp"
+        android:layout_height="100dp"
+        android:src="@drawable/fan_deck"
+        android:scaleType = "centerCrop"/>
 
     </android.support.v7.widget.LinearLayoutCompat>
 
