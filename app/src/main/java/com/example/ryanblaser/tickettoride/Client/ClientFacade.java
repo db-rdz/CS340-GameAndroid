@@ -20,7 +20,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
  * Created by natha on 2/4/2017.
  *
  * The following note added by 0joshuaolson1 on 2/10/2017:
- * IClient should only have methods the server 'calls' on the ClientProxy.
+ * IClient should only have methods the server 'calls' on the CProxy.
  * All other methods (without @Override) are called by presenters/fragments/MainActivity.
  */
 
@@ -167,6 +167,7 @@ public class ClientFacade implements IClient {
     public CommandContainer loginRegisterSucceeded(User user) {
         clientmodel.setAuthenticationKey(user.getStr_authentication_code());
         clientmodel.setUser(user);
+        poller.setUser(user);
         loginpresenter.switchToLobbyView();
         //change view/presenter
 		return null;

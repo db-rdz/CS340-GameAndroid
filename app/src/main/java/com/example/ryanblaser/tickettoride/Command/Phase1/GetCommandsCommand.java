@@ -1,5 +1,4 @@
 package com.example.ryanblaser.tickettoride.Command.Phase1;
-import com.example.ryanblaser.tickettoride.Server.ClientProxy;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,7 +23,7 @@ public class GetCommandsCommand implements ICommand {
 
   @Override
   public CommandContainer execute(){
-    return ClientProxy.SINGLETON.getUserCommands(getUser().getUsername());
+    return null;
   }
 
   @Override

@@ -1,6 +1,5 @@
 package com.example.ryanblaser.tickettoride.Command.Phase1;
 
-import com.example.ryanblaser.tickettoride.Server.ServerFacade;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,7 +24,7 @@ public class LogoutCommand implements ICommand {
   
   @Override
   public CommandContainer execute(){
-    return ServerFacade.SINGLETON.logout(str_authentication_code);
+    return null;
     }
 
   @JsonIgnore
