@@ -8,5 +8,6 @@ public class GameBoardPresenter {
     private int screenSizeX;
     private int screenSizeY;
 
+    public GameBoardPresenter _SINGLETON  = new GameBoardPresenter();
 
 }
