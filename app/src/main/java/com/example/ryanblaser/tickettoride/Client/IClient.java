@@ -2,8 +2,7 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import java.util.List;
 
-
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
+import com.example.ryanblaser.tickettoride.Command.ICommand;
 
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
@@ -30,31 +29,29 @@ public interface IClient {
 
     }
 
-    public CommandContainer login(User user) throws InvalidUsername, InvalidPassword;
-    public CommandContainer register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists;
-    public CommandContainer addResumableGame(int gameId);
-    public CommandContainer addJoinableGame();
-    public CommandContainer addWaitingGame(int gameId);
-    public CommandContainer removeGame(int gameId);
-    public CommandContainer startGame(int gameId, String authorizationCode);
-    public CommandContainer addPlayer(String username, int gameId) throws IServer.GameIsFullException;
-    public CommandContainer logout(String str_authentication_code);
-    public CommandContainer listJoinableGames(List<Integer> listJoinableGames);
-    public CommandContainer listResumableGames(List<Integer> listResumableGames);
-    public CommandContainer listWaitingGames(List<Integer> listWaitingGames);
-    public CommandContainer loginRegisterSucceeded(User user);
-    public CommandContainer logoutSucceeded();
+    public void login(User user) throws InvalidUsername, InvalidPassword;
+    public void register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists;
+    public void addJoinableGame();
+    public void addWaitingGame(int gameId);
+    public void removeGame(int gameId);
+    public void startGame(int gameId, String authorizationCode);
+    public void addPlayer(String username, int gameId) throws IServer.GameIsFullException;
+    public void logout(String str_authentication_code);
+    public void listJoinableGames(List<Integer> listJoinableGames);
+    public void listWaitingGames(List<Integer> listWaitingGames);
+    public void loginRegisterSucceeded(User user);
+    public void logoutSucceeded();
 
     // Phase 2 additions - Ryan Blaser
-    public CommandContainer broadcastToChat(String message);
-    public CommandContainer getDestinationCards();
-    public CommandContainer selectRequestedDestinationCard();
-    public CommandContainer showMessage(String message);
-    public CommandContainer updateCarCount(int numOfCarsUsed);
-    public CommandContainer updateFaceUpTableTrainCards();
-    public CommandContainer updatePlayerDestinationCards();
-    public CommandContainer updatePlayerTrainCards();
-    public CommandContainer updatePoints(int pointsToAdd);
+    public void broadcastToChat(String message);
+    public void getDestinationCards();
+    public void selectRequestedDestinationCard();
+    public void showMessage(String message);
+    public void updateCarCount(int numOfCarsUsed);
+    public void updateFaceUpTableTrainCards();
+    public void updatePlayerDestinationCards();
+    public void updatePlayerTrainCards();
+    public void updatePoints(int pointsToAdd);
 
     public void attachObserver(/* Observer object */);
     public void detachObserver(/* Observer object */);

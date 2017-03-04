@@ -6,6 +6,8 @@ import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.List;
+
 public class AddPlayerToClientCommand implements ICommand { // sent after changes from what List... commands sent
   private int int_game_id;
   private String str_username;
@@ -32,7 +34,7 @@ public class AddPlayerToClientCommand implements ICommand { // sent after change
   }
 
   @Override
-  public CommandContainer execute() throws GameIsFullException {
+  public List<ICommand> execute() throws GameIsFullException {
     ClientFacade.SINGLETON.addPlayer(str_username, int_game_id);
     return null; //TODO: stub
   }

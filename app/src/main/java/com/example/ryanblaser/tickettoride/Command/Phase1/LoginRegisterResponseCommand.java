@@ -6,6 +6,8 @@ import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.List;
+
 public class LoginRegisterResponseCommand implements ICommand {
   private User user;
   private LoginRegisterResponseCommand(){}
@@ -20,7 +22,7 @@ public class LoginRegisterResponseCommand implements ICommand {
   }
   
   @Override
-  public CommandContainer execute(){
+  public List<ICommand> execute(){
     ClientFacade.SINGLETON.loginRegisterSucceeded(user);
     ClientFacade.SINGLETON.getPoller().setUser(user);
     return null;

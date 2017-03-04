@@ -29,7 +29,7 @@ public class ListJoinableCommand implements ICommand { // sent to clients after 
   }
   
   @Override
-  public CommandContainer execute(){
+  public List<ICommand> execute(){
     ClientFacade.SINGLETON.listJoinableGames(list_game_list);
     return null;
   }

@@ -76,7 +76,6 @@ public class LobbyFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Created a new game", Toast.LENGTH_SHORT).show();
                 LobbyPresenter.SINGLETON.addJoinableGame();
-                onResume();
             }
         });
 
@@ -86,7 +85,7 @@ public class LobbyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Refreshed game lobby", Toast.LENGTH_SHORT).show();
-                onResume(); //Refreshes the fragment view to show new data.
+//                onResume(); //Refreshes the fragment view to show new data.
 
             }
         });
@@ -107,7 +106,7 @@ public class LobbyFragment extends Fragment {
 //            e.printStackTrace();
 //        }
 
-        List<Integer> listJoinableGames = LobbyPresenter.SINGLETON.getJoinableGames();
+        List<Integer> listJoinableGames = LobbyPresenter.SINGLETON.getWaitingGames();
         if (listJoinableGames.size() > 0) {
             ArrayList<String> gamesList = new ArrayList<>();
             for (int i = 0; i < listJoinableGames.size(); i++) {
@@ -136,7 +135,7 @@ public class LobbyFragment extends Fragment {
     {
         MainActivity sudo_mainActivity = ClientFacade.SINGLETON.getClientModel().getMainActivity();
         FragmentTransaction ft = sudo_mainActivity.getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.lobbyFragment, sudo_mainActivity.getWaitingFragment());
+        ft.replace(R.id.lobbyFragment, sudo_mainActivity.getWaitingFragment()); //TODO: lobby doesn't go away
         ft.commit();
     }
 }

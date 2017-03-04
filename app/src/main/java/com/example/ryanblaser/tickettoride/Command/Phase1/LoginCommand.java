@@ -1,10 +1,10 @@
 package com.example.ryanblaser.tickettoride.Command.Phase1;
-import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Server.ServerFacade;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 public class LoginCommand implements ICommand {
     private User user;
@@ -17,14 +17,7 @@ public class LoginCommand implements ICommand {
     }
 
     @Override
-    public CommandContainer execute() {
-        try {
-            ServerFacade.SINGLETON.login(user);
-        } catch (IClient.InvalidUsername invalidUsername) {
-            invalidUsername.printStackTrace();
-        } catch (IClient.InvalidPassword invalidPassword) {
-            invalidPassword.printStackTrace();
-        }
+    public List<ICommand> execute() {
         return null;
     }
 

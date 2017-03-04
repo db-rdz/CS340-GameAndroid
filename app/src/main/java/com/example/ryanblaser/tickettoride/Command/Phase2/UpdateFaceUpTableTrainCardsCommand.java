@@ -4,10 +4,11 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 /**
  * FROM SERVER -> CLIENT
@@ -29,8 +30,9 @@ public class UpdateFaceUpTableTrainCardsCommand implements ICommand {
 
     //Functions
     @Override
-    public CommandContainer execute() throws IServer.GameIsFullException {
-        return ClientFacade.SINGLETON.updateFaceUpTableTrainCards(); //TODO: Need arguments?
+    public List<ICommand> execute() throws IServer.GameIsFullException {
+        ClientFacade.SINGLETON.updateFaceUpTableTrainCards(); //TODO: Need arguments?
+        return null;
     }
 
     @JsonIgnore

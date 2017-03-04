@@ -26,7 +26,7 @@ public class ListWaitingCommand implements ICommand { // sent to clients after l
   }
   
   @Override
-  public CommandContainer execute(){
+  public List<ICommand> execute(){
     ClientFacade.SINGLETON.listWaitingGames(list_game_list); //TODO: Decide which Game class to use
     return null;
   }

@@ -4,6 +4,9 @@ import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 /**
  * Created by RyanBlaser on 2/27/17.
@@ -16,21 +19,25 @@ public class AddGameToServerCommand implements ICommand {
         this.str_authentication_code = str_authentication_code;
     }
 
+    @JsonIgnore
     @Override
-    public CommandContainer execute() throws IServer.GameIsFullException {
+    public List<ICommand> execute() throws IServer.GameIsFullException {
         return null;
     }
+
 
     @Override
     public String getAuthenticationCode() {
         return str_authentication_code;
     }
 
+    @JsonIgnore
     @Override
     public User getUser() {
         return null;
     }
 
+    @JsonIgnore
     @Override
     public Game getGame() {
         return null;
