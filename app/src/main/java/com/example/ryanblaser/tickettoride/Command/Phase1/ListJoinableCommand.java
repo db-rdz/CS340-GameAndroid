@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ListJoinableCommand implements ICommand { // sent to clients after login/registration
 
-  @JsonProperty("list_Game_List")
+
   private List<Integer> list_game_list;
   private ListJoinableCommand(){}
   public ListJoinableCommand(List<Integer> list){
@@ -38,5 +38,10 @@ public class ListJoinableCommand implements ICommand { // sent to clients after 
   @Override
   public Game getGame() {
     return null;
+  }
+
+  @JsonProperty("list_game_list")
+  public List<Integer> getList_game_list() {
+    return list_game_list;
   }
 }

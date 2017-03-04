@@ -76,8 +76,10 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                         InputStreamReader isr = new InputStreamReader(http.getInputStream());
 
                         List<ICommand> respondData = null;
+                        TypeReference ref = new TypeReference<List<ICommand>>() { };
                         try {
-                             respondData = objectMapper.readValue(http.getInputStream(), new TypeReference<List<ICommand>>(){});
+                             respondData = objectMapper.readValue(http.getInputStream(), ref);
+//                             respondData = objectMapper.readValue(http.getInputStream(), objectMapper.getTypeFactory().constructCollectionType(List.class, ICommand.class));
                         }
                         catch (Exception e) {
                             e.printStackTrace();

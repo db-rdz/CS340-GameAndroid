@@ -30,6 +30,7 @@ import java.util.List;
 })
 public interface ICommand {
 
+
     public List<ICommand> execute() throws GameIsFullException;
     public String getAuthenticationCode();
     public User getUser();
