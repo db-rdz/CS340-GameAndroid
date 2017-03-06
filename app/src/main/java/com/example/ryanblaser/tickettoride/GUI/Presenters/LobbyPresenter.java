@@ -3,7 +3,6 @@ package com.example.ryanblaser.tickettoride.GUI.Presenters;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Views.ILobbyView;
-import com.example.ryanblaser.tickettoride.Server.IServer;
 
 import java.util.List;
 
@@ -36,7 +35,12 @@ public class LobbyPresenter implements ILobbyPresenter {
         return ClientFacade.SINGLETON.getClientModel().getJoinableGames();
     }
 
-//    @Override
+    @Override
+    public void addPlayer(int gameId) {
+        String code = ClientFacade.SINGLETON.getCurrentUser().getStr_authentication_code();
+        ClientFacade.SINGLETON.addPlayerToServerModel(code, gameId);
+    }
+
     public List<Integer> getWaitingGames() {
 //        ClientFacade.SINGLETON.getClientModel().setWaitingGames(ServerModel.SINGLETON.getAvailableGames());
         return ClientFacade.SINGLETON.getClientModel().getWaitingGames();

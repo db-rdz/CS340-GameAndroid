@@ -40,7 +40,7 @@ public class ListJoinableCommand implements ICommand { // sent to clients after 
     return null;
   }
 
-  @JsonProperty("list_game_list")
+//  @JsonProperty("list_game_list")
   public List<Integer> getList_game_list() {
     return list_game_list;
   }

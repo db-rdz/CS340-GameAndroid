@@ -35,12 +35,14 @@ public interface IClient {
     public void addWaitingGame(int gameId);
     public void removeGame(int gameId);
     public void startGame(int gameId, String authorizationCode);
-    public void addPlayer(String username, int gameId) throws IServer.GameIsFullException;
+    public void addPlayerToClientModel(String username, int gameId) throws IServer.GameIsFullException;
+    public void addPlayerToServerModel(String authenticationCode, int gameId);
     public void logout(String str_authentication_code);
     public void listJoinableGames(List<Integer> listJoinableGames);
     public void listWaitingGames(List<Integer> listWaitingGames);
     public void loginRegisterSucceeded(User user);
     public void logoutSucceeded();
+
 
     // Phase 2 additions - Ryan Blaser
     public void broadcastToChat(String message);
@@ -52,6 +54,7 @@ public interface IClient {
     public void updatePlayerDestinationCards();
     public void updatePlayerTrainCards();
     public void updatePoints(int pointsToAdd);
+
 
     public void attachObserver(/* Observer object */);
     public void detachObserver(/* Observer object */);

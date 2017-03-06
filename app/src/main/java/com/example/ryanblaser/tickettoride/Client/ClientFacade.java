@@ -76,6 +76,7 @@ public class ClientFacade implements IClient {
     @Override
     public void addWaitingGame(int gameId) {
         clientmodel.addWaitingGame(gameId);
+        ServerProxy.SINGLETON.addPlayer(clientmodel.getUser().getStr_authentication_code(), gameId);
         lobbypresenter.switchToWaitingView();
         //lobbypresenter
 		
@@ -113,10 +114,15 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void addPlayer(String username, int gameId){
+    public void addPlayerToClientModel(String username, int gameId){
         clientmodel.addPlayer(username, gameId);
         //lobbypresenter
 		
+    }
+
+    @Override
+    public void addPlayerToServerModel(String authenticationCode, int gameId) {
+        ServerProxy.SINGLETON.addPlayer(authenticationCode, gameId);
     }
 
     public void attachLobbyObserver(LobbyPresenter lobbyPresenter) { //necessary?

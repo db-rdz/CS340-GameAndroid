@@ -35,7 +35,7 @@ public class AddPlayerToClientCommand implements ICommand { // sent after change
 
   @Override
   public List<ICommand> execute() throws GameIsFullException {
-    ClientFacade.SINGLETON.addPlayer(str_username, int_game_id);
+    ClientFacade.SINGLETON.addPlayerToClientModel(str_username, int_game_id);
     return null;
   }
 

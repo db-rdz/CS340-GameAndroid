@@ -13,4 +13,5 @@ public interface ILobbyPresenter {
     public void logout();
     public void addJoinableGame();
     public List<Integer> getJoinableGames();
+    public void addPlayer(int gameId);
 }

@@ -116,7 +116,7 @@ public class ServerProxy implements IServer {
     public List<ICommand> addPlayer(String authenticationCode, int gameId) {
         String urlSuffix = "/command";
 
-        ICommand addPlayerCommand = new AddPlayerToClientCommand(authenticationCode, gameId);
+        ICommand addPlayerCommand = new AddPlayerToServerCommand(authenticationCode, gameId);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);

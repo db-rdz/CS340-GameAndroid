@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command;
 
+import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.Client.User;
 
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddJoinableToClientCommand;
@@ -31,7 +32,7 @@ import java.util.List;
 public interface ICommand {
 
 
-    public List<ICommand> execute() throws GameIsFullException;
+    public List<ICommand> execute() throws GameIsFullException, IClient.UserAlreadyLoggedIn;
     public String getAuthenticationCode();
     public User getUser();
     public Game getGame();
