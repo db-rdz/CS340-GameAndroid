@@ -3,7 +3,6 @@ package com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,10 +25,7 @@ import com.example.ryanblaser.tickettoride.R;
  * create an instance of this fragment.
  */
 public class GameBoardFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
     private Canvas mCanvas;
 
     /**
@@ -55,6 +51,8 @@ public class GameBoardFragment extends Fragment {
     private boolean mVisible;
 
     public static final String ARG_PAGE = "page";
+    public static final float BOARD_IMAGE_WIDTH = 2030;
+    public static final float BOARD_IMAGE_HEIGHT = 1507;
 
     public static GameBoardFragment create(int pageNumber){
         GameBoardFragment fragment = new GameBoardFragment();
@@ -126,17 +124,11 @@ public class GameBoardFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment GameBoardFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static GameBoardFragment newInstance(String param1, String param2) {
+    public static GameBoardFragment newInstance() {
         GameBoardFragment fragment = new GameBoardFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -152,15 +144,10 @@ public class GameBoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_game_board, container, false);
-
         mVisible = true;
-        mCanvas = new Canvas();
+
         mControlsView = v.findViewById(R.id.fullscreen_content_controls);
         mContentView = v.findViewById(R.id.fullscreen_content);
-        Paint mpaint = new Paint();
-        mpaint.setColor(9);
-        mpaint.setStrokeWidth(20);
-        mCanvas.drawLine(50, 50, 200, 200, mpaint);
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +157,6 @@ public class GameBoardFragment extends Fragment {
         });
 
         return v;
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event
