@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command.Phase1;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,6 +25,7 @@ public class StartGameCommand implements ICommand {
     public List<ICommand> execute(){
         return null;
     }
+
     @Override
     public String getAuthenticationCode(){
         return str_authentication_code;}

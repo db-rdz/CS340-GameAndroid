@@ -24,7 +24,6 @@ public class LoginRegisterResponseCommand implements ICommand {
   @Override
   public List<ICommand> execute(){
     ClientFacade.SINGLETON.loginRegisterSucceeded(user);
-    ClientFacade.SINGLETON.getPoller().setUser(user);
     return null;
     }
 
