@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.R;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.CardsModel.iDestCard;
 import com.redbooth.SlidingDeck;
@@ -24,18 +25,27 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
         View view = convertView;
+
         if (view == null) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.sliding_item, parent, false);
         }
+
         iDestCard item = getItem(position);
         String originToDestination = item.get_origin() + " " + item.get_destination();
         view.setTag(item);
         ((TextView)view.findViewById(R.id.card_destination)).setText(originToDestination);
         ((TextView)view.findViewById(R.id.card_points)).setText(item.get_points());
 
-        final View completeView = view.findViewById(R.id.completeCommand);
+        final View completeView = view.findViewById(R.id.reject);
+
         completeView.setTag(view);
+
+        if(GameBoardPresenter._SINGLETON.is_readyToStart()){
+                completeView.setVisibility(View.GONE);
+        }
+
+
 
         completeView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +55,13 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
                     @Override
                     public void onSwipe(SlidingDeck parent, View item) {
                         final iDestCard slidingDeckModel = (iDestCard) item.getTag();
+                        GameBoardPresenter._SINGLETON.set_readyToStart(true);
                         remove(slidingDeckModel);
+
+                        //TODO: delete the card from the player model...
+
+                        View container = (View)item.getParent().getParent();
+                        container.findViewById(R.id.keep_allCards).setVisibility(View.GONE);
                         notifyDataSetChanged();
                     }
                 });
@@ -54,4 +70,5 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
 
         return view;
     }
+
 }

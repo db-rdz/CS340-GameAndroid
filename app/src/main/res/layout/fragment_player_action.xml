@@ -13,10 +13,17 @@
         android:orientation="vertical">
 
 
-            <com.redbooth.SlidingDeck
-                android:id="@+id/slidingDeck"
-                android:layout_width="156dp"
-                android:layout_height="-5033213dp" />
+        <com.redbooth.SlidingDeck
+            android:id="@+id/slidingDeck"
+            android:layout_width="156dp"
+            android:layout_height="-5033213dp" />
+
+        <Button
+            android:text="Keep all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|left"
+            android:id="@+id/keep_allCards" />
 
     </android.support.v7.widget.LinearLayoutCompat>
 
@@ -73,6 +80,9 @@
         android:src="@drawable/fan_deck"
         android:scaleType = "centerCrop"/>
 
+
     </android.support.v7.widget.LinearLayoutCompat>
+
+
 
 </FrameLayout>

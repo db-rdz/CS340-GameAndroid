@@ -1,7 +1,11 @@
 package com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.CardType;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,7 +28,8 @@ public class PlayerCardHand {
         _M_typeToCardCount.put(CardType.RAINBOW, 0);
     }
 
-    Map<CardType, Integer> _M_typeToCardCount = new HashMap<>();
+    private Map<CardType, Integer> _M_typeToCardCount = new HashMap<>();
+    private List<DestCard> _L_destCards = new ArrayList<>();
 
     //--------------------------------------CLASS FUNCTIONS---------------------------------------//
     public void subtractToCardCount(CardType type, int subtractNumber){
@@ -36,4 +41,12 @@ public class PlayerCardHand {
         int count = _M_typeToCardCount.get(type);
         count += 1;
     }
+
+    //-------------------------------------GETTERS AND SETTERS------------------------------------//
+    public List<DestCard> get_destCards() { return _L_destCards; }
+    public void set_destCards(List<DestCard> destCards) { _L_destCards = destCards; }
+
+    public Map<CardType, Integer> get_cardCount() { return _M_typeToCardCount; }
+    public void set_cardCount(Map<CardType, Integer> typeToCardCount) { _M_typeToCardCount = typeToCardCount; }
+
 }

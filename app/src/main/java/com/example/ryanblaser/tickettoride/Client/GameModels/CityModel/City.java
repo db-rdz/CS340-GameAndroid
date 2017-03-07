@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Client.GameModels.CityModel;
 
 import android.graphics.PointF;
+import android.graphics.RectF;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 
@@ -16,7 +17,9 @@ import java.util.Map;
 public class City implements  iCity{
 
     public City(String name, PointF p, Map<String, List<Route>> m){
-
+        _S_name = name;
+        _P_coordinate = p;
+        _M_Routes = m;
     }
 
     //------------------------------------CLASS VARIABLES----------------------------------------//
@@ -24,6 +27,7 @@ public class City implements  iCity{
     private PointF _P_coordinate = null;
     private Map<String, List<Route>> _M_Routes = new HashMap<>();
     private List<City> _L_adjacentCities = new ArrayList<>();
+    private RectF _cityPointArea;
 
 
 
@@ -48,12 +52,19 @@ public class City implements  iCity{
     public List<City> get_adjacentCities() { return _L_adjacentCities; }
     public void set_adjacentCities(List<City> adjacentCities) { _L_adjacentCities = adjacentCities; }
 
-    public static List<City> get_L_allCities() { return _L_allCities; }
+    public static List<City> get_allCities() {
+        return new ArrayList<City>(_M_allCities.values()); }
     public static void set_L_allCities(List<City> allCities) { _L_allCities = allCities; }
 
 
     public static Map<String, City> get_allCitiesMap() { return _M_allCities; }
     public static void set_M_allCities(Map<String, City> allCities) { _M_allCities = allCities; }
+
+    public RectF get_cityPointArea() { return _cityPointArea; }
+    public void set_cityPointArea(RectF _cityPointArea) { this._cityPointArea = _cityPointArea; }
+
+    public PointF get_coordinate() { return _P_coordinate; }
+    public void set_coordinate(PointF _P_coordinate) { this._P_coordinate = _P_coordinate; }
 
     //------------------------------------STATIC FUNCTIONS----------------------------------------//
 
@@ -715,7 +726,7 @@ public class City implements  iCity{
         routeList = new ArrayList<>();
         r = Route.get_RoutesMap().get("Houston-NewOrleans");
         routeList.add(r);
-        routes.put("NewOrleans", routeList);
+        routes.put("Houston", routeList);
 
         routeList = new ArrayList<>();
         r = Route.get_RoutesMap().get("LittleRock-NewOrleans");
@@ -1538,7 +1549,7 @@ public class City implements  iCity{
         adjCities.add(_M_allCities.get("Charleton"));
         city.set_adjacentCities(adjCities);
 
-        city = _M_allCities.get("Charleton");
+        city = _M_allCities.get("Charleston");
         adjCities = new ArrayList<>();
         adjCities.add(_M_allCities.get("Miami"));
         adjCities.add(_M_allCities.get("Atlanta"));
@@ -1562,7 +1573,23 @@ public class City implements  iCity{
         adjCities.add(_M_allCities.get("Pittsburgh"));
         adjCities.add(_M_allCities.get("NewYork"));
         city.set_adjacentCities(adjCities);
+    }
 
+
+    public static void initCityPoints(){
+
+        List<City> cities = get_allCities();
+
+        for(City c : cities){
+            RectF rect = new RectF();
+            if(c.get_coordinate() == null){
+                int x = 1;
+            }
+            rect.set(c.get_coordinate().x - 15, c.get_coordinate().y - 15,
+                    c.get_coordinate().x + 15, c.get_coordinate().y + 15 );
+
+            c.set_cityPointArea(rect);
+        }
     }
 
 }

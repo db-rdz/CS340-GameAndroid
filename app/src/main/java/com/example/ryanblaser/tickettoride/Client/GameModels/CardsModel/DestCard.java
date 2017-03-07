@@ -15,4 +15,6 @@ public class DestCard implements iDestCard {
     }
 
     private Pair<City, City> _destination;
+    private int points;
+
 }

@@ -1,20 +1,28 @@
 package com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
+import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,33 +34,48 @@ import com.example.ryanblaser.tickettoride.R;
  */
 public class GameBoardFragment extends Fragment {
 
-    private Canvas mCanvas;
+    public GameBoardFragment() {
+    }
 
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
+
+    //----------------------------------FRAGMENT VARIABLES----------------------------------------//
+
+    //-----------------------VIEWS/LAYOUT-------------------//
+    private View mContentView;
+    private View mControlsView;
+
+    //-----------------------CONFIGURATION VARIABLES--------//
+
+    //BOARD IMAGE CONFIGURATION
+    public static final float BOARD_IMAGE_WIDTH = 2030;
+    public static final float BOARD_IMAGE_HEIGHT = 1507;
+    public static final String ARG_PAGE = "page";
+    private float _screenToImageRatioY = 0;
+    private float _screenToImageRatioX = 0;
+
+    //MENU HIDING CONFIGURATION
+    private boolean mVisible;
     private static final boolean AUTO_HIDE = true;
-
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
+    //Some older devices needs a small delay between UI widget updates
+    // and a change of the status and navigation bar.
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
 
-    private View mContentView;
-    private boolean mVisible;
+    //-------------END OF CONFIGURATION VARIABLES------------//
 
-    public static final String ARG_PAGE = "page";
-    public static final float BOARD_IMAGE_WIDTH = 2030;
-    public static final float BOARD_IMAGE_HEIGHT = 1507;
+
+    //---------------------VIEW LOGIC VARIABLES--------------//
+    private City c1 = null;
+    private City c2 = null;
+    private Route _selectedRoute = null;
+    private Boolean _clickedOnCityOnce = false;
+    private Boolean _selectedDoubleRoute = false;
+    private List<Route> _selectedRouteList = new ArrayList<>();
+
+    //-------------END OF VIEW LOGIC VARIABLES--------------//
+
 
     public static GameBoardFragment create(int pageNumber){
         GameBoardFragment fragment = new GameBoardFragment();
@@ -79,7 +102,7 @@ public class GameBoardFragment extends Fragment {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
-    private View mControlsView;
+
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -115,17 +138,6 @@ public class GameBoardFragment extends Fragment {
     };
 
 
-
-
-    public GameBoardFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     * @return A new instance of fragment GameBoardFragment.
-     */
     public static GameBoardFragment newInstance() {
         GameBoardFragment fragment = new GameBoardFragment();
         Bundle args = new Bundle();
@@ -139,6 +151,7 @@ public class GameBoardFragment extends Fragment {
 
     }
 
+    //TODO: NOT DETECTING CLICKS NOW... FIX PLEASE!!!
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -149,20 +162,155 @@ public class GameBoardFragment extends Fragment {
         mControlsView = v.findViewById(R.id.fullscreen_content_controls);
         mContentView = v.findViewById(R.id.fullscreen_content);
         // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
+
+
+        v.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                toggle();
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    GameBoardPresenter._SINGLETON.resolveClickEvent();
+                    
+                    List<City> cities = City.get_allCities();
+
+                    getScreenToImageRatio();
+
+                    //----------CONVERT THE CLICK COORDINATES TO BOARD COORDINATES------------//
+                    float x = _screenToImageRatioX*event.getX();
+                    float y = _screenToImageRatioY*event.getY();
+
+                    for(City c : cities){
+                        if(c.get_cityPointArea().contains(x, y)){
+
+                            if(!_clickedOnCityOnce){
+                                c1 = c;
+                                _clickedOnCityOnce = true;
+                            }
+                            else if(_selectedDoubleRoute){
+                                c2 = c;
+                                claimUserChoice(c2);
+                            }
+                            else{
+                                c2 = c;
+                                _selectedRouteList = c1.get_M_Routes().get(c.get_S_name());
+                                if(_selectedRouteList.size() > 1){
+                                    solveDoubleRoutes();
+                                }
+                                else{
+                                    Route selectedRoute = _selectedRouteList.get(0);
+                                    claimRoute(selectedRoute);
+                                }
+                            }
+                            return true;
+                        }
+                    }
+                    resetViewLogicVariables();
+                    toggle();
+                }
+                return true;
             }
         });
 
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void solveDoubleRoutes(){
+        //IF BOTH ROUTES ARE THE SAME COLOR THEN CHECK IF ONE IS AVAILABLE
+        if(_selectedRouteList.get(0).get_Color() == _selectedRouteList.get(1).get_Color()){
 
+            if(_selectedRouteList.get(0).get_Owner() == null) {
+                //TODO: Claiming a route must be done in the model and through the presenter
+                Route seltectedRoute = _selectedRouteList.get(0);
+                claimRoute(seltectedRoute);
+            }else if(_selectedRouteList.get(1).get_Owner() == null){
+                Route seltectedRoute = _selectedRouteList.get(1);
+                claimRoute(seltectedRoute);
+            }
+            else{
+                Toast.makeText(getContext(), "Routes Already Taken", Toast.LENGTH_LONG ).show();
+            }
+        }//DIFFERENT COLOR LET THE USER CHOOSE
+        else if(_selectedRouteList.get(0).get_Owner() == null && _selectedRouteList.get(1).get_Owner() != null){
+            claimRoute(_selectedRouteList.get(0));
+        }
+        else if(_selectedRouteList.get(0).get_Owner() != null && _selectedRouteList.get(1).get_Owner() == null){
+            claimRoute(_selectedRouteList.get(1));
+        }
+        else if(_selectedRouteList.get(0).get_Owner() != null && _selectedRouteList.get(1).get_Owner() != null){
+            Toast.makeText(getContext(), "Routes Already Taken", Toast.LENGTH_LONG ).show();
+            resetViewLogicVariables();
+        }
+        else{
+            _selectedDoubleRoute = true;
+            String toastText = "Click on " + c1.get_S_name() + " to claim the " +
+                    _selectedRouteList.get(0).get_S_Color() + " or click on " + c2.get_S_name() + " to Claim the " +
+                    _selectedRouteList.get(1).get_S_Color() + " route";
+            Toast.makeText(getContext(), toastText, Toast.LENGTH_LONG ).show();
+        }
     }
+
+
+
+    public void claimRoute(Route route){
+        if(route.get_Owner() == null){
+            //ClaimRoute
+            route.set_Owner("Daniel");
+            Toast.makeText(getContext(), "You have claimed route " + c1.get_S_name() + "-"
+                    + c2.get_S_name(), Toast.LENGTH_LONG ).show();
+
+            invalidateBoard();
+            resetViewLogicVariables();
+
+        }
+    }
+
+    public void resetViewLogicVariables(){
+        _selectedDoubleRoute = false;
+        _selectedRoute = null;
+        _selectedRouteList = null;
+        _clickedOnCityOnce = false;
+        c1 = null;
+        c2 = null;
+    }
+
+    public void claimUserChoice(City c){
+        if(c == c1){
+            Route selectedRoute = _selectedRouteList.get(0);
+            claimRoute(selectedRoute);
+        }
+        else{
+            Route selectedRoute  = _selectedRouteList.get(1);
+            claimRoute(selectedRoute);
+        }
+    }
+
+    public void getScreenToImageRatio(){
+        //---------------GET SCREEN SIZE----------------------//
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager()
+                .getDefaultDisplay()
+                .getMetrics(displayMetrics);
+
+        float height = displayMetrics.heightPixels;
+        float width = displayMetrics.widthPixels;
+
+        _screenToImageRatioY = BOARD_IMAGE_HEIGHT/height;
+        _screenToImageRatioX = BOARD_IMAGE_WIDTH/width;
+    }
+
+    public void invalidateBoard(){
+        CanvasImageView touchView = (CanvasImageView) getView().findViewById(R.id.fullscreen_content);
+        touchView.invalidate();
+    }
+
+    public void onMsgReceived(String message){
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG ).show();
+    }
+
+    public void onMsgSent(String message){
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG ).show();
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -174,25 +322,17 @@ public class GameBoardFragment extends Fragment {
         super.onDetach();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
+        if(!Route.are_RoutesSet()){
+            Route.initAllRoutes();
+            City.initAllCities();
+            City.initAdjacentCities();
+            City.initCityPoints();
+        }
         delayedHide(100);
     }
 
@@ -230,12 +370,9 @@ public class GameBoardFragment extends Fragment {
         mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
 }

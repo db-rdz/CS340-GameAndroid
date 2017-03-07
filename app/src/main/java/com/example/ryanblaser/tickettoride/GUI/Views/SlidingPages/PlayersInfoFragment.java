@@ -3,11 +3,21 @@ package com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
+import com.example.ryanblaser.tickettoride.GUI.Adapters.ExpandableListAdapter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class PlayersInfoFragment extends Fragment {
 
     public PlayersInfoFragment() {
@@ -39,7 +49,21 @@ public class PlayersInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_players_info, container, false);
+        View v =  inflater.inflate(R.layout.fragment_players_info, container, false);
+        ExpandableListView expListView = (ExpandableListView) v.findViewById(R.id.lvExp);
+
+
+        List<String> headers = new ArrayList<>();
+        headers.add("Players");
+
+        Pair<List<String>, HashMap<String, Player>> info
+                = GameBoardPresenter._SINGLETON.getInfoForExpandable();
+
+        ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
+
+        expListView.setAdapter(listAdapter);
+
+        return v;
     }
 
     @Override
