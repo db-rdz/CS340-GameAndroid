@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 
 import com.example.ryanblaser.tickettoride.Server.IServer;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 
 /**
  * Created by natha on 2/1/2017.
@@ -38,7 +39,7 @@ public interface IClient {
     public void addPlayerToClientModel(String username, int gameId) throws IServer.GameIsFullException;
     public void addPlayerToServerModel(String authenticationCode, int gameId);
     public void logout(String str_authentication_code);
-    public void listJoinableGames(List<Integer> listJoinableGames);
+    public void listJoinableGames(List<Game> listJoinableGames);
     public void listWaitingGames(List<Integer> listWaitingGames);
     public void loginRegisterSucceeded(User user);
     public void logoutSucceeded();

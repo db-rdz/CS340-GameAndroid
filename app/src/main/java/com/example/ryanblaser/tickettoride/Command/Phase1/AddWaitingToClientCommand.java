@@ -40,4 +40,9 @@ public class AddWaitingToClientCommand implements ICommand { // sent after chang
   public Game getGame() {
     return game;
   }
+
+  public int getGameId() {
+    return gameId;
+  }
+
 }

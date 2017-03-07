@@ -124,8 +124,9 @@ public class LobbyFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long j) {
             String gameSelected = list_of_Games.getItem(i);
-            int gameId = Integer.parseInt(gameSelected);
-            LobbyPresenter.SINGLETON.addPlayer();
+            String[] split = gameSelected.split(" ");
+            int gameId = Integer.parseInt(split[1]); //gameId is in position 1 of array.
+            LobbyPresenter.SINGLETON.addPlayer(gameId);
             Intent intent = new Intent(getContext(), GameActivity.class);
             intent.putExtra("GAME", gameSelected);
             startActivity(intent);
@@ -141,5 +142,9 @@ public class LobbyFragment extends Fragment {
 //        FragmentTransaction ft = sudo_mainActivity.getSupportFragmentManager().beginTransaction();
 //        ft.replace(R.id.lobbyFragment, sudo_mainActivity.getWaitingFragment()); //TODO: lobby doesn't go away
 //        ft.commit();
+    }
+
+    public void refreshGameLobby() {
+        onResume();
     }
 }

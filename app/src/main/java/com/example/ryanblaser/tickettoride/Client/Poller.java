@@ -42,6 +42,7 @@ public class Poller implements Runnable {
     {
         if (user != null) {
             ServerProxy.SINGLETON.checkForCommands(user.getUsername());
+            ServerProxy.SINGLETON.deleteGottenCommands(user.getUsername());
         }
     }
     

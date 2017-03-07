@@ -1,6 +1,9 @@
 package com.example.ryanblaser.tickettoride.Client;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.Game;
+import com.example.ryanblaser.tickettoride.GUI.Activities.GameActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +22,13 @@ public class ClientModel{
     private Hashtable<Integer, GameType> hashtable_id_to_list; //Each gameId key has their own GameType value.
     private Hashtable<Integer, List<String>> gameId_to_usernames;
     private MainActivity mainActivity;
+    private GameActivity gameActivity;
     private int int_car_count;
     private int int_total_points;
 
     public ClientModel(MainActivity mainActivity1){
         mainActivity = mainActivity1;
+        gameActivity = null;
         list_joinable = new ArrayList<Integer>();
         list_waiting = new ArrayList<Integer>();
         list_resumable = new ArrayList<Integer>();
@@ -49,9 +54,9 @@ public class ClientModel{
         return user;
     }
 
-    public void setJoinableGames(List<Integer> list){
-        for(int game : list)
-            addJoinableGame(game);
+    public void setJoinableGames(List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> list){
+        for(com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game game : list)
+            addJoinableGame(game.get_i_gameId());
     }
 
     public List<Integer> getJoinableGames(){
@@ -61,6 +66,8 @@ public class ClientModel{
     public void addJoinableGame(int gameId){
         hashtable_id_to_list.put(gameId, GameType.JOINABLE);
         list_joinable.add(gameId);
+//        LobbyPresenter.SINGLETON.refreshGameLobby();
+
     }
 
     public void setWaitingGames(List<Integer> list){
@@ -78,19 +85,6 @@ public class ClientModel{
 
     }
 
-    public void setResumableGames(List<Integer> list){
-        for(int game : list)
-            addResumableGame(game);
-    }
-
-    public List<Integer> getResumableGames(){
-        return list_resumable;
-    }
-
-    public void addResumableGame(int gameId){
-        hashtable_id_to_list.put(gameId, GameType.RESUMABLE);
-        list_resumable.add(gameId);
-    }
 
     public GameType getGameType(int gameId){
         return hashtable_id_to_list.get(gameId);
@@ -112,7 +106,7 @@ public class ClientModel{
     	gameId_to_usernames.get(gameId).add(username);
     }
 
-    public void addPlayer(String username, int gameId){
+    public void addPlayerToModel(String username, int gameId){
         GameType type = getGameType(gameId);
         if(type == GameType.JOINABLE){
             addPlayerToGameObject(username, gameId);
@@ -147,6 +141,14 @@ public class ClientModel{
 
     public MainActivity getMainActivity() { return mainActivity; }
 
+    /**
+     * Nathan: GameActivity methods
+     * For grabbing the onResume() method for screen refreshing
+     * @return
+     */
+    public GameActivity getGameActivity() { return gameActivity; }
+    public void setGameActivity(GameActivity gameActivity) { this.gameActivity = gameActivity; }
+
     public int getInt_car_count() {
         return int_car_count;
     }
@@ -161,5 +163,29 @@ public class ClientModel{
 
     public void setInt_total_points(int int_total_points) {
         this.int_total_points = int_total_points;
+    }
+
+    public String getStr_authentication_code() {
+        return str_authentication_code;
+    }
+
+    public List<Integer> getList_joinable() {
+        return list_joinable;
+    }
+
+    public List<Integer> getList_waiting() {
+        return list_waiting;
+    }
+
+    public List<Integer> getList_resumable() {
+        return list_resumable;
+    }
+
+    public Hashtable<Integer, GameType> getHashtable_id_to_list() {
+        return hashtable_id_to_list;
+    }
+
+    public Hashtable<Integer, List<String>> getGameId_to_usernames() {
+        return gameId_to_usernames;
     }
 }

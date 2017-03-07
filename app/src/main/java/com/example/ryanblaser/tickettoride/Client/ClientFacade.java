@@ -5,6 +5,7 @@ import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.Server.IServer;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 
 import java.util.List;
 
@@ -69,6 +70,7 @@ public class ClientFacade implements IClient {
     @Override
     public void addJoinableGame() {
         ServerProxy.SINGLETON.addJoinableGame(clientmodel.getUser().getStr_authentication_code());
+        lobbypresenter.refreshGameLobby();
         //lobbypresenter
 		
     }
@@ -76,7 +78,7 @@ public class ClientFacade implements IClient {
     @Override
     public void addWaitingGame(int gameId) {
         clientmodel.addWaitingGame(gameId);
-        ServerProxy.SINGLETON.addPlayer(clientmodel.getUser().getStr_authentication_code(), gameId);
+        ServerProxy.SINGLETON.addPlayer(clientmodel.getUser().getUsername(), gameId);
         lobbypresenter.switchToWaitingView();
         //lobbypresenter
 		
@@ -115,7 +117,7 @@ public class ClientFacade implements IClient {
 
     @Override
     public void addPlayerToClientModel(String username, int gameId){
-        clientmodel.addPlayer(username, gameId);
+        clientmodel.addPlayerToModel(username, gameId);
         //lobbypresenter
 		
     }
@@ -137,8 +139,9 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void listJoinableGames(List<Integer> listJoinableGames) {
-        clientmodel.setJoinableGames(listJoinableGames); //TODO: Change type of game 
+    public void listJoinableGames(List<Game> listJoinableGames) {
+        clientmodel.setJoinableGames(listJoinableGames); //TODO: Change type of game
+//        lobbypresenter.refreshGameLobby();
         //lobbypresenter
 		
     }

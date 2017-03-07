@@ -2,7 +2,6 @@ package com.example.ryanblaser.tickettoride.Command.Phase1;
 
 import java.util.List;
 
-import com.example.ryanblaser.tickettoride.Client.GameModels.Game;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -11,10 +10,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class AddPlayerToServerCommand implements ICommand{
     private int i_game_id;
-    private String str_authentication_code;
+    private String str_username;
     private AddPlayerToServerCommand(){}
     public AddPlayerToServerCommand(String k, int gameId){
-        str_authentication_code = k;
+        str_username = k;
         i_game_id = gameId;
     }
 
@@ -29,9 +28,10 @@ public class AddPlayerToServerCommand implements ICommand{
       return null;
     }
 
+    @JsonIgnore
     @Override
     public String getAuthenticationCode(){
-      return str_authentication_code;}
+      return null;}
 
     @JsonIgnore
     @Override
@@ -39,5 +39,9 @@ public class AddPlayerToServerCommand implements ICommand{
 
     public int getI_game_id() {
       return i_game_id;
+    }
+
+    public String getStr_username() {
+        return str_username;
     }
 }

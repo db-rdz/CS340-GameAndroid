@@ -1,6 +1,8 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 
+import android.util.Log;
+
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToServerCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
@@ -66,7 +68,7 @@ public class ServerProxy implements IServer {
     public int addJoinableGame(String str_authentication_code) {
         String urlSuffix = "/command";
 
-        ICommand addGameCommand = new AddGameToServerCommand(str_authentication_code);
+        ICommand addGameCommand = new AddGameToServerCommand(new Game(), str_authentication_code);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -113,10 +115,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public List<ICommand> addPlayer(String authenticationCode, int gameId) {
+    public List<ICommand> addPlayer(String username, int gameId) {
         String urlSuffix = "/command";
 
-        ICommand addPlayerCommand = new AddPlayerToServerCommand(authenticationCode, gameId);
+        ICommand addPlayerCommand = new AddPlayerToServerCommand(username, gameId);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -149,6 +151,7 @@ public class ServerProxy implements IServer {
         String urlSuffix = "/update";
 
         ICommand checkForCommands = new GetCommandsCommand(username);
+        Log.d("GetCommandsCommand", "Checking commands for " + username);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -158,6 +161,27 @@ public class ServerProxy implements IServer {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Nathan
+     * This function allows the commands gotten with checkForCommands be deleted. So they're never repeated
+     * @param username
+     */
+    public void deleteGottenCommands(String username) {
+        String urlSuffix = "/update";
+
+        ICommand deleteGottenCommands = new DeleteGottenCommands(username);
+        Log.d("DeleteGottenCommands", "Deleting commands for " + username);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, deleteGottenCommands);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 	@Override
 	public List<ICommand> addGame(Game game) {
@@ -169,4 +193,5 @@ public class ServerProxy implements IServer {
     public ICommand broadcastToChat(String message) {
         return null;
     }
+
 }

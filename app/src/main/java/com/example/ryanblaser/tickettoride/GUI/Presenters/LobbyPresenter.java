@@ -51,4 +51,8 @@ public class LobbyPresenter implements ILobbyPresenter {
         MainActivity.getLobbyFragment().switchToWaitingView();
     }
 
+    public void refreshGameLobby() {
+        MainActivity.getLobbyFragment().refreshGameLobby();
+    }
+
 }
