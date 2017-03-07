@@ -32,26 +32,35 @@ public class MainActivity extends AppCompatActivity {
         ClientFacade.SINGLETON.initilizeClientModel(this);
 
 
-//        FragmentManager fm = this.getSupportFragmentManager();
-//        loginFragment = (LoginFragment) fm.findFragmentById(R.id.loginFragment);
-//        if (loginFragment == null) {
-//            loginFragment = LoginFragment.newInstance(new User()); //Pass in a User to use inside the LoginFragment
-//            if (ClientFacade.SINGLETON.getClientModel().getUser() == null) {
-//                fm.beginTransaction().add(R.id.loginFragment, loginFragment).commit();
-//
-//            }
-//        }
-//
-//
-//        lobbyFragment = (LobbyFragment) fm.findFragmentById(R.id.lobbyFragment);
-//        if (lobbyFragment == null) {
-//            lobbyFragment = LobbyFragment.newInstance();
-//
-//            if (ClientFacade.SINGLETON.getClientModel().getUser() != null) {
-//                fm.beginTransaction().add(R.id.lobbyFragment, lobbyFragment).commit();
-//            }
-//
-//        }
+        FragmentManager fm = this.getSupportFragmentManager();
+        loginFragment = (LoginFragment) fm.findFragmentById(R.id.loginFragment);
+        if (loginFragment == null) {
+            loginFragment = LoginFragment.newInstance(new User()); //Pass in a User to use inside the LoginFragment
+            if (ClientFacade.SINGLETON.getClientModel().getUser() == null) {
+                fm.beginTransaction().add(R.id.loginFragment, loginFragment).commit();
+
+            }
+        }
+
+
+        lobbyFragment = (LobbyFragment) fm.findFragmentById(R.id.lobbyFragment);
+        if (lobbyFragment == null) {
+            lobbyFragment = LobbyFragment.newInstance();
+
+            if (ClientFacade.SINGLETON.getClientModel().getUser() != null) {
+                fm.beginTransaction().add(R.id.lobbyFragment, lobbyFragment).commit();
+            }
+
+        }
+
+        waitingFragment = (WaitingFragment) fm.findFragmentById(R.id.waitingFragment);
+        if (waitingFragment == null) {
+            waitingFragment = WaitingFragment.newInstance("", "");
+
+            if (ClientFacade.SINGLETON.getClientModel().getWaitingGames().size() > 0) {
+                fm.beginTransaction().add(R.id.waitingFragment, waitingFragment).commit();
+            }
+        }
 
     }
 
@@ -83,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        waitingFragment = (WaitingFragment) fm.findFragmentById(R.id.waitingFragment);
         if (waitingFragment == null)
             waitingFragment = WaitingFragment.newInstance("", "");
 

@@ -1,12 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddJoinableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddResumableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
-import com.example.ryanblaser.tickettoride.Command.Phase1.DeleteGameCommand;
-import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.Server.IServer.GameIsFullException;
 
 import java.util.Timer;
@@ -44,13 +38,12 @@ public class Poller implements Runnable {
         user = null;
     }
     
-    public CommandContainer checkForCommands() throws GameIsFullException
+    public void checkForCommands() throws GameIsFullException
     {
         if (user != null) {
-            CommandContainer result = ServerProxy.SINGLETON.checkForCommands(user.getUsername());
-            return result;
+            ServerProxy.SINGLETON.checkForCommands(user.getUsername());
+            ServerProxy.SINGLETON.deleteGottenCommands(user.getUsername());
         }
-        return null;
     }
     
     public TimerTask getTimerTask() { return timerTask; }

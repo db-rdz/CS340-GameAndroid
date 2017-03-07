@@ -5,12 +5,9 @@ import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.Server.IServer;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 
 import java.util.List;
-
-
-
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 
 /**
  * This class accesses the data in the Client Holder/Model.
@@ -20,6 +17,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
  * Created by natha on 2/4/2017.
  *
  * The following note added by 0joshuaolson1 on 2/10/2017:
+
  * IClient should only have methods the server 'calls' on the CProxy.
  * All other methods (without @Override) are called by presenters/fragments/MainActivity.
  */
@@ -27,7 +25,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 public class ClientFacade implements IClient {
 
 
-    public static com.example.ryanblaser.tickettoride.Client.ClientFacade SINGLETON = new com.example.ryanblaser.tickettoride.Client.ClientFacade();
+    public static ClientFacade SINGLETON = new com.example.ryanblaser.tickettoride.Client.ClientFacade();
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
@@ -48,9 +46,9 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public CommandContainer login(User user) throws InvalidUsername, InvalidPassword {
+    public void login(User user) throws InvalidUsername, InvalidPassword {
         try {
-            return ServerProxy.SINGLETON.login(user);
+            ServerProxy.SINGLETON.login(user);
 
         } catch (InvalidPassword e) { //Catches exception if the login failed.
             throw new InvalidPassword();
@@ -60,58 +58,52 @@ public class ClientFacade implements IClient {
         
     }
 
-    public CommandContainer register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists {
+    public void register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists {
         try {
-            return ServerProxy.SINGLETON.register(username, password);
+            ServerProxy.SINGLETON.register(username, password);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
-    }
-
-
-    @Override
-    public CommandContainer addResumableGame(int gameId) {
-        clientmodel.addResumableGame(gameId);
-        //lobbypresenter
-		return null;
+        
     }
 
     @Override
-    public CommandContainer addJoinableGame() {
+    public void addJoinableGame() {
         ServerProxy.SINGLETON.addJoinableGame(clientmodel.getUser().getStr_authentication_code());
+        lobbypresenter.refreshGameLobby();
         //lobbypresenter
-		return null;
+		
     }
 
     @Override
-    public CommandContainer addWaitingGame(int gameId) {
+    public void addWaitingGame(int gameId) {
         clientmodel.addWaitingGame(gameId);
+        ServerProxy.SINGLETON.addPlayer(clientmodel.getUser().getUsername(), gameId);
         lobbypresenter.switchToWaitingView();
         //lobbypresenter
-		return null;
+		
     }
 
     @Override
-    public CommandContainer removeGame(int gameId) {
+    public void removeGame(int gameId) {
         clientmodel.deleteGame(gameId);
         //lobbypresenter
-		return null;
+		
     }
 
     
     @Override
-    public CommandContainer startGame(int gameId, String authenticationCode) { // just gameId?
+    public void startGame(int gameId, String authenticationCode) { // just gameId?
         ServerProxy.SINGLETON.startGame(gameId, authenticationCode);
         //lobbypresenter
-        return null;
+        
     }
 
-    public CommandContainer addPlayerToModel(String str_authentication_code, int gameId) throws IServer.GameIsFullException { // which exception?
+    public void addPlayerToModel(String str_authentication_code, int gameId) throws IServer.GameIsFullException { // which exception?
         ServerProxy.SINGLETON.addPlayer(str_authentication_code, gameId); //server will get username
         //lobbypresenter
-        return null;
+        
     }
 
     @Override
@@ -125,10 +117,15 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public CommandContainer addPlayer(String username, int gameId){
-        clientmodel.addPlayer(username, gameId);
+    public void addPlayerToClientModel(String username, int gameId){
+        clientmodel.addPlayerToModel(username, gameId);
         //lobbypresenter
-		return null;
+		
+    }
+
+    @Override
+    public void addPlayerToServerModel(String authenticationCode, int gameId) {
+        ServerProxy.SINGLETON.addPlayer(authenticationCode, gameId);
     }
 
     public void attachLobbyObserver(LobbyPresenter lobbyPresenter) { //necessary?
@@ -138,92 +135,89 @@ public class ClientFacade implements IClient {
         this.loginpresenter = loginPresenter;
     }
 
-    public CommandContainer logout(String authenticationCode) {
-        return ServerProxy.SINGLETON.logout(authenticationCode);
+    public void logout(String authenticationCode) {
+        ServerProxy.SINGLETON.logout(authenticationCode);
     }
 
     @Override
-    public CommandContainer listJoinableGames(List<Integer> listJoinableGames) {
-        clientmodel.setJoinableGames(listJoinableGames); //TODO: Change type of game 
+    public void listJoinableGames(List<Game> listJoinableGames) {
+        clientmodel.setJoinableGames(listJoinableGames); //TODO: Change type of game
+//        lobbypresenter.refreshGameLobby();
         //lobbypresenter
-		return null;
+		
     }
 
-    @Override
-    public CommandContainer listResumableGames(List<Integer> listResumableGames) {
-        clientmodel.setResumableGames(listResumableGames);
-        //lobbypresenter
-		return null;
-    }
 
     @Override
-    public CommandContainer listWaitingGames(List<Integer> listWaitingGames) {
+    public void listWaitingGames(List<Integer> listWaitingGames) {
         clientmodel.setWaitingGames(listWaitingGames);
         //lobbypresenter
-		return null;
+		
     }
 
     @Override
-    public CommandContainer loginRegisterSucceeded(User user) {
+    public void loginRegisterSucceeded(User user) {
         clientmodel.setAuthenticationKey(user.getStr_authentication_code());
         clientmodel.setUser(user);
         poller.setUser(user);
         loginpresenter.switchToLobbyView();
         //change view/presenter
-		return null;
+		
     }
 
     @Override
-    public CommandContainer logoutSucceeded() {
+    public void logoutSucceeded() {
 
         clientmodel.setAuthenticationKey(null);
         clientmodel.setUser(null);
-    	return null;
+    	
     }
 
     @Override
-    public CommandContainer broadcastToChat(String message) {
-        return ServerProxy.SINGLETON.broadcastToChat(message);
+    public void broadcastToChat(String message) {
+        ServerProxy.SINGLETON.broadcastToChat(message);
     }
 
     @Override
-    public CommandContainer getDestinationCards() {
-        return null;
+    public void getDestinationCards() {
+        
     }
 
     @Override
-    public CommandContainer selectRequestedDestinationCard() {
-        return null;
+    public void selectRequestedDestinationCard() {
+        
     }
 
     @Override
-    public CommandContainer showMessage(String message) {
-        return null;
+    public void showMessage(String message) {
+        
     }
 
     @Override
-    public CommandContainer updateCarCount() {
-        return null;
+    public void updateCarCount(int numOfCarsUsed) {
+        clientmodel.updateCarCount(numOfCarsUsed);
+        
     }
 
     @Override
-    public CommandContainer updatePoints(int pointsToAdd) {
-        return null;
+    public void updatePoints(int pointsToAdd) {
+        clientmodel.updatePoints(pointsToAdd);
+        
     }
 
     @Override
-    public CommandContainer updateFaceUpTableTrainCards() {
-        return null;
+    public void updateFaceUpTableTrainCards() {
+        
     }
 
     @Override
-    public CommandContainer updatePlayerDestinationCards() {
-        return null;
+    public void updatePlayerDestinationCards() {
+        
     }
 
     @Override
-    public CommandContainer updatePlayerTrainCards() {
-        return null;
+    public void updatePlayerTrainCards() {
+        
     }
 
     public User getCurrentUser() { return clientmodel.getUser(); }

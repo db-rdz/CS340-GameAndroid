@@ -3,7 +3,6 @@ package com.example.ryanblaser.tickettoride.GUI.Views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +57,7 @@ public class LobbyFragment extends Fragment {
 
         listView_joinable_games = (ListView) view.findViewById(R.id.list_joinable);
 
-                //This part links the buttons to the code.
+        //This part links the buttons to the code.
         button_logout = (Button) view.findViewById(R.id.button_logout);
         button_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +75,6 @@ public class LobbyFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Created a new game", Toast.LENGTH_SHORT).show();
                 LobbyPresenter.SINGLETON.addJoinableGame();
-                onResume();
             }
         });
 
@@ -99,6 +97,7 @@ public class LobbyFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+//        Poller poller = new Poller();
 
 //        List<Integer> listJoinableGames = LobbyPresenter.SINGLETON.getJoinableGames();
 //        try {
@@ -111,21 +110,23 @@ public class LobbyFragment extends Fragment {
         if (listJoinableGames.size() > 0) {
             ArrayList<String> gamesList = new ArrayList<>();
             for (int i = 0; i < listJoinableGames.size(); i++) {
-                int inc = i; //A holder so we don't accidentally increment i
-                gamesList.add("Game " + ++inc); //Lists the game and which game number
+                int inc = listJoinableGames.get(i); //A holder so we don't accidentally increment i
+                gamesList.add("Game " + inc); //Lists the game and which game number
             }
             list_of_Games = new ArrayAdapter<String>(getContext(), R.layout.row_info, gamesList);
             listView_joinable_games.setAdapter(list_of_Games);
             listView_joinable_games.setOnItemClickListener(gameItemClickListener);
             list_of_Games.notifyDataSetChanged();
         }
-
     }
 
     private AdapterView.OnItemClickListener gameItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long j) {
             String gameSelected = list_of_Games.getItem(i);
+            String[] split = gameSelected.split(" ");
+            int gameId = Integer.parseInt(split[1]); //gameId is in position 1 of array.
+            LobbyPresenter.SINGLETON.addPlayer(gameId);
             Intent intent = new Intent(getContext(), GameActivity.class);
             intent.putExtra("GAME", gameSelected);
             startActivity(intent);
@@ -134,9 +135,16 @@ public class LobbyFragment extends Fragment {
 
     public void switchToWaitingView()
     {
-        MainActivity sudo_mainActivity = ClientFacade.SINGLETON.getClientModel().getMainActivity();
-        FragmentTransaction ft = sudo_mainActivity.getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.lobbyFragment, sudo_mainActivity.getWaitingFragment());
-        ft.commit();
+        Intent intent = new Intent(getContext(), GameActivity.class);
+        startActivity(intent);
+
+//        MainActivity sudo_mainActivity = ClientFacade.SINGLETON.getClientModel().getMainActivity();
+//        FragmentTransaction ft = sudo_mainActivity.getSupportFragmentManager().beginTransaction();
+//        ft.replace(R.id.lobbyFragment, sudo_mainActivity.getWaitingFragment()); //TODO: lobby doesn't go away
+//        ft.commit();
+    }
+
+    public void refreshGameLobby() {
+        onResume();
     }
 }

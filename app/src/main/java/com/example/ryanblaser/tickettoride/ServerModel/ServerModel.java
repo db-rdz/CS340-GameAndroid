@@ -30,7 +30,7 @@ public class ServerModel implements iModel {
 
     @Override
     public List<Game> getUserJoinedGames(String username ){
-        return User.getUserWithUsername(username).getJoinedGames();
+        return User.getUserWithUsername(username).get_L_joinedGames();
     }
 
     @Override
