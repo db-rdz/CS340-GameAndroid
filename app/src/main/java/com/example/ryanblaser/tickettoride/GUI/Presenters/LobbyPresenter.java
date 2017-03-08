@@ -37,8 +37,8 @@ public class LobbyPresenter implements ILobbyPresenter {
 
     @Override
     public void addPlayer(int gameId) {
-        String username = ClientFacade.SINGLETON.getCurrentUser().getUsername();
-        ClientFacade.SINGLETON.addPlayerToServerModel(username, gameId);
+        String authenticationCode = ClientFacade.SINGLETON.getCurrentUser().getStr_authentication_code();
+        ClientFacade.SINGLETON.addPlayerToServerModel(authenticationCode, gameId);
     }
 
     public List<Integer> getWaitingGames() {

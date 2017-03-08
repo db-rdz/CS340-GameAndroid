@@ -119,6 +119,7 @@ public class ClientFacade implements IClient {
     @Override
     public void addPlayerToClientModel(String username, int gameId){
         clientmodel.addPlayerToModel(username, gameId);
+
         //lobbypresenter
 		
     }

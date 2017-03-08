@@ -72,7 +72,7 @@ public class ServerProxy implements IServer {
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, addGameCommand);
-            ICommand cmd = clientCommunicator.execute(url).get();
+            int cmd = clientCommunicator.execute(url).get();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,10 +114,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public List<ICommand> addPlayerToServerModel(String username, int gameId) {
+    public List<ICommand> addPlayerToServerModel(String authenticationCode, int gameId) {
         String urlSuffix = "/command";
 
-        ICommand addPlayerCommand = new AddPlayerToServerCommand(username, gameId);
+        ICommand addPlayerCommand = new AddPlayerToServerCommand(authenticationCode, gameId);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -145,41 +145,45 @@ public class ServerProxy implements IServer {
         return null; //No need to return anything since the command execute methods access the clientmodel already
     }
 
-    public void checkForCommands(String username)
+    public int checkForCommands(String username, int lastCommandRecievedIndex)
     {
         String urlSuffix = "/update";
 
-        ICommand checkForCommands = new GetCommandsCommand(username);
+        ICommand checkForCommands = new GetCommandsCommand(username,lastCommandRecievedIndex);
         Log.d("GetCommandsCommand", "Checking commands for " + username);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, checkForCommands);
             clientCommunicator.execute(url);
+            int returnValue = clientCommunicator.get();
+            return returnValue;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return 0;
     }
 
     /**
      * Nathan
      * This function allows the commands gotten with checkForCommands be deleted. So they're never repeated
-     * @param username
+     * @param
      */
-    public void deleteGottenCommands(String username) {
-        String urlSuffix = "/update";
-
-        ICommand deleteGottenCommands = new DeleteGottenCommands(username);
-        Log.d("DeleteGottenCommands", "Deleting commands for " + username);
-
-        try {
-            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
-            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, deleteGottenCommands);
-            clientCommunicator.execute(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public void deleteGottenCommands(String username) {
+//        String urlSuffix = "/update";
+//
+//        ICommand deleteGottenCommands = new DeleteGottenCommands(username);
+//        Log.d("DeleteGottenCommands", "Deleting commands for " + username);
+//
+//        try {
+//            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+//            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, deleteGottenCommands);
+//            clientCommunicator.execute(url);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 	@Override
