@@ -76,6 +76,7 @@ public class Route {
         return _B_areRoutesSet;
     }
 
+
     public static void initAllRoutes() {
         //-------------------------RED ROUTES---------------------//
         int color = Color.RED;

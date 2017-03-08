@@ -17,18 +17,18 @@ import java.util.Map;
 public class PlayerCardHand {
 
     public PlayerCardHand(){
-        _M_typeToCardCount.put(CardType.RED, 0);
-        _M_typeToCardCount.put(CardType.WHITE, 0);
-        _M_typeToCardCount.put(CardType.ORANGE, 0);
-        _M_typeToCardCount.put(CardType.GREEN, 0);
-        _M_typeToCardCount.put(CardType.BLUE, 0);
-        _M_typeToCardCount.put(CardType.PURPLE, 0);
-        _M_typeToCardCount.put(CardType.YELLOW, 0);
-        _M_typeToCardCount.put(CardType.PINK, 0);
-        _M_typeToCardCount.put(CardType.RAINBOW, 0);
+        _M_typeToCardCount.put("redcard", 0);
+        _M_typeToCardCount.put("whitecard", 0);
+        _M_typeToCardCount.put("orangecard", 0);
+        _M_typeToCardCount.put("greencard", 0);
+        _M_typeToCardCount.put("bluecard", 0);
+        _M_typeToCardCount.put("blackcard", 0);
+        _M_typeToCardCount.put("yellowcard", 0);
+        _M_typeToCardCount.put("pinkcard", 0);
+        _M_typeToCardCount.put("rainbowcard", 0);
     }
 
-    private Map<CardType, Integer> _M_typeToCardCount = new HashMap<>();
+    private Map<String, Integer> _M_typeToCardCount = new HashMap<>();
     private List<DestCard> _L_destCards = new ArrayList<>();
 
     //--------------------------------------CLASS FUNCTIONS---------------------------------------//
@@ -46,7 +46,7 @@ public class PlayerCardHand {
     public List<DestCard> get_destCards() { return _L_destCards; }
     public void set_destCards(List<DestCard> destCards) { _L_destCards = destCards; }
 
-    public Map<CardType, Integer> get_cardCount() { return _M_typeToCardCount; }
-    public void set_cardCount(Map<CardType, Integer> typeToCardCount) { _M_typeToCardCount = typeToCardCount; }
+    public Map<String, Integer> get_cardCount() { return _M_typeToCardCount; }
+    public void set_cardCount(Map<String, Integer> typeToCardCount) { _M_typeToCardCount = typeToCardCount; }
 
 }

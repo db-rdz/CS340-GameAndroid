@@ -12,18 +12,25 @@ import android.widget.ExpandableListView;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.ExpandableListAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/*
+*   IMPORTANT NOTE:
+*   every time you open this fragment you are adding more of the same users to the
+*   expandable list adapter.
+*
+* */
 public class PlayersInfoFragment extends Fragment {
 
     public PlayersInfoFragment() {
         // Required empty public constructor
     }
 
+    private ExpandableListView _expListView;
     public static final String ARG_PAGE = "page";
 
     public static PlayersInfoFragment create(int pageNumber){
@@ -43,6 +50,7 @@ public class PlayersInfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PlayerInfoPresenter._SINGLETON.set_playersInfoFragment(this);
     }
 
     @Override
@@ -50,7 +58,7 @@ public class PlayersInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_players_info, container, false);
-        ExpandableListView expListView = (ExpandableListView) v.findViewById(R.id.lvExp);
+        _expListView = (ExpandableListView) v.findViewById(R.id.lvExp);
 
 
         List<String> headers = new ArrayList<>();
@@ -61,9 +69,13 @@ public class PlayersInfoFragment extends Fragment {
 
         ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
 
-        expListView.setAdapter(listAdapter);
+        _expListView.setAdapter(listAdapter);
 
         return v;
+    }
+
+    public void refresh(){
+        _expListView.invalidate();
     }
 
     @Override

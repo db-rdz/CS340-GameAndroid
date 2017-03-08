@@ -1,37 +1,33 @@
 package com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
+import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
+import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.RESPONSE_STATUS;
 import com.example.ryanblaser.tickettoride.R;
 
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * interface
- * to handle interaction events.
- * Use the {@link GameBoardFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class GameBoardFragment extends Fragment {
 
     public GameBoardFragment() {
@@ -43,15 +39,25 @@ public class GameBoardFragment extends Fragment {
     //-----------------------VIEWS/LAYOUT-------------------//
     private View mContentView;
     private View mControlsView;
+    private EditText textMessageView;
+
+    //Card count views
+    private TextView _blackCardCount;
+    private TextView _blueCardCount;
+    private TextView _greenCardCount;
+    private TextView _orangeCardCount;
+    private TextView _pinkCardCount;
+    private TextView _redCardCount;
+    private TextView _whiteCardCount;
+    private TextView _yellowCardCount;
+    private TextView _rainbowCardCount;
+
 
     //-----------------------CONFIGURATION VARIABLES--------//
 
     //BOARD IMAGE CONFIGURATION
-    public static final float BOARD_IMAGE_WIDTH = 2030;
-    public static final float BOARD_IMAGE_HEIGHT = 1507;
     public static final String ARG_PAGE = "page";
-    private float _screenToImageRatioY = 0;
-    private float _screenToImageRatioX = 0;
+
 
     //MENU HIDING CONFIGURATION
     private boolean mVisible;
@@ -66,13 +72,7 @@ public class GameBoardFragment extends Fragment {
     //-------------END OF CONFIGURATION VARIABLES------------//
 
 
-    //---------------------VIEW LOGIC VARIABLES--------------//
-    private City c1 = null;
-    private City c2 = null;
-    private Route _selectedRoute = null;
-    private Boolean _clickedOnCityOnce = false;
-    private Boolean _selectedDoubleRoute = false;
-    private List<Route> _selectedRouteList = new ArrayList<>();
+
 
     //-------------END OF VIEW LOGIC VARIABLES--------------//
 
@@ -151,7 +151,8 @@ public class GameBoardFragment extends Fragment {
 
     }
 
-    //TODO: NOT DETECTING CLICKS NOW... FIX PLEASE!!!
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -161,145 +162,105 @@ public class GameBoardFragment extends Fragment {
 
         mControlsView = v.findViewById(R.id.fullscreen_content_controls);
         mContentView = v.findViewById(R.id.fullscreen_content);
-        // Set up the user interaction to manually show or hide the system UI.
+        textMessageView = (EditText) v.findViewById(R.id.text_message);
+
+        setPlayerCardsViews(v);
+        setPlayerCardViewValues();
+
+        Button sendMessage = (Button)v.findViewById(R.id.send);
+        sendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String textMessage = textMessageView.getText().toString();
+                onMsgSent(textMessage);
+            }
+        });
 
 
         v.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    GameBoardPresenter presenter = GameBoardPresenter._SINGLETON;
+                    Pair<RESPONSE_STATUS, String> response;
+                    response = presenter.resolveClickEvent(event.getX(), event.getY());
 
-                    GameBoardPresenter._SINGLETON.resolveClickEvent();
-                    
-                    List<City> cities = City.get_allCities();
-
-                    getScreenToImageRatio();
-
-                    //----------CONVERT THE CLICK COORDINATES TO BOARD COORDINATES------------//
-                    float x = _screenToImageRatioX*event.getX();
-                    float y = _screenToImageRatioY*event.getY();
-
-                    for(City c : cities){
-                        if(c.get_cityPointArea().contains(x, y)){
-
-                            if(!_clickedOnCityOnce){
-                                c1 = c;
-                                _clickedOnCityOnce = true;
-                            }
-                            else if(_selectedDoubleRoute){
-                                c2 = c;
-                                claimUserChoice(c2);
-                            }
-                            else{
-                                c2 = c;
-                                _selectedRouteList = c1.get_M_Routes().get(c.get_S_name());
-                                if(_selectedRouteList.size() > 1){
-                                    solveDoubleRoutes();
-                                }
-                                else{
-                                    Route selectedRoute = _selectedRouteList.get(0);
-                                    claimRoute(selectedRoute);
-                                }
-                            }
-                            return true;
+                    RESPONSE_STATUS responseCode = response.first;
+                    switch(responseCode){
+                        case TOGGLE_NEEDED : {
+                            toggle();
+                            break;
+                        }
+                        case CITY_CLICKED: {
+                            Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+                        }
+                        case SECOND_CITY_CLICKED : {
+                            break;
+                        }
+                        case CLAIMED_ROUTE : {
+                            Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG ).show();
+                            invalidateBoard();
+                            break;
+                        }
+                        default: {
+                            Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
+                            break;
                         }
                     }
-                    resetViewLogicVariables();
-                    toggle();
                 }
                 return true;
             }
         });
-
         return v;
     }
 
-    public void solveDoubleRoutes(){
-        //IF BOTH ROUTES ARE THE SAME COLOR THEN CHECK IF ONE IS AVAILABLE
-        if(_selectedRouteList.get(0).get_Color() == _selectedRouteList.get(1).get_Color()){
-
-            if(_selectedRouteList.get(0).get_Owner() == null) {
-                //TODO: Claiming a route must be done in the model and through the presenter
-                Route seltectedRoute = _selectedRouteList.get(0);
-                claimRoute(seltectedRoute);
-            }else if(_selectedRouteList.get(1).get_Owner() == null){
-                Route seltectedRoute = _selectedRouteList.get(1);
-                claimRoute(seltectedRoute);
-            }
-            else{
-                Toast.makeText(getContext(), "Routes Already Taken", Toast.LENGTH_LONG ).show();
-            }
-        }//DIFFERENT COLOR LET THE USER CHOOSE
-        else if(_selectedRouteList.get(0).get_Owner() == null && _selectedRouteList.get(1).get_Owner() != null){
-            claimRoute(_selectedRouteList.get(0));
-        }
-        else if(_selectedRouteList.get(0).get_Owner() != null && _selectedRouteList.get(1).get_Owner() == null){
-            claimRoute(_selectedRouteList.get(1));
-        }
-        else if(_selectedRouteList.get(0).get_Owner() != null && _selectedRouteList.get(1).get_Owner() != null){
-            Toast.makeText(getContext(), "Routes Already Taken", Toast.LENGTH_LONG ).show();
-            resetViewLogicVariables();
-        }
-        else{
-            _selectedDoubleRoute = true;
-            String toastText = "Click on " + c1.get_S_name() + " to claim the " +
-                    _selectedRouteList.get(0).get_S_Color() + " or click on " + c2.get_S_name() + " to Claim the " +
-                    _selectedRouteList.get(1).get_S_Color() + " route";
-            Toast.makeText(getContext(), toastText, Toast.LENGTH_LONG ).show();
-        }
+    public void setPlayerCardsViews(View v){
+        _blackCardCount = (TextView) v.findViewById(R.id.blackCardCount);
+        _blueCardCount = (TextView) v.findViewById(R.id.blueCardCount);
+        _greenCardCount = (TextView) v.findViewById(R.id.greenCardCount);
+        _orangeCardCount = (TextView) v.findViewById(R.id.orangeCardCount);
+        _pinkCardCount = (TextView) v.findViewById(R.id.pinkCardCount);
+        _redCardCount = (TextView) v.findViewById(R.id.redCardCount);
+        _whiteCardCount = (TextView) v.findViewById(R.id.whiteCardCount);
+        _yellowCardCount = (TextView) v.findViewById(R.id.yellowCardCount);
+        _rainbowCardCount = (TextView) v.findViewById(R.id.rainbowCardCount);
     }
 
+    public void setPlayerCardViewValues(){
+        Player clientPlayer = GameBoardPresenter._SINGLETON.getClientPlayer();
+        PlayerCardHand hand = clientPlayer.get_Hand();
 
-
-    public void claimRoute(Route route){
-        if(route.get_Owner() == null){
-            //ClaimRoute
-            route.set_Owner("Daniel");
-            Toast.makeText(getContext(), "You have claimed route " + c1.get_S_name() + "-"
-                    + c2.get_S_name(), Toast.LENGTH_LONG ).show();
-
-            invalidateBoard();
-            resetViewLogicVariables();
-
-        }
-    }
-
-    public void resetViewLogicVariables(){
-        _selectedDoubleRoute = false;
-        _selectedRoute = null;
-        _selectedRouteList = null;
-        _clickedOnCityOnce = false;
-        c1 = null;
-        c2 = null;
-    }
-
-    public void claimUserChoice(City c){
-        if(c == c1){
-            Route selectedRoute = _selectedRouteList.get(0);
-            claimRoute(selectedRoute);
-        }
-        else{
-            Route selectedRoute  = _selectedRouteList.get(1);
-            claimRoute(selectedRoute);
-        }
-    }
-
-    public void getScreenToImageRatio(){
-        //---------------GET SCREEN SIZE----------------------//
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) getContext()).getWindowManager()
-                .getDefaultDisplay()
-                .getMetrics(displayMetrics);
-
-        float height = displayMetrics.heightPixels;
-        float width = displayMetrics.widthPixels;
-
-        _screenToImageRatioY = BOARD_IMAGE_HEIGHT/height;
-        _screenToImageRatioX = BOARD_IMAGE_WIDTH/width;
+        _blackCardCount.setText(String.valueOf(hand.get_cardCount().get("blackcard")));
+        _blueCardCount.setText(String.valueOf(hand.get_cardCount().get("bluecard")));
+        _greenCardCount.setText(String.valueOf(hand.get_cardCount().get("greencard")));
+        _orangeCardCount.setText(String.valueOf(hand.get_cardCount().get("orangecard")));
+        _pinkCardCount.setText(String.valueOf(hand.get_cardCount().get("pinkcard")));
+        _redCardCount.setText(String.valueOf(hand.get_cardCount().get("redcard")));
+        _whiteCardCount.setText(String.valueOf(hand.get_cardCount().get("whitecard")));
+        _yellowCardCount.setText(String.valueOf(hand.get_cardCount().get("yellowcard")));
+        _rainbowCardCount.setText(String.valueOf(hand.get_cardCount().get("rainbowcard")));
+        _blackCardCount.invalidate();
+        _blueCardCount.invalidate();
+        _greenCardCount.invalidate();
+        _orangeCardCount.invalidate();
+        _pinkCardCount.invalidate();
+        _redCardCount.invalidate();
+        _whiteCardCount.invalidate();
+        _yellowCardCount.invalidate();
+        _rainbowCardCount.invalidate();
     }
 
     public void invalidateBoard(){
         CanvasImageView touchView = (CanvasImageView) getView().findViewById(R.id.fullscreen_content);
+        _blackCardCount.invalidate();
+        _blueCardCount.invalidate();
+        _greenCardCount.invalidate();
+        _orangeCardCount.invalidate();
+        _pinkCardCount.invalidate();
+        _redCardCount.invalidate();
+        _whiteCardCount.invalidate();
+        _yellowCardCount.invalidate();
+        _rainbowCardCount.invalidate();
         touchView.invalidate();
     }
 
@@ -332,7 +293,9 @@ public class GameBoardFragment extends Fragment {
             City.initAllCities();
             City.initAdjacentCities();
             City.initCityPoints();
+            GameBoardPresenter._SINGLETON.getScreenToImageRatio(getContext());
         }
+        GameBoardPresenter._SINGLETON.set_boardFragment(this);
         delayedHide(100);
     }
 

@@ -15,8 +15,9 @@ import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 
 import java.util.List;
 
-import static com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.GameBoardFragment.BOARD_IMAGE_HEIGHT;
-import static com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.GameBoardFragment.BOARD_IMAGE_WIDTH;
+import static com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter.BOARD_IMAGE_HEIGHT;
+import static com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter.BOARD_IMAGE_WIDTH;
+
 
 /**
  * Created by benjamin on 3/03/17.

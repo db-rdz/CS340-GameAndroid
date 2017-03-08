@@ -57,8 +57,8 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
                         final iDestCard slidingDeckModel = (iDestCard) item.getTag();
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
                         remove(slidingDeckModel);
-
                         //TODO: delete the card from the player model...
+//                        GameBoardPresenter._SINGLETON.
 
                         View container = (View)item.getParent().getParent();
                         container.findViewById(R.id.keep_allCards).setVisibility(View.GONE);

@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SliddingAdapter;
+import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.R;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.CardsModel.iDestCard;
 import com.redbooth.SlidingDeck;
@@ -19,10 +21,13 @@ import java.util.Collection;
 
 public class PlayerActionFragment extends Fragment {
 
-    public PlayerActionFragment() {
+    public PlayerActionFragment() { }
 
-    }
 
+    //-----------------------------VIEW VARIABLES-----------------------------//
+    private Button _keepAllCards;
+    private SlidingDeck _slidingDeck;
+    private SlidingDeck _slidingTrainCards;
     public static final String ARG_PAGE = "page";
 
 
@@ -42,6 +47,7 @@ public class PlayerActionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PlayerActionPresenter._SINGLETON.initTrainCardMap();
     }
 
     @Override
@@ -50,21 +56,27 @@ public class PlayerActionFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_player_action, container, false);
 
-        final SlidingDeck slidingDeck = (SlidingDeck)v.findViewById(R.id.slidingDeck);
+        _slidingDeck = (SlidingDeck)v.findViewById(R.id.slidingDeck);
+        _slidingTrainCards = (SlidingDeck)v.findViewById(R.id.slidingTrainCards);
+
         final SliddingAdapter slidingAdapter  = new SliddingAdapter(getContext());
+        final SlidingTrainCardAdapter trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
 
         slidingAdapter.addAll((Collection<? extends iDestCard>)
-                GameBoardPresenter._SINGLETON.getFourDestinationCards());
+                GameBoardPresenter._SINGLETON.getThreeDestinationCards());
 
-        slidingDeck.setAdapter(slidingAdapter);
+        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.getFourTrainCards());
 
-        Button keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
+        _slidingDeck.setAdapter(slidingAdapter);
+        _slidingTrainCards.setAdapter(trainCardAdapter);
+
+        _keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
 
         if(GameBoardPresenter._SINGLETON.is_readyToStart()){
-            keepAllCards.setVisibility(View.GONE);
+            _keepAllCards.setVisibility(View.GONE);
         }
 
-        keepAllCards.setOnClickListener(new View.OnClickListener() {
+        _keepAllCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -83,6 +95,9 @@ public class PlayerActionFragment extends Fragment {
         return v;
     }
 
+    public void invalidate(){
+
+    }
 
     @Override
     public void onAttach(Context context) {

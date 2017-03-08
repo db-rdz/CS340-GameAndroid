@@ -55,14 +55,22 @@
                     android:layout_gravity="top|left"
                     android:orientation="horizontal">
 
+                    <EditText
+                        android:background="@color/black_overlay"
+                        android:textColor="@color/colorAccent"
+                        android:id="@+id/text_message"
+                        android:layout_width="500dp"
+                        android:layout_height="30dp" />
+
                     <Button
                         android:text="Messages"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/button4"
+                        android:id="@+id/send"
                         android:elevation="0dp"
                         style="@style/Widget.AppCompat.Button.Colored"
                         android:textSize="12sp" />
+
 
                 </LinearLayout>
 
@@ -89,6 +97,7 @@
                             android:scaleType = "centerCrop"/>
 
                         <TextView
+                            android:id="@+id/blackCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="95dp"
@@ -111,6 +120,7 @@
                             android:scaleType="centerCrop" />
 
                         <TextView
+                            android:id="@+id/blueCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="95dp"
@@ -133,6 +143,7 @@
                             android:scaleType="centerCrop" />
 
                         <TextView
+                            android:id="@+id/greenCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="94dp"
@@ -155,6 +166,7 @@
                             android:scaleType="centerCrop" />
 
                         <TextView
+                            android:id="@+id/orangeCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="92dp"
@@ -177,6 +189,7 @@
                             android:scaleType="centerCrop" />
 
                         <TextView
+                            android:id="@+id/pinkCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="fill_parent"
@@ -199,6 +212,7 @@
                             android:scaleType="centerCrop" />
 
                         <TextView
+                            android:id="@+id/redCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="fill_parent"
@@ -221,6 +235,7 @@
                             android:scaleType = "centerCrop" />
 
                         <TextView
+                            android:id="@+id/whiteCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="fill_parent"
@@ -242,6 +257,7 @@
                             android:scaleType = "centerCrop"/>
 
                         <TextView
+                            android:id="@+id/yellowCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="match_parent"
@@ -264,6 +280,7 @@
                             android:scaleType = "centerCrop"/>
 
                         <TextView
+                            android:id="@+id/rainbowCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="94dp"

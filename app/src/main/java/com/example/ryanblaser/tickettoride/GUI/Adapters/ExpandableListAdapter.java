@@ -24,6 +24,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> _listDataHeader;
     private HashMap<String, Player> _listDataChild;
 
+
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, Player> listChildData) {
         this._context = context;
@@ -110,6 +111,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
+        Player currentPlayer = _listDataChild.get(headerTitle);
+        lblListHeader.setBackgroundColor(currentPlayer.get_playerColor());
 
         return convertView;
     }
