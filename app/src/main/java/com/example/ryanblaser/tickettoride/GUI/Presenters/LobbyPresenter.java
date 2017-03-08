@@ -22,12 +22,12 @@ public class LobbyPresenter implements ILobbyPresenter {
 
     @Override
     public void logout(){
-        ClientFacade.SINGLETON.logout(ClientFacade.SINGLETON.getClientModel().getAuthenticationKey());
+        ClientFacade.SINGLETON.logout(ClientFacade.SINGLETON.getClientModel().getStr_authentication_code());
     }
 
     @Override
     public void addJoinableGame() {
-        ClientFacade.SINGLETON.addJoinableGame();
+        ClientFacade.SINGLETON.addJoinableGameToServer();
     }
 
     @Override
@@ -37,8 +37,8 @@ public class LobbyPresenter implements ILobbyPresenter {
 
     @Override
     public void addPlayer(int gameId) {
-        String code = ClientFacade.SINGLETON.getCurrentUser().getStr_authentication_code();
-        ClientFacade.SINGLETON.addPlayerToServerModel(code, gameId);
+        String username = ClientFacade.SINGLETON.getCurrentUser().getUsername();
+        ClientFacade.SINGLETON.addPlayerToServerModel(username, gameId);
     }
 
     public List<Integer> getWaitingGames() {

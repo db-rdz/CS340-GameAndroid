@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 public class LogoutResponseCommand implements ICommand {
+
+  public LogoutResponseCommand() {}
   
   @Override
   public List<ICommand> execute(){

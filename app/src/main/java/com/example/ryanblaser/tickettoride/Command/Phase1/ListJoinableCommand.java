@@ -16,10 +16,14 @@ import java.util.List;
 
 public class ListJoinableCommand implements ICommand { // sent to clients after login/registration
 
-    private List<Game> list_game_list;
+    /**
+     * This is a list of gameIds the Client will receive
+     * We don't use Game because the client shouldn't have access to the games they're apart of.
+     */
+    private List<Integer> list_gameIds;
     public ListJoinableCommand(){}
-    public ListJoinableCommand(List<Game> list){
-    list_game_list = list;}
+    public ListJoinableCommand(List<Integer> list){
+        list_gameIds = list;}
 
     @JsonIgnore
     @Override
@@ -35,7 +39,7 @@ public class ListJoinableCommand implements ICommand { // sent to clients after 
 
     @Override
     public List<ICommand> execute(){
-        ClientFacade.SINGLETON.listJoinableGames(list_game_list);
+        ClientFacade.SINGLETON.listJoinableGames(list_gameIds);
 
         return null;
     }
@@ -46,8 +50,7 @@ public class ListJoinableCommand implements ICommand { // sent to clients after 
     return null;
     }
 
-    @JsonProperty("list_game_list")
-    public List<Game> getList_game_list() {
-    return list_game_list;
+    public List<Integer> getList_gameIds() {
+        return list_gameIds;
     }
 }

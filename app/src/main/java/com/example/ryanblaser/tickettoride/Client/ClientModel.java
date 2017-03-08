@@ -13,27 +13,69 @@ import java.util.Hashtable; // HashMap but hopefully throws exceptions if concur
 public class ClientModel{
 
     public enum GameType{
-        JOINABLE, WAITING, RESUMABLE
+        JOINABLE, WAITING
     }
 
+    /**
+     * Authentication code of the current user
+     */
     private String str_authentication_code;
+
+    /**
+     * User information of the current user
+     */
     private User user;
-    private List<Integer> list_joinable, list_waiting, list_resumable;
-    private Hashtable<Integer, GameType> hashtable_id_to_list; //Each gameId key has their own GameType value.
+
+    /**
+     * These lists contain the gameId's for the game that the current user is apart of
+     */
+    private List<Integer> list_joinable, list_waiting;
+
+    /**
+     * Each gameId key has their own GameType value;
+     */
+    private Hashtable<Integer, GameType> hashtable_id_to_list;
+
+    /**
+     * The client stores the gameId of a specific game, and then stores a list of Strings (usernames)
+     * per gameId.
+     * @key Integer The gameId received from the server
+     * @key List The List of usernames
+     *
+     */
     private Hashtable<Integer, List<String>> gameId_to_usernames;
+
+    /**
+     * MainActivity used to call methods from it.
+     * Used to update the list of games in the lobby
+     */
     private MainActivity mainActivity;
+
+    /**
+     * MainActivity used to call methods from it.
+     * Used to update the list of games in the lobby
+     */
     private GameActivity gameActivity;
+
+    /**
+     * Total car count of the curreent user.
+     * Always start with 45 cars
+     */
     private int int_car_count;
+
+    /**
+     * Total points the player has.
+     * Always start with 0
+     */
     private int int_total_points;
 
     public ClientModel(MainActivity mainActivity1){
         mainActivity = mainActivity1;
         gameActivity = null;
-        list_joinable = new ArrayList<Integer>();
-        list_waiting = new ArrayList<Integer>();
-        list_resumable = new ArrayList<Integer>();
-        hashtable_id_to_list = new Hashtable<Integer, GameType>();
-        gameId_to_usernames = new Hashtable<Integer, List<String>>();
+        list_joinable = new ArrayList<>();
+        list_waiting = new ArrayList<>();
+        hashtable_id_to_list = new Hashtable<>();
+        gameId_to_usernames = new Hashtable<>();
         int_car_count = 45; //Each player starts with 45 train cars
         int_total_points = 0;
     }
@@ -42,9 +84,6 @@ public class ClientModel{
         str_authentication_code = k;
     }
 
-    public String getAuthenticationKey(){
-        return str_authentication_code;
-    }
 
     public void setUser(User u){
         user = u;
@@ -54,9 +93,9 @@ public class ClientModel{
         return user;
     }
 
-    public void setJoinableGames(List<com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game> list){
-        for(com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game game : list)
-            addJoinableGame(game.get_i_gameId());
+    public void setJoinableGames(List<Integer> list){
+        for(int gameId : list)
+            addJoinableGame(gameId);
     }
 
     public List<Integer> getJoinableGames(){
@@ -66,13 +105,11 @@ public class ClientModel{
     public void addJoinableGame(int gameId){
         hashtable_id_to_list.put(gameId, GameType.JOINABLE);
         list_joinable.add(gameId);
-//        LobbyPresenter.SINGLETON.refreshGameLobby();
-
     }
 
     public void setWaitingGames(List<Integer> list){
-        for(int game : list)
-            addWaitingGame(game);
+        for(int gameId : list)
+            addWaitingGame(gameId);
     }
 
     public List<Integer> getWaitingGames(){
@@ -90,32 +127,47 @@ public class ClientModel{
         return hashtable_id_to_list.get(gameId);
     }
 
+    /**
+     * Deletes the specific gameId from the map.
+     * @param gameId
+     * @return
+     */
     public GameType deleteGame(int gameId){
         GameType type = getGameType(gameId);
         hashtable_id_to_list.remove(gameId);
-        if(type == GameType.JOINABLE)
+        if(type == GameType.JOINABLE) {
             list_joinable.remove(gameId);
-        else if(type == GameType.WAITING)
+        }
+        else {//(type == GameType.WAITING)
             list_waiting.remove(gameId);
-        else
-            list_resumable.remove(gameId);
+        }
         return type;
     }
 
-    private void addPlayerToGameObject(String username, int gameId){
-    	gameId_to_usernames.get(gameId).add(username);
+    /**
+     * Adds a username to a game represented by a gameId to the map
+     * @param username
+     * @param gameId
+     */
+    public void addPlayerToGameObject(String username, int gameId){
+        if (gameId_to_usernames.containsKey(gameId)) { //If game exists
+    	    gameId_to_usernames.get(gameId).add(username);
+        }
+        else if (!gameId_to_usernames.containsKey(gameId)) { //If game doesn't exist yet
+            List<String> gameCreator = new ArrayList<>();
+            gameCreator.add(username); //Need to make a new List<String> for Map.put()
+            gameId_to_usernames.put(gameId, gameCreator);
+        }
     }
 
     public void addPlayerToModel(String username, int gameId){
         GameType type = getGameType(gameId);
+
         if(type == GameType.JOINABLE){
             addPlayerToGameObject(username, gameId);
         }
-        else if(type == GameType.WAITING){
+        else { //(type == GameType.WAITING)
             addPlayerToGameObject(username, gameId);
-        }
-        else {
-            //do nothing for resumable type game
         }
 
     }
@@ -175,10 +227,6 @@ public class ClientModel{
 
     public List<Integer> getList_waiting() {
         return list_waiting;
-    }
-
-    public List<Integer> getList_resumable() {
-        return list_resumable;
     }
 
     public Hashtable<Integer, GameType> getHashtable_id_to_list() {

@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToServerCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
 
 import com.example.ryanblaser.tickettoride.Command.Phase1.*;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
@@ -65,7 +64,7 @@ public class ServerProxy implements IServer {
 
 
     @Override
-    public int addJoinableGame(String str_authentication_code) {
+    public int addJoinableGameToServer(String str_authentication_code) {
         String urlSuffix = "/command";
 
         ICommand addGameCommand = new AddGameToServerCommand(new Game(), str_authentication_code);
@@ -115,7 +114,7 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public List<ICommand> addPlayer(String username, int gameId) {
+    public List<ICommand> addPlayerToServerModel(String username, int gameId) {
         String urlSuffix = "/command";
 
         ICommand addPlayerCommand = new AddPlayerToServerCommand(username, gameId);

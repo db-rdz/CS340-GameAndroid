@@ -21,6 +21,8 @@ import com.example.ryanblaser.tickettoride.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by 0joshuaolson1 on 2/15/17.
@@ -110,8 +112,8 @@ public class LobbyFragment extends Fragment {
         if (listJoinableGames.size() > 0) {
             ArrayList<String> gamesList = new ArrayList<>();
             for (int i = 0; i < listJoinableGames.size(); i++) {
-                int inc = listJoinableGames.get(i); //A holder so we don't accidentally increment i
-                gamesList.add("Game " + inc); //Lists the game and which game number
+                int gameId = listJoinableGames.get(i); //A holder so we don't accidentally increment i
+                gamesList.add("Game " + gameId); //Lists the game and which game number
             }
             list_of_Games = new ArrayAdapter<String>(getContext(), R.layout.row_info, gamesList);
             listView_joinable_games.setAdapter(list_of_Games);
@@ -123,13 +125,22 @@ public class LobbyFragment extends Fragment {
     private AdapterView.OnItemClickListener gameItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long j) {
-            String gameSelected = list_of_Games.getItem(i);
+            final String gameSelected = list_of_Games.getItem(i);
             String[] split = gameSelected.split(" ");
             int gameId = Integer.parseInt(split[1]); //gameId is in position 1 of array.
             LobbyPresenter.SINGLETON.addPlayer(gameId);
-            Intent intent = new Intent(getContext(), GameActivity.class);
-            intent.putExtra("GAME", gameSelected);
-            startActivity(intent);
+
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getContext(), GameActivity.class);
+                    intent.putExtra("GAME", gameSelected);
+                    startActivity(intent);
+                }
+            }, 5000); //Runs the activity AFTER 5 seconds.
+
+
         }
     };
 

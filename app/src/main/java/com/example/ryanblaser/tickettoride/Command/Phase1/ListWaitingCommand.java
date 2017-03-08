@@ -8,31 +8,35 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 public class ListWaitingCommand implements ICommand { // sent to clients after login/registration
-  private List<Integer> list_game_list;
-  private ListWaitingCommand(){}
-  public ListWaitingCommand(List<Integer> list){
-    list_game_list = list;}
+    private List<Integer> list_gameIds;
+    public ListWaitingCommand(){}
+    public ListWaitingCommand(List<Integer> list){
+    list_gameIds = list;}
 
-  @JsonIgnore
-  @Override
-  public String getAuthenticationCode() {
+    @JsonIgnore
+    @Override
+    public String getAuthenticationCode() {
     return null;
-  }
+    }
 
-  @JsonIgnore
-  @Override
-  public User getUser() {
+    @JsonIgnore
+    @Override
+    public User getUser() {
     return null;
-  }
-  
-  @Override
-  public List<ICommand> execute(){
-    ClientFacade.SINGLETON.listWaitingGames(list_game_list); //TODO: Decide which Game class to use
-    return null;
-  }
+    }
 
-  @Override
-  public Game getGame() {
+    @Override
+    public List<ICommand> execute(){
+    ClientFacade.SINGLETON.listWaitingGames(list_gameIds); //TODO: Decide which Game class to use
     return null;
-  }
+    }
+
+    @Override
+    public Game getGame() {
+    return null;
+    }
+
+    public List<Integer> getList_gameIds() {
+    return list_gameIds;
+    }
 }
