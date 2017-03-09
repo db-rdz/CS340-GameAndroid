@@ -10,10 +10,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class AddPlayerToServerCommand implements ICommand{
     private int i_game_id;
-    private String str_authenticationCode;
+    private String str_authentication_code;
     private AddPlayerToServerCommand(){}
     public AddPlayerToServerCommand(String k, int gameId){
-        str_authenticationCode = k;
+        str_authentication_code = k;
         i_game_id = gameId;
     }
 
@@ -41,7 +41,7 @@ public class AddPlayerToServerCommand implements ICommand{
       return i_game_id;
     }
 
-    public String getStr_authenticationCode() {
-        return str_authenticationCode;
+    public String getStr_authentication_code() {
+        return str_authentication_code;
     }
 }
