@@ -1,11 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddJoinableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddResumableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
-import com.example.ryanblaser.tickettoride.Command.Phase1.DeleteGameCommand;
-import com.example.ryanblaser.tickettoride.Command.ICommand;
+
 import com.example.ryanblaser.tickettoride.Server.IServer.GameIsFullException;
 
 import java.util.Timer;
@@ -15,59 +10,60 @@ import java.util.TimerTask;
  * Created by RyanBlaser on 2/12/17.
  */
 
+
 public class Poller implements Runnable {
+    
     private final Timer timer = new Timer();
     private TimerTask timerTask;
-
+    private User user;
+    private int lastCommandRecievedIndex;
+    
     public Poller()
     {
+        lastCommandRecievedIndex = 0;
+
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 try {
-					checkForCommands();
-				} catch (GameIsFullException e) {
-					e.printStackTrace();
-				}
+                    checkForCommands(lastCommandRecievedIndex);
+                } catch (GameIsFullException e) {
+                    e.printStackTrace();
+                }
             }
         };
-
+        
         long delay = 10000; //10 seconds
-
-        timer.schedule(timerTask, delay);
+        
+        timer.schedule(timerTask, delay, delay);
+        
+        user = null;
     }
-
-    public CommandContainer checkForCommands() throws GameIsFullException
+    
+    public void checkForCommands(int lastCommandRecievedIndex) throws GameIsFullException
     {
-        CommandContainer result = ServerProxy.SINGLETON.checkForCommands();
-        ICommand command;
-        for (int i = 0; i < result.str_type.size(); i++)
-        {
-            switch (result.str_type.get(i)) {
-                case "AddJoinableCommand" :
-                    command = new AddJoinableToClientCommand(result.icommand.get(i).getGame());
-                    break;
-                case "DeleteGameCommand" :
-                    command = (DeleteGameCommand) result.icommand.get(i);
-                    break;
-                case "AddResumableCommand" :
-                    command = (AddResumableToClientCommand) result.icommand.get(i);
-                    break;
-                case "AddPlayerCommand" :
-                    command = (AddPlayerToClientCommand) result.icommand.get(i);
-                    break;
-                default:
-                    command = null;
-                    break;
-            }
-            command.execute();
+        if (user != null) {
+            int increment = ServerProxy.SINGLETON.checkForCommands(user.getUsername(), lastCommandRecievedIndex);
+            this.lastCommandRecievedIndex += increment;
+//            ServerProxy.SINGLETON.deleteGottenCommands(user.getUsername());
         }
-        return result;
     }
-
+    
     public TimerTask getTimerTask() { return timerTask; }
     public void setTimerTask(TimerTask timerTask) { this.timerTask = timerTask; }
-
+    
+    public Timer getTimer() {
+        return timer;
+    }
+    
+    public User getUser() {
+        return user;
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     @Override
     public void run() {
     }

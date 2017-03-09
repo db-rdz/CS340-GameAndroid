@@ -1,11 +1,13 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
+
 /**
  * Created by RyanBlaser on 2/5/17.
  */
 
-public class User {
+public class User extends Player {
 
     //Data members
 	String username;
@@ -24,7 +26,7 @@ public class User {
         username = u;
         password = p;
     }
-    
+
     @Override
     public String toString() {
     	return "Username: " + getUsername() + "\npassword: " + getPassword() + "\nauthentication: " + getStr_authentication_code() + "\n";

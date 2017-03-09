@@ -10,13 +10,17 @@ import java.util.Map;
 /**
  * Created by benjamin on 10/02/17.
  */
-public class Game implements iGame, Cloneable {
+public class Game implements iGame {
+
+    public Game() {
+
+    }
 
 
 
     //-----------------------------------------STATIC VARIABLES----------------------------------------//
     /** _M_idToGame maps a game id to a game. */
-    private static Map<Integer, Game> _M_idToGame = new HashMap();
+    private static Map<Integer, Game> _M_idToGame = new HashMap<>();
     /**  These are all the games that haven't started */
     private static List<Game> _L_listOfAvailableGames = new ArrayList<>();
     /**  These are all the games that have already started */
@@ -27,16 +31,17 @@ public class Game implements iGame, Cloneable {
     public static int modelNextGameIndex = 0;
 
 
+
     //-----------------------------------------CLASS VARIABLES-----------------------------------------//
     /** _M_idToUserInGame maps a username string to a User. It only maps the user's of the people in the game */
     private Map<String, User> _M_idToUserInGame = new HashMap<>();
-    
+
     /** _i_numberOfPlayers are the current number of users in the game */
     private int _i_numberOfPlayers = 0;
-    
+
     /** _i_gameId is the id of a game in the database */
     private int _i_gameId = -1;
-    
+
     /** This is the user id of the person that created the game. */
     private int _i_gameOwner = -1;
 
@@ -63,15 +68,25 @@ public class Game implements iGame, Cloneable {
 
     /** Tells if a game is full or not  */
     public static Boolean isGameFull(int gameId){
-        if(_M_idToGame.get(gameId).get_numberOfPlayers() > _MAX_PLAYERS){
-            return true;
+        try {
+            if(_M_idToGame.get(gameId).get_numberOfPlayers() > _MAX_PLAYERS){
+                return true;
+            }
+            return false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }
 
     /** Returns the list of all games */
     public static List<Game> getAllGames(){
-        return (List<Game>) _M_idToGame.values();
+        List<Game> games = new ArrayList<>();
+        for (Game game : _M_idToGame.values()) {
+            games.add(game);
+        }
+        return games;
     }
 
 
@@ -115,13 +130,13 @@ public class Game implements iGame, Cloneable {
     public void set_S_gameName(String _S_gameName) {
         this._S_gameName = _S_gameName;
     }
-    
+
     public int get_i_gameId() {
-    	return _i_gameId;
+        return _i_gameId;
     }
-    
+
     public void set_i_gameId(int _i_gameId) {
-    	this._i_gameId = _i_gameId;
+        this._i_gameId = _i_gameId;
     }
 
     public Boolean get_S_active() {
@@ -131,15 +146,15 @@ public class Game implements iGame, Cloneable {
     public void set_S_active(Boolean _S_active) {
         this._S_active = _S_active;
     }
-    
+
     public Map<String, User> get_M_idToUserInGame() {
-    	return _M_idToUserInGame;
+        return _M_idToUserInGame;
     }
 
 
     //-----------------------------------------CLASS FUNCTIONS----------------------------------------//
     /** Uses a map to return the User object associated with a user id (returns null if user is not in the game) */
-    private User getUserInGame(String username ){
+    private User getUserInGame( String username ){
         return _M_idToUserInGame.get(username);
     }
 

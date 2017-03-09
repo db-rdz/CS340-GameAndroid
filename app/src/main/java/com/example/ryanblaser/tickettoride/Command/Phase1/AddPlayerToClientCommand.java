@@ -6,11 +6,13 @@ import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.List;
+
 public class AddPlayerToClientCommand implements ICommand { // sent after changes from what List... commands sent
   private int int_game_id;
   private String str_username;
-  private AddPlayerToClientCommand(){}
-  public AddPlayerToClientCommand(String name, Integer gameId){
+  public AddPlayerToClientCommand(){}
+  public AddPlayerToClientCommand(String name, int gameId){
     str_username = name;
     int_game_id = gameId;}
 
@@ -32,14 +34,22 @@ public class AddPlayerToClientCommand implements ICommand { // sent after change
   }
 
   @Override
-  public CommandContainer execute() throws GameIsFullException {
-    ClientFacade.SINGLETON.addPlayer(str_username, int_game_id);
-    return null; //TODO: stub
+  public List<ICommand> execute() throws GameIsFullException {
+    ClientFacade.SINGLETON.addPlayerToClientModel(str_username, int_game_id);
+    return null;
   }
 
   @JsonIgnore
   @Override
   public Game getGame() {
     return null;
+  }
+
+  public int getInt_game_id() {
+    return int_game_id;
+  }
+
+  public String getStr_username() {
+    return str_username;
   }
 }

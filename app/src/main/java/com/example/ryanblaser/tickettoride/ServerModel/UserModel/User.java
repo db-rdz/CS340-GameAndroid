@@ -2,6 +2,7 @@ package com.example.ryanblaser.tickettoride.ServerModel.UserModel;
 
 import com.example.ryanblaser.tickettoride.Database.DAO;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.SQLException;
@@ -15,14 +16,16 @@ import java.util.Map;
  */
 public class User implements iUser {
 
+    public User() {}
+
     //-----------------------------------------CLASS VARIABLES-------------------------------------------------//
     private String _S_username = null;
     private String _S_password = null;
     private String _S_token = null;
 
-    @JsonProperty("userInGame")
     private Boolean _B_isInGame = false;
-    private List<Game> _L_joinedGames = new ArrayList<>();
+    private List<Integer> _L_joinedGames = new ArrayList<>();
+    private Boolean _B_isLoggedIn = false; //Determines if the user is logged in or not. Used in ClientProxy.
 
     //_________________________________________________________________________________________________________//
 
@@ -32,19 +35,20 @@ public class User implements iUser {
     //-----------------------------------------STATIC VARIABLES------------------------------------------------//
     /**Maps a string () to a user*/
     /** Note: The function of finding a user with a determined id I think should be done here to keep us organized */
-    private static Map<String, com.example.ryanblaser.tickettoride.ServerModel.UserModel.User> _M_idToUser = new HashMap();
+    private static Map<String, User> _M_idToUser = new HashMap();
+    private  List<User> _L_listOfAllUsers = new ArrayList<>();
 
     //_________________________________________________________________________________________________________//
 
 
 
     //-----------------------------------------STATIC FUNCTIONS------------------------------------------------//
-    public static com.example.ryanblaser.tickettoride.ServerModel.UserModel.User getUserWithUsername(String username){ return _M_idToUser.get(username); }
+    public static User getUserWithUsername(String username){ return _M_idToUser.get(username); }
 
     public static Boolean addLoggedInUser(String username){
         try {
-            com.example.ryanblaser.tickettoride.ServerModel.UserModel.User loggedUser = DAO._SINGLETON.getUserByUserName(username);
-            mapIdToUser(username, loggedUser);
+            User loggedUser = DAO._SINGLETON.getUserByUserName(username);
+            mapUsernameToLoggedInUser(username, loggedUser);
             return true;
         }
         catch (Exception e){
@@ -52,8 +56,17 @@ public class User implements iUser {
         }
     }
 
-    public static Boolean mapIdToUser(String username, com.example.ryanblaser.tickettoride.ServerModel.UserModel.User user){
-        _M_idToUser.put(username, user);
+    /**
+     * Nathan
+     * Changed user to loggedUser for consistency
+     * Changed method name from "mapIdToUser" -> "mapUsernameToLoggedInUser"
+     *
+     * @param username
+     * @param loggedUser
+     * @return
+     */
+    public static Boolean mapUsernameToLoggedInUser(String username, User loggedUser){
+        _M_idToUser.put(username, loggedUser);
         return true;
     }
 
@@ -64,25 +77,102 @@ public class User implements iUser {
 
     //-----------------------------------------SETTERS AND GETTERS---------------------------------------------//
 
-    public String get_Username() { return _S_username; }
-    public void set_Username(String username) { _S_username = username; }
+    public String get_S_username() {
+        return _S_username;
+    }
 
-    public String get_Password(){ return _S_password; }
-    public void set_Password(String password ) { _S_password = password; }
+    public void set_S_username(String _S_username) {
+        this._S_username = _S_username;
+    }
 
-    public String get_Token(){ return _S_token; }
-    public void set_Token(String token) { _S_token = token; }
+    public String get_S_password() {
+        return _S_password;
+    }
+
+    public void set_S_password(String _S_password) {
+        this._S_password = _S_password;
+    }
+
+    public String get_S_token() {
+        return _S_token;
+    }
+
+    public void set_S_token(String _S_token) {
+        this._S_token = _S_token;
+    }
+
+    public Boolean get_B_isInGame() {
+        return _B_isInGame;
+    }
+
+    public void set_B_isInGame(Boolean _B_isInGame) {
+        this._B_isInGame = _B_isInGame;
+    }
+
+    public List<Integer> get_L_joinedGames() {
+        return _L_joinedGames;
+    }
+
+    public void set_L_joinedGames(List<Integer> _L_joinedGames) {
+        this._L_joinedGames = _L_joinedGames;
+    }
 
 
-    public Boolean isUserInGame() { return _B_isInGame; }
-    public void set_UserGameStatus(Boolean _B_isInGame) { this._B_isInGame = _B_isInGame; }
 
-    public List<Game> getJoinedGames() { return _L_joinedGames; }
-    public void setJoinedGameList(List<Game> _L_joinedGames) { this._L_joinedGames = _L_joinedGames; }
-    
-	public static List<User> get_L_listOfAllUsers() throws SQLException {
-		return DAO._SINGLETON.getAllUsers();
-	}
+    public void set_B_isLoggedIn(Boolean _B_isLoggedIn) {
+        this._B_isLoggedIn = _B_isLoggedIn;
+    }
+
+    public Boolean get_B_isLoggedIn() {
+        return _B_isLoggedIn;
+    }
+
+    public static void set_M_idToUser(Map<String, User> _M_idToUser) {
+        User._M_idToUser = _M_idToUser;
+    }
+
+    public static Map<String, User> get_M_idToUser() {
+        return _M_idToUser;
+    }
+
+    public void set_L_listOfAllUsers(List<User> _L_listOfAllUsers) {
+        this._L_listOfAllUsers = _L_listOfAllUsers;
+    }
+
+    public List<User> get_L_listOfAllUsers() {
+        return _L_listOfAllUsers;
+    }
+
+//    public String get_Username() { return _S_username; }
+//    public void set_Username(String username) { _S_username = username; }
+//
+//    public String get_Password(){ return _S_password; }
+//    public void set_Password(String password ) { _S_password = password; }
+//
+//    public String get_Token(){ return _S_token; }
+//    public void set_Token(String token) { _S_token = token; }
+//
+//
+//    public Boolean isUserInGame() { return _B_isInGame; }
+//    public void set_UserGameStatus(Boolean _B_isInGame) { this._B_isInGame = _B_isInGame; }
+//
+//    public List<Game> getJoinedGames() { return _L_joinedGames; }
+//    public void setJoinedGameList(List<Game> _L_joinedGames) { this._L_joinedGames = _L_joinedGames; }
+//
+//    public static List<User> get_L_listOfAllUsers() { //TODO: Implement!
+//        return null;
+//    }
+//
+//    public Boolean isLoggedIn() {
+//        return _B_isLoggedIn;
+//    }
+//    public void set_B_isLoggedIn(Boolean _B_isLoggedIn) {
+//        this._B_isLoggedIn = _B_isLoggedIn;
+//    }
+//
+//    public static Map<String, User> get_M_idToUser() {
+//        return _M_idToUser;
+//    }
 
 
     //________________________________________________________________________________________________________//
@@ -96,19 +186,14 @@ public class User implements iUser {
     public Boolean initializeGame(int gameId ){
         Game createdGame = DAO._SINGLETON.getGameFromId( gameId );
         Game.addGame(createdGame, gameId);
-        addGameToJoinedGames(createdGame);
+        addGameToJoinedGames(gameId);
         return true;
     }
 
-    public Boolean addGameToJoinedGames( Game game ){
-        _L_joinedGames.add( game );
+    public Boolean addGameToJoinedGames( int gameId ){
+        _L_joinedGames.add( gameId );
         return true;
     }
-
-	public String get_S_token() {
-		
-		return _S_token;
-	}
 
 
 

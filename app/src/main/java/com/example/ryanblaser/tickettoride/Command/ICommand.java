@@ -1,13 +1,12 @@
 package com.example.ryanblaser.tickettoride.Command;
 
+import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.Client.User;
 
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddJoinableToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddWaitingToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Command.Phase1.ListJoinableCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.ListResumableCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.ListWaitingCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LoginRegisterResponseCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LogoutResponseCommand;
@@ -15,6 +14,8 @@ import com.example.ryanblaser.tickettoride.Server.IServer.GameIsFullException;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import java.util.List;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
@@ -27,10 +28,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = AddPlayerToClientCommand.class),
         @JsonSubTypes.Type(value = ListJoinableCommand.class),
         @JsonSubTypes.Type(value = ListWaitingCommand.class),
-        @JsonSubTypes.Type(value = ListResumableCommand.class),
 })
 public interface ICommand {
-    public CommandContainer execute() throws GameIsFullException;
+
+
+    public List<ICommand> execute() throws GameIsFullException, IClient.UserAlreadyLoggedIn;
     public String getAuthenticationCode();
     public User getUser();
     public Game getGame();

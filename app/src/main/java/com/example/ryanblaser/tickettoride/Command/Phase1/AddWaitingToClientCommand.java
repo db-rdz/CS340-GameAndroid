@@ -6,12 +6,14 @@ import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class AddWaitingToClientCommand implements ICommand { // sent after changes from what List... commands sent
   @JsonIgnore
   private int gameId;
   @JsonProperty("game")
   private Game game;
-  private AddWaitingToClientCommand(){}
+  public AddWaitingToClientCommand(){}
   public AddWaitingToClientCommand(Game g){
 	  game = g;}
 
@@ -28,8 +30,14 @@ public class AddWaitingToClientCommand implements ICommand { // sent after chang
   }
 
   @Override
-  public CommandContainer execute(){
-    return ClientFacade.SINGLETON.addWaitingGame(game.get_i_gameId());
+  public List<ICommand> execute(){
+
+    for (int i = 1; i <= game.get_numberOfPlayers(); i++) {
+      ClientFacade.SINGLETON.getClientModel().addPlayerToGameObject(game.getPlayer(i).get_S_username(), game.get_i_gameId());
+    }
+
+    ClientFacade.SINGLETON.addWaitingGame(game.get_i_gameId());
+    return null; //Since client side is all void
   }
 
   @JsonIgnore
@@ -37,4 +45,9 @@ public class AddWaitingToClientCommand implements ICommand { // sent after chang
   public Game getGame() {
     return game;
   }
+
+  public int getGameId() {
+    return gameId;
+  }
+
 }

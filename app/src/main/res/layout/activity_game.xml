@@ -13,10 +13,19 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="325dp"
+        android:id="@+id/list_players_in_game"
+        android:layout_below="@+id/text_players"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/list_players_in_game" />
+        android:id="@+id/button_refresh" />
 
     <Button
         android:text="Start Game"
@@ -26,4 +35,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="38dp"
         android:id="@+id/button_start_game" />
+
+    <TextView
+        android:id="@+id/text_players"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button_refresh"
+        android:text="Players in this lobby:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 </RelativeLayout>

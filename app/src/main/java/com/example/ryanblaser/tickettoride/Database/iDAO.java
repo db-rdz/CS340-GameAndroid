@@ -3,6 +3,7 @@ package com.example.ryanblaser.tickettoride.Database;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
 
@@ -13,15 +14,15 @@ public interface iDAO {
 
     public User getUserFromId(int userId);
 
-    public int getUserId(String userName);
+//    public int getUserId(String userName);
 
     public Game getGameFromId(int gameId);
 
-    public Boolean login(String userName, String password) throws SQLException;
+    public Boolean login(String userName, String password) throws SQLException, IClient.InvalidUsername, IClient.InvalidPassword, IClient.UserAlreadyLoggedIn;
 
     public Boolean authenticateUserWithToken(String token) throws SQLException;
 
-    public User getUserByUserName(String username) throws SQLException;
+    public User getUserByUserName(String username) throws SQLException, IClient.UserAlreadyLoggedIn;
 
     public User getUserByAccessToken(String token) throws SQLException;
 
@@ -35,4 +36,11 @@ public interface iDAO {
 
     public List<User> getAllUsers() throws SQLException;
 
+    public DataBase getDb();
+
+    public Boolean addGame(Game game) throws SQLException;
+
+    public void deleteAllGames() throws SQLException;
+
+    public Game getGamebyGameId(int gameId) throws SQLException;
 }

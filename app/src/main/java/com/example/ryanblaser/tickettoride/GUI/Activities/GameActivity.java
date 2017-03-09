@@ -9,16 +9,19 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ServerProxy;
 import com.example.ryanblaser.tickettoride.R;
 import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
 
     private ListView listView_players;
-    private Button button_start_game;
+    private Button button_start_game, button_refresh;
     private ArrayAdapter<String> list_of_users;
 
 
@@ -27,7 +30,9 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ClientFacade.SINGLETON.getClientModel().setGameActivity(this);
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Ticket To Ride - Game Lobby");
 
         listView_players = (ListView) findViewById(R.id.list_players_in_game);
@@ -40,6 +45,17 @@ public class GameActivity extends AppCompatActivity {
                 //TODO: Add start game functionality
             }
         });
+
+        button_refresh = (Button) findViewById(R.id.button_refresh);
+        button_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), "Refreshed game lobby", Toast.LENGTH_SHORT).show();
+
+                onResume(); //Refreshes the fragment view to show new data.
+
+            }
+        });
     }
 
 
@@ -47,27 +63,22 @@ public class GameActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        List<User> listUsers = new ArrayList<>();
-        if (listUsers.size() > 0) {
-            ArrayList<String> userList = new ArrayList<>();
-            for (int i = 0; i < listUsers.size(); i++) {
-                int inc = i; //A holder so we don't accidentally increment i
-                userList.add(listUsers.get(i).get_Username()); //Lists the game and which game number
+        List<String> listUsers = new ArrayList<>();
+
+        try {
+            int gameId = ClientFacade.SINGLETON.getClientModel().getWaitingGames().get(0);
+            listUsers.addAll(ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId));
+            if (listUsers.size() > 0) {
+                ArrayList<String> userList = new ArrayList<>();
+                for (int i = 0; i < listUsers.size(); i++) {
+                    userList.add(listUsers.get(i)); //Lists the player
+                }
+                list_of_users = new ArrayAdapter<String>(getBaseContext(), R.layout.row_info, userList);
+                listView_players.setAdapter(list_of_users);
+                list_of_users.notifyDataSetChanged();
             }
-            list_of_users = new ArrayAdapter<String>(getBaseContext(), R.layout.row_info, userList);
-            listView_players.setAdapter(list_of_users);
-            list_of_users.notifyDataSetChanged();
-        }
+        } catch (Exception e) {}
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

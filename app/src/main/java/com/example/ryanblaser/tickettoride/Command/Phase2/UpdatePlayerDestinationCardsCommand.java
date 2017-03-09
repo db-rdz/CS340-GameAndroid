@@ -1,10 +1,14 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 /**
  * FROM SERVER -> CLIENT
@@ -15,23 +19,41 @@ import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
  */
 
 public class UpdatePlayerDestinationCardsCommand implements ICommand {
+
+    //Data members
+    private DestCard destCard;
+
+    //Constructor
+    public UpdatePlayerDestinationCardsCommand(DestCard destCard) {
+        this.destCard = destCard;
+    }
+
+    //Functions
     @Override
-    public CommandContainer execute() throws IServer.GameIsFullException {
+    public List<ICommand> execute() throws IServer.GameIsFullException {
+        ClientFacade.SINGLETON.updatePlayerDestinationCards(); //TODO: Need an argument for the client
         return null;
     }
 
+    @JsonIgnore
     @Override
     public String getAuthenticationCode() {
         return null;
     }
 
+    @JsonIgnore
     @Override
     public User getUser() {
         return null;
     }
 
+    @JsonIgnore
     @Override
     public Game getGame() {
         return null;
+    }
+
+    public DestCard getDestCard() {
+        return destCard;
     }
 }

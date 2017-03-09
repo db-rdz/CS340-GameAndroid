@@ -6,6 +6,8 @@ import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.List;
+
 public class DeleteGameCommand implements ICommand {
   private int int_game_id;
   private DeleteGameCommand(){}
@@ -25,7 +27,7 @@ public class DeleteGameCommand implements ICommand {
   }
   
   @Override
-  public CommandContainer execute(){
+  public List<ICommand> execute(){
     ClientFacade.SINGLETON.removeGame(int_game_id);
     return null; //TODO: stub
   }
