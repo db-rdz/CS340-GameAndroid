@@ -45,8 +45,14 @@ public class GameActivity extends AppCompatActivity {
         button_start_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Starting Game!", Toast.LENGTH_SHORT).show();
-                //TODO: Add start game functionality
+                if (isAtLeastTwoPlayers()) {
+                    Toast.makeText(getBaseContext(), "Starting Game!", Toast.LENGTH_SHORT).show();
+                    //TODO: Add start game functionality and switch to GameBoardView
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -62,11 +68,20 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    private Boolean isAtLeastTwoPlayers() {
+        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+        if (ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size() < 2) {
+            return false;
+        }
+        else { //If there's 2 or more players then the game will start.
+            return true;
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (!ClientFacade.SINGLETON.getClientModel().getCreatorOfGame()) {
+        if (!ClientFacade.SINGLETON.getClientModel().getBoolean_is_creator_of_game()) {
             button_start_game.setClickable(false);
             button_start_game.setVisibility(View.GONE); //Prevents players in the lobby to start the game
             textView_waiting_text.setVisibility(View.VISIBLE);

@@ -1,9 +1,7 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import com.example.ryanblaser.tickettoride.Client.GameModels.Game;
 import com.example.ryanblaser.tickettoride.GUI.Activities.GameActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
-import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +72,13 @@ public class ClientModel{
      * If true, The player can see the Start Game button in the Game Activity Lobby
      * If false, The player can't see the Start Game button
      */
-    private Boolean isCreatorOfGame;
+    private Boolean boolean_is_creator_of_game;
+
+    /**
+     * Nathan
+     * Since there's only one game a user can join, we need this variable.
+     */
+    private int int_curr_gameId;
 
     public ClientModel(MainActivity mainActivity1){
         mainActivity = mainActivity1;
@@ -85,7 +89,8 @@ public class ClientModel{
         gameId_to_usernames = new Hashtable<>();
         int_car_count = 45; //Each player starts with 45 train cars
         int_total_points = 0;
-        isCreatorOfGame = false;
+        boolean_is_creator_of_game = false;
+        int_curr_gameId = 0;
     }
 
     public void setAuthenticationKey(String k){
@@ -200,15 +205,6 @@ public class ClientModel{
     }
 
     //Getters and Setters
-    public MainActivity getMainActivity() { return mainActivity; }
-
-    public GameActivity getGameActivity() { return gameActivity; }
-
-    public void setGameActivity(GameActivity gameActivity) { this.gameActivity = gameActivity; }
-
-    public int getInt_car_count() {
-        return int_car_count;
-    }
 
     public String getStr_authentication_code() {
         return str_authentication_code;
@@ -250,8 +246,24 @@ public class ClientModel{
         this.gameId_to_usernames = gameId_to_usernames;
     }
 
+    public MainActivity getMainActivity() {
+        return mainActivity;
+    }
+
     public void setMainActivity(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+    }
+
+    public GameActivity getGameActivity() {
+        return gameActivity;
+    }
+
+    public void setGameActivity(GameActivity gameActivity) {
+        this.gameActivity = gameActivity;
+    }
+
+    public int getInt_car_count() {
+        return int_car_count;
     }
 
     public void setInt_car_count(int int_car_count) {
@@ -266,11 +278,19 @@ public class ClientModel{
         this.int_total_points = int_total_points;
     }
 
-    public Boolean getCreatorOfGame() {
-        return isCreatorOfGame;
+    public Boolean getBoolean_is_creator_of_game() {
+        return boolean_is_creator_of_game;
     }
 
-    public void setCreatorOfGame(Boolean creatorOfGame) {
-        isCreatorOfGame = creatorOfGame;
+    public void setBoolean_is_creator_of_game(Boolean boolean_is_creator_of_game) {
+        this.boolean_is_creator_of_game = boolean_is_creator_of_game;
+    }
+
+    public int getInt_curr_gameId() {
+        return int_curr_gameId;
+    }
+
+    public void setInt_curr_gameId(int int_curr_gameId) {
+        this.int_curr_gameId = int_curr_gameId;
     }
 }

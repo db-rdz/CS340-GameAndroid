@@ -49,7 +49,8 @@ public class AddWaitingToClientCommand implements ICommand { // sent after chang
             ClientFacade.SINGLETON.getClientModel().addPlayerToGameObject(usernames.get(i), gameId);
         }
         ClientFacade.SINGLETON.addWaitingGame(gameId);
-        ClientFacade.SINGLETON.getClientModel().setCreatorOfGame(isCreator);
+        ClientFacade.SINGLETON.getClientModel().setBoolean_is_creator_of_game(isCreator);
+        ClientFacade.SINGLETON.getClientModel().setInt_curr_gameId(gameId);
         return null; //Since client side is all void
     }
 
