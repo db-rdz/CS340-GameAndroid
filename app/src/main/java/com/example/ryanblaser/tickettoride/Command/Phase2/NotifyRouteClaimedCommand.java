@@ -45,11 +45,6 @@ public class NotifyRouteClaimedCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
 
     public String getStr_message() {
         return str_message;

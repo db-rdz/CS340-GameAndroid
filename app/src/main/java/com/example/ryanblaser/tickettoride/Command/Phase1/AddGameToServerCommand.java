@@ -43,6 +43,7 @@ public class AddGameToServerCommand implements ICommand {
 
     }
 
-    @Override
-    public Game getGame() { return game; }
+    public Game getGame() {
+        return game;
+    }
 }

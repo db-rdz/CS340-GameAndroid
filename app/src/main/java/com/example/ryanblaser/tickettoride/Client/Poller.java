@@ -33,7 +33,7 @@ public class Poller implements Runnable {
             }
         };
         
-        long delay = 10000; //10 seconds
+        long delay = 5000; //10 seconds
         
         timer.schedule(timerTask, delay, delay);
         
@@ -44,6 +44,7 @@ public class Poller implements Runnable {
     {
         if (user != null) {
             int increment = ServerProxy.SINGLETON.checkForCommands(user.getUsername(), lastCommandRecievedIndex);
+
             this.lastCommandRecievedIndex += increment;
 //            ServerProxy.SINGLETON.deleteGottenCommands(user.getUsername());
         }

@@ -44,11 +44,6 @@ public class ListJoinableCommand implements ICommand { // sent to clients after 
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-    return null;
-    }
 
     public List<Integer> getList_gameIds() {
         return list_gameIds;

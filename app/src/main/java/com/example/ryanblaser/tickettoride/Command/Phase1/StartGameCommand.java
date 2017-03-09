@@ -30,9 +30,5 @@ public class StartGameCommand implements ICommand {
     public String getAuthenticationCode(){
         return str_authentication_code;}
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
+
 }

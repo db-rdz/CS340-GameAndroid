@@ -34,9 +34,4 @@ public class GetDestinationCardsCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
 }

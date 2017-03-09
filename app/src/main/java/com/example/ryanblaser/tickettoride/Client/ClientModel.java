@@ -69,6 +69,13 @@ public class ClientModel{
      */
     private int int_total_points;
 
+    /**
+     * This determines if a player is the creator of the game.
+     * If true, The player can see the Start Game button in the Game Activity Lobby
+     * If false, The player can't see the Start Game button
+     */
+    private Boolean isCreatorOfGame;
+
     public ClientModel(MainActivity mainActivity1){
         mainActivity = mainActivity1;
         gameActivity = null;
@@ -78,6 +85,7 @@ public class ClientModel{
         gameId_to_usernames = new Hashtable<>();
         int_car_count = 45; //Each player starts with 45 train cars
         int_total_points = 0;
+        isCreatorOfGame = false;
     }
 
     public void setAuthenticationKey(String k){
@@ -150,7 +158,7 @@ public class ClientModel{
      * @param gameId
      */
     public void addPlayerToGameObject(String username, int gameId){
-        if (gameId_to_usernames.containsKey(gameId)) { //If game exists
+        if (gameId_to_usernames.containsKey(gameId) && !gameId_to_usernames.get(gameId).contains(username)) { //If game exists
     	    gameId_to_usernames.get(gameId).add(username);
         }
         else if (!gameId_to_usernames.containsKey(gameId)) { //If game doesn't exist yet
@@ -191,18 +199,59 @@ public class ClientModel{
         int_car_count -= numOfCarsUsed;
     }
 
+    //Getters and Setters
     public MainActivity getMainActivity() { return mainActivity; }
 
-    /**
-     * Nathan: GameActivity methods
-     * For grabbing the onResume() method for screen refreshing
-     * @return
-     */
     public GameActivity getGameActivity() { return gameActivity; }
+
     public void setGameActivity(GameActivity gameActivity) { this.gameActivity = gameActivity; }
 
     public int getInt_car_count() {
         return int_car_count;
+    }
+
+    public String getStr_authentication_code() {
+        return str_authentication_code;
+    }
+
+    public void setStr_authentication_code(String str_authentication_code) {
+        this.str_authentication_code = str_authentication_code;
+    }
+
+    public List<Integer> getList_joinable() {
+        return list_joinable;
+    }
+
+    public void setList_joinable(List<Integer> list_joinable) {
+        this.list_joinable = list_joinable;
+    }
+
+    public List<Integer> getList_waiting() {
+        return list_waiting;
+    }
+
+    public void setList_waiting(List<Integer> list_waiting) {
+        this.list_waiting = list_waiting;
+    }
+
+    public Hashtable<Integer, GameType> getHashtable_id_to_list() {
+        return hashtable_id_to_list;
+    }
+
+    public void setHashtable_id_to_list(Hashtable<Integer, GameType> hashtable_id_to_list) {
+        this.hashtable_id_to_list = hashtable_id_to_list;
+    }
+
+    public Hashtable<Integer, List<String>> getGameId_to_usernames() {
+        return gameId_to_usernames;
+    }
+
+    public void setGameId_to_usernames(Hashtable<Integer, List<String>> gameId_to_usernames) {
+        this.gameId_to_usernames = gameId_to_usernames;
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     public void setInt_car_count(int int_car_count) {
@@ -217,23 +266,11 @@ public class ClientModel{
         this.int_total_points = int_total_points;
     }
 
-    public String getStr_authentication_code() {
-        return str_authentication_code;
+    public Boolean getCreatorOfGame() {
+        return isCreatorOfGame;
     }
 
-    public List<Integer> getList_joinable() {
-        return list_joinable;
-    }
-
-    public List<Integer> getList_waiting() {
-        return list_waiting;
-    }
-
-    public Hashtable<Integer, GameType> getHashtable_id_to_list() {
-        return hashtable_id_to_list;
-    }
-
-    public Hashtable<Integer, List<String>> getGameId_to_usernames() {
-        return gameId_to_usernames;
+    public void setCreatorOfGame(Boolean creatorOfGame) {
+        isCreatorOfGame = creatorOfGame;
     }
 }

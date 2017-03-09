@@ -47,11 +47,7 @@ public class UpdatePlayerTrainCardsCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
+
 
     public TrainCard getTrainCard() {
         return trainCard;
