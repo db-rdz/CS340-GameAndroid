@@ -23,7 +23,7 @@ import java.util.List;
  * Created by natha on 2/21/2017.
  */
 
-public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
+public class ClientCommunicator extends AsyncTask<URL, Void, Integer> {
 
     /**
      * This is what will be used in the ServerProy class to set up ClientCommunicator objects.
@@ -49,7 +49,7 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
     }
 
     @Override
-    protected ICommand doInBackground(URL... urls) {
+    protected Integer doInBackground(URL... urls) {
 
         for (URL url : urls) {
             try {
@@ -92,7 +92,9 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                 cmd.execute();
                             }
                         }
-                        return cmd;
+
+                        return respondData.size();
+
                     }
                     catch (Exception e) //InputStreamReader
                     {

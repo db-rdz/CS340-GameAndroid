@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ServerProxy;
 import com.example.ryanblaser.tickettoride.R;
 import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
 
@@ -50,6 +51,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getBaseContext(), "Refreshed game lobby", Toast.LENGTH_SHORT).show();
+
                 onResume(); //Refreshes the fragment view to show new data.
 
             }
@@ -62,21 +64,21 @@ public class GameActivity extends AppCompatActivity {
         super.onResume();
 
         List<String> listUsers = new ArrayList<>();
-        int index = 0;
-        for (Map.Entry<Integer, List<String>> map : ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().entrySet()) {
-            listUsers.add(map.getValue().get(index));
-            index++;
-        }
-        if (listUsers.size() > 0) {
-            ArrayList<String> userList = new ArrayList<>();
-            for (int i = 0; i < listUsers.size(); i++) {
-                int inc = i; //A holder so we don't accidentally increment i
-                userList.add(listUsers.get(i)); //Lists the game and which game number
+
+        try {
+            int gameId = ClientFacade.SINGLETON.getClientModel().getWaitingGames().get(0);
+            listUsers.addAll(ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId));
+            if (listUsers.size() > 0) {
+                ArrayList<String> userList = new ArrayList<>();
+                for (int i = 0; i < listUsers.size(); i++) {
+                    userList.add(listUsers.get(i)); //Lists the player
+                }
+                list_of_users = new ArrayAdapter<String>(getBaseContext(), R.layout.row_info, userList);
+                listView_players.setAdapter(list_of_users);
+                list_of_users.notifyDataSetChanged();
             }
-            list_of_users = new ArrayAdapter<String>(getBaseContext(), R.layout.row_info, userList);
-            listView_players.setAdapter(list_of_users);
-            list_of_users.notifyDataSetChanged();
-        }
+        } catch (Exception e) {}
+
     }
 
 }

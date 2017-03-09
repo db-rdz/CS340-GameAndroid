@@ -11,7 +11,7 @@ import java.util.List;
 public class AddJoinableToClientCommand implements ICommand { // sent after changes from what List... commands sent
     private int gameId;
     private Game game;
-    private AddJoinableToClientCommand(){}
+    public AddJoinableToClientCommand(){}
     public AddJoinableToClientCommand(Game g){
         game = g;}
 

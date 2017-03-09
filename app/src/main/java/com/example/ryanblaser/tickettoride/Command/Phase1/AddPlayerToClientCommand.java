@@ -11,8 +11,8 @@ import java.util.List;
 public class AddPlayerToClientCommand implements ICommand { // sent after changes from what List... commands sent
   private int int_game_id;
   private String str_username;
-  private AddPlayerToClientCommand(){}
-  public AddPlayerToClientCommand(String name, Integer gameId){
+  public AddPlayerToClientCommand(){}
+  public AddPlayerToClientCommand(String name, int gameId){
     str_username = name;
     int_game_id = gameId;}
 
@@ -43,5 +43,13 @@ public class AddPlayerToClientCommand implements ICommand { // sent after change
   @Override
   public Game getGame() {
     return null;
+  }
+
+  public int getInt_game_id() {
+    return int_game_id;
+  }
+
+  public String getStr_username() {
+    return str_username;
   }
 }

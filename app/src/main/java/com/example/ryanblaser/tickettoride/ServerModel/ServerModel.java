@@ -29,7 +29,7 @@ public class ServerModel implements iModel {
     }
 
     @Override
-    public List<Game> getUserJoinedGames(String username ){
+    public List<Integer> getUserJoinedGames(String username ){
         return User.getUserWithUsername(username).get_L_joinedGames();
     }
 
@@ -55,7 +55,7 @@ public class ServerModel implements iModel {
         }
 
         Game game = Game.getGameWithId(gameID);
-        User.getUserWithUsername(username).addGameToJoinedGames(game);
+        User.getUserWithUsername(username).addGameToJoinedGames(gameID);
         return true;
     }
 

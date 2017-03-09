@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LoginRegisterResponseCommand implements ICommand {
   private User user;
-  private LoginRegisterResponseCommand(){}
+  public LoginRegisterResponseCommand(){}
   public LoginRegisterResponseCommand(User user){
     this.user = user;
     }

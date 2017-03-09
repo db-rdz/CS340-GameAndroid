@@ -9,9 +9,11 @@ import java.util.List;
 
 public class GetCommandsCommand implements ICommand {
     private String username;
+    private int lastCommandRecievedIndex;
     public GetCommandsCommand(){}
-    public GetCommandsCommand(String username){
-      this.username = username;}
+    public GetCommandsCommand(String username, int index){
+      this.username = username;
+        lastCommandRecievedIndex = index;}
 
     @JsonIgnore
     @Override
@@ -39,5 +41,17 @@ public class GetCommandsCommand implements ICommand {
     public String getUsername()
     {
       return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getLastCommandRecievedIndex() {
+        return lastCommandRecievedIndex;
+    }
+
+    public void setLastCommandRecievedIndex(int lastCommandRecievedIndex) {
+        this.lastCommandRecievedIndex = lastCommandRecievedIndex;
     }
 }

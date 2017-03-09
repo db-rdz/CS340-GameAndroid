@@ -46,7 +46,7 @@ public interface iModel {
      *
      */
 
-    public List<Game> getUserJoinedGames(String username);
+    public List<Integer> getUserJoinedGames(String username);
 
 
     /**
