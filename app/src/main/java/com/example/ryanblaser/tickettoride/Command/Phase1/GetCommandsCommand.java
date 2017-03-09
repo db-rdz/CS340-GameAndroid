@@ -51,7 +51,4 @@ public class GetCommandsCommand implements ICommand {
         return lastCommandRecievedIndex;
     }
 
-    public void setLastCommandRecievedIndex(int lastCommandRecievedIndex) {
-        this.lastCommandRecievedIndex = lastCommandRecievedIndex;
-    }
 }
