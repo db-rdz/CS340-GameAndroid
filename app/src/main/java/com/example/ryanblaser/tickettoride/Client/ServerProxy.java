@@ -98,10 +98,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public List<ICommand> startGame(int gameId, String authorizationCode) {
+    public List<ICommand> startGame(int gameId, List<String> usernamesInGame) {
         String urlSuffix = "/command";
 
-        ICommand startGameCommand = new StartGameCommand(gameId, authorizationCode);
+        ICommand startGameCommand = new StartGameCommand(gameId, usernamesInGame);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);

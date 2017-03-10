@@ -50,6 +50,9 @@ public class GameActivity extends AppCompatActivity {
                 if (isAtLeastTwoPlayers()) {
                     int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
                     int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+                    List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
+
+                    ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
                     Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
                     //TODO: Add start game functionality and switch to GameBoardView
                 }

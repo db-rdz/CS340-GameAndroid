@@ -94,8 +94,8 @@ public class ClientFacade implements IClient {
 
     
     @Override
-    public void startGame(int gameId, String authenticationCode) { // just gameId?
-        ServerProxy.SINGLETON.startGame(gameId, authenticationCode);
+    public void startGame(int gameId, List<String> usernamesInGame) { // just gameId?
+        ServerProxy.SINGLETON.startGame(gameId, usernamesInGame);
         //lobbypresenter
         
     }

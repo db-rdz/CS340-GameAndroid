@@ -20,7 +20,7 @@ public interface IServer {
     public List<ICommand> addGame(Game game);
     public int addJoinableGameToServer(String str_authentication_code);
     public List<ICommand> removeGame(Game game);
-    public List<ICommand> startGame(int gameId, String str_authentication_code);
+    public List<ICommand> startGame(int gameId, List<String> usernamesInGame);
     public List<ICommand> addPlayerToServerModel(String str_authentication_code, int gameId) throws GameIsFullException;
     public List<ICommand> logout(String str_authentication_code);
 }

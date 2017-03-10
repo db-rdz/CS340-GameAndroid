@@ -9,11 +9,11 @@ import java.util.List;
 
 public class StartGameCommand implements ICommand {
     private int gameId;
-    private String str_authentication_code;
+    private List<String> usernamesInGame;
     private StartGameCommand(){}
-    public StartGameCommand(int g, String k){
+    public StartGameCommand(int g, List<String> k){
         gameId = g;
-        str_authentication_code = k;}
+        usernamesInGame = k;}
 
     @JsonIgnore
     @Override
@@ -28,7 +28,13 @@ public class StartGameCommand implements ICommand {
 
     @Override
     public String getAuthenticationCode(){
-        return str_authentication_code;}
+        return null;}
 
+    public int getGameId() {
+        return gameId;
+    }
 
+    public List<String> getUsernamesInGame() {
+        return usernamesInGame;
+    }
 }
