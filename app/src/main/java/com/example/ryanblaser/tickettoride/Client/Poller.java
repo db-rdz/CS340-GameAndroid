@@ -40,12 +40,12 @@ public class Poller implements Runnable {
         user = null;
     }
     
-    public void checkForCommands(int lastCommandRecievedIndex) throws GameIsFullException
+    public void checkForCommands(int lastCommandIndex) throws GameIsFullException
     {
         if (user != null) {
-            int increment = ServerProxy.SINGLETON.checkForCommands(user.getUsername(), lastCommandRecievedIndex);
-            this.lastCommandRecievedIndex += increment;
-//            ServerProxy.SINGLETON.deleteGottenCommands(user.getUsername());
+            int increment = ServerProxy.SINGLETON.checkForCommands(user.getUsername(), lastCommandIndex);
+
+            lastCommandRecievedIndex += increment;
         }
     }
     

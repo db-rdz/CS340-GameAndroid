@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 
 import com.example.ryanblaser.tickettoride.Command.ICommand;
@@ -17,6 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,11 +36,10 @@ public class ClientCommunicator extends AsyncTask<URL, Void, Integer> {
     }
 
     private ObjectMapper objectMapper;
-    private SimpleModule module_login_register_response;
-    private SimpleModule module_add_joinable;
     private ICommand command;
     private String string_urlSuffix;
     private ICommand cmd; //Will return this at the end
+    private List<ICommand> respondData;
 
     public ClientCommunicator(String urlSuffix, ICommand command) {
         this.command = command;
@@ -46,6 +47,7 @@ public class ClientCommunicator extends AsyncTask<URL, Void, Integer> {
         objectMapper = new ObjectMapper();
         //objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         cmd = null;
+        respondData = new ArrayList<>();
     }
 
     @Override
@@ -119,7 +121,7 @@ public class ClientCommunicator extends AsyncTask<URL, Void, Integer> {
 
 
 
-        return null;
+        return respondData.size();
     }
 
     public ICommand getICommand() { return cmd; }

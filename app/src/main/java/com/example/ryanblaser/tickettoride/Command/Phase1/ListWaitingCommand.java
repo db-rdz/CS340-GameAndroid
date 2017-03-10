@@ -31,10 +31,7 @@ public class ListWaitingCommand implements ICommand { // sent to clients after l
     return null;
     }
 
-    @Override
-    public Game getGame() {
-    return null;
-    }
+
 
     public List<Integer> getList_gameIds() {
     return list_gameIds;

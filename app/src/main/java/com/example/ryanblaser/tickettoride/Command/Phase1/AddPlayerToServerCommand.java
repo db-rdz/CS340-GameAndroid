@@ -25,6 +25,7 @@ public class AddPlayerToServerCommand implements ICommand{
 
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException { // auth key must be changed to Username somewhere
+
       return null;
     }
 
@@ -33,9 +34,6 @@ public class AddPlayerToServerCommand implements ICommand{
     public String getAuthenticationCode(){
       return null;}
 
-    @JsonIgnore
-    @Override
-    public com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game getGame() { return null; }
 
     public int getI_game_id() {
       return i_game_id;

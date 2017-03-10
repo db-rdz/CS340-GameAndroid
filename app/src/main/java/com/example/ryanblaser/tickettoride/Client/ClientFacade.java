@@ -24,11 +24,11 @@ import java.util.List;
 public class ClientFacade implements IClient {
 
 
-    public static ClientFacade SINGLETON = new com.example.ryanblaser.tickettoride.Client.ClientFacade();
+    public static ClientFacade SINGLETON = new ClientFacade();
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
-    private Poller poller;
+    private final Poller poller;
 
 
     private ClientFacade() {

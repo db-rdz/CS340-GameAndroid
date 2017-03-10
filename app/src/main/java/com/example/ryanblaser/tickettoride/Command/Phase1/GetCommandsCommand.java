@@ -33,10 +33,6 @@ public class GetCommandsCommand implements ICommand {
     }
 
 
-    @Override
-    public Game getGame() {
-      return null;
-    }
 
     public String getUsername()
     {

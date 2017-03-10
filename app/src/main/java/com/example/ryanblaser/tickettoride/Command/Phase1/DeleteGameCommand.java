@@ -32,9 +32,5 @@ public class DeleteGameCommand implements ICommand {
     return null; //TODO: stub
   }
 
-  @JsonIgnore
-  @Override
-  public Game getGame() {
-    return null;
-  }
+
 }

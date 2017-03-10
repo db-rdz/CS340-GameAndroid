@@ -34,8 +34,5 @@ public class ListPlayersInGameLobby implements ICommand {
         return null;
     }
 
-    @Override
-    public Game getGame() {
-        return null;
-    }
+
 }

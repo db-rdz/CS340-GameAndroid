@@ -45,11 +45,6 @@ public class UpdatePointsCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
 
     public int getInt_points_to_add() {
         return int_points_to_add;

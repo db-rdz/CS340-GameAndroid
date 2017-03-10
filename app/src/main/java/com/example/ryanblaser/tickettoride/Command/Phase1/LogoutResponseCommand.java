@@ -29,9 +29,5 @@ public class LogoutResponseCommand implements ICommand {
     return null;
   }
 
-  @JsonIgnore
-  @Override
-  public Game getGame() {
-    return null;
-  }
+
 }

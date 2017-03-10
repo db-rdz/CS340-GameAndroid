@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
@@ -22,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
 
     private ListView listView_players;
     private Button button_start_game, button_refresh;
+    private TextView textView_waiting_text;
     private ArrayAdapter<String> list_of_users;
 
 
@@ -36,13 +38,25 @@ public class GameActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Ticket To Ride - Game Lobby");
 
         listView_players = (ListView) findViewById(R.id.list_players_in_game);
+        listView_players.setClickable(false);
+
+        textView_waiting_text = (TextView) findViewById(R.id.textView_waiting_text);
+        textView_waiting_text.setClickable(false);
 
         button_start_game = (Button) findViewById(R.id.button_start_game);
         button_start_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Starting Game!", Toast.LENGTH_SHORT).show();
-                //TODO: Add start game functionality
+                if (isAtLeastTwoPlayers()) {
+                    int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+                    int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+                    Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
+                    //TODO: Add start game functionality and switch to GameBoardView
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -58,10 +72,24 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    private Boolean isAtLeastTwoPlayers() {
+        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+        if (ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size() < 2) {
+            return false;
+        }
+        else { //If there's 2 or more players then the game will start.
+            return true;
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (!ClientFacade.SINGLETON.getClientModel().getBoolean_is_creator_of_game()) {
+            button_start_game.setClickable(false);
+            button_start_game.setVisibility(View.GONE); //Prevents players in the lobby to start the game
+            textView_waiting_text.setVisibility(View.VISIBLE);
+        }
 
         List<String> listUsers = new ArrayList<>();
 

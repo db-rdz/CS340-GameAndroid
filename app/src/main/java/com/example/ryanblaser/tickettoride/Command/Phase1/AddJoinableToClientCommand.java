@@ -33,8 +33,11 @@ public class AddJoinableToClientCommand implements ICommand { // sent after chan
         return null;
     }
 
-    @Override
+    public int getGameId() {
+        return gameId;
+    }
+
     public Game getGame() {
-      return game;
+        return game;
     }
 }

@@ -21,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button_logout"
-        android:layout_alignParentTop="true"
+        android:layout_alignBaseline="@+id/button_new_game"
+        android:layout_alignBottom="@+id/button_new_game"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -30,16 +31,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button_new_game"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/textView_welcome_user"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:text="Refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:id="@+id/button_refresh"
+        android:layout_below="@+id/textView_welcome_user"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView_welcome_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/button_refresh" />
+        android:layout_alignParentTop="true"
+        android:clickable="false"
+        android:textAlignment="center"
+        android:textAppearance="@android:style/TextAppearance" />
 
 </RelativeLayout>
