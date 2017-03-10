@@ -33,20 +33,19 @@ public class Poller implements Runnable {
             }
         };
         
-        long delay = 5000; //10 seconds
+        long delay = 10000; //10 seconds
         
         timer.schedule(timerTask, delay, delay);
         
         user = null;
     }
     
-    public void checkForCommands(int lastCommandRecievedIndex) throws GameIsFullException
+    public void checkForCommands(int lastCommandIndex) throws GameIsFullException
     {
         if (user != null) {
-            int increment = ServerProxy.SINGLETON.checkForCommands(user.getUsername(), lastCommandRecievedIndex);
+            int increment = ServerProxy.SINGLETON.checkForCommands(user.getUsername(), lastCommandIndex);
 
-            this.lastCommandRecievedIndex += increment;
-//            ServerProxy.SINGLETON.deleteGottenCommands(user.getUsername());
+            lastCommandRecievedIndex += increment;
         }
     }
     

@@ -28,7 +28,7 @@ public class ClientFacade implements IClient {
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
-    private Poller poller;
+    private final Poller poller;
 
 
     private ClientFacade() {

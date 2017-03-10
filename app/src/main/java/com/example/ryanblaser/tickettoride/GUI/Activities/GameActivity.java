@@ -38,6 +38,8 @@ public class GameActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Ticket To Ride - Game Lobby");
 
         listView_players = (ListView) findViewById(R.id.list_players_in_game);
+        listView_players.setClickable(false);
+
         textView_waiting_text = (TextView) findViewById(R.id.textView_waiting_text);
         textView_waiting_text.setClickable(false);
 
@@ -46,7 +48,9 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isAtLeastTwoPlayers()) {
-                    Toast.makeText(getBaseContext(), "Starting Game!", Toast.LENGTH_SHORT).show();
+                    int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+                    int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+                    Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
                     //TODO: Add start game functionality and switch to GameBoardView
                 }
                 else {
