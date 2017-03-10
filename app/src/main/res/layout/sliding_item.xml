@@ -47,17 +47,8 @@
             android:layout_marginTop="20dp">
 
         <Button
-            android:id="@+id/completeCommand"
-            android:text="Yes"
-            android:layout_width="53dp"
-            android:layout_height="40dp"
-            android:elevation="1dp"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:textSize="12sp" />
-
-        <Button
             android:id="@+id/reject"
-            android:text="No"
+            android:text="Reject"
             android:layout_width="53dp"
             android:layout_height="40dp"
             android:elevation="1dp"

@@ -1,28 +1,18 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayersInfoFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#f4f4f4" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+    <ExpandableListView
+        android:id="@+id/lvExp"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
+    <TextView android:id="@id/android:empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:background="#FF0000"
+        android:text="No data"/>
 
-        <ExpandableListView android:id="@id/android:list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00FF00"
-            android:layout_weight="1"
-            android:drawSelectorOnTop="false"/>
-
-        <TextView android:id="@id/android:empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FF0000"
-            android:text="No data"/>
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

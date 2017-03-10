@@ -6,28 +6,30 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SliddingAdapter;
+import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.R;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.CardsModel.testDestinationCard;
+import com.example.ryanblaser.tickettoride.ServerModel.GameModels.CardsModel.iDestCard;
 import com.redbooth.SlidingDeck;
+
+import java.util.Collection;
 
 
 public class PlayerActionFragment extends Fragment {
 
-    public PlayerActionFragment() {
-        // Required empty public constructor
-    }
+    public PlayerActionFragment() { }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PlayerActionFragment.
-     */
+
+    //-----------------------------VIEW VARIABLES-----------------------------//
+    private Button _keepAllCards;
+    private SlidingDeck _slidingDeck;
+    private SlidingDeck _slidingTrainCards;
     public static final String ARG_PAGE = "page";
+
 
     public static PlayerActionFragment newInstance(String param1, String param2) {
         PlayerActionFragment fragment = new PlayerActionFragment();
@@ -45,6 +47,7 @@ public class PlayerActionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PlayerActionPresenter._SINGLETON.initTrainCardMap();
     }
 
     @Override
@@ -52,18 +55,49 @@ public class PlayerActionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_player_action, container, false);
-        final SlidingDeck slidingDeck = (SlidingDeck)v.findViewById(R.id.slidingDeck);
-        SliddingAdapter slidingAdapter  = new SliddingAdapter(getContext());
 
-        slidingAdapter.add(new testDestinationCard("asdf1", "asdf2", "10"));
-        slidingAdapter.add(new testDestinationCard("asdf3", "asdf4", "10"));
-        slidingAdapter.add(new testDestinationCard("asdf5", "asdf6", "10"));
+        _slidingDeck = (SlidingDeck)v.findViewById(R.id.slidingDeck);
+        _slidingTrainCards = (SlidingDeck)v.findViewById(R.id.slidingTrainCards);
 
-        slidingDeck.setAdapter(slidingAdapter);
+        final SliddingAdapter slidingAdapter  = new SliddingAdapter(getContext());
+        final SlidingTrainCardAdapter trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
+
+        slidingAdapter.addAll((Collection<? extends iDestCard>)
+                GameBoardPresenter._SINGLETON.getThreeDestinationCards());
+
+        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.getFourTrainCards());
+
+        _slidingDeck.setAdapter(slidingAdapter);
+        _slidingTrainCards.setAdapter(trainCardAdapter);
+
+        _keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
+
+        if(GameBoardPresenter._SINGLETON.is_readyToStart()){
+            _keepAllCards.setVisibility(View.GONE);
+        }
+
+        _keepAllCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                GameBoardPresenter._SINGLETON.set_readyToStart(true);
+                v.setVisibility(View.GONE);
+
+                View deck = getView().findViewById(R.id.slidingDeck);
+
+                final SliddingAdapter deckAdapter = slidingAdapter;
+                slidingAdapter.notifyDataSetChanged();
+
+
+            }
+        });
 
         return v;
     }
 
+    public void invalidate(){
+
+    }
 
     @Override
     public void onAttach(Context context) {
