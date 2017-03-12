@@ -35,9 +35,5 @@ public class GetFirstFaceUpTableTrainCardCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
+
 }

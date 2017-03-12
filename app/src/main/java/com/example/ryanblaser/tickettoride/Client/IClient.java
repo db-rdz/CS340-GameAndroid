@@ -32,14 +32,14 @@ public interface IClient {
 
     public void login(User user) throws InvalidUsername, InvalidPassword;
     public void register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists;
-    public void addJoinableGame();
+    public void addJoinableGameToServer();
     public void addWaitingGame(int gameId);
     public void removeGame(int gameId);
-    public void startGame(int gameId, String authorizationCode);
+    public void startGame(int gameId, List<String> usernamesInGame);
     public void addPlayerToClientModel(String username, int gameId) throws IServer.GameIsFullException;
     public void addPlayerToServerModel(String authenticationCode, int gameId);
     public void logout(String str_authentication_code);
-    public void listJoinableGames(List<Game> listJoinableGames);
+    public void listJoinableGames(List<Integer> listJoinableGames);
     public void listWaitingGames(List<Integer> listWaitingGames);
     public void loginRegisterSucceeded(User user);
     public void logoutSucceeded();

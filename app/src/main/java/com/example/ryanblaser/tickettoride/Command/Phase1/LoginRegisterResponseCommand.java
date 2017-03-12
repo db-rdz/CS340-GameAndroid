@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LoginRegisterResponseCommand implements ICommand {
   private User user;
-  private LoginRegisterResponseCommand(){}
+  public LoginRegisterResponseCommand(){}
   public LoginRegisterResponseCommand(User user){
     this.user = user;
     }
@@ -32,9 +32,5 @@ public class LoginRegisterResponseCommand implements ICommand {
   public String getAuthenticationCode(){
     return null;}
 
-  @JsonIgnore
-  @Override
-  public Game getGame() {
-    return null;
-  }
+
 }

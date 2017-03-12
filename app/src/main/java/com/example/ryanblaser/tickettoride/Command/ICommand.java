@@ -35,5 +35,4 @@ public interface ICommand {
     public List<ICommand> execute() throws GameIsFullException, IClient.UserAlreadyLoggedIn;
     public String getAuthenticationCode();
     public User getUser();
-    public Game getGame();
 }

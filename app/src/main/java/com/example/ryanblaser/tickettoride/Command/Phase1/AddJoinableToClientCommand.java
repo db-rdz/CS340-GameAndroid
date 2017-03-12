@@ -11,7 +11,7 @@ import java.util.List;
 public class AddJoinableToClientCommand implements ICommand { // sent after changes from what List... commands sent
     private int gameId;
     private Game game;
-    private AddJoinableToClientCommand(){}
+    public AddJoinableToClientCommand(){}
     public AddJoinableToClientCommand(Game g){
         game = g;}
 
@@ -33,8 +33,11 @@ public class AddJoinableToClientCommand implements ICommand { // sent after chan
         return null;
     }
 
-    @Override
+    public int getGameId() {
+        return gameId;
+    }
+
     public Game getGame() {
-      return game;
+        return game;
     }
 }

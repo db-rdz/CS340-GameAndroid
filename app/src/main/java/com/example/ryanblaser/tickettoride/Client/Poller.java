@@ -16,15 +16,17 @@ public class Poller implements Runnable {
     private final Timer timer = new Timer();
     private TimerTask timerTask;
     private User user;
+    private int lastCommandRecievedIndex;
     
     public Poller()
     {
-        
+        lastCommandRecievedIndex = 0;
+
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 try {
-                    checkForCommands();
+                    checkForCommands(lastCommandRecievedIndex);
                 } catch (GameIsFullException e) {
                     e.printStackTrace();
                 }
@@ -38,11 +40,12 @@ public class Poller implements Runnable {
         user = null;
     }
     
-    public void checkForCommands() throws GameIsFullException
+    public void checkForCommands(int lastCommandIndex) throws GameIsFullException
     {
         if (user != null) {
-            ServerProxy.SINGLETON.checkForCommands(user.getUsername());
-            ServerProxy.SINGLETON.deleteGottenCommands(user.getUsername());
+            int increment = ServerProxy.SINGLETON.checkForCommands(user.getUsername(), lastCommandIndex);
+
+            lastCommandRecievedIndex += increment;
         }
     }
     

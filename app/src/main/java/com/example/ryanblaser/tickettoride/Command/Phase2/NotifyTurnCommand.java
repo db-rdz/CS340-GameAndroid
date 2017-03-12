@@ -43,11 +43,7 @@ public class NotifyTurnCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
+
 
     public String getStr_notify_message() {
         return str_notify_message;

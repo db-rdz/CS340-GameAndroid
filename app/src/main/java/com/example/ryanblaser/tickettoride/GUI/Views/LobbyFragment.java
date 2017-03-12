@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
@@ -19,8 +20,12 @@ import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by 0joshuaolson1 on 2/15/17.
@@ -30,10 +35,10 @@ public class LobbyFragment extends Fragment {
 
     private Button button_logout, button_new_game, button_refresh;
     private ListView listView_joinable_games;
+    private TextView textView_welcome;
     private static int game_Id;
     private ArrayAdapter<String> list_of_Games;
     private Poller poller;
-    // list views
 
     public LobbyFragment() {
         ClientFacade.SINGLETON.attachLobbyObserver(this); // does this belong in onCreate?
@@ -56,6 +61,11 @@ public class LobbyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lobby, container, false); //Sets the view to grab from the lobby fragment
 
         listView_joinable_games = (ListView) view.findViewById(R.id.list_joinable);
+
+        //Displays a text saying "Welcome *username*!" above the buttons in the lobby
+        textView_welcome = (TextView) view.findViewById(R.id.textView_welcome_user);
+        textView_welcome.setClickable(false);
+        textView_welcome.setText("Welcome " + ClientFacade.SINGLETON.getClientModel().getUser().getUsername() + "!");
 
         //This part links the buttons to the code.
         button_logout = (Button) view.findViewById(R.id.button_logout);
@@ -97,21 +107,13 @@ public class LobbyFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        Poller poller = new Poller();
-
-//        List<Integer> listJoinableGames = LobbyPresenter.SINGLETON.getJoinableGames();
-//        try {
-//            LobbyPresenter.SINGLETON.update();
-//        } catch (IServer.GameIsFullException e) {
-//            e.printStackTrace();
-//        }
 
         List<Integer> listJoinableGames = LobbyPresenter.SINGLETON.getJoinableGames();
         if (listJoinableGames.size() > 0) {
             ArrayList<String> gamesList = new ArrayList<>();
             for (int i = 0; i < listJoinableGames.size(); i++) {
-                int inc = listJoinableGames.get(i); //A holder so we don't accidentally increment i
-                gamesList.add("Game " + inc); //Lists the game and which game number
+                int gameId = listJoinableGames.get(i); //A holder so we don't accidentally increment i
+                gamesList.add("Game " + gameId); //Lists the game and which game number
             }
             list_of_Games = new ArrayAdapter<String>(getContext(), R.layout.row_info, gamesList);
             listView_joinable_games.setAdapter(list_of_Games);
@@ -123,13 +125,22 @@ public class LobbyFragment extends Fragment {
     private AdapterView.OnItemClickListener gameItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long j) {
-            String gameSelected = list_of_Games.getItem(i);
+            final String gameSelected = list_of_Games.getItem(i);
             String[] split = gameSelected.split(" ");
             int gameId = Integer.parseInt(split[1]); //gameId is in position 1 of array.
             LobbyPresenter.SINGLETON.addPlayer(gameId);
-            Intent intent = new Intent(getContext(), GameActivity.class);
-            intent.putExtra("GAME", gameSelected);
-            startActivity(intent);
+
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getContext(), GameActivity.class);
+                    intent.putExtra("GAME", gameSelected);
+                    startActivity(intent);
+                }
+            }, 5000); //Runs the activity AFTER 5 seconds.
+
+
         }
     };
 

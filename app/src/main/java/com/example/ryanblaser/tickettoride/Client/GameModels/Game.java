@@ -10,11 +10,12 @@ import java.util.Map;
 /**
  * Created by benjamin on 10/02/17.
  */
-public class Game implements iGame, Cloneable {
+public class Game implements iGame {
 
     public Game() {
 
     }
+
 
 
     //-----------------------------------------STATIC VARIABLES----------------------------------------//

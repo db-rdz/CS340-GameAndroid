@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 
 import com.example.ryanblaser.tickettoride.Command.ICommand;
@@ -17,13 +18,14 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by natha on 2/21/2017.
  */
 
-public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
+public class ClientCommunicator extends AsyncTask<URL, Void, Integer> {
 
     /**
      * This is what will be used in the ServerProy class to set up ClientCommunicator objects.
@@ -34,11 +36,10 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
     }
 
     private ObjectMapper objectMapper;
-    private SimpleModule module_login_register_response;
-    private SimpleModule module_add_joinable;
     private ICommand command;
     private String string_urlSuffix;
     private ICommand cmd; //Will return this at the end
+    private List<ICommand> respondData;
 
     public ClientCommunicator(String urlSuffix, ICommand command) {
         this.command = command;
@@ -46,10 +47,11 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
         objectMapper = new ObjectMapper();
         //objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         cmd = null;
+        respondData = new ArrayList<>();
     }
 
     @Override
-    protected ICommand doInBackground(URL... urls) {
+    protected Integer doInBackground(URL... urls) {
 
         for (URL url : urls) {
             try {
@@ -92,7 +94,9 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
                                 cmd.execute();
                             }
                         }
-                        return cmd;
+
+                        return respondData.size();
+
                     }
                     catch (Exception e) //InputStreamReader
                     {
@@ -117,7 +121,7 @@ public class ClientCommunicator extends AsyncTask<URL, Void, ICommand> {
 
 
 
-        return null;
+        return respondData.size();
     }
 
     public ICommand getICommand() { return cmd; }

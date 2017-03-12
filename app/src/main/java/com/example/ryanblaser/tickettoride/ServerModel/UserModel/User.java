@@ -16,13 +16,15 @@ import java.util.Map;
  */
 public class User implements iUser {
 
+    public User() {}
+
     //-----------------------------------------CLASS VARIABLES-------------------------------------------------//
     private String _S_username = null;
     private String _S_password = null;
     private String _S_token = null;
 
     private Boolean _B_isInGame = false;
-    private List<Game> _L_joinedGames = new ArrayList<>();
+    private List<Integer> _L_joinedGames = new ArrayList<>();
     private Boolean _B_isLoggedIn = false; //Determines if the user is logged in or not. Used in ClientProxy.
 
     //_________________________________________________________________________________________________________//
@@ -107,13 +109,15 @@ public class User implements iUser {
         this._B_isInGame = _B_isInGame;
     }
 
-    public List<Game> get_L_joinedGames() {
+    public List<Integer> get_L_joinedGames() {
         return _L_joinedGames;
     }
 
-    public void set_L_joinedGames(List<Game> _L_joinedGames) {
+    public void set_L_joinedGames(List<Integer> _L_joinedGames) {
         this._L_joinedGames = _L_joinedGames;
     }
+
+
 
     public void set_B_isLoggedIn(Boolean _B_isLoggedIn) {
         this._B_isLoggedIn = _B_isLoggedIn;
@@ -182,12 +186,12 @@ public class User implements iUser {
     public Boolean initializeGame(int gameId ){
         Game createdGame = DAO._SINGLETON.getGameFromId( gameId );
         Game.addGame(createdGame, gameId);
-        addGameToJoinedGames(createdGame);
+        addGameToJoinedGames(gameId);
         return true;
     }
 
-    public Boolean addGameToJoinedGames( Game game ){
-        _L_joinedGames.add( game );
+    public Boolean addGameToJoinedGames( int gameId ){
+        _L_joinedGames.add( gameId );
         return true;
     }
 

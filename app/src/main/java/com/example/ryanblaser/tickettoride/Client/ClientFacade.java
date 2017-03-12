@@ -5,7 +5,6 @@ import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.Server.IServer;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 
 import java.util.List;
 
@@ -25,11 +24,11 @@ import java.util.List;
 public class ClientFacade implements IClient {
 
 
-    public static ClientFacade SINGLETON = new com.example.ryanblaser.tickettoride.Client.ClientFacade();
+    public static ClientFacade SINGLETON = new ClientFacade();
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
-    private Poller poller;
+    private final Poller poller;
 
 
     private ClientFacade() {
@@ -58,6 +57,7 @@ public class ClientFacade implements IClient {
         
     }
 
+    @Override
     public void register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists {
         try {
             ServerProxy.SINGLETON.register(username, password);
@@ -69,8 +69,8 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void addJoinableGame() {
-        ServerProxy.SINGLETON.addJoinableGame(clientmodel.getUser().getStr_authentication_code());
+    public void addJoinableGameToServer() {
+        ServerProxy.SINGLETON.addJoinableGameToServer(clientmodel.getUser().getStr_authentication_code());
         lobbypresenter.refreshGameLobby();
         //lobbypresenter
 		
@@ -79,7 +79,7 @@ public class ClientFacade implements IClient {
     @Override
     public void addWaitingGame(int gameId) {
         clientmodel.addWaitingGame(gameId);
-        ServerProxy.SINGLETON.addPlayer(clientmodel.getUser().getUsername(), gameId);
+//        ServerProxy.SINGLETON.addPlayerToServerModel(clientmodel.getUser().getUsername(), gameId);
         lobbypresenter.switchToWaitingView();
         //lobbypresenter
 		
@@ -94,14 +94,14 @@ public class ClientFacade implements IClient {
 
     
     @Override
-    public void startGame(int gameId, String authenticationCode) { // just gameId?
-        ServerProxy.SINGLETON.startGame(gameId, authenticationCode);
+    public void startGame(int gameId, List<String> usernamesInGame) { // just gameId?
+        ServerProxy.SINGLETON.startGame(gameId, usernamesInGame);
         //lobbypresenter
         
     }
 
     public void addPlayerToModel(String str_authentication_code, int gameId) throws IServer.GameIsFullException { // which exception?
-        ServerProxy.SINGLETON.addPlayer(str_authentication_code, gameId); //server will get username
+        ServerProxy.SINGLETON.addPlayerToServerModel(str_authentication_code, gameId); //server will get username
         //lobbypresenter
         
     }
@@ -119,13 +119,14 @@ public class ClientFacade implements IClient {
     @Override
     public void addPlayerToClientModel(String username, int gameId){
         clientmodel.addPlayerToModel(username, gameId);
+
         //lobbypresenter
 		
     }
 
     @Override
     public void addPlayerToServerModel(String authenticationCode, int gameId) {
-        ServerProxy.SINGLETON.addPlayer(authenticationCode, gameId);
+        ServerProxy.SINGLETON.addPlayerToServerModel(authenticationCode, gameId);
     }
 
     public void attachLobbyObserver(LobbyPresenter lobbyPresenter) { //necessary?
@@ -140,7 +141,7 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void listJoinableGames(List<Game> listJoinableGames) {
+    public void listJoinableGames(List<Integer> listJoinableGames) {
         clientmodel.setJoinableGames(listJoinableGames); //TODO: Change type of game
 //        lobbypresenter.refreshGameLobby();
         //lobbypresenter
