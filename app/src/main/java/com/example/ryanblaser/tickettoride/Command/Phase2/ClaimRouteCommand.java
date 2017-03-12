@@ -14,6 +14,9 @@ import java.util.List;
  * This command is called whenever a player wants to claim a route.
  * A BroadcastCommand will be called after to tell other players when a route has been claimed.
  *
+ * The route contains the game owner, weight (route length), and route color.
+ * Use those to store data in the server side.
+ *
  * Created by natha on 2/27/2017.
  */
 
@@ -27,6 +30,8 @@ public class ClaimRouteCommand implements ICommand {
     public ClaimRouteCommand(Route route1) {
         route = route1;
     }
+
+    //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         return null;

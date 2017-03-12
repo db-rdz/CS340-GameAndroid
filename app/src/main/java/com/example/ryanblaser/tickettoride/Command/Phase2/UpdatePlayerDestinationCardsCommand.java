@@ -21,17 +21,17 @@ import java.util.List;
 public class UpdatePlayerDestinationCardsCommand implements ICommand {
 
     //Data members
-    private DestCard destCard;
+    private int addDestCardAmount;
 
     //Constructor
-    public UpdatePlayerDestinationCardsCommand(DestCard destCard) {
-        this.destCard = destCard;
+    public UpdatePlayerDestinationCardsCommand(int amount) {
+        addDestCardAmount = amount;
     }
 
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.updatePlayerDestinationCards(); //TODO: Need an argument for the client
+        ClientFacade.SINGLETON.updatePlayerDestinationCards(addDestCardAmount);
         return null;
     }
 
@@ -47,8 +47,7 @@ public class UpdatePlayerDestinationCardsCommand implements ICommand {
         return null;
     }
 
-
-    public DestCard getDestCard() {
-        return destCard;
+    public int getAddDestCardAmount() {
+        return addDestCardAmount;
     }
 }

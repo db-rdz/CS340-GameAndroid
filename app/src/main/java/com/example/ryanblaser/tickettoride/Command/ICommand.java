@@ -10,6 +10,11 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.ListJoinableCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.ListWaitingCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LoginRegisterResponseCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LogoutResponseCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.UpdateCarCountCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.UpdateFaceUpTableTrainCardsCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.UpdatePlayerDestinationCardsCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.UpdatePlayerTrainCardsCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.UpdatePointsCommand;
 import com.example.ryanblaser.tickettoride.Server.IServer.GameIsFullException;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -28,6 +33,11 @@ import java.util.List;
         @JsonSubTypes.Type(value = AddPlayerToClientCommand.class),
         @JsonSubTypes.Type(value = ListJoinableCommand.class),
         @JsonSubTypes.Type(value = ListWaitingCommand.class),
+        @JsonSubTypes.Type(value = UpdateCarCountCommand.class),
+        @JsonSubTypes.Type(value = UpdateFaceUpTableTrainCardsCommand.class),
+        @JsonSubTypes.Type(value = UpdatePlayerDestinationCardsCommand.class),
+        @JsonSubTypes.Type(value = UpdatePlayerTrainCardsCommand.class),
+        @JsonSubTypes.Type(value = UpdatePointsCommand.class)
 })
 public interface ICommand {
 

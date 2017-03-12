@@ -65,11 +65,12 @@ public class PlayerActionFragment extends Fragment {
 
         slidingAdapter.addAll((Collection<? extends iDestCard>)
                 GameBoardPresenter._SINGLETON.getThreeDestinationCards());
-        //TODO: Does this work?
+        //TODO: Need to change once DestCard gets updated
 //        slidingAdapter.addAll((Collection<? extends iDestCard>)
 //                ClientFacade.SINGLETON.getClientModel().getListOfDestinationCards());
 
-        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.getFourTrainCards());
+//        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.getFourTrainCards());
+        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());
 
         _slidingDeck.setAdapter(slidingAdapter);
         _slidingTrainCards.setAdapter(trainCardAdapter);

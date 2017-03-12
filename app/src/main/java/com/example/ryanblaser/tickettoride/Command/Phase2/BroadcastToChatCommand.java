@@ -18,6 +18,17 @@ import java.util.List;
  */
 
 public class BroadcastToChatCommand implements ICommand {
+
+    //Data members
+    String message;
+
+    //Constructors
+    public BroadcastToChatCommand(){}
+    public BroadcastToChatCommand(String messageToSend) {
+        message = messageToSend;
+    }
+
+    //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         return null;
@@ -35,5 +46,7 @@ public class BroadcastToChatCommand implements ICommand {
         return null;
     }
 
-
+    public String getMessage() {
+        return message;
+    }
 }

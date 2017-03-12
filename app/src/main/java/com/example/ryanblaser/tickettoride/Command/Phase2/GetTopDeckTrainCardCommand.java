@@ -10,13 +10,13 @@ import java.util.List;
 
 /**
  * FROM CLIENT -> SERVER
- * A player can grab a second train card from the deck.
- * If the player hasn't picked up a wild from the face up train cards on their first card pick.
+ * This class will allow one player to grab one train card from the deck.
+ * There's another command to grab a second card either from the deck or face up train cards.
  *
  * Created by natha on 2/27/2017.
  */
 
-public class GetSecondDeckTrainCardCommand implements ICommand {
+public class GetTopDeckTrainCardCommand implements ICommand {
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         return null;
@@ -33,5 +33,6 @@ public class GetSecondDeckTrainCardCommand implements ICommand {
     public User getUser() {
         return null;
     }
+
 
 }

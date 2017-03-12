@@ -8,6 +8,7 @@ import android.util.Pair;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
@@ -185,7 +186,11 @@ public class GameBoardPresenter {
             String toastText =  "You have claimed route " + _firstCityClicked.get_S_name() + "-" +
                     _secondCityClicked.get_S_name();
 
-            //TODO:Send ClaimRouteComand here
+            ClientFacade.SINGLETON.claimRoute(route);
+            String broadcast = route.get_Owner() + " has claimed route " + _firstCityClicked.get_S_name() + "-" +
+                    _secondCityClicked.get_S_name();
+            ClientFacade.SINGLETON.broadcastToChat(broadcast);
+
             resetViewLogicVariables();
             return new Pair<>(RESPONSE_STATUS.CLAIMED_ROUTE, toastText);
         }
@@ -230,7 +235,7 @@ public class GameBoardPresenter {
     }
 
     public void sendMessage(String message){
-        
+        ClientFacade.SINGLETON.broadcastToChat(message);
     }
 
     public void refreshBoard(){

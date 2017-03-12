@@ -236,13 +236,13 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void updatePlayerDestinationCards() {
-        
+    public void updatePlayerDestinationCards(int cardAmountToAdd) {
+        clientmodel.getCurrent_player().updateCurrentDestinationCards(cardAmountToAdd);
     }
 
     @Override
-    public void updatePlayerTrainCards() {
-        
+    public void updatePlayerTrainCards(int cardAmountToAdd) {
+        clientmodel.getCurrent_player().updateCurrentTrainCards(cardAmountToAdd);
     }
 
     public User getCurrentUser() { return clientmodel.getUser(); }

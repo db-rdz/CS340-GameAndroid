@@ -57,8 +57,8 @@ public interface IClient {
     public void updateTrainCardAmount(int cardAmountToAdd);
     public void updateDestCardAmount(int cardAmountToAdd);
     public void updateFaceUpTableTrainCards();
-    public void updatePlayerDestinationCards();
-    public void updatePlayerTrainCards();
+    public void updatePlayerDestinationCards(int cardAmountToAdd);
+    public void updatePlayerTrainCards(int cardAmountToAdd);
     public void updatePoints(int pointsToAdd);
 
     // Phase 3?

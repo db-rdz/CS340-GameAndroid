@@ -15,18 +15,21 @@ import java.util.List;
  * There's another command to grab a second card either from the deck or face up train cards. IF the player
  * doesn't choose a wild card first.
  *
+ * If isWild is true, then the player's turn must end immediately.
+ * If isWild is false, then the player can still pick another card afterwards
+ *
  * Created by natha on 2/27/2017.
  */
 
-public class GetFirstFaceUpTableTrainCardCommand implements ICommand {
+public class GetFaceUpTableTrainCardCommand implements ICommand {
 
     //Data member
     private TrainCard trainCard;
     private Boolean isWild; //Is the traincard a wild or normal card?
 
     //Constructors
-    public GetFirstFaceUpTableTrainCardCommand(){}
-    public GetFirstFaceUpTableTrainCardCommand(TrainCard card, Boolean wild) {
+    public GetFaceUpTableTrainCardCommand(){}
+    public GetFaceUpTableTrainCardCommand(TrainCard card, Boolean wild) {
         trainCard = card;
         isWild = wild;
     }
