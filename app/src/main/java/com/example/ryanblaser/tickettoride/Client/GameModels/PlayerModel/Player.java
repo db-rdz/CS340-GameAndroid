@@ -3,6 +3,8 @@ package com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel;
 import android.graphics.Color;
 
 /**
+ * This class is simply a data storage class for a user's game data.
+ * The User class will have a Player variable (this class) to store all the data.
  * Created by benjamin on 6/03/17.
  */
 
@@ -24,9 +26,43 @@ public class Player {
     private String _userName = null;
     private int _noOfTrainCards = 0;
     private int _noOfDestCards = 0;
-    private int _playerColor = Color.BLACK;
+    private int _playerColor = Color.MAGENTA; //Magenta is just an indicator is the correct color wasn't set
+    private int _car_count = 45; //Each player always starts the game with 45 train cars
     private int _points = 0;
 
+    //--------------------------------------CLASS FUNCTIONS---------------------------------------//
+
+    /**
+     * Nathan
+     * Updates the car count by subtracting the current number of cars by the amount of cars used.
+     * @param numOfCarsUsed
+     */
+    public void updateCarCount(int numOfCarsUsed) {
+        _car_count -= numOfCarsUsed;
+    }
+
+    /**
+     * Nathan
+     * Updates the player's points by adding the gained point total to the current amount of points
+     * @param pointsToAdd
+     */
+    public void updatePoints(int pointsToAdd) {
+        _points += pointsToAdd;
+    }
+
+    /**
+     * Nathan
+     * Updates the number of train cards by adding the gained amount of cards to the current total
+     * @param cardAmountToAdd
+     */
+    public void updateCurrentTrainCards(int cardAmountToAdd) { _noOfTrainCards += cardAmountToAdd; }
+
+    /**
+     * Nathan
+     * Updates the number of destination cards by adding the gained amount of cards to the current total
+     * @param cardAmountToAdd
+     */
+    public void updateCurrentDestinationCards(int cardAmountToAdd) { _noOfDestCards += cardAmountToAdd; }
 
     //-------------------------------------GETTERS AND SETTERS------------------------------------//
 
@@ -44,6 +80,13 @@ public class Player {
 
     public int get_playerColor() { return _playerColor; }
     public void set_playerColor(int _playerColor) { this._playerColor = _playerColor; }
+
+    public int get_car_count() {
+        return _car_count;
+    }
+    public void set_car_count(int _car_count) {
+        this._car_count = _car_count;
+    }
 
     public int get_points() { return _points; }
     public void set_points(int _points) { this._points = _points; }

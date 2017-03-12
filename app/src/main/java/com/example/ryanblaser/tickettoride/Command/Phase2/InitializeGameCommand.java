@@ -1,5 +1,7 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -21,9 +23,20 @@ import java.util.List;
 
 public class InitializeGameCommand implements ICommand {
 
+    //Data members
+	private List<Player> listOfPlayersInGame;
+
+    //Constructors
+    public InitializeGameCommand(){}
+    public InitializeGameCommand(List<Player> list) {
+        listOfPlayersInGame = list;
+    }
+
+    //Functions
 	@Override
     public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
-		// TODO Auto-generated method stub
+		ClientFacade.SINGLETON.getClientModel().setListOfPlayersInGame(listOfPlayersInGame);
+        ClientFacade.SINGLETON.getClientModel().setCurrent_player(new Player()); //Ensures player is brand new at game start
 		return null;
 	}
 
@@ -40,4 +53,7 @@ public class InitializeGameCommand implements ICommand {
 		return null;
 	}
 
+    public List<Player> getListOfPlayersInGame() {
+        return listOfPlayersInGame;
+    }
 }

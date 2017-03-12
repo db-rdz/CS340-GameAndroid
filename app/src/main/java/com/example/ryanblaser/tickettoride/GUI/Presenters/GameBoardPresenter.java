@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
@@ -109,7 +110,9 @@ public class GameBoardPresenter {
     }
 
     private City getCityByCoodinates(float x, float y){
-        List<City> cities = GameBoardPresenter._SINGLETON.getAllCities();
+//        List<City> cities = GameBoardPresenter._SINGLETON.getAllCities();
+        List<City> cities = City.get_allCities();
+
         for(City c : cities){
             if(c.get_cityPointArea().contains(x, y)) {
                 return c;
@@ -182,6 +185,7 @@ public class GameBoardPresenter {
             String toastText =  "You have claimed route " + _firstCityClicked.get_S_name() + "-" +
                     _secondCityClicked.get_S_name();
 
+            //TODO:Send ClaimRouteComand here
             resetViewLogicVariables();
             return new Pair<>(RESPONSE_STATUS.CLAIMED_ROUTE, toastText);
         }
@@ -242,7 +246,7 @@ public class GameBoardPresenter {
     //-------------------------------MODEL ACCESSING FUNCTIONS------------------------------------//
     public List<Player> getPlayersInGame(){
         asdf = new ArrayList<>();
-        asdf.add(new Player("Nathan", 0, 0, Color.MAGENTA,0));
+        asdf.add(new Player("Nathan", 0, 0, Color.RED,0));
         asdf.add(new Player("Raul", 0, 0, Color.YELLOW,0));
         asdf.add(new Player("Ryan", 0, 0, Color.BLUE,0));
         asdf.add(new Player("Daniel", 0, 0, Color.GREEN,0));

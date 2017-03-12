@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.ExpandableListAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
@@ -65,7 +66,9 @@ public class PlayersInfoFragment extends Fragment {
         headers.add("Players");
 
         Pair<List<String>, HashMap<String, Player>> info
-                = GameBoardPresenter._SINGLETON.getInfoForExpandable();
+//                = GameBoardPresenter._SINGLETON.getInfoForExpandable();
+                = ClientFacade.SINGLETON.getClientModel().getInfoForExpandable();
+
 
         ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
 

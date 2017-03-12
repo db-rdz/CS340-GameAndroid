@@ -2,6 +2,8 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import java.util.List;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -47,14 +49,20 @@ public interface IClient {
 
     // Phase 2 additions - Ryan Blaser
     public void broadcastToChat(String message);
-    public void getDestinationCards();
+    public void claimRoute(Route route);
+    public void getFirstFaceUpTableTrainCardCommand(TrainCard trainCard, Boolean isWild);
     public void selectRequestedDestinationCard();
     public void showMessage(String message);
     public void updateCarCount(int numOfCarsUsed);
+    public void updateTrainCardAmount(int cardAmountToAdd);
+    public void updateDestCardAmount(int cardAmountToAdd);
     public void updateFaceUpTableTrainCards();
     public void updatePlayerDestinationCards();
     public void updatePlayerTrainCards();
     public void updatePoints(int pointsToAdd);
+
+    // Phase 3?
+    public void getDestinationCards();
 
 
     public void attachObserver(/* Observer object */);

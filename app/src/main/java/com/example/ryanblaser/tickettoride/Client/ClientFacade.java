@@ -1,5 +1,7 @@
 package com.example.ryanblaser.tickettoride.Client;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.Views.LobbyFragment;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
@@ -85,6 +87,7 @@ public class ClientFacade implements IClient {
 		
     }
 
+
     @Override
     public void removeGame(int gameId) {
         clientmodel.deleteGame(gameId);
@@ -118,7 +121,7 @@ public class ClientFacade implements IClient {
 
     @Override
     public void addPlayerToClientModel(String username, int gameId){
-        clientmodel.addPlayerToModel(username, gameId);
+        clientmodel.addPlayerToGameObject(username, gameId);
 
         //lobbypresenter
 		
@@ -158,7 +161,7 @@ public class ClientFacade implements IClient {
 
     @Override
     public void loginRegisterSucceeded(User user) {
-        clientmodel.setAuthenticationKey(user.getStr_authentication_code());
+        clientmodel.setStr_authentication_code(user.getStr_authentication_code());
         clientmodel.setUser(user);
         poller.setUser(user);
         loginpresenter.switchToLobbyView();
@@ -169,19 +172,30 @@ public class ClientFacade implements IClient {
     @Override
     public void logoutSucceeded() {
 
-        clientmodel.setAuthenticationKey(null);
+        clientmodel.setStr_authentication_code(null);
         clientmodel.setUser(null);
     	
     }
 
+    //PHASE 2
     @Override
     public void broadcastToChat(String message) {
         ServerProxy.SINGLETON.broadcastToChat(message);
     }
 
     @Override
+    public void claimRoute(Route route) {
+        ServerProxy.SINGLETON.claimRoute(route);
+    }
+
+    @Override
     public void getDestinationCards() {
         
+    }
+
+    @Override
+    public void getFirstFaceUpTableTrainCardCommand(TrainCard trainCard, Boolean isWild) {
+        ServerProxy.SINGLETON.getFirstFaceUpTableTrainCardCommand(trainCard, isWild);
     }
 
     @Override
@@ -196,14 +210,24 @@ public class ClientFacade implements IClient {
 
     @Override
     public void updateCarCount(int numOfCarsUsed) {
-        clientmodel.updateCarCount(numOfCarsUsed);
-        
+        clientmodel.getCurrent_player().updateCarCount(numOfCarsUsed);
+
     }
 
     @Override
     public void updatePoints(int pointsToAdd) {
-        clientmodel.updatePoints(pointsToAdd);
-        
+        clientmodel.getCurrent_player().updatePoints(pointsToAdd);
+
+    }
+
+    @Override
+    public void updateTrainCardAmount(int cardAmountToAdd) {
+        clientmodel.getCurrent_player().updateCurrentTrainCards(cardAmountToAdd);
+    }
+
+    @Override
+    public void updateDestCardAmount(int cardAmountToAdd) {
+        clientmodel.getCurrent_player().updateCurrentDestinationCards(cardAmountToAdd);
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SliddingAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
@@ -64,6 +65,9 @@ public class PlayerActionFragment extends Fragment {
 
         slidingAdapter.addAll((Collection<? extends iDestCard>)
                 GameBoardPresenter._SINGLETON.getThreeDestinationCards());
+        //TODO: Does this work?
+//        slidingAdapter.addAll((Collection<? extends iDestCard>)
+//                ClientFacade.SINGLETON.getClientModel().getListOfDestinationCards());
 
         trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.getFourTrainCards());
 

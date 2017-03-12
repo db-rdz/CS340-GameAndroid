@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -18,6 +19,17 @@ import java.util.List;
  */
 
 public class GetFirstFaceUpTableTrainCardCommand implements ICommand {
+
+    //Data member
+    private TrainCard trainCard;
+    private Boolean isWild; //Is the traincard a wild or normal card?
+
+    //Constructors
+    public GetFirstFaceUpTableTrainCardCommand(){}
+    public GetFirstFaceUpTableTrainCardCommand(TrainCard card, Boolean wild) {
+        trainCard = card;
+        isWild = wild;
+    }
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         return null;
@@ -35,5 +47,11 @@ public class GetFirstFaceUpTableTrainCardCommand implements ICommand {
         return null;
     }
 
+    public TrainCard getTrainCard() {
+        return trainCard;
+    }
 
+    public Boolean getWild() {
+        return isWild;
+    }
 }

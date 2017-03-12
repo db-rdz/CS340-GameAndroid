@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -17,6 +18,15 @@ import java.util.List;
  */
 
 public class ClaimRouteCommand implements ICommand {
+
+    //Data members
+    private Route route;
+
+    //Constructors
+    public ClaimRouteCommand(){}
+    public ClaimRouteCommand(Route route1) {
+        route = route1;
+    }
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         return null;
@@ -34,4 +44,7 @@ public class ClaimRouteCommand implements ICommand {
         return null;
     }
 
+    public Route getRoute() {
+        return route;
+    }
 }

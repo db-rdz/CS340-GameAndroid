@@ -8,7 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
@@ -56,10 +58,18 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                     public void onSwipe(SlidingDeck parent, View item) {
                         final TrainCard slidingDeckModel = (TrainCard) item.getTag();
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
-                        int count = GameBoardPresenter._SINGLETON.getClientPlayer().get_Hand().get_cardCount()
-                                .get(slidingDeckModel.getType());
-                        GameBoardPresenter._SINGLETON.getClientPlayer().get_Hand().get_cardCount()
-                                .put(slidingDeckModel.getType(), count + 1);
+
+
+                        //TODO:Finished?
+                        Player currentPlayer = ClientFacade.SINGLETON.getClientModel().getCurrent_player();
+                        int cnt = currentPlayer.get_Hand().get_cardCount().get(slidingDeckModel.getType());
+                        currentPlayer.get_Hand().get_cardCount().put(slidingDeckModel.getType(), cnt++);
+
+//                        int count = GameBoardPresenter._SINGLETON.getClientPlayer().get_Hand().get_cardCount()
+//                                .get(slidingDeckModel.getType());
+//                        GameBoardPresenter._SINGLETON.getClientPlayer().get_Hand().get_cardCount()
+//                                .put(slidingDeckModel.getType(), count + 1);
+
                         GameBoardPresenter._SINGLETON.refreshCardCounters();
                         remove(slidingDeckModel);
 
@@ -67,6 +77,14 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                         GameBoardPresenter._SINGLETON.refreshBoard();
                         PlayerInfoPresenter._SINGLETON.refreshPlayerInfo();
                         notifyDataSetChanged();
+
+                        if (slidingDeckModel.getType().equals("rainbowcard")) {
+                            ClientFacade.SINGLETON.getFirstFaceUpTableTrainCardCommand(slidingDeckModel, true);
+                        }
+                        else {
+                            ClientFacade.SINGLETON.getFirstFaceUpTableTrainCardCommand(slidingDeckModel, false);
+                        }
+                        //TODO: What if the player picks a wild card? How do we end his turn immediately?
                     }
                 });
             }

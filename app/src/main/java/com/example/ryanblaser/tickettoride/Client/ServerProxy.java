@@ -3,10 +3,14 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import android.util.Log;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToServerCommand;
 
 import com.example.ryanblaser.tickettoride.Command.Phase1.*;
+import com.example.ryanblaser.tickettoride.Command.Phase2.ClaimRouteCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.GetFirstFaceUpTableTrainCardCommand;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -197,4 +201,35 @@ public class ServerProxy implements IServer {
         return null;
     }
 
+    @Override
+    public List<ICommand> claimRoute(Route route) {
+        String urlSuffix = "/command";
+
+        ICommand claimRouteCommand = new ClaimRouteCommand(route);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, claimRouteCommand);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<ICommand> getFirstFaceUpTableTrainCardCommand(TrainCard trainCard, Boolean isWild) {
+        String urlSuffix = "/command";
+
+        ICommand claimRouteCommand = new GetFirstFaceUpTableTrainCardCommand(trainCard, isWild);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, claimRouteCommand);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
