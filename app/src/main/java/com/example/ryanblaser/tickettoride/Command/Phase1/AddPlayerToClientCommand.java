@@ -9,47 +9,42 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 public class AddPlayerToClientCommand implements ICommand { // sent after changes from what List... commands sent
-  private int int_game_id;
-  private String str_username;
-  public AddPlayerToClientCommand(){}
-  public AddPlayerToClientCommand(String name, int gameId){
+    private int int_game_id;
+    private String str_username;
+    public AddPlayerToClientCommand(){}
+    public AddPlayerToClientCommand(String name, int gameId){
     str_username = name;
     int_game_id = gameId;}
 
-  @JsonIgnore
-  @Override
-  public String getAuthenticationCode() {
-    return null;
-  }
-  
-  public String getUsername()
-  {
-	  return str_username;
-  }
+    @JsonIgnore
+    @Override
+    public String getAuthenticationCode() {
+        return null;
+    }
 
-  @JsonIgnore
-  @Override
-  public User getUser() {
-    return null;
-  }
+    public String getUsername()
+    {
+      return str_username;
+    }
 
-  @Override
-  public List<ICommand> execute() throws GameIsFullException {
-    ClientFacade.SINGLETON.addPlayerToClientModel(str_username, int_game_id);
-    return null;
-  }
+    @JsonIgnore
+    @Override
+        public User getUser() {
+        return null;
+    }
 
-  @JsonIgnore
-  @Override
-  public Game getGame() {
-    return null;
-  }
+    @Override
+    public List<ICommand> execute() throws GameIsFullException {
+        ClientFacade.SINGLETON.getClientModel().addPlayerToGameObject(str_username, int_game_id);
+        return null;
+    }
 
-  public int getInt_game_id() {
+
+    public int getInt_game_id() {
     return int_game_id;
-  }
+    }
 
-  public String getStr_username() {
+    public String getStr_username() {
     return str_username;
-  }
+    }
 }

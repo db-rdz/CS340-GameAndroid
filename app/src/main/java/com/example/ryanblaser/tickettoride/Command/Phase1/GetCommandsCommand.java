@@ -33,10 +33,6 @@ public class GetCommandsCommand implements ICommand {
     }
 
 
-    @Override
-    public Game getGame() {
-      return null;
-    }
 
     public String getUsername()
     {
@@ -51,7 +47,4 @@ public class GetCommandsCommand implements ICommand {
         return lastCommandRecievedIndex;
     }
 
-    public void setLastCommandRecievedIndex(int lastCommandRecievedIndex) {
-        this.lastCommandRecievedIndex = lastCommandRecievedIndex;
-    }
 }

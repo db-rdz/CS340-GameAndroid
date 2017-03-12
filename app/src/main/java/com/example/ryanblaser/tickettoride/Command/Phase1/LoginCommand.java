@@ -35,9 +35,4 @@ public class LoginCommand implements ICommand {
         return user;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
 }

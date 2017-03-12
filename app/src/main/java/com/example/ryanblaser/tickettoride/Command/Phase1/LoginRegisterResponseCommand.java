@@ -32,9 +32,5 @@ public class LoginRegisterResponseCommand implements ICommand {
   public String getAuthenticationCode(){
     return null;}
 
-  @JsonIgnore
-  @Override
-  public Game getGame() {
-    return null;
-  }
+
 }

@@ -28,33 +28,12 @@ public class RegisterCommand implements ICommand {
     public String getAuthenticationCode() {
         return null;
     }
-    //   public RegisterCommand(String username, String password, String str_authentication_code) {
-//    	user = new User();
-//    	user.setUsername(username);
-//    	user.setPassword(password);
-//    	user.setStr_authentication_code(str_authentication_code);
-//    }
-//
-//    @JsonIgnore
-//    @Override
-//    public String getAuthenticationCode() {
-//        return null;
-//    }
+
 
     @Override
     public User getUser() {
         return user;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
-//
-//    @JsonIgnore
-//    @Override
-//    public Game getGame() {
-//        return null;
-//    }
+
 }

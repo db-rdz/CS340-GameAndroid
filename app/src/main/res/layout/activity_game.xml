@@ -31,10 +31,9 @@
         android:text="Start Game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="38dp"
-        android:id="@+id/button_start_game" />
+        android:id="@+id/button_start_game"
+        android:layout_below="@+id/textView_waiting_text"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/text_players"
@@ -45,4 +44,16 @@
         android:layout_below="@+id/button_refresh"
         android:text="Players in this lobby:"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/textView_waiting_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list_players_in_game"
+        android:layout_centerHorizontal="true"
+        android:text="Waiting for Creator to start game"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="18sp"
+        android:visibility="invisible" />
 </RelativeLayout>

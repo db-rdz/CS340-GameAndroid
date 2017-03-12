@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
@@ -18,6 +19,8 @@ import com.example.ryanblaser.tickettoride.GUI.Activities.GameActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +35,10 @@ public class LobbyFragment extends Fragment {
 
     private Button button_logout, button_new_game, button_refresh;
     private ListView listView_joinable_games;
+    private TextView textView_welcome;
     private static int game_Id;
     private ArrayAdapter<String> list_of_Games;
     private Poller poller;
-    // list views
 
     public LobbyFragment() {
         ClientFacade.SINGLETON.attachLobbyObserver(this); // does this belong in onCreate?
@@ -58,6 +61,11 @@ public class LobbyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lobby, container, false); //Sets the view to grab from the lobby fragment
 
         listView_joinable_games = (ListView) view.findViewById(R.id.list_joinable);
+
+        //Displays a text saying "Welcome *username*!" above the buttons in the lobby
+        textView_welcome = (TextView) view.findViewById(R.id.textView_welcome_user);
+        textView_welcome.setClickable(false);
+        textView_welcome.setText("Welcome " + ClientFacade.SINGLETON.getClientModel().getUser().getUsername() + "!");
 
         //This part links the buttons to the code.
         button_logout = (Button) view.findViewById(R.id.button_logout);
@@ -99,14 +107,6 @@ public class LobbyFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        Poller poller = new Poller();
-
-//        List<Integer> listJoinableGames = LobbyPresenter.SINGLETON.getJoinableGames();
-//        try {
-//            LobbyPresenter.SINGLETON.update();
-//        } catch (IServer.GameIsFullException e) {
-//            e.printStackTrace();
-//        }
 
         List<Integer> listJoinableGames = LobbyPresenter.SINGLETON.getJoinableGames();
         if (listJoinableGames.size() > 0) {

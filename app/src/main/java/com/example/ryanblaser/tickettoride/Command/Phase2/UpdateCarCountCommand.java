@@ -47,11 +47,7 @@ public class UpdateCarCountCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
+
 
     public int getInt_cars_used() {
         return int_cars_used;

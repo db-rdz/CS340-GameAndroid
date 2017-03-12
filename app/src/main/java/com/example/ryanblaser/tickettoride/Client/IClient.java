@@ -35,7 +35,7 @@ public interface IClient {
     public void addJoinableGameToServer();
     public void addWaitingGame(int gameId);
     public void removeGame(int gameId);
-    public void startGame(int gameId, String authorizationCode);
+    public void startGame(int gameId, List<String> usernamesInGame);
     public void addPlayerToClientModel(String username, int gameId) throws IServer.GameIsFullException;
     public void addPlayerToServerModel(String authenticationCode, int gameId);
     public void logout(String str_authentication_code);
