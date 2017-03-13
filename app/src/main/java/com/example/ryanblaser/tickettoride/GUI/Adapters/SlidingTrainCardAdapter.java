@@ -62,8 +62,8 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
 
                         //TODO:Finished?
                         Player currentPlayer = ClientFacade.SINGLETON.getClientModel().getCurrent_player();
-                        int cnt = currentPlayer.get_Hand().get_cardCount().get(slidingDeckModel.getType());
-                        currentPlayer.get_Hand().get_cardCount().put(slidingDeckModel.getType(), cnt++);
+                        int cnt = currentPlayer.get_Hand().get_cardCount().get(slidingDeckModel.getType()); //Adds specific card to player
+                        currentPlayer.get_Hand().get_cardCount().put(slidingDeckModel.getType(), cnt++); //Increases total card count to player
 
 //                        int count = GameBoardPresenter._SINGLETON.getClientPlayer().get_Hand().get_cardCount()
 //                                .get(slidingDeckModel.getType());
@@ -79,10 +79,10 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                         notifyDataSetChanged();
 
                         if (slidingDeckModel.getType().equals("rainbowcard")) {
-                            ClientFacade.SINGLETON.getFirstFaceUpTableTrainCardCommand(slidingDeckModel, true);
+                            ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), true);
                         }
                         else {
-                            ClientFacade.SINGLETON.getFirstFaceUpTableTrainCardCommand(slidingDeckModel, false);
+                            ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), false);
                         }
                         //TODO: What if the player picks a wild card? How do we end his turn immediately?
                     }

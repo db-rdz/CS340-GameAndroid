@@ -17,6 +17,13 @@ import java.util.List;
  */
 
 public class GetTopDeckTrainCardCommand implements ICommand {
+    private int gameId;
+
+    public GetTopDeckTrainCardCommand(int g)
+    {
+        gameId = g;
+    }
+
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         return null;
@@ -34,5 +41,8 @@ public class GetTopDeckTrainCardCommand implements ICommand {
         return null;
     }
 
-
+    public int getGameId()
+    {
+        return gameId;
+    }
 }

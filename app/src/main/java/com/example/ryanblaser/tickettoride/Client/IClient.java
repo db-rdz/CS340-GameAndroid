@@ -50,9 +50,9 @@ public interface IClient {
     // Phase 2 additions - Ryan Blaser
     public void broadcastToChat(String message);
     public void claimRoute(Route route);
-    public void getFirstFaceUpTableTrainCardCommand(TrainCard trainCard, Boolean isWild);
+    public void getFaceUpTableTrainCardCommand(int trainCardIndex, Boolean isWild);
     public void selectRequestedDestinationCard();
-    public void showMessage(String message);
+    public void showMessage(List<String> message);
     public void updateCarCount(int numOfCarsUsed);
     public void updateTrainCardAmount(int cardAmountToAdd);
     public void updateDestCardAmount(int cardAmountToAdd);

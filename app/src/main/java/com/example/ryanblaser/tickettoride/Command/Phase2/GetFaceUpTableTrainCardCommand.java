@@ -22,16 +22,19 @@ import java.util.List;
  */
 
 public class GetFaceUpTableTrainCardCommand implements ICommand {
-
     //Data member
-    private TrainCard trainCard;
+    private int _i_gameId;
+
+    //Ryan: changed TrainCard to cardIndex to match the model
+    private int _i_cardIndex;
     private Boolean isWild; //Is the traincard a wild or normal card?
 
     //Constructors
     public GetFaceUpTableTrainCardCommand(){}
-    public GetFaceUpTableTrainCardCommand(TrainCard card, Boolean wild) {
-        trainCard = card;
+    public GetFaceUpTableTrainCardCommand(int g, int index, Boolean wild) {
+        _i_cardIndex = index;
         isWild = wild;
+        _i_gameId = g;
     }
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
@@ -50,11 +53,18 @@ public class GetFaceUpTableTrainCardCommand implements ICommand {
         return null;
     }
 
-    public TrainCard getTrainCard() {
-        return trainCard;
+    public int getCardIndex() {
+        return _i_cardIndex;
     }
 
     public Boolean getWild() {
         return isWild;
     }
+
+    public int getGameId()
+    {
+        return _i_gameId;
+    }
+
+
 }

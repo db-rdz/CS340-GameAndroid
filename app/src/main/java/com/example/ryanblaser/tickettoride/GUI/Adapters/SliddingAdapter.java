@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.R;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.CardsModel.iDestCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.iDestCard;
 import com.redbooth.SlidingDeck;
 
 /**

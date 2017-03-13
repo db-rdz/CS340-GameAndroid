@@ -27,6 +27,6 @@ public interface IServer {
     public List<ICommand> logout(String str_authentication_code);
 
     //PHASE2
-    public List<ICommand> claimRoute(Route route);
-    public List<ICommand> getFirstFaceUpTableTrainCardCommand(TrainCard trainCard, Boolean isWild);
+    public List<ICommand> claimRoute(Route route, String authenticationCode, int gameId);
+    public List<ICommand> getFaceUpTableTrainCardCommand(int gameId, Boolean isWild, int trainCardIndex);
 }

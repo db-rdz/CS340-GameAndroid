@@ -18,7 +18,7 @@ public class Route {
 
     public Route(int color, int weight, String owner, Pair<String, String> p, PointF p1, PointF p2, String sColor){
         _i_Color = color;
-        _i_Weight = weight;
+        _i_Weight = weight; //length of the route
         _S_Owner = owner;
         _P_ConnectingCities = p;
         point1 = p1;

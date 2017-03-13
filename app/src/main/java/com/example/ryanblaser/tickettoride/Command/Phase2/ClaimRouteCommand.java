@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.iRoute;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -21,14 +22,17 @@ import java.util.List;
  */
 
 public class ClaimRouteCommand implements ICommand {
-
     //Data members
     private Route route;
+    private int gameId;
+    String authenticationCode;
 
     //Constructors
     public ClaimRouteCommand(){}
-    public ClaimRouteCommand(Route route1) {
+    public ClaimRouteCommand(int g, String code, Route route1) {
         route = route1;
+        gameId = g;
+        authenticationCode = code;
     }
 
     //Functions
@@ -40,7 +44,7 @@ public class ClaimRouteCommand implements ICommand {
     @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return null;
+        return authenticationCode;
     }
 
     @JsonIgnore
@@ -52,4 +56,15 @@ public class ClaimRouteCommand implements ICommand {
     public Route getRoute() {
         return route;
     }
+
+    public int getGameId()
+    {
+        return gameId;
+    }
+
+    public String getStrAuthenticationCode()
+    {
+        return authenticationCode;
+    }
+
 }

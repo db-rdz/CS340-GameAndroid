@@ -186,7 +186,8 @@ public class GameBoardPresenter {
             String toastText =  "You have claimed route " + _firstCityClicked.get_S_name() + "-" +
                     _secondCityClicked.get_S_name();
 
-            ClientFacade.SINGLETON.claimRoute(route);
+            ClientFacade.SINGLETON.claimRoute(route); //Sends the route claimed
+
             String broadcast = route.get_Owner() + " has claimed route " + _firstCityClicked.get_S_name() + "-" +
                     _secondCityClicked.get_S_name();
             ClientFacade.SINGLETON.broadcastToChat(broadcast);

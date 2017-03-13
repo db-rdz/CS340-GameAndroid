@@ -3,7 +3,6 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import android.util.Log;
 
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToServerCommand;
@@ -198,10 +197,10 @@ public class ServerProxy implements IServer {
 	}
 
 
-    public ICommand broadcastToChat(String message) {
+    public ICommand broadcastToChat(int gameId, String authenticationCode, String message) {
         String urlSuffix = "/command";
 
-        ICommand broadcastToChat = new BroadcastToChatCommand(message);
+        ICommand broadcastToChat = new BroadcastToChatCommand(gameId, authenticationCode, message);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -214,10 +213,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public List<ICommand> claimRoute(Route route) {
+    public List<ICommand> claimRoute(Route route, String authenticationCode, int gameId) {
         String urlSuffix = "/command";
 
-        ICommand claimRouteCommand = new ClaimRouteCommand(route);
+        ICommand claimRouteCommand = new ClaimRouteCommand(gameId, authenticationCode, route);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -230,10 +229,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public List<ICommand> getFirstFaceUpTableTrainCardCommand(TrainCard trainCard, Boolean isWild) {
+    public List<ICommand> getFaceUpTableTrainCardCommand(int gameId, Boolean isWild, int trainCardIndex) {
         String urlSuffix = "/command";
 
-        ICommand getFirstFaceUpTableTrainCardCommand = new GetFaceUpTableTrainCardCommand(trainCard, isWild);
+        ICommand getFirstFaceUpTableTrainCardCommand = new GetFaceUpTableTrainCardCommand(gameId, trainCardIndex, isWild);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);

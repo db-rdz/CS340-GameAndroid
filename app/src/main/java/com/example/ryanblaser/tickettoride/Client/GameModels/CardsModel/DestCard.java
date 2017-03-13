@@ -1,6 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel;
 
-import android.util.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 
@@ -10,11 +10,34 @@ import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 
 public class DestCard implements iDestCard {
 
-    public DestCard(City c1, City c2){
-        _destination = new Pair<>(c1, c2);
+    // should map the id of the map used on DestCardTypes
+    private int _cardType;
+    private Pair<String, String> _destination;
+    private String points;
+
+    public DestCard(String city1, String city2){
+
+        _destination = Pair.of(city1, city2);
     }
 
-    private Pair<City, City> _destination;
-    private int points;
 
+
+    @Override
+    public String get_destination() {
+        return null;
+    }
+
+    @Override
+    public String get_origin() {
+        return null;
+    }
+
+    @Override
+    public String get_points() {
+        return points;
+    }
+
+    public void setPoints(String points) {
+        this.points = points;
+    }
 }

@@ -18,26 +18,31 @@ import java.util.List;
  */
 
 public class BroadcastToChatCommand implements ICommand {
-
     //Data members
+    // Ryan: added authenticationCode so that I can display what user sent the message in the chatroom
     String message;
+    String str_authenticationCode;
+    int gameId;
 
     //Constructors
     public BroadcastToChatCommand(){}
-    public BroadcastToChatCommand(String messageToSend) {
+    public BroadcastToChatCommand(int g, String code, String messageToSend) {
+        str_authenticationCode = code;
         message = messageToSend;
+        gameId = g;
     }
 
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
+        //TODO: connect this to the Messages part in the GUI
         return null;
     }
 
     @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return null;
+        return str_authenticationCode;
     }
 
     @JsonIgnore
@@ -48,5 +53,15 @@ public class BroadcastToChatCommand implements ICommand {
 
     public String getMessage() {
         return message;
+    }
+
+    public int getGameId()
+    {
+        return gameId;
+    }
+
+    public String get_strAuthenticationCode()
+    {
+        return str_authenticationCode;
     }
 }
