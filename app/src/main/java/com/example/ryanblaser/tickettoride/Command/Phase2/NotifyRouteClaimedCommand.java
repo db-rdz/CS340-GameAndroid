@@ -19,10 +19,10 @@ import java.util.List;
 public class NotifyRouteClaimedCommand implements ICommand {
 
     //Data members
-    private String str_message;
+    private List<String> str_message;
 
     //Constructor
-    public NotifyRouteClaimedCommand(String str_message) {
+    public NotifyRouteClaimedCommand(List<String> str_message) {
         this.str_message = str_message;
     }
 
@@ -45,8 +45,7 @@ public class NotifyRouteClaimedCommand implements ICommand {
         return null;
     }
 
-
-    public String getStr_message() {
+    public List<String> getStr_message() {
         return str_message;
     }
 }
