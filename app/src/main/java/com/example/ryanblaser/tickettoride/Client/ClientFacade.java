@@ -209,9 +209,7 @@ public class ClientFacade implements IClient {
 
     @Override
     public void showMessage(List<String> message) {
-        for (int i = 0; i < message.size(); i++) {
-            //TODO: Implement
-        }
+        clientmodel.setChatroom(message);
     }
 
     @Override

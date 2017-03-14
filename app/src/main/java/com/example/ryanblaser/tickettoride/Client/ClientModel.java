@@ -96,6 +96,8 @@ public class ClientModel{
      */
     private List<DestCard> listOfDestinationCards;
 
+    private List<String> chatroom;
+
 
 
     public ClientModel(MainActivity mainActivity1){
@@ -112,6 +114,7 @@ public class ClientModel{
         current_player = new Player();
         listOfPlayersInGame = new ArrayList<>();
         listOfDestinationCards = new ArrayList<>();
+        chatroom = new ArrayList<>();
     }
 
 
@@ -292,5 +295,13 @@ public class ClientModel{
     }
     public void setListOfDestinationCards(List<DestCard> listOfDestinationCards) {
         this.listOfDestinationCards = listOfDestinationCards;
+    }
+
+    public List<String> getChatroom() {
+        return chatroom;
+    }
+
+    public void setChatroom(List<String> chatroom) {
+        this.chatroom = chatroom;
     }
 }

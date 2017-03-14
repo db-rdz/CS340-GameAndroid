@@ -37,6 +37,7 @@ public class InitializeGameCommand implements ICommand {
 	public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
         ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_Hand().initializeHand(hand);
         ClientFacade.SINGLETON.getClientModel().setListOfDestinationCards(destinationCards);
+		ClientFacade.SINGLETON.getClientModel().getMainActivity().switchToGameBoard();
 		return null;
 	}
 

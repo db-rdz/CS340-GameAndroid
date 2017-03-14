@@ -98,6 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Nathan: Method is called from the InitializeGameCommand and all users will receive this.
+     */
+    public void switchToGameBoard() {
+        Toast.makeText(this, "Starting Game!", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getBaseContext(), GameActivity.class);
+        startActivity(intent);
+    }
+
 
     public static LoginFragment getLoginFragment() {
         return loginFragment;
