@@ -9,6 +9,7 @@ import java.util.Hashtable; // HashMap but hopefully throws exceptions if concur
 
 
 public class ClientModel{
+    public ClientModel(){}
 
     public enum GameType{
         JOINABLE, WAITING
