@@ -29,7 +29,7 @@ public class UpdatePlayerTrainCardsCommand implements ICommand {
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.updatePlayerTrainCards(addNewCardAmount);
+        ClientFacade.SINGLETON.updatePlayerTrainCardAmount(addNewCardAmount);
         return null;
     }
 

@@ -19,17 +19,17 @@ import java.util.List;
 public class NotifyRouteClaimedCommand implements ICommand {
 
     //Data members
-    private List<String> str_message;
+    private List<String> str_messages;
 
     //Constructor
     public NotifyRouteClaimedCommand(List<String> str_message) {
-        this.str_message = str_message;
+        this.str_messages = str_message;
     }
 
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.showMessage(str_message);
+        ClientFacade.SINGLETON.showMessage(str_messages);
         return null;
     }
 
@@ -45,7 +45,7 @@ public class NotifyRouteClaimedCommand implements ICommand {
         return null;
     }
 
-    public List<String> getStr_message() {
-        return str_message;
+    public List<String> getStr_messages() {
+        return str_messages;
     }
 }

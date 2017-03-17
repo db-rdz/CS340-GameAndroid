@@ -26,17 +26,19 @@ import java.util.List;
 public class InitializeGameCommand implements ICommand {
 	private List<TrainCard> hand; //The 4 starting train cards
 	private List<DestCard> destinationCards; //The 3 starting destination cards where the player picks at least 1.
+	private List<Player> playersInGame;
 
-	public InitializeGameCommand(List<TrainCard> hand, List<DestCard> dc)
+	public InitializeGameCommand(List<TrainCard> hand, List<DestCard> dc, List<Player> players)
 	{
 		this.hand = hand;
 		destinationCards = dc;
+		playersInGame = players;
 	}
 
 	@Override
 	public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
-        ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_Hand().initializeHand(hand);
-        ClientFacade.SINGLETON.getClientModel().setListOfDestinationCards(destinationCards);
+        ClientFacade.SINGLETON.getClientModel().getPlayer_hand().initializeHand(hand);
+        ClientFacade.SINGLETON.getClientModel().setList_dest_cards(destinationCards);
 		ClientFacade.SINGLETON.getClientModel().getMainActivity().switchToGameBoard();
 		return null;
 	}
@@ -60,9 +62,11 @@ public class InitializeGameCommand implements ICommand {
 		return hand;
 	}
 
-	public List<DestCard> getDestCards()
-	{
+	public List<DestCard> getDestinationCards() {
 		return destinationCards;
 	}
 
+	public List<Player> getPlayersInGame() {
+		return playersInGame;
+	}
 }

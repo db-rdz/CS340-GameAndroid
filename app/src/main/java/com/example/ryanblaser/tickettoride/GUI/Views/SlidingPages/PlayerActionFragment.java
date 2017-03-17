@@ -68,7 +68,7 @@ public class PlayerActionFragment extends Fragment {
 
         //Loads the 3 destination cards from the ClientModel
         slidingAdapter.addAll((Collection<? extends iDestCard>)
-                ClientFacade.SINGLETON.getClientModel().getListOfDestinationCards());
+                ClientFacade.SINGLETON.getClientModel().getList_dest_cards());
 
 //        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.getFourTrainCards());
         trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());

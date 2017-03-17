@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
+import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
@@ -61,9 +62,9 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
 
 
                         //TODO:Finished?
-                        Player currentPlayer = ClientFacade.SINGLETON.getClientModel().getCurrent_player();
-                        int cnt = currentPlayer.get_Hand().get_cardCount().get(slidingDeckModel.getType()); //Adds specific card to player
-                        currentPlayer.get_Hand().get_cardCount().put(slidingDeckModel.getType(), cnt++); //Increases total card count to player
+                        String type = slidingDeckModel.getType() + "card";
+                        PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
+                        playerHand.addOneToCardCount(type); //Increases total card count to player hand
 
 //                        int count = GameBoardPresenter._SINGLETON.getClientPlayer().get_Hand().get_cardCount()
 //                                .get(slidingDeckModel.getType());
@@ -79,10 +80,10 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                         notifyDataSetChanged();
 
                         if (slidingDeckModel.getType().equals("rainbowcard")) {
-                            ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), true);
+//                            ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), true);
                         }
                         else {
-                            ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), false);
+//                            ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), false);
                         }
                         //TODO: What if the player picks a wild card? How do we end his turn immediately?
                     }

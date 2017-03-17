@@ -22,7 +22,7 @@ public class Player {
 
     }
 
-    private PlayerCardHand _Hand = new PlayerCardHand();
+//    private PlayerCardHand _Hand = new PlayerCardHand();
     private String _userName = null;
     private int _noOfTrainCards = 0;
     private int _noOfDestCards = 0;
@@ -38,7 +38,10 @@ public class Player {
      * @param numOfCarsUsed
      */
     public void updateCarCount(int numOfCarsUsed) {
-        _car_count -= numOfCarsUsed;
+        int holder = _car_count;
+        if ((holder -= numOfCarsUsed) >= 0) {
+            _car_count -= numOfCarsUsed;
+        }
     }
 
     /**
@@ -66,8 +69,8 @@ public class Player {
 
     //-------------------------------------GETTERS AND SETTERS------------------------------------//
 
-    public PlayerCardHand get_Hand() { return _Hand; }
-    public void set_Hand(PlayerCardHand _Hand) { this._Hand = _Hand; }
+//    public PlayerCardHand get_Hand() { return _Hand; }
+//    public void set_Hand(PlayerCardHand _Hand) { this._Hand = _Hand; }
 
     public String get_userName() { return _userName; }
     public void set_userName(String _userName) { this._userName = _userName; }

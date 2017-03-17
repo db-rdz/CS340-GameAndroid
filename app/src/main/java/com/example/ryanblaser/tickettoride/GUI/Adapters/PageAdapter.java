@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.ChatFragment;
 import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.GameBoardFragment;
 import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayerActionFragment;
 import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayersInfoFragment;
@@ -27,13 +28,14 @@ public class PageAdapter extends FragmentStatePagerAdapter {
             case 0: return new PlayersInfoFragment();
             case 1: return new GameBoardFragment();
             case 2: return new PlayerActionFragment();
+            case 3: return new ChatFragment();
             default: return new GameBoardFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override

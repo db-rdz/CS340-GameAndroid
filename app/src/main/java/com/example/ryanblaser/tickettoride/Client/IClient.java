@@ -1,13 +1,8 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import java.util.List;
-
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
-import com.example.ryanblaser.tickettoride.Command.ICommand;
 
-import com.example.ryanblaser.tickettoride.Server.IServer;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import java.util.List;
 
 /**
  * Created by natha on 2/1/2017.
@@ -35,14 +30,12 @@ public interface IClient {
     public void login(User user) throws InvalidUsername, InvalidPassword;
     public void register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists;
     public void addJoinableGameToServer();
-    public void addWaitingGame(int gameId);
+    public void switchToWaitingView();
     public void removeGame(int gameId);
     public void startGame(int gameId, List<String> usernamesInGame);
-    public void addPlayerToClientModel(String username, int gameId) throws IServer.GameIsFullException;
     public void addPlayerToServerModel(String authenticationCode, int gameId);
     public void logout(String str_authentication_code);
     public void listJoinableGames(List<Integer> listJoinableGames);
-    public void listWaitingGames(List<Integer> listWaitingGames);
     public void loginRegisterSucceeded(User user);
     public void logoutSucceeded();
 
@@ -50,19 +43,14 @@ public interface IClient {
     // Phase 2 additions - Ryan Blaser
     public void broadcastToChat(String message);
     public void claimRoute(Route route);
-    public void getFaceUpTableTrainCardCommand(int trainCardIndex, Boolean isWild);
-    public void selectRequestedDestinationCard();
-    public void showMessage(List<String> message);
-    public void updateCarCount(int numOfCarsUsed);
-    public void updateTrainCardAmount(int cardAmountToAdd);
-    public void updateDestCardAmount(int cardAmountToAdd);
-    public void updateFaceUpTableTrainCards();
-    public void updatePlayerDestinationCards(int cardAmountToAdd);
-    public void updatePlayerTrainCards(int cardAmountToAdd);
-    public void updatePoints(int pointsToAdd);
-
-    // Phase 3?
     public void getDestinationCards();
+    public void selectRequestedDestinationCard();
+    public void showMessage(List<String> messages);
+    public void updateCarCount(int numOfCarsUsed);
+    public void updateFaceUpTableTrainCards();
+    public void updatePlayerDestinationCards(int addDestCardAmount);
+    public void updatePlayerTrainCardAmount(int addTrainCardAmount);
+    public void updatePoints(int pointsToAdd);
 
 
     public void attachObserver(/* Observer object */);

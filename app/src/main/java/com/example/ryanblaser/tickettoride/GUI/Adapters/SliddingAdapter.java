@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.R;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.iDestCard;
@@ -56,6 +57,8 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
                     public void onSwipe(SlidingDeck parent, View item) {
                         final iDestCard slidingDeckModel = (iDestCard) item.getTag();
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
+
+                        ClientFacade.SINGLETON.getClientModel().getCurrent_player().updateCurrentDestinationCards(1);
                         remove(slidingDeckModel);
                         //TODO: delete the card from the player model...
 //                        GameBoardPresenter._SINGLETON.
