@@ -2,14 +2,11 @@ package com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
-
 /**
  * Created by RyanBlaser on 2/28/17.
  */
 
 public class DestCard implements iDestCard {
-
     // should map the id of the map used on DestCardTypes
     private int _cardType;
     private Pair<String, String> _destination;

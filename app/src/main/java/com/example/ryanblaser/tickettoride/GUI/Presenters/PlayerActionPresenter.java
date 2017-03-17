@@ -36,24 +36,24 @@ public class PlayerActionPresenter {
 
     public List<TrainCard> getFourTrainCards(){
         List<TrainCard> asdf = new ArrayList<>();
-        asdf.add(new TrainCard("redcard"));
-        asdf.add(new TrainCard("blackcard"));
-        asdf.add(new TrainCard("rainbowcard"));
-        asdf.add(new TrainCard("greencard"));
+        asdf.add(new TrainCard("red"));
+        asdf.add(new TrainCard("black"));
+        asdf.add(new TrainCard("rainbow"));
+        asdf.add(new TrainCard("green"));
         return asdf;
         //return ActionBoard._SINGLETON.get_fourTrainCards();
     }
 
     public void initTrainCardMap(){
-        _trainCardMap.put("blackcard", R.drawable.blackcard);
-        _trainCardMap.put("bluecard", R.drawable.bluecard);
-        _trainCardMap.put("greencard", R.drawable.greencard);
-        _trainCardMap.put("orangecard", R.drawable.orangecard);
-        _trainCardMap.put("pinkcard", R.drawable.pinkcard);
-        _trainCardMap.put("rainbowcard", R.drawable.rainbowcard);
-        _trainCardMap.put("redcard", R.drawable.redcard);
-        _trainCardMap.put("whitecard", R.drawable.whitecard);
-        _trainCardMap.put("yellowcard", R.drawable.yellowcard);
+        _trainCardMap.put("black", R.drawable.blackcard);
+        _trainCardMap.put("blue", R.drawable.bluecard);
+        _trainCardMap.put("green", R.drawable.greencard);
+        _trainCardMap.put("orange", R.drawable.orangecard);
+        _trainCardMap.put("pink", R.drawable.pinkcard);
+        _trainCardMap.put("rainbow", R.drawable.rainbowcard);
+        _trainCardMap.put("red", R.drawable.redcard);
+        _trainCardMap.put("white", R.drawable.whitecard);
+        _trainCardMap.put("yellow", R.drawable.yellowcard);
     }
 
     //----------------------------------GETTERS AND SETTERS--------------------------------------\\

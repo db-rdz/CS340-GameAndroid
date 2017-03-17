@@ -27,6 +27,7 @@ import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.RESPONSE_STATUS;
 import com.example.ryanblaser.tickettoride.R;
 
+import static java.security.AccessController.getContext;
 
 
 public class GameBoardFragment extends Fragment {
