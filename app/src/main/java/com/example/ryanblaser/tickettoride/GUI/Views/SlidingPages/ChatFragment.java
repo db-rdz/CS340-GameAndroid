@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.ryanblaser.tickettoride.GUI.Presenters.ChatMessagesPresenter;
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chat, container, false);
-        List<String> messages = ChatMessagesPresenter._SINGLETON.getMessages();
+        List<String> messages = ClientFacade.SINGLETON.getClientModel().getChat();
 
         ListView list = (ListView) v.findViewById(R.id.messagesList);
 

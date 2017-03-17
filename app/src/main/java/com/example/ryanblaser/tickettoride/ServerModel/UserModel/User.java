@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.ServerModel.UserModel;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Database.DAO;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 
@@ -26,6 +27,7 @@ public class User implements iUser {
     private Boolean _B_isInGame = false;
     private List<Integer> _L_joinedGames = new ArrayList<>();
     private Boolean _B_isLoggedIn = false; //Determines if the user is logged in or not. Used in ClientProxy.
+    private Player _player_current = new Player();
 
     //_________________________________________________________________________________________________________//
 
@@ -117,8 +119,6 @@ public class User implements iUser {
         this._L_joinedGames = _L_joinedGames;
     }
 
-
-
     public void set_B_isLoggedIn(Boolean _B_isLoggedIn) {
         this._B_isLoggedIn = _B_isLoggedIn;
     }
@@ -143,37 +143,13 @@ public class User implements iUser {
         return _L_listOfAllUsers;
     }
 
-//    public String get_Username() { return _S_username; }
-//    public void set_Username(String username) { _S_username = username; }
-//
-//    public String get_Password(){ return _S_password; }
-//    public void set_Password(String password ) { _S_password = password; }
-//
-//    public String get_Token(){ return _S_token; }
-//    public void set_Token(String token) { _S_token = token; }
-//
-//
-//    public Boolean isUserInGame() { return _B_isInGame; }
-//    public void set_UserGameStatus(Boolean _B_isInGame) { this._B_isInGame = _B_isInGame; }
-//
-//    public List<Game> getJoinedGames() { return _L_joinedGames; }
-//    public void setJoinedGameList(List<Game> _L_joinedGames) { this._L_joinedGames = _L_joinedGames; }
-//
-//    public static List<User> get_L_listOfAllUsers() { //TODO: Implement!
-//        return null;
-//    }
-//
-//    public Boolean isLoggedIn() {
-//        return _B_isLoggedIn;
-//    }
-//    public void set_B_isLoggedIn(Boolean _B_isLoggedIn) {
-//        this._B_isLoggedIn = _B_isLoggedIn;
-//    }
-//
-//    public static Map<String, User> get_M_idToUser() {
-//        return _M_idToUser;
-//    }
+    public Player get_player_current() {
+        return _player_current;
+    }
 
+    public void set_player_current(Player _player_current) {
+        this._player_current = _player_current;
+    }
 
     //________________________________________________________________________________________________________//
 

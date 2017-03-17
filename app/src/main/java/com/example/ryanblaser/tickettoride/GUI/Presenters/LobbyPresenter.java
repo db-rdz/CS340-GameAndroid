@@ -41,10 +41,6 @@ public class LobbyPresenter implements ILobbyPresenter {
         ClientFacade.SINGLETON.addPlayerToServerModel(authenticationCode, gameId);
     }
 
-    public List<Integer> getWaitingGames() {
-//        ClientFacade.SINGLETON.getClientModel().setWaitingGames(ServerModel.SINGLETON.getAvailableGames());
-        return ClientFacade.SINGLETON.getClientModel().getWaitingGames();
-    }
 
     public void switchToWaitingView()
     {

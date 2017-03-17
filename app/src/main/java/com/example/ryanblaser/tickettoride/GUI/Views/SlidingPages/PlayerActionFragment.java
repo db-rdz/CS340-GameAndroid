@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SliddingAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.R;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.CardsModel.iDestCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.iDestCard;
 import com.redbooth.SlidingDeck;
 
 import java.util.Collection;
@@ -62,10 +63,15 @@ public class PlayerActionFragment extends Fragment {
         final SliddingAdapter slidingAdapter  = new SliddingAdapter(getContext());
         final SlidingTrainCardAdapter trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
 
-        slidingAdapter.addAll((Collection<? extends iDestCard>)
-                GameBoardPresenter._SINGLETON.getThreeDestinationCards());
+//        slidingAdapter.addAll((Collection<? extends iDestCard>)
+//                GameBoardPresenter._SINGLETON.getThreeDestinationCards());
 
-        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.getFourTrainCards());
+        //Loads the 3 destination cards from the ClientModel
+        slidingAdapter.addAll((Collection<? extends iDestCard>)
+                ClientFacade.SINGLETON.getClientModel().getList_dest_cards());
+
+//        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.getFourTrainCards());
+        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());
 
         _slidingDeck.setAdapter(slidingAdapter);
         _slidingTrainCards.setAdapter(trainCardAdapter);

@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
@@ -173,6 +174,7 @@ public class GameBoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String textMessage = textMessageView.getText().toString();
+                ClientFacade.SINGLETON.getClientModel().getChat().add(textMessage);
                 onMsgSent(textMessage);
             }
         });
@@ -228,8 +230,9 @@ public class GameBoardFragment extends Fragment {
     }
 
     public void setPlayerCardViewValues(){
-        Player clientPlayer = GameBoardPresenter._SINGLETON.getClientPlayer();
-        PlayerCardHand hand = clientPlayer.get_Hand();
+//        Player clientPlayer = GameBoardPresenter._SINGLETON.getClientPlayer();
+        Player clientPlayer = ClientFacade.SINGLETON.getClientModel().getCurrent_player();
+        PlayerCardHand hand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
 
         _blackCardCount.setText(String.valueOf(hand.get_cardCount().get("blackcard")));
         _blueCardCount.setText(String.valueOf(hand.get_cardCount().get("bluecard")));

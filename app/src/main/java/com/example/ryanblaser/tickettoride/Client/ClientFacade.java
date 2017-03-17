@@ -1,9 +1,10 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import com.example.ryanblaser.tickettoride.GUI.Views.LobbyFragment;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
+import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
-import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
+import com.example.ryanblaser.tickettoride.GUI.Views.LobbyFragment;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
 import java.util.List;
@@ -71,15 +72,13 @@ public class ClientFacade implements IClient {
     @Override
     public void addJoinableGameToServer() {
         ServerProxy.SINGLETON.addJoinableGameToServer(clientmodel.getUser().getStr_authentication_code());
-        lobbypresenter.refreshGameLobby();
+//        lobbypresenter.refreshGameLobby();
         //lobbypresenter
 		
     }
 
     @Override
-    public void addWaitingGame(int gameId) {
-        clientmodel.addWaitingGame(gameId);
-//        ServerProxy.SINGLETON.addPlayerToServerModel(clientmodel.getUser().getUsername(), gameId);
+    public void switchToWaitingView() {
         lobbypresenter.switchToWaitingView();
         //lobbypresenter
 		
@@ -117,14 +116,6 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void addPlayerToClientModel(String username, int gameId){
-        clientmodel.addPlayerToModel(username, gameId);
-
-        //lobbypresenter
-		
-    }
-
-    @Override
     public void addPlayerToServerModel(String authenticationCode, int gameId) {
         ServerProxy.SINGLETON.addPlayerToServerModel(authenticationCode, gameId);
     }
@@ -148,17 +139,9 @@ public class ClientFacade implements IClient {
 		
     }
 
-
-    @Override
-    public void listWaitingGames(List<Integer> listWaitingGames) {
-        clientmodel.setWaitingGames(listWaitingGames);
-        //lobbypresenter
-		
-    }
-
     @Override
     public void loginRegisterSucceeded(User user) {
-        clientmodel.setAuthenticationKey(user.getStr_authentication_code());
+        clientmodel.setStr_authentication_code(user.getStr_authentication_code());
         clientmodel.setUser(user);
         poller.setUser(user);
         loginpresenter.switchToLobbyView();
@@ -169,14 +152,22 @@ public class ClientFacade implements IClient {
     @Override
     public void logoutSucceeded() {
 
-        clientmodel.setAuthenticationKey(null);
+        clientmodel.setStr_authentication_code(null);
         clientmodel.setUser(null);
-    	
+    }
+
+
+    //Phase 2
+    @Override
+    public void broadcastToChat(String message) {
+        ServerProxy.SINGLETON.broadcastToChat(clientmodel.getInt_curr_gameId(), clientmodel.getStr_authentication_code(), message);
     }
 
     @Override
-    public void broadcastToChat(String message) {
-        ServerProxy.SINGLETON.broadcastToChat(message);
+    public void claimRoute(Route route) {
+        String code = clientmodel.getStr_authentication_code();
+        int gameId = clientmodel.getInt_curr_gameId();
+        ServerProxy.SINGLETON.claimRoute(route, code, gameId);
     }
 
     @Override
@@ -190,19 +181,19 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showMessage(List<String> messages) {
         
     }
 
     @Override
     public void updateCarCount(int numOfCarsUsed) {
-        clientmodel.updateCarCount(numOfCarsUsed);
+        clientmodel.getCurrent_player().updateCarCount(numOfCarsUsed);
         
     }
 
     @Override
     public void updatePoints(int pointsToAdd) {
-        clientmodel.updatePoints(pointsToAdd);
+        clientmodel.getCurrent_player().updatePoints(pointsToAdd);
         
     }
 
@@ -212,13 +203,13 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void updatePlayerDestinationCards() {
-        
+    public void updatePlayerDestinationCards(int addDestCardAmount) {
+        clientmodel.getCurrent_player().updateCurrentDestinationCards(addDestCardAmount);
     }
 
     @Override
-    public void updatePlayerTrainCards() {
-        
+    public void updatePlayerTrainCardAmount(int addTrainCardAmount) {
+        clientmodel.getCurrent_player().updateCurrentTrainCards(addTrainCardAmount);
     }
 
     public User getCurrentUser() { return clientmodel.getUser(); }

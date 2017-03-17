@@ -4,6 +4,7 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,23 +16,30 @@ import java.util.List;
  * When a face up table train card is picked from a player, the game will get updated
  * to replace that card with a new one.
  *
+ * We receive a list of 5 random train cards at the start of the game for the table. When a card
+ * is taken, we replace it with another one from the server. This list will be stored within the
+ * PlayerActionPresenter instead of the client model.
+ *
+ * The List of TrainCards will come from the server and this command will simply update the
+ * face up train cards
+ *
  * Created by natha on 2/28/2017.
  */
 
 public class UpdateFaceUpTableTrainCardsCommand implements ICommand {
 
     //Data members
-    private TrainCard trainCard; //TODO: make into a list?
+    private List<TrainCard> trainCards;
 
     //Constructor
-    public UpdateFaceUpTableTrainCardsCommand(TrainCard trainCard) {
-        this.trainCard = trainCard;
+    public UpdateFaceUpTableTrainCardsCommand(List<TrainCard> list) {
+        trainCards = list;
     }
 
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.updateFaceUpTableTrainCards(); //TODO: Need arguments?
+        PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(trainCards);
         return null;
     }
 
@@ -48,8 +56,7 @@ public class UpdateFaceUpTableTrainCardsCommand implements ICommand {
     }
 
 
-
-    public TrainCard getTrainCard() {
-        return trainCard;
+    public List<TrainCard> getTrainCards() {
+        return trainCards;
     }
 }

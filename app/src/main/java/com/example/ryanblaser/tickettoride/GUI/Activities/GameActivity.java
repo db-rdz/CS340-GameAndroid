@@ -1,8 +1,8 @@
 package com.example.ryanblaser.tickettoride.GUI.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,13 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Client.ServerProxy;
 import com.example.ryanblaser.tickettoride.R;
-import com.example.ryanblaser.tickettoride.ServerModel.UserModel.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -55,6 +52,8 @@ public class GameActivity extends AppCompatActivity {
                     ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
                     Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
                     //TODO: Add start game functionality and switch to GameBoardView
+                    Intent intent = new Intent(getBaseContext(), BoardActivity.class);
+                    startActivity(intent);
                 }
                 else {
                     Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
@@ -97,12 +96,16 @@ public class GameActivity extends AppCompatActivity {
         List<String> listUsers = new ArrayList<>();
 
         try {
-            int gameId = ClientFacade.SINGLETON.getClientModel().getWaitingGames().get(0);
+            int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
             listUsers.addAll(ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId));
             if (listUsers.size() > 0) {
                 ArrayList<String> userList = new ArrayList<>();
                 for (int i = 0; i < listUsers.size(); i++) {
-                    userList.add(listUsers.get(i)); //Lists the player
+                    String username = listUsers.get(i);
+                    if (listUsers.get(i).equals(ClientFacade.SINGLETON.getClientModel().getUser().getUsername())) {
+                        username += " (YOU)";
+                    }
+                    userList.add(username); //Lists the player
                 }
                 list_of_users = new ArrayAdapter<String>(getBaseContext(), R.layout.row_info, userList);
                 listView_players.setAdapter(list_of_users);

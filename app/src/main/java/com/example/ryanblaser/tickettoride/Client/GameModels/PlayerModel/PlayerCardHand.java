@@ -2,6 +2,7 @@ package com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.CardType;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,14 +33,22 @@ public class PlayerCardHand {
     private List<DestCard> _L_destCards = new ArrayList<>();
 
     //--------------------------------------CLASS FUNCTIONS---------------------------------------//
-    public void subtractToCardCount(CardType type, int subtractNumber){
-        int count = _M_typeToCardCount.get(type);
+    public void subtractToCardCount(String type, int subtractNumber){
+        int count = _M_typeToCardCount.get(type).intValue();
         count -= subtractNumber;
+        _M_typeToCardCount.put(type, count); //Replaces the integer value with the new updated card count
     }
 
-    public void addOneToCardCount(CardType type){
+    public void addOneToCardCount(String type){
         int count = _M_typeToCardCount.get(type);
         count += 1;
+        _M_typeToCardCount.put(type, count); //Replaces the integer value with the new updated card count
+    }
+
+    public void initializeHand(List<TrainCard> hand) {
+        for (int i = 0; i < hand.size(); i++) {
+            addOneToCardCount(hand.get(i).getType());
+        }
     }
 
     //-------------------------------------GETTERS AND SETTERS------------------------------------//
@@ -48,5 +57,6 @@ public class PlayerCardHand {
 
     public Map<String, Integer> get_cardCount() { return _M_typeToCardCount; }
     public void set_cardCount(Map<String, Integer> typeToCardCount) { _M_typeToCardCount = typeToCardCount; }
+
 
 }

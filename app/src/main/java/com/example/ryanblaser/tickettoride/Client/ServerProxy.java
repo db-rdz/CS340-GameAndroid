@@ -3,10 +3,14 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import android.util.Log;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToServerCommand;
 
 import com.example.ryanblaser.tickettoride.Command.Phase1.*;
+import com.example.ryanblaser.tickettoride.Command.Phase2.BroadcastToChatCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.ClaimRouteCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.GetFaceUpTableTrainCardCommand;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
 import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -193,8 +197,50 @@ public class ServerProxy implements IServer {
 	}
 
 
-    public ICommand broadcastToChat(String message) {
+    public ICommand broadcastToChat(int gameId, String authenticationCode, String message) {
+        String urlSuffix = "/command";
+
+        ICommand broadcastToChat = new BroadcastToChatCommand(gameId, authenticationCode, message);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, broadcastToChat);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
+    @Override
+    public List<ICommand> claimRoute(Route route, String authenticationCode, int gameId) {
+        String urlSuffix = "/command";
+
+        ICommand claimRouteCommand = new ClaimRouteCommand(gameId, authenticationCode, route);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, claimRouteCommand);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<ICommand> getFaceUpTableTrainCardCommand(int gameId, Boolean isWild, int trainCardIndex) {
+        String urlSuffix = "/command";
+
+        ICommand getFirstFaceUpTableTrainCardCommand = new GetFaceUpTableTrainCardCommand(gameId, trainCardIndex, isWild);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, getFirstFaceUpTableTrainCardCommand);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

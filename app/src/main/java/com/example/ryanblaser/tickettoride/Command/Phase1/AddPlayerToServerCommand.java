@@ -1,14 +1,14 @@
 package com.example.ryanblaser.tickettoride.Command.Phase1;
 
-import java.util.List;
-
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.List;
 
-public class AddPlayerToServerCommand implements ICommand{
+
+public class AddPlayerToServerCommand implements ICommand {
     private int i_game_id;
     private String str_authentication_code;
     private AddPlayerToServerCommand(){}

@@ -1,9 +1,9 @@
 package com.example.ryanblaser.tickettoride.Command.Phase1;
+
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer.GameIsFullException;
-import com.example.ryanblaser.tickettoride.Client.User;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class AddPlayerToClientCommand implements ICommand { // sent after change
 
     @Override
     public List<ICommand> execute() throws GameIsFullException {
-        ClientFacade.SINGLETON.getClientModel().addPlayerToGameObject(str_username, int_game_id);
+        ClientFacade.SINGLETON.getClientModel().addPlayerToGame(str_username, int_game_id);
         return null;
     }
 

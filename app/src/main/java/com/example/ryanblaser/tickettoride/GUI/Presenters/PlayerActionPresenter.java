@@ -19,7 +19,7 @@ public class PlayerActionPresenter {
 
     private PlayerActionFragment _playerActionFragment;
     private Map<String, Integer> _trainCardMap = new HashMap<String, Integer>();
-
+    private List<TrainCard> _faceUpTrainCards = new ArrayList<>();
 
 
     public PlayerActionPresenter(){
@@ -54,5 +54,20 @@ public class PlayerActionPresenter {
         _trainCardMap.put("red", R.drawable.redcard);
         _trainCardMap.put("white", R.drawable.whitecard);
         _trainCardMap.put("yellow", R.drawable.yellowcard);
+    }
+
+    //----------------------------------GETTERS AND SETTERS--------------------------------------\\
+    public Map<String, Integer> get_trainCardMap() {
+        return _trainCardMap;
+    }
+    public void set_trainCardMap(Map<String, Integer> _trainCardMap) {
+        this._trainCardMap = _trainCardMap;
+    }
+
+    public List<TrainCard> get_faceUpTrainCards() {
+        return _faceUpTrainCards;
+    }
+    public void set_faceUpTrainCards(List<TrainCard> _faceUpTrainCards) {
+        this._faceUpTrainCards = _faceUpTrainCards;
     }
 }

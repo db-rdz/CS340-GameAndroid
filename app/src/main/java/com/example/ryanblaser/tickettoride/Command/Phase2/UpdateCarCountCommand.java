@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 /**
- * FROM SERVER -> CLIENT
+ * ONLY IN CLIENT MODEL
  * This class updates the car amount for a player.
  * Decreases the car count whenever a ClaimRouteCommand is called.
  * So this class will contain the amount of cars USED to claim a route.
