@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.GUI.Presenters.ChatMessagesPresenter;
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.List;

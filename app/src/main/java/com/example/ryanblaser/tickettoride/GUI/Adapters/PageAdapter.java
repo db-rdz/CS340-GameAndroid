@@ -25,10 +25,10 @@ public class PageAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position){
-            case 0: return new PlayersInfoFragment();
-            case 1: return new GameBoardFragment();
-            case 2: return new PlayerActionFragment();
-            case 3: return new ChatFragment();
+            case 0: return new ChatFragment();
+            case 1: return new PlayersInfoFragment();
+            case 2: return new GameBoardFragment();
+            case 3: return new PlayerActionFragment();
             default: return new GameBoardFragment();
         }
     }
