@@ -219,6 +219,21 @@ public class ClientModel{
 
         return adapterInfo;
     }
+//    public Pair<List<String>, HashMap<String, String>> getInfoForExpandable(){
+//        List<String> playerList = gameId_to_usernames.get(int_curr_gameId);
+//        List<String> usernameList = new ArrayList<>();
+//        HashMap<String, String> info = new HashMap<>();
+//        for(int i = 0; i < playerList.size(); i++){
+//            String username = playerList.get(i);
+//            usernameList.add(username);
+//            info.put(username, playerList.get(i));
+//        }
+//
+//        Pair<List<String>, HashMap<String, String>> adapterInfo =
+//                new Pair<>(usernameList, info);
+//
+//        return adapterInfo;
+//    }
 
     //Getters and Setters
     public String getStr_authentication_code() {
