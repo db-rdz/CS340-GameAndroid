@@ -26,13 +26,11 @@ import java.util.List;
 public class InitializeGameCommand implements ICommand {
 	private List<TrainCard> hand; //The 4 starting train cards
 	private List<DestCard> destinationCards; //The 3 starting destination cards where the player picks at least 1.
-	private List<Player> playersInGame;
 
-	public InitializeGameCommand(List<TrainCard> hand, List<DestCard> dc, List<Player> players)
+	public InitializeGameCommand(List<TrainCard> hand, List<DestCard> dc)
 	{
 		this.hand = hand;
 		destinationCards = dc;
-		playersInGame = players;
 	}
 
 	@Override
@@ -66,7 +64,4 @@ public class InitializeGameCommand implements ICommand {
 		return destinationCards;
 	}
 
-	public List<Player> getPlayersInGame() {
-		return playersInGame;
-	}
 }
