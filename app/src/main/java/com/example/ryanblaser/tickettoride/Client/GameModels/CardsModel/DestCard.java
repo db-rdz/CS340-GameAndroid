@@ -6,35 +6,30 @@ import org.apache.commons.lang3.tuple.Pair;
  * Created by RyanBlaser on 2/28/17.
  */
 
-public class DestCard implements iDestCard {
+public class DestCard {
     // should map the id of the map used on DestCardTypes
     private int _cardType;
     private Pair<String, String> _destination;
-    private String points;
+    private int points;
 
+    public DestCard(){}
     public DestCard(String city1, String city2){
-
         _destination = Pair.of(city1, city2);
     }
 
-
-
-    @Override
-    public String get_destination() {
-        return null;
+    public int get_cardType() {
+        return _cardType;
     }
 
-    @Override
-    public String get_origin() {
-        return null;
+    public Pair<String, String> get_destination() {
+        return _destination;
     }
 
-    @Override
-    public String get_points() {
+    public int getPoints() {
         return points;
     }
 
-    public void setPoints(String points) {
+    public void setPoints(int points) {
         this.points = points;
     }
 }
