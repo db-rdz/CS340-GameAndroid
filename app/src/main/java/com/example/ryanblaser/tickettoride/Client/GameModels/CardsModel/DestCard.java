@@ -1,5 +1,7 @@
 package com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
@@ -9,6 +11,8 @@ import org.apache.commons.lang3.tuple.Pair;
 public class DestCard {
     // should map the id of the map used on DestCardTypes
     private int _cardType;
+
+    @JsonProperty("_destination")
     private Pair<String, String> _destination;
     private int points;
 
