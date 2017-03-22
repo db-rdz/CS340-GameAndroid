@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
+import android.content.Intent;
 import android.util.Pair;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
@@ -20,7 +21,19 @@ import java.util.List;
  * and the client model will tell the GameBoardPresenter which data to show in the GUI.
  */
 public class ClientModel{
-    public ClientModel(){}
+    public ClientModel() {
+        gameActivity = null;
+        user = null;
+        current_player = null;
+        list_joinable = new ArrayList<>();
+        gameId_to_usernames = new Hashtable<>();
+        boolean_is_creator_of_game = false;
+        int_curr_gameId = 0;
+        chat = new ArrayList<>();
+        list_dest_cards = null;
+        list_players_in_game = null;
+        player_hand = new PlayerCardHand();
+    }
 
     /**
      * This helps determine if a game is Joinable or in the Waiting lobby state
@@ -118,7 +131,7 @@ public class ClientModel{
         chat = new ArrayList<>();
         list_dest_cards = null;
         list_players_in_game = null;
-        player_hand = null;
+        player_hand = new PlayerCardHand();
     }
 
 
@@ -201,6 +214,30 @@ public class ClientModel{
             gameCreator.add(username); //Need to make a new List<String> for Map.put()
             gameId_to_usernames.put(gameId, gameCreator);
         }
+    }
+
+    /**
+     * Nathan
+     * Makes everything null.
+     */
+    public void logout() {
+        current_player = null;
+        int_curr_gameId = -1;
+        player_hand = null;
+        user = null;
+        gameId_to_usernames.clear();
+        mainActivity.logout();
+        gameActivity = null;
+        str_authentication_code = "";
+        list_dest_cards.clear();
+        list_joinable.clear();
+        list_players_in_game.clear();
+        chat.clear();
+    }
+
+    public void backToLogin() {
+        Intent intent = new Intent(mainActivity.getBaseContext(), MainActivity.class);
+        mainActivity.startActivity(intent);
     }
 
     //---------------------------------------- PHASE 2

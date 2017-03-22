@@ -32,11 +32,13 @@ public class Poller implements Runnable {
                 }
             }
         };
-        
+
+        long fastDelay = 2500; //2.5 seconds
         long delay = 10000; //10 seconds
         
+//        timer.schedule(timerTask, fastDelay, fastDelay);
         timer.schedule(timerTask, delay, delay);
-        
+
         user = null;
     }
     
@@ -47,6 +49,12 @@ public class Poller implements Runnable {
 
             lastCommandRecievedIndex += increment;
         }
+    }
+
+    public void logout() {
+        lastCommandRecievedIndex = 0;
+        timer.cancel(); //Stop the poller from working anymore
+//        timer.purge();
     }
     
     public TimerTask getTimerTask() { return timerTask; }

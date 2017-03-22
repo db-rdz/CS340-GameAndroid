@@ -10,7 +10,7 @@ import com.example.ryanblaser.tickettoride.Client.User;
  * Created by 0joshuaolson1 on 2/15/17.
  */
 
-public class LoginPresenter implements com.example.ryanblaser.tickettoride.GUI.Presenters.ILoginPresenter {
+public class LoginPresenter implements ILoginPresenter {
 
     private static ILoginView view;
     public LoginPresenter(ILoginView v){
@@ -21,6 +21,7 @@ public class LoginPresenter implements com.example.ryanblaser.tickettoride.GUI.P
 
     public void login(User user) {
         try {
+
             ClientFacade.SINGLETON.login(user);
         } catch (IClient.InvalidPassword invalidPassword) {
             view.showMessage("Bad password!");
@@ -47,5 +48,15 @@ public class LoginPresenter implements com.example.ryanblaser.tickettoride.GUI.P
     @Override
     public void setCurrentUser(User user) {
         ClientFacade.SINGLETON.setCurrentUser(user);
+    }
+
+    @Override
+    public void showLoginMessage() {
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().showLoginMessage();
+    }
+
+    @Override
+    public void showSocketTimeoutMessage() {
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().showSocketTimeoutMessage();
     }
 }

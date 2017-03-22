@@ -183,7 +183,6 @@ public class LoginFragment extends Fragment {
             string_server_port = string_port;
 
             try {
-                Toast.makeText(getContext(), "Logging in...", Toast.LENGTH_SHORT).show();
                 //Gets the user login info from ClientModel and tries logging into the Server.
                 LoginPresenter.SINGLETON.setCurrentUser(getUserInfo());
                 LoginPresenter.SINGLETON.login(user);
@@ -223,25 +222,10 @@ public class LoginFragment extends Fragment {
         FragmentTransaction ft = sudo_mainActivity.getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.loginFragment, sudo_mainActivity.getLobbyFragment());
         ft.commit();
+
     }
 
-//    TODO: check if we need callback functionality
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
+
 
     /**
      * Do we need this?

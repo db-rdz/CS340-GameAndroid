@@ -115,4 +115,57 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Nathan:
+     * Instead of calling onResume() and causing another view to appear on the android stack,
+     * We just simply update the list view the same way we did in onResume()
+     */
+    public void refreshList() {
+        runOnUiThread(new Runnable() { //Allows UI to be updated from a command
+            @Override
+            public void run() {
+                if (!ClientFacade.SINGLETON.getClientModel().getBoolean_is_creator_of_game()) {
+                    button_start_game.setClickable(false);
+                    button_start_game.setVisibility(View.GONE); //Prevents players in the lobby to start the game
+                    textView_waiting_text.setVisibility(View.VISIBLE);
+                }
+
+                List<String> listUsers = new ArrayList<>();
+
+                try {
+                    int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+                    listUsers.addAll(ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId));
+                    if (listUsers.size() > 0) {
+                        ArrayList<String> userList = new ArrayList<>();
+                        for (int i = 0; i < listUsers.size(); i++) {
+                            String username = listUsers.get(i);
+                            if (listUsers.get(i).equals(ClientFacade.SINGLETON.getClientModel().getUser().getUsername())) {
+                                username += " (YOU)";
+                            }
+                            userList.add(username); //Lists the player
+                        }
+                        list_of_users = new ArrayAdapter<String>(getBaseContext(), R.layout.row_info, userList);
+                        listView_players.setAdapter(list_of_users);
+                        list_of_users.notifyDataSetChanged();
+                    }
+                } catch (Exception e) {}
+            }
+        });
+    }
+
+    /**
+     * Nathan: Method is called from the InitializeGameCommand and all users will receive this.
+     */
+    public void switchToGameBoard() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Switching to the game board!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        Intent intent = new Intent(getBaseContext(), BoardActivity.class);
+        startActivity(intent);
+    }
+
 }

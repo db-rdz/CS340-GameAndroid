@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.*;
 import com.example.ryanblaser.tickettoride.Deserializers.PairDeserializer;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
 import com.example.ryanblaser.tickettoride.Serializers.PairSerializer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -127,7 +128,7 @@ public class ClientCommunicator extends AsyncTask<URL, Void, Integer> {
 
 //                ClientCommunicator_old.SINGLETON.send(string_urlSuffix, commandContainer);
             } catch (SocketTimeoutException e) {
-                e.printStackTrace();
+                LoginPresenter.SINGLETON.showSocketTimeoutMessage();
             } catch (ProtocolException e) {
                 e.printStackTrace();
             } catch (IOException e) {

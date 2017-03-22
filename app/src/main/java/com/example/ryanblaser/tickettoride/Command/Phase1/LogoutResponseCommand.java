@@ -9,24 +9,24 @@ import java.util.List;
 
 public class LogoutResponseCommand implements ICommand {
 
-  public LogoutResponseCommand() {}
-  
-  @Override
-  public List<ICommand> execute(){
-    ClientFacade.SINGLETON.logoutSucceeded();
-    return null;
-  }
+    private LogoutResponseCommand(){}
 
-  @JsonIgnore
-  @Override
-  public String getAuthenticationCode() {
-    return null;
-  }
+    @Override
+    public List<ICommand> execute(){
+        ClientFacade.SINGLETON.logoutSucceeded();
+        return null;
+    }
 
-  @Override
-  public User getUser() {
+    @JsonIgnore
+    @Override
+    public String getAuthenticationCode() {
     return null;
-  }
+    }
 
+    @JsonIgnore
+    @Override
+    public User getUser() {
+    return null;
+    }
 
 }

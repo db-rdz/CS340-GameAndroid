@@ -10,4 +10,6 @@ interface ILoginPresenter {
     public void login(User user);
     public void register(User user);
     public void setCurrentUser(User user);
+    public void showLoginMessage();
+    public void showSocketTimeoutMessage();
 }

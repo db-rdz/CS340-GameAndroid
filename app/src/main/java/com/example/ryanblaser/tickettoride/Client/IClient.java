@@ -1,6 +1,8 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
 
 import java.util.List;
 
@@ -34,10 +36,12 @@ public interface IClient {
     public void removeGame(int gameId);
     public void startGame(int gameId, List<String> usernamesInGame);
     public void addPlayerToServerModel(String authenticationCode, int gameId);
-    public void logout(String str_authentication_code);
+    public void logout(User user);
     public void listJoinableGames(List<Integer> listJoinableGames);
     public void loginRegisterSucceeded(User user);
     public void logoutSucceeded();
+    public void attachLoginObserver(LoginPresenter loginPresenter);
+    public void attachLobbyObserver(LobbyPresenter lobbyPresenter);
 
 
     // Phase 2 additions - Ryan Blaser
@@ -53,6 +57,5 @@ public interface IClient {
     public void updatePoints(int pointsToAdd);
 
 
-    public void attachObserver(/* Observer object */);
-    public void detachObserver(/* Observer object */);
+
 }
