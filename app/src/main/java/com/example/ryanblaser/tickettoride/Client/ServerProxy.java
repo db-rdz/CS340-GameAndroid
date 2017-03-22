@@ -12,7 +12,6 @@ import com.example.ryanblaser.tickettoride.Command.Phase2.BroadcastToChatCommand
 import com.example.ryanblaser.tickettoride.Command.Phase2.ClaimRouteCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetFaceUpTableTrainCardCommand;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
 import java.net.URL;
@@ -71,7 +70,7 @@ public class ServerProxy implements IServer {
     public int addJoinableGameToServer(String str_authentication_code) {
         String urlSuffix = "/command";
 
-        ICommand addGameCommand = new AddGameToServerCommand(new Game(), str_authentication_code);
+        ICommand addGameCommand = new AddGameToServerCommand(str_authentication_code);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -84,22 +83,6 @@ public class ServerProxy implements IServer {
         return 0;
     }
 
-
-    @Override
-    public List<ICommand> removeGame(Game game) {
-        String urlSuffix = "/command";
-
-        ICommand removeGameCommand = new DeleteGameCommand(game.get_i_gameId());
-
-        try {
-            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
-            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, removeGameCommand);
-            clientCommunicator.execute(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null; //No need to return anything since the command execute methods access the clientmodel already
-    }
 
     @Override
     public List<ICommand> startGame(int gameId, List<String> usernamesInGame, String authenticationCode) {
@@ -189,12 +172,6 @@ public class ServerProxy implements IServer {
 //        }
 //    }
 
-
-	@Override
-	public List<ICommand> addGame(Game game) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
     public ICommand broadcastToChat(int gameId, String authenticationCode, String message) {

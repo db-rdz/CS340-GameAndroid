@@ -13,7 +13,6 @@ import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.GameBoardFragment;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.CardsModel.testDestinationCard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -268,13 +267,13 @@ public class GameBoardPresenter {
         return City.get_allCities();
     }
 
-    public List<testDestinationCard> getThreeDestinationCards(){
-        List<testDestinationCard> asdf = new ArrayList<>();
-        asdf.add(new testDestinationCard("asdf1", "asdf2", "10"));
-        asdf.add(new testDestinationCard("asdf3", "asdf4", "10"));
-        asdf.add(new testDestinationCard("asdf5", "asdf6", "10"));
-        return asdf;
-    }
+//    public List<testDestinationCard> getThreeDestinationCards(){
+//        List<testDestinationCard> asdf = new ArrayList<>();
+//        asdf.add(new testDestinationCard("asdf1", "asdf2", "10"));
+//        asdf.add(new testDestinationCard("asdf3", "asdf4", "10"));
+//        asdf.add(new testDestinationCard("asdf5", "asdf6", "10"));
+//        return asdf;
+//    }
 
     public void removeDestinationCardFromModel(DestCard card){
 

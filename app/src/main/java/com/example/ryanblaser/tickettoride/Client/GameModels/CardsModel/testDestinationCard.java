@@ -1,6 +1,7 @@
-package com.example.ryanblaser.tickettoride.ServerModel.GameModels.CardsModel;
+package com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel;
 
 /**
+ * DON'T NEED THIS. USE AS REFERENCE TO FIX DestCard/SliddingAdapter
  * Created by benjamin on 28/02/17.
  */
 

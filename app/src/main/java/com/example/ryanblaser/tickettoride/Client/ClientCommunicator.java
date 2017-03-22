@@ -74,7 +74,7 @@ public class ClientCommunicator extends AsyncTask<URL, Void, Integer> {
             try {
                 HttpURLConnection http = (HttpURLConnection)url.openConnection();
                 http.setRequestMethod("POST");
-                http.setConnectTimeout(5000);
+                http.setConnectTimeout(1500);
                 http.setDoOutput(true);
 
                 http.connect();
