@@ -29,10 +29,11 @@ public class ClientFacade implements IClient {
     private ClientModel clientmodel;
     private LoginPresenter loginpresenter;
     private LobbyPresenter lobbypresenter;
-    private final Poller poller;
+    private Poller poller;
 
 
     private ClientFacade() {
+        clientmodel = new ClientModel();
         attachLoginObserver(LoginPresenter.SINGLETON);
         attachLobbyObserver(LobbyPresenter.SINGLETON);
         poller = new Poller();
@@ -41,9 +42,9 @@ public class ClientFacade implements IClient {
     /**
      * ClientModel is initilized in the MainActivity so no need to reinitialize it in the constructor
      */
-    public void initilizeClientModel(MainActivity mainActivity) {
-        this.clientmodel = new ClientModel(mainActivity);
-    }
+//    public void initilizeClientModel(MainActivity mainActivity) {
+//        this.clientmodel = new ClientModel(mainActivity);
+//    }
 
     @Override
     public void login(User user) throws InvalidUsername, InvalidPassword {
@@ -107,29 +108,24 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void attachObserver() {
-
-    }
-
-    @Override
-    public void detachObserver() {
-
-    }
-
-    @Override
     public void addPlayerToServerModel(String authenticationCode, int gameId) {
         ServerProxy.SINGLETON.addPlayerToServerModel(authenticationCode, gameId);
     }
 
+    @Override
     public void attachLobbyObserver(LobbyPresenter lobbyPresenter) { //necessary?
         this.lobbypresenter = lobbyPresenter;
     }
+
+    @Override
     public void attachLoginObserver(LoginPresenter loginPresenter) { //necessary?
         this.loginpresenter = loginPresenter;
     }
 
-    public void logout(String authenticationCode) {
-        ServerProxy.SINGLETON.logout(authenticationCode);
+    @Override
+    public void logout(User user) {
+        ServerProxy.SINGLETON.logout(user);
+        poller.logout(); //Stops the poller from working anymore
     }
 
     @Override
@@ -142,8 +138,10 @@ public class ClientFacade implements IClient {
 
     @Override
     public void loginRegisterSucceeded(User user) {
+        LoginPresenter.SINGLETON.showLoginMessage();
         clientmodel.setStr_authentication_code(user.getStr_authentication_code());
         clientmodel.setUser(user);
+        poller = new Poller();
         poller.setUser(user);
         loginpresenter.switchToLobbyView();
         //change view/presenter
@@ -152,9 +150,8 @@ public class ClientFacade implements IClient {
 
     @Override
     public void logoutSucceeded() {
-
-        clientmodel.setStr_authentication_code(null);
-        clientmodel.setUser(null);
+        clientmodel.logout();
+        clientmodel.backToLogin();
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.GUI.Activities;
 
+import android.app.backup.BackupDataOutput;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ClientFacade.SINGLETON.initilizeClientModel(this);
+        ClientFacade.SINGLETON.getClientModel().setMainActivity(this);
 
 
         FragmentManager fm = this.getSupportFragmentManager();
@@ -52,43 +53,57 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClick(View v) {
-
-        Intent i;
-
-        i = new Intent(this, BoardActivity.class);
-        startActivity(i);
-
-        FragmentManager fm = this.getSupportFragmentManager();
-        loginFragment = (LoginFragment) fm.findFragmentById(R.id.loginFragment);
-        if (loginFragment == null) {
-            loginFragment = LoginFragment.newInstance(new User()); //Pass in a User to use inside the LoginFragment
-            if (ClientFacade.SINGLETON.getClientModel().getUser() == null) {
-                fm.beginTransaction().add(R.id.loginFragment, loginFragment).commit();
-
-            }
-        }
-
-
-        lobbyFragment = (LobbyFragment) fm.findFragmentById(R.id.lobbyFragment);
-        if (lobbyFragment == null) {
-            lobbyFragment = LobbyFragment.newInstance();
-
-            if (ClientFacade.SINGLETON.getClientModel().getUser() != null) {
-                fm.beginTransaction().add(R.id.lobbyFragment, lobbyFragment).commit();
-            }
-
-        }
-
-    }
+//    public void onClick(View v) {
+//
+//        Intent i;
+//
+//        i = new Intent(this, BoardActivity.class);
+//        startActivity(i);
+//
+//        FragmentManager fm = this.getSupportFragmentManager();
+//        loginFragment = (LoginFragment) fm.findFragmentById(R.id.loginFragment);
+//        if (loginFragment == null) {
+//            loginFragment = LoginFragment.newInstance(new User()); //Pass in a User to use inside the LoginFragment
+//            if (ClientFacade.SINGLETON.getClientModel().getUser() == null) {
+//                fm.beginTransaction().add(R.id.loginFragment, loginFragment).commit();
+//
+//            }
+//        }
+//
+//
+//        lobbyFragment = (LobbyFragment) fm.findFragmentById(R.id.lobbyFragment);
+//        if (lobbyFragment == null) {
+//            lobbyFragment = LobbyFragment.newInstance();
+//
+//            if (ClientFacade.SINGLETON.getClientModel().getUser() != null) {
+//                fm.beginTransaction().add(R.id.lobbyFragment, lobbyFragment).commit();
+//            }
+//
+//        }
+//
+//    }
 
     /**
-     * Nathan: Method is called from the InitializeGameCommand and all users will receive this.
+     * Nathan:
+     * Refreshes the lobby when a new game is created on the server
      */
-    public void switchToGameBoard() {
-        Toast.makeText(this, "Starting Game!", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(getBaseContext(), GameActivity.class);
-        startActivity(intent);
+    public void refreshLobbyView() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                lobbyFragment.refreshGameLobby();
+            }
+        });
+    }
+
+    public void logout() {
+        getSupportFragmentManager().beginTransaction().remove(lobbyFragment).commit();
+        getSupportFragmentManager().beginTransaction().remove(loginFragment).commit();
+        FragmentManager fm = this.getSupportFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+        loginFragment = LoginFragment.newInstance(new User());
     }
 
 
@@ -96,20 +111,48 @@ public class MainActivity extends AppCompatActivity {
         return loginFragment;
     }
 
-    public static void setLoginFragment(LoginFragment loginFragment) {
-        com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity.loginFragment = loginFragment;
+    public static void setLoginFragment(LoginFragment login) {
+        loginFragment = login;
     }
 
     public static LobbyFragment getLobbyFragment() {
         return lobbyFragment;
     }
 
-    public static void setLobbyFragment(LobbyFragment lobbyFragment) {
-        com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity.lobbyFragment = lobbyFragment;
+    public static void setLobbyFragment(LobbyFragment lobby) {
+        lobbyFragment = lobby;
+    }
+
+    public void showLoginMessage() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Logging in!", Toast.LENGTH_SHORT).show();
+
+//                String username = ClientFacade.SINGLETON.getCurrentUser().getUsername();
+//                Toast.makeText(getBaseContext(), "Hi " + username, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    public void showSocketTimeoutMessage() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Server is down", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void messageInvalidUsername() {
-        Toast.makeText(getBaseContext(), "Invalid Username!", Toast.LENGTH_SHORT).show();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Invalid Username!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
 }

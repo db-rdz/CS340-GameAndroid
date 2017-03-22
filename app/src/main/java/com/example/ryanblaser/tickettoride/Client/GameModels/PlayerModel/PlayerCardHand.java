@@ -19,13 +19,13 @@ public class PlayerCardHand {
 
     public PlayerCardHand(){
         _M_typeToCardCount.put("redcard", 0);
-        _M_typeToCardCount.put("whitecard", 0);
         _M_typeToCardCount.put("orangecard", 0);
+        _M_typeToCardCount.put("yellowcard", 0);
         _M_typeToCardCount.put("greencard", 0);
         _M_typeToCardCount.put("bluecard", 0);
-        _M_typeToCardCount.put("blackcard", 0);
-        _M_typeToCardCount.put("yellowcard", 0);
         _M_typeToCardCount.put("pinkcard", 0);
+        _M_typeToCardCount.put("whitecard", 0);
+        _M_typeToCardCount.put("blackcard", 0);
         _M_typeToCardCount.put("rainbowcard", 0);
     }
 

@@ -3,6 +3,7 @@ package com.example.ryanblaser.tickettoride.Command.Phase1;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class AddGameToJoinableListCommand implements ICommand {
     @Override
     public List<ICommand> execute() {
         ClientFacade.SINGLETON.getClientModel().addJoinableGame(gameId);
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().refreshLobbyView();
         return null;
     }
 

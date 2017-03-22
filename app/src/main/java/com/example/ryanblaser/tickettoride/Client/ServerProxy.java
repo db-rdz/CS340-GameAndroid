@@ -134,10 +134,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public List<ICommand> logout(String authenticationCode) {
+    public List<ICommand> logout(User user) {
         String urlSuffix = "/command";
 
-        ICommand logoutCommand = new LogoutCommand(authenticationCode);
+        ICommand logoutCommand = new LogoutCommand(user);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);

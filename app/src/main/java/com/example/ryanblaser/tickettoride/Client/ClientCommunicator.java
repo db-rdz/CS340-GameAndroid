@@ -6,10 +6,15 @@ import android.util.Log;
 
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.*;
+import com.example.ryanblaser.tickettoride.Deserializers.PairDeserializer;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
+import com.example.ryanblaser.tickettoride.Serializers.PairSerializer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -50,8 +55,20 @@ public class ClientCommunicator extends AsyncTask<URL, Void, Integer> {
         respondData = new ArrayList<>();
     }
 
+    /**
+     * Nathan
+     * This allows Jackson to deserialize the apache.lang3.tuple.Pair class properly.
+     */
+    public void addPairModule() {
+        final SimpleModule module = new SimpleModule();
+        module.addSerializer(Pair.class, new PairSerializer());
+        module.addDeserializer(Pair.class, new PairDeserializer());
+        objectMapper.registerModule(module);
+    }
+
     @Override
     protected Integer doInBackground(URL... urls) {
+        addPairModule();
 
         for (URL url : urls) {
             try {
@@ -111,7 +128,7 @@ public class ClientCommunicator extends AsyncTask<URL, Void, Integer> {
 
 //                ClientCommunicator_old.SINGLETON.send(string_urlSuffix, commandContainer);
             } catch (SocketTimeoutException e) {
-                e.printStackTrace();
+                LoginPresenter.SINGLETON.showSocketTimeoutMessage();
             } catch (ProtocolException e) {
                 e.printStackTrace();
             } catch (IOException e) {

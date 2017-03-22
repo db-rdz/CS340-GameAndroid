@@ -22,7 +22,7 @@ public class LobbyPresenter implements ILobbyPresenter {
 
     @Override
     public void logout(){
-        ClientFacade.SINGLETON.logout(ClientFacade.SINGLETON.getClientModel().getStr_authentication_code());
+        ClientFacade.SINGLETON.logout(ClientFacade.SINGLETON.getClientModel().getUser());
     }
 
     @Override

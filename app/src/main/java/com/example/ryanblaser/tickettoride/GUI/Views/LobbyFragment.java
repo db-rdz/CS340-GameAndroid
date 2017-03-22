@@ -155,7 +155,23 @@ public class LobbyFragment extends Fragment {
 //        ft.commit();
     }
 
+    /**
+     * Nathan:
+     * Instead of calling onResume() and causing another view to appear on the android stack,
+     * We just simply update the list view the same way we did in onResume()
+     */
     public void refreshGameLobby() {
-        onResume();
+        List<Integer> listJoinableGames = LobbyPresenter.SINGLETON.getJoinableGames();
+        if (listJoinableGames.size() > 0) {
+            ArrayList<String> gamesList = new ArrayList<>();
+            for (int i = 0; i < listJoinableGames.size(); i++) {
+                int gameId = listJoinableGames.get(i); //A holder so we don't accidentally increment i
+                gamesList.add("Game " + gameId); //Lists the game and which game number
+            }
+            list_of_Games = new ArrayAdapter<String>(getContext(), R.layout.row_info, gamesList);
+            listView_joinable_games.setAdapter(list_of_Games);
+            listView_joinable_games.setOnItemClickListener(gameItemClickListener);
+            list_of_Games.notifyDataSetChanged();
+        }
     }
 }
