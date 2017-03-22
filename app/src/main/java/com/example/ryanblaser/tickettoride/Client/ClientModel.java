@@ -33,6 +33,7 @@ public class ClientModel{
         list_dest_cards = null;
         list_players_in_game = null;
         player_hand = new PlayerCardHand();
+        state = State.NOT_YOUR_TURN;
     }
 
     /**
@@ -109,6 +110,12 @@ public class ClientModel{
     private PlayerCardHand player_hand;
 
     /**
+     * Nathan:
+     * Determines what the player can do
+     */
+    private State state;
+
+    /**
      * This will be initialized through the ClientFacade in the MainActivty.
      * <pre>
      * pre: mainActivity1 can't be null.
@@ -132,6 +139,7 @@ public class ClientModel{
         list_dest_cards = null;
         list_players_in_game = null;
         player_hand = new PlayerCardHand();
+        state = State.NOT_YOUR_TURN;
     }
 
 
@@ -233,6 +241,8 @@ public class ClientModel{
         list_joinable.clear();
         list_players_in_game.clear();
         chat.clear();
+        state = State.NOT_YOUR_TURN;
+
     }
 
     public void backToLogin() {
