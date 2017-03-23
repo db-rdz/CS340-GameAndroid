@@ -41,7 +41,6 @@ public class GameBoardFragment extends Fragment {
     //-----------------------VIEWS/LAYOUT-------------------//
     private View mContentView;
     private View mControlsView;
-    private EditText textMessageView;
 
     //Card count views
     private TextView _blackCardCount;
@@ -164,20 +163,10 @@ public class GameBoardFragment extends Fragment {
 
         mControlsView = v.findViewById(R.id.fullscreen_content_controls);
         mContentView = v.findViewById(R.id.fullscreen_content);
-        textMessageView = (EditText) v.findViewById(R.id.text_message);
 
         setPlayerCardsViews(v);
         setPlayerCardViewValues();
 
-        Button sendMessage = (Button)v.findViewById(R.id.send);
-        sendMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textMessage = textMessageView.getText().toString();
-                ClientFacade.SINGLETON.getClientModel().getChat().add(textMessage);
-                onMsgSent(textMessage);
-            }
-        });
 
 
         v.setOnTouchListener(new View.OnTouchListener() {
@@ -266,14 +255,6 @@ public class GameBoardFragment extends Fragment {
         _yellowCardCount.invalidate();
         _rainbowCardCount.invalidate();
         touchView.invalidate();
-    }
-
-    public void onMsgReceived(String message){
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG ).show();
-    }
-
-    public void onMsgSent(String message){
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG ).show();
     }
 
 

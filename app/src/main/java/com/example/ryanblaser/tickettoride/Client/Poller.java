@@ -36,8 +36,8 @@ public class Poller implements Runnable {
         long fastDelay = 2500; //2.5 seconds
         long delay = 10000; //10 seconds
         
-//        timer.schedule(timerTask, fastDelay, fastDelay);
-        timer.schedule(timerTask, delay, delay);
+        timer.schedule(timerTask, fastDelay, fastDelay);
+//        timer.schedule(timerTask, delay, delay);
 
         user = null;
     }

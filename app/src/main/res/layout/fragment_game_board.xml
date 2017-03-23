@@ -55,22 +55,6 @@
                     android:layout_gravity="top|left"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:background="@color/black_overlay"
-                        android:textColor="@color/colorAccent"
-                        android:id="@+id/text_message"
-                        android:layout_width="500dp"
-                        android:layout_height="30dp" />
-
-                    <Button
-                        android:text="Messages"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/send"
-                        android:elevation="0dp"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:textSize="12sp" />
-
 
                 </LinearLayout>
 

@@ -233,9 +233,6 @@ public class GameBoardPresenter {
 
 
     //------------------------------------VIEW COMMANDS-------------------------------------------//
-    public void displayMessage(String message){
-        _boardFragment.onMsgReceived(message);
-    }
 
     public void sendMessage(String message){
         ClientFacade.SINGLETON.broadcastToChat(message);
@@ -261,26 +258,6 @@ public class GameBoardPresenter {
         return asdf;
     }
 
-    public Player getClientPlayer(){
-        return asdf.get(3);
-    }
-
-
-    public List<City> getAllCities(){
-        return City.get_allCities();
-    }
-
-//    public List<testDestinationCard> getThreeDestinationCards(){
-//        List<testDestinationCard> asdf = new ArrayList<>();
-//        asdf.add(new testDestinationCard("asdf1", "asdf2", "10"));
-//        asdf.add(new testDestinationCard("asdf3", "asdf4", "10"));
-//        asdf.add(new testDestinationCard("asdf5", "asdf6", "10"));
-//        return asdf;
-//    }
-
-    public void removeDestinationCardFromModel(DestCard card){
-
-    }
 
     public Pair<List<String>, HashMap<String, Player>> getInfoForExpandable(){
         List<Player> playerList =  getPlayersInGame();
