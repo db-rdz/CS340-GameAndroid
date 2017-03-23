@@ -4,11 +4,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
@@ -203,17 +205,36 @@ public class LoginFragment extends Fragment {
      * If the username is already in the server database, then the server throws a UsernameAlreadyExists exception.
      */
     public void onRegisterButtonPressed() throws IClient.InvalidPassword, IClient.InvalidUsername, IClient.UsernameAlreadyExists{
-        Toast.makeText(getContext(), "Registering new user...", Toast.LENGTH_SHORT).show();
-        string_server_address = editText_server.getText().toString() + ":";
-        string_server_port = editText_port.getText().toString();
 
         try {
             //Checks the server database if the username has been taken.
-            LoginPresenter.SINGLETON.setCurrentUser(getUserInfo());
-            LoginPresenter.SINGLETON.register(user);
+            //Checks if the desired username and password is valid
+            if (editText_password.length() >= 5 && editText_username.length() >= 3) { //credentials are valid
+                Toast.makeText(getContext(), "Registering new user", Toast.LENGTH_SHORT).show();
+                string_server_address = editText_server.getText().toString() + ":";
+                string_server_port = editText_port.getText().toString();
+
+                LoginPresenter.SINGLETON.setCurrentUser(getUserInfo());
+                LoginPresenter.SINGLETON.register(user);
+            }
+            else { //credentials are bad
+                if (editText_username.length() < 3) {
+                    Toast username = Toast.makeText(getContext(), "Username must be 3 or more characters long", Toast.LENGTH_SHORT);
+                    TextView v = (TextView) username.getView().findViewById(android.R.id.message);
+                    if( v != null) { v.setGravity(Gravity.CENTER); }
+                    username.show();
+                }
+                if (editText_password.length() < 5) {
+                    Toast password = Toast.makeText(getContext(), "Password must be 5 or more characters long", Toast.LENGTH_SHORT);
+                    TextView v = (TextView) password.getView().findViewById(android.R.id.message);
+                    if( v != null) { v.setGravity(Gravity.CENTER); }
+                    password.show();
+                }
+            }
+
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

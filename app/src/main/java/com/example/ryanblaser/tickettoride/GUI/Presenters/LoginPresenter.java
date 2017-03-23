@@ -16,23 +16,24 @@ public class LoginPresenter implements ILoginPresenter {
     public LoginPresenter(ILoginView v){
         view = v;
     }
-    public static com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter SINGLETON = new com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter(view);
+    public static LoginPresenter SINGLETON = new LoginPresenter(view);
 
 
     public void login(User user) {
         try {
-
             ClientFacade.SINGLETON.login(user);
-        } catch (IClient.InvalidPassword invalidPassword) {
+        } catch (IClient.InvalidPassword invalidPassword) { //Doesn't do anything
             view.showMessage("Bad password!");
         } catch (IClient.InvalidUsername invalidUsername) {
             view.showMessage("Bad username!");
         }
     }
+
+    @Override
     public void register(User user) {
         try {
             ClientFacade.SINGLETON.register(user.getUsername(), user.getPassword());
-        } catch (IClient.InvalidPassword invalidPassword) {
+        } catch (IClient.InvalidPassword invalidPassword) { //Doesn't do anything
             view.showMessage("Bad password!");
         } catch (IClient.InvalidUsername invalidUsername) {
             view.showMessage("Bad username!");
@@ -53,6 +54,16 @@ public class LoginPresenter implements ILoginPresenter {
     @Override
     public void showLoginMessage() {
         ClientFacade.SINGLETON.getClientModel().getMainActivity().showLoginMessage();
+    }
+
+    @Override
+    public void showBadCredentials() {
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().showBadCredentials();
+    }
+
+    @Override
+    public void showUserLoggedInAlready() {
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().showUserLoggedInAlready();
     }
 
     @Override

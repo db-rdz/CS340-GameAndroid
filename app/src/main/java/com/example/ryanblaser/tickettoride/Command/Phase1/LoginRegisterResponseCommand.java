@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Command.Phase1;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Board;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
@@ -11,9 +12,12 @@ import java.util.List;
 
 public class LoginRegisterResponseCommand implements ICommand {
     private User user;
+    Boolean validCredentials;
+    Boolean userLoggedInAlready;
+
     public LoginRegisterResponseCommand(){}
     public LoginRegisterResponseCommand(User user){
-    this.user = user;
+        this.user = user;
     }
 
 
@@ -24,8 +28,17 @@ public class LoginRegisterResponseCommand implements ICommand {
 
     @Override
     public List<ICommand> execute(){
-        ClientFacade.SINGLETON.loginRegisterSucceeded(user);
-        LobbyPresenter.SINGLETON.refreshGameLobby();
+
+        if (validCredentials && !userLoggedInAlready) {
+            ClientFacade.SINGLETON.loginRegisterSucceeded(user);
+            LobbyPresenter.SINGLETON.refreshGameLobby();
+        }
+        else if (!validCredentials) {
+            LoginPresenter.SINGLETON.showBadCredentials();
+        }
+        else if (userLoggedInAlready) {
+            LoginPresenter.SINGLETON.showUserLoggedInAlready();
+        }
         return null;
     }
 
@@ -35,5 +48,11 @@ public class LoginRegisterResponseCommand implements ICommand {
         return null;
     }
 
+    public Boolean getValidCredentials() {
+        return validCredentials;
+    }
 
+    public Boolean getUserLoggedInAlready() {
+        return userLoggedInAlready;
+    }
 }

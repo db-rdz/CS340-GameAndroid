@@ -36,7 +36,7 @@ public class ClientFacade implements IClient {
         clientmodel = new ClientModel();
         attachLoginObserver(LoginPresenter.SINGLETON);
         attachLobbyObserver(LobbyPresenter.SINGLETON);
-        poller = new Poller();
+//        poller = new Poller();
     }
 
     /**
@@ -141,7 +141,7 @@ public class ClientFacade implements IClient {
         LoginPresenter.SINGLETON.showLoginMessage();
         clientmodel.setStr_authentication_code(user.getStr_authentication_code());
         clientmodel.setUser(user);
-        poller = new Poller();
+        poller = new Poller(); //Start poller if login is successful
         poller.setUser(user);
         loginpresenter.switchToLobbyView();
         //change view/presenter
