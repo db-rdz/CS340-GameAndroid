@@ -6,7 +6,7 @@ import android.util.Pair;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
-import com.example.ryanblaser.tickettoride.GUI.Activities.GameActivity;
+import com.example.ryanblaser.tickettoride.GUI.Activities.WaitingActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class ClientModel{
      * MainActivity used to call methods from it.
      * Used to update the list of games in the lobby
      */
-    private GameActivity gameActivity;
+    private WaitingActivity gameActivity;
 
     /**
      * This determines if a player is the creator of the game.
@@ -323,11 +323,11 @@ public class ClientModel{
         this.mainActivity = mainActivity;
     }
 
-    public GameActivity getGameActivity() {
+    public WaitingActivity getGameActivity() {
         return gameActivity;
     }
 
-    public void setGameActivity(GameActivity gameActivity) {
+    public void setGameActivity(WaitingActivity gameActivity) {
         this.gameActivity = gameActivity;
     }
 

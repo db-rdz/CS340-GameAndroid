@@ -16,7 +16,7 @@ import com.example.ryanblaser.tickettoride.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameActivity extends AppCompatActivity {
+public class WaitingActivity extends AppCompatActivity {
 
     private ListView listView_players;
     private Button button_start_game, button_refresh;
@@ -31,8 +31,8 @@ public class GameActivity extends AppCompatActivity {
 
         ClientFacade.SINGLETON.getClientModel().setGameActivity(this);
 
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Ticket To Ride - Game Lobby");
+        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+        getSupportActionBar().setTitle("Ticket To Ride - Game " + gameId + " Lobby");
 
         listView_players = (ListView) findViewById(R.id.list_players_in_game);
         listView_players.setClickable(false);
@@ -44,7 +44,7 @@ public class GameActivity extends AppCompatActivity {
         button_start_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isAtLeastTwoPlayers()) {
+//                if (isAtLeastTwoPlayers()) {
                     int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
                     int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
                     List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
@@ -54,10 +54,10 @@ public class GameActivity extends AppCompatActivity {
                     //TODO: Add start game functionality and switch to GameBoardView
                     Intent intent = new Intent(getBaseContext(), BoardActivity.class);
                     startActivity(intent);
-                }
-                else {
-                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
-                }
+//                }
+//                else {
+//                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
+//                }
 
             }
         });

@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GUI.Activities.GameActivity"></activity>
+        <activity android:name=".GUI.Activities.WaitingActivity"></activity>
         <activity android:name=".GUI.Activities.BoardActivity">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
