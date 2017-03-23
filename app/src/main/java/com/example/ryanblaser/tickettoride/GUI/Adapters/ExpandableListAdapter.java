@@ -23,6 +23,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> _listDataHeader;
     private HashMap<String, Player> _listDataChild;
+    private HashMap<String, String> _scoreboard; //TESTING
 
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
@@ -31,6 +32,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
     }
+
+//    //TESTING
+//    public ExpandableListAdapter(Context context, List<String> listDataHeader,
+//                                 HashMap<String, String> _scoreboard) {
+//        this._context = context;
+//        this._listDataHeader = listDataHeader;
+//        this._scoreboard = _scoreboard;
+//    }
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
@@ -47,6 +56,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         final Player childPlayer = (Player) getChild(groupPosition, childPosition);
+//        final String player = (String) getChild(groupPosition, childPosition); //TESTING
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context

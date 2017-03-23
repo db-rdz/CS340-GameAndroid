@@ -33,7 +33,7 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
         }
 
         iDestCard item = getItem(position);
-        String originToDestination = item.get_origin() + " " + item.get_destination();
+        String originToDestination = item.get_origin() + " " + item.get_routeDestination();
         view.setTag(item);
         ((TextView)view.findViewById(R.id.card_destination)).setText(originToDestination);
         ((TextView)view.findViewById(R.id.card_points)).setText(item.get_points());

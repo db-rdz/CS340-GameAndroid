@@ -41,7 +41,7 @@ public class BoardActivity extends AppCompatActivity {
 
 
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new PageAdapter(getSupportFragmentManager());
+        mPagerAdapter = new PageAdapter(this.getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
 
@@ -64,6 +64,8 @@ public class BoardActivity extends AppCompatActivity {
         // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
+
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
