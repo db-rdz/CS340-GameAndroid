@@ -44,7 +44,7 @@ public class WaitingActivity extends AppCompatActivity {
         button_start_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (isAtLeastTwoPlayers()) {
+                if (isAtLeastTwoPlayers()) {
                     int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
                     int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
                     List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
@@ -52,12 +52,12 @@ public class WaitingActivity extends AppCompatActivity {
                     ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
                     Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
 //                    //TODO: Add start game functionality and switch to GameBoardView
-//                    Intent intent = new Intent(getBaseContext(), BoardActivity.class);
-//                    startActivity(intent);
-//                }
-//                else {
-//                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
-//                }
+                    Intent intent = new Intent(getBaseContext(), BoardActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
