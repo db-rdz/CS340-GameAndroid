@@ -15,12 +15,10 @@ import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.Poller;
-import com.example.ryanblaser.tickettoride.GUI.Activities.GameActivity;
+import com.example.ryanblaser.tickettoride.GUI.Activities.WaitingActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +132,7 @@ public class LobbyFragment extends Fragment {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(getContext(), GameActivity.class);
+                    Intent intent = new Intent(getContext(), WaitingActivity.class);
                     intent.putExtra("GAME", gameSelected);
                     startActivity(intent);
                 }
@@ -146,7 +144,7 @@ public class LobbyFragment extends Fragment {
 
     public void switchToWaitingView()
     {
-        Intent intent = new Intent(getContext(), GameActivity.class);
+        Intent intent = new Intent(getContext(), WaitingActivity.class);
         startActivity(intent);
 
 //        MainActivity sudo_mainActivity = ClientFacade.SINGLETON.getClientModel().getMainActivity();

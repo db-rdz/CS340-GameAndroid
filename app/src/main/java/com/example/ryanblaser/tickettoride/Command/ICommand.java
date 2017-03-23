@@ -6,7 +6,7 @@ import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.Client.User;
 
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToJoinableListCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddJoinableGameCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.SwitchToWaitingActivityCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.DeleteGameCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.ListJoinableCommand;
@@ -30,7 +30,7 @@ import java.util.List;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = LoginRegisterResponseCommand.class),
         @JsonSubTypes.Type(value = LogoutResponseCommand.class),
-        @JsonSubTypes.Type(value = AddJoinableGameCommand.class),
+        @JsonSubTypes.Type(value = SwitchToWaitingActivityCommand.class),
         @JsonSubTypes.Type(value = AddGameToJoinableListCommand.class),
         @JsonSubTypes.Type(value = AddPlayerToClientCommand.class),
         @JsonSubTypes.Type(value = ListJoinableCommand.class),

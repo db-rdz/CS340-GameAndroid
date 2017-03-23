@@ -11,16 +11,16 @@ import java.util.List;
 /**
  * This command is only received from ALREADY logged in users on the server
  */
-public class AddJoinableGameCommand implements ICommand { // sent after changes from what List... commands sent
+public class SwitchToWaitingActivityCommand implements ICommand { // sent after changes from what List... commands sent
 
     private int gameId;
     private List<String> usernames = new ArrayList<>(); //Server sends back a list of usernames to add to the clientmodel
     private Boolean isCreator;
 
-    public AddJoinableGameCommand() {
+    public SwitchToWaitingActivityCommand() {
     }
 
-    public AddJoinableGameCommand(int id, List<String> names, Boolean creator) {
+    public SwitchToWaitingActivityCommand(int id, List<String> names, Boolean creator) {
         gameId = id;
         usernames = names;
         isCreator = creator;
