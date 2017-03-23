@@ -65,13 +65,14 @@ public class PlayersInfoFragment extends Fragment {
         List<String> headers = new ArrayList<>();
         headers.add("Players");
 
-        Pair<List<String>, HashMap<String, Player>> info
+        //TODO: Fix the adapter for the player info
+//        Pair<List<String>, HashMap<String, Player>> info
 //                = GameBoardPresenter._SINGLETON.getInfoForExpandable();
-                = ClientFacade.SINGLETON.getClientModel().getInfoForExpandable();
+//                = ClientFacade.SINGLETON.getClientModel().getInfoForExpandable();
 
-        ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
-
-        _expListView.setAdapter(listAdapter);
+//        ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
+//
+//        _expListView.setAdapter(listAdapter);
 
         //TESTING
 //        Pair<List<String>, HashMap<String, String>> scoreboard
