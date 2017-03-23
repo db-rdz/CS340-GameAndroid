@@ -174,4 +174,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void showUserRegisteredAlready() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "User is registered already", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
 }

@@ -66,6 +66,10 @@ public class LoginPresenter implements ILoginPresenter {
         ClientFacade.SINGLETON.getClientModel().getMainActivity().showUserLoggedInAlready();
     }
 
+    public void showUserRegisteredAlready() {
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().showUserRegisteredAlready();
+    }
+
     @Override
     public void showSocketTimeoutMessage() {
         ClientFacade.SINGLETON.getClientModel().getMainActivity().showSocketTimeoutMessage();

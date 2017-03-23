@@ -19,7 +19,7 @@ public class testDestinationCard implements iDestCard {
 
 
     @Override
-    public String get_destination() {
+    public String get_routeDestination() {
         return _des;
     }
 

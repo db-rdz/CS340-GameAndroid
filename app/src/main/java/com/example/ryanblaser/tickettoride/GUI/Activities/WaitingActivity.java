@@ -27,7 +27,7 @@ public class WaitingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_waiting);
 
         ClientFacade.SINGLETON.getClientModel().setGameActivity(this);
 
@@ -51,9 +51,9 @@ public class WaitingActivity extends AppCompatActivity {
 
                     ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
                     Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
-                    //TODO: Add start game functionality and switch to GameBoardView
-                    Intent intent = new Intent(getBaseContext(), BoardActivity.class);
-                    startActivity(intent);
+//                    //TODO: Add start game functionality and switch to GameBoardView
+//                    Intent intent = new Intent(getBaseContext(), BoardActivity.class);
+//                    startActivity(intent);
 //                }
 //                else {
 //                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
@@ -161,11 +161,11 @@ public class WaitingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Toast.makeText(getBaseContext(), "Switching to the game board!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getBaseContext(), BoardActivity.class);
+                startActivity(intent);
 
             }
         });
-        Intent intent = new Intent(getBaseContext(), BoardActivity.class);
-        startActivity(intent);
     }
 
 }

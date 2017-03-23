@@ -62,14 +62,10 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
 
 
                         //TODO:Finished?
-                        String type = slidingDeckModel.getType() + "card";
+                        String type = slidingDeckModel.getType();
                         PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
                         playerHand.addOneToCardCount(type); //Increases total card count to player hand
 
-//                        int count = GameBoardPresenter._SINGLETON.getClientPlayer().get_Hand().get_cardCount()
-//                                .get(slidingDeckModel.getType());
-//                        GameBoardPresenter._SINGLETON.getClientPlayer().get_Hand().get_cardCount()
-//                                .put(slidingDeckModel.getType(), count + 1);
 
                         GameBoardPresenter._SINGLETON.refreshCardCounters();
                         remove(slidingDeckModel);

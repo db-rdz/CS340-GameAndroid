@@ -1,7 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
-import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Views.LobbyFragment;

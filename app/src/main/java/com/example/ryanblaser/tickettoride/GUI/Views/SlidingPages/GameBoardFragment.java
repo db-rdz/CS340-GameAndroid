@@ -231,7 +231,7 @@ public class GameBoardFragment extends Fragment {
 
     public void setPlayerCardViewValues(){
 //        Player clientPlayer = GameBoardPresenter._SINGLETON.getClientPlayer();
-        Player clientPlayer = ClientFacade.SINGLETON.getClientModel().getCurrent_player();
+//        Player clientPlayer = ClientFacade.SINGLETON.getClientModel().getCurrent_player();
         PlayerCardHand hand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
 
         _blackCardCount.setText(String.valueOf(hand.get_cardCount().get("blackcard")));

@@ -59,6 +59,9 @@ public class GameBoardPresenter {
     public String get_PlayerUserName(){
         return "Daniel";
     }
+    public String playerUsername() {
+        return ClientFacade.SINGLETON.getCurrentUser().getUsername();
+    }
 
     public void initCityPoints(){
 
@@ -110,7 +113,6 @@ public class GameBoardPresenter {
     }
 
     private City getCityByCoodinates(float x, float y){
-//        List<City> cities = GameBoardPresenter._SINGLETON.getAllCities();
         List<City> cities = City.get_allCities();
 
         for(City c : cities){
@@ -182,6 +184,7 @@ public class GameBoardPresenter {
     private Pair<RESPONSE_STATUS, String> claimRoute(Route route){
         if(route.get_Owner() == null){
             route.set_Owner(get_PlayerUserName());
+//            route.set_Owner(playerUsername());
             String toastText =  "You have claimed route " + _firstCityClicked.get_S_name() + "-" +
                     _secondCityClicked.get_S_name();
 

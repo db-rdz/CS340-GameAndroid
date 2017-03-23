@@ -8,7 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
  * Created by RyanBlaser on 2/28/17.
  */
 
-public class DestCard {
+public class DestCard implements iDestCard {
     // should map the id of the map used on DestCardTypes
     private int _cardType;
 
@@ -35,5 +35,20 @@ public class DestCard {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    @Override
+    public String get_origin() {
+        return _destination.getLeft();
+    }
+
+    @Override
+    public String get_points() {
+        return String.valueOf(points);
+    }
+
+    @Override
+    public String get_routeDestination() {
+        return _destination.getRight();
     }
 }

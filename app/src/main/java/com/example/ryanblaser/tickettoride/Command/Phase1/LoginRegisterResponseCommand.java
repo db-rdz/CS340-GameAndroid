@@ -1,7 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command.Phase1;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Board;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
@@ -12,8 +11,9 @@ import java.util.List;
 
 public class LoginRegisterResponseCommand implements ICommand {
     private User user;
-    Boolean validCredentials;
-    Boolean userLoggedInAlready;
+    private Boolean validCredentials;
+    private Boolean userLoggedInAlready;
+    private Boolean userRegisteredAlready;
 
     public LoginRegisterResponseCommand(){}
     public LoginRegisterResponseCommand(User user){
@@ -29,15 +29,20 @@ public class LoginRegisterResponseCommand implements ICommand {
     @Override
     public List<ICommand> execute(){
 
-        if (validCredentials && !userLoggedInAlready) {
+        if (validCredentials && !userLoggedInAlready && userRegisteredAlready) { //login true false true
             ClientFacade.SINGLETON.loginRegisterSucceeded(user);
             LobbyPresenter.SINGLETON.refreshGameLobby();
         }
-        else if (!validCredentials) {
-            LoginPresenter.SINGLETON.showBadCredentials();
-        }
-        else if (userLoggedInAlready) {
-            LoginPresenter.SINGLETON.showUserLoggedInAlready();
+        else {
+            if (!validCredentials && !userRegisteredAlready) {
+                LoginPresenter.SINGLETON.showBadCredentials();
+            }
+            else if (userLoggedInAlready && !userRegisteredAlready) {
+                LoginPresenter.SINGLETON.showUserLoggedInAlready();
+            }
+            else if (userRegisteredAlready) { //register
+                LoginPresenter.SINGLETON.showUserRegisteredAlready();
+            }
         }
         return null;
     }
@@ -54,5 +59,9 @@ public class LoginRegisterResponseCommand implements ICommand {
 
     public Boolean getUserLoggedInAlready() {
         return userLoggedInAlready;
+    }
+
+    public Boolean getUserRegisteredAlready() {
+        return userRegisteredAlready;
     }
 }

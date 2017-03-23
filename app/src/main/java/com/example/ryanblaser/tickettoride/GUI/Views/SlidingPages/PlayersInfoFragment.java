@@ -69,10 +69,15 @@ public class PlayersInfoFragment extends Fragment {
 //                = GameBoardPresenter._SINGLETON.getInfoForExpandable();
                 = ClientFacade.SINGLETON.getClientModel().getInfoForExpandable();
 
-
         ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
 
         _expListView.setAdapter(listAdapter);
+
+        //TESTING
+//        Pair<List<String>, HashMap<String, String>> scoreboard
+//                = ClientFacade.SINGLETON.getClientModel().getInfoForExpandables();
+//        ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
+//        _expListView.setAdapter(expandableListAdapter);
 
         return v;
     }
