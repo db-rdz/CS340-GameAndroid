@@ -129,28 +129,46 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Toast.makeText(getBaseContext(), "Logging in!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-//                String username = ClientFacade.SINGLETON.getCurrentUser().getUsername();
-//                Toast.makeText(getBaseContext(), "Hi " + username, Toast.LENGTH_SHORT).show();
+    public void showRegisterMessage() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Registering new user", Toast.LENGTH_SHORT).show();
+
 
             }
         });
+
     }
 
     public void showSocketTimeoutMessage() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getBaseContext(), "Server is down", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Server is down", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public void messageInvalidUsername() {
+    public void showBadCredentials() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getBaseContext(), "Invalid Username!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Username or password is wrong", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    public void showUserLoggedInAlready() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "User is logged in already", Toast.LENGTH_SHORT).show();
 
             }
         });

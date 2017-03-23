@@ -12,4 +12,6 @@ interface ILoginPresenter {
     public void setCurrentUser(User user);
     public void showLoginMessage();
     public void showSocketTimeoutMessage();
+    public void showBadCredentials();
+    public void showUserLoggedInAlready();
 }
