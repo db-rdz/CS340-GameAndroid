@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.R;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.iDestCard;
@@ -38,17 +39,21 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
         ((TextView)view.findViewById(R.id.card_destination)).setText(originToDestination);
         ((TextView)view.findViewById(R.id.card_points)).setText(item.get_points());
 
-        final View completeView = view.findViewById(R.id.reject);
+        final View rejectButton = view.findViewById(R.id.reject);
 
-        completeView.setTag(view);
+        rejectButton.setTag(view);
 
-        if(GameBoardPresenter._SINGLETON.is_readyToStart()){
-                completeView.setVisibility(View.GONE);
+        //Nathan: If the player is picking destination cards,
+        if(ClientFacade.SINGLETON.getClientModel().getState().equals(ClientModel.State.PICKING_DEST)){
+            rejectButton.setVisibility(View.VISIBLE); //He can see the reject button
+        }
+        else {
+            rejectButton.setVisibility(View.GONE); //He cannot see the reject button
         }
 
 
 
-        completeView.setOnClickListener(new View.OnClickListener() {
+        rejectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final SlidingDeck slidingDeck = (SlidingDeck)parent;

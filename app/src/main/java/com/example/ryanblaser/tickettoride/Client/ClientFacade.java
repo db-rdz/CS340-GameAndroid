@@ -173,6 +173,13 @@ public class ClientFacade implements IClient {
     }
 
     @Override
+    public void getFaceUpTableTrainCardCommand(int id, Boolean isWild) {
+        int gameId = clientmodel.getInt_curr_gameId();
+        String authenticationCode = clientmodel.getStr_authentication_code();
+        ServerProxy.SINGLETON.getFaceUpTableTrainCardCommand(gameId, authenticationCode, id, isWild);
+    }
+
+    @Override
     public void selectRequestedDestinationCard() {
         
     }

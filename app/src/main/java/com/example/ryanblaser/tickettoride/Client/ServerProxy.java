@@ -206,10 +206,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public List<ICommand> getFaceUpTableTrainCardCommand(int gameId, Boolean isWild, int trainCardIndex) {
+    public List<ICommand> getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int trainCardIndex, Boolean isWild) {
         String urlSuffix = "/command";
 
-        ICommand getFirstFaceUpTableTrainCardCommand = new GetFaceUpTableTrainCardCommand(gameId, trainCardIndex, isWild);
+        ICommand getFirstFaceUpTableTrainCardCommand = new GetFaceUpTableTrainCardCommand(gameId, authenticationCode, trainCardIndex, isWild);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);

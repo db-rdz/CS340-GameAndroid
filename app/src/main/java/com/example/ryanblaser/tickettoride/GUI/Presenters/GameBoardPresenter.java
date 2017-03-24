@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.util.Pair;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
@@ -183,6 +184,7 @@ public class GameBoardPresenter {
 
     private Pair<RESPONSE_STATUS, String> claimRoute(Route route){
         if(route.get_Owner() == null){
+            changePlayerState(ClientModel.State.CLAIMING_ROUTE);
             route.set_Owner(get_PlayerUserName());
 //            route.set_Owner(playerUsername());
             String toastText =  "You have claimed route " + _firstCityClicked.get_S_name() + "-" +
@@ -249,6 +251,11 @@ public class GameBoardPresenter {
 
 
     //-------------------------------MODEL ACCESSING FUNCTIONS------------------------------------//
+
+    public void changePlayerState(ClientModel.State state) {
+        ClientFacade.SINGLETON.getClientModel().setState(state);
+    }
+
     public List<Player> getPlayersInGame(){
         asdf = new ArrayList<>();
         asdf.add(new Player("Nathan", 0, 0, Color.RED,0));

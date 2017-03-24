@@ -1,5 +1,7 @@
 package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayerActionFragment;
 import com.example.ryanblaser.tickettoride.R;
@@ -56,6 +58,13 @@ public class PlayerActionPresenter {
         _trainCardMap.put("yellowcard", R.drawable.yellowcard);
     }
 
+    public void getFaceUpTableTrainCardCommand(int id, boolean b) {
+        ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(id, b);
+    }
+
+    public void changePlayerState(ClientModel.State state) {
+        ClientFacade.SINGLETON.getClientModel().setState(state);
+    }
     //----------------------------------GETTERS AND SETTERS--------------------------------------\\
     public Map<String, Integer> get_trainCardMap() {
         return _trainCardMap;
@@ -70,4 +79,6 @@ public class PlayerActionPresenter {
     public void set_faceUpTrainCards(List<TrainCard> _faceUpTrainCards) {
         this._faceUpTrainCards = _faceUpTrainCards;
     }
+
+
 }

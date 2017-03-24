@@ -22,6 +22,7 @@ import java.util.List;
 public class GetFaceUpTableTrainCardCommand implements ICommand {
     //Data member
     private int _i_gameId;
+    private String authenticationCode;
 
     //Ryan: changed TrainCard to cardIndex to match the model
     private int _i_cardIndex;
@@ -29,8 +30,9 @@ public class GetFaceUpTableTrainCardCommand implements ICommand {
 
     //Constructors
     public GetFaceUpTableTrainCardCommand(){}
-    public GetFaceUpTableTrainCardCommand(int g, int index, Boolean wild) {
+    public GetFaceUpTableTrainCardCommand(int g, String code, int index, Boolean wild) {
         _i_cardIndex = index;
+        authenticationCode = code;
         isWild = wild;
         _i_gameId = g;
     }
@@ -39,10 +41,9 @@ public class GetFaceUpTableTrainCardCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return null;
+        return authenticationCode;
     }
 
     @JsonIgnore

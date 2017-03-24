@@ -37,7 +37,7 @@ public class ClientModel{
     }
 
     /**
-     * This helps determine if a game is Joinable or in the Waiting lobby state
+     * This helps determine what a player can do during his turn
      */
     public enum State {
         YOUR_TURN, NOT_YOUR_TURN, CLAIMING_ROUTE, PICKING_DEST, PICKING_TRAIN;

@@ -18,6 +18,10 @@ import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
 import com.example.ryanblaser.tickettoride.R;
 import com.redbooth.SlidingDeck;
 
+import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.NOT_YOUR_TURN;
+import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.PICKING_TRAIN;
+import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.YOUR_TURN;
+
 /**
  * Created by benjamin on 8/03/17.
  */
@@ -28,13 +32,13 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
         super(context, R.layout.sliding_traincard_item);
     }
 
-    ImageView _trainCardImage;
-    Button _getButton;
+    private ImageView _trainCardImage;
+    private Button _getButton;
+    private int amountOfCardsTaken; //Nathan: Used to check if the player can pick a rainbow card
 
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
         View view = convertView;
-
         if (view == null) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.sliding_traincard_item, parent, false);
@@ -42,6 +46,15 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
 
         _trainCardImage = (ImageView) view.findViewById(R.id.trainCard);
         _getButton = (Button)view.findViewById(R.id.getTrainCard);
+
+        //Nathan: If the player's turn just started or is already picking a card,
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(YOUR_TURN) ||
+                ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_TRAIN)) {
+            _getButton.setVisibility(View.VISIBLE); //Player can see the get button
+        }
+        else {
+            _getButton.setVisibility(View.GONE); //Player can't see the get button
+        }
 
         TrainCard item = getItem(position);
         view.setTag(item);
@@ -61,7 +74,7 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
 
 
-                        //TODO:Finished?
+                        //TODO: Prevent player from picking a rainbow card if he picked another card from the face up already.
                         String type = slidingDeckModel.getType();
                         PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
                         playerHand.addOneToCardCount(type); //Increases total card count to player hand
@@ -75,11 +88,19 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                         PlayerInfoPresenter._SINGLETON.refreshPlayerInfo();
                         notifyDataSetChanged();
 
-                        if (slidingDeckModel.getType().equals("rainbowcard")) {
-//                            ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), true);
+                        if (slidingDeckModel.getType().equals("rainbowcard") && amountOfCardsTaken == 0) {
+                            PlayerActionPresenter._SINGLETON.changePlayerState(NOT_YOUR_TURN);
+                            //TODO: need to refresh the fragment view for the state to take affect on visibility
+                            PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), true);
+
                         }
                         else {
-//                            ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), false);
+                            PlayerActionPresenter._SINGLETON.changePlayerState(PICKING_TRAIN);
+                            amountOfCardsTaken++;
+                            //TODO: need to refresh the fragment view for the state to take affect on visibility
+                            PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), false);
+                            if (amountOfCardsTaken == 2) { amountOfCardsTaken = 0; }
+
                         }
                         //TODO: What if the player picks a wild card? How do we end his turn immediately?
                     }

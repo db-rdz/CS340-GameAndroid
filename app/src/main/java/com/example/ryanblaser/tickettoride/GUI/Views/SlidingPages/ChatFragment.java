@@ -60,8 +60,6 @@ public class ChatFragment extends Fragment {
         ListView list = (ListView) v.findViewById(R.id.messagesList);
 
         textMessageView = (EditText) v.findViewById(R.id.text_message);
-        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(textMessageView.getWindowToken(), 0);
 
         Button sendMessage = (Button)v.findViewById(R.id.send);
         sendMessage.setOnClickListener(new View.OnClickListener() {

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SliddingAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
@@ -77,8 +78,12 @@ public class PlayerActionFragment extends Fragment {
 
         _keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
 
-        if(GameBoardPresenter._SINGLETON.is_readyToStart()){
-            _keepAllCards.setVisibility(View.GONE);
+        //Nathan: If the player is picking destination cards,
+        if(ClientFacade.SINGLETON.getClientModel().getState().equals(ClientModel.State.PICKING_DEST)){
+            _keepAllCards.setVisibility(View.VISIBLE); //He can see the keep all button
+        }
+        else {
+            _keepAllCards.setVisibility(View.GONE); //He cannot see the keep all button
         }
 
         _keepAllCards.setOnClickListener(new View.OnClickListener() {

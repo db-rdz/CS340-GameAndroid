@@ -24,5 +24,5 @@ public interface IServer {
 
     //PHASE2
     public List<ICommand> claimRoute(Route route, String authenticationCode, int gameId);
-    public List<ICommand> getFaceUpTableTrainCardCommand(int gameId, Boolean isWild, int trainCardIndex);
+    public List<ICommand> getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int trainCardIndex, Boolean isWild);
 }
