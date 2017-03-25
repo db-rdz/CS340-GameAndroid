@@ -58,12 +58,16 @@ public class PlayerActionPresenter {
         _trainCardMap.put("yellowcard", R.drawable.yellowcard);
     }
 
-    public void getFaceUpTableTrainCardCommand(int id, boolean b) {
-        ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(id, b);
+    public void getFaceUpTableTrainCardCommand(int FirstSecondCardPick, int id, boolean b) {
+        ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(FirstSecondCardPick, id, b);
     }
 
     public void changePlayerState(ClientModel.State state) {
         ClientFacade.SINGLETON.getClientModel().setState(state);
+    }
+
+    public void getTopDeckTrainCardCommand(int FirstSecondCardPick) {
+        ClientFacade.SINGLETON.getTopDeckTrainCardCommand(FirstSecondCardPick);
     }
     //----------------------------------GETTERS AND SETTERS--------------------------------------\\
     public Map<String, Integer> get_trainCardMap() {
@@ -79,6 +83,7 @@ public class PlayerActionPresenter {
     public void set_faceUpTrainCards(List<TrainCard> _faceUpTrainCards) {
         this._faceUpTrainCards = _faceUpTrainCards;
     }
+
 
 
 }

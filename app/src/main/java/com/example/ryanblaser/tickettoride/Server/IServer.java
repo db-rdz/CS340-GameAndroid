@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface IServer {
 
+
     public static class GameIsFullException extends Exception {
     }
 
@@ -23,6 +24,8 @@ public interface IServer {
     public List<ICommand> logout(User user);
 
     //PHASE2
-    public List<ICommand> claimRoute(Route route, String authenticationCode, int gameId);
-    public List<ICommand> getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int trainCardIndex, Boolean isWild);
+    public void claimRoute(Route route, String authenticationCode, int gameId);
+    public void getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int FirstSecondCardPick, int trainCardIndex, Boolean isWild);
+    public void getTopDeckTrainCardCommand(int gameId, String authenticationCode, int firstSecondCardPick);
+
 }

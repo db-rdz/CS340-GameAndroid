@@ -115,18 +115,18 @@ public class ClientCommunicator extends AsyncTask<URL, Void, Integer> {
                         return respondData.size();
 
                     }
+
                     catch (Exception e) //InputStreamReader
                     {
                         e.printStackTrace();
                     }
                 }
-                else
+                else if (http.getResponseCode() == 13)
                 {
-                    System.out.println("ERROR: " + http.getResponseMessage());
-//                    return "ERROR @ ClientCommunicator_old send()";
+                    Exception respondData = objectMapper.readValue(http.getInputStream(), Exception.class);
+
                 }
 
-//                ClientCommunicator_old.SINGLETON.send(string_urlSuffix, commandContainer);
             } catch (SocketTimeoutException e) {
                 LoginPresenter.SINGLETON.showSocketTimeoutMessage();
             } catch (ProtocolException e) {

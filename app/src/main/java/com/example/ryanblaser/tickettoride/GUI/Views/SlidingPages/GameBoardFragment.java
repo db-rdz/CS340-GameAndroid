@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
@@ -27,6 +30,8 @@ import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.RESPONSE_STATUS;
 import com.example.ryanblaser.tickettoride.R;
 
+import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.FIRST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.YOUR_TURN;
 import static java.security.AccessController.getContext;
 
 
@@ -38,6 +43,10 @@ public class GameBoardFragment extends Fragment {
 
     //----------------------------------FRAGMENT VARIABLES----------------------------------------//
 
+    /**
+     * Nathan: Shortened variable to check the player state
+     */
+    private ClientModel.State _playerState = ClientFacade.SINGLETON.getClientModel().getState();
     //-----------------------VIEWS/LAYOUT-------------------//
     private View mContentView;
     private View mControlsView;
@@ -149,10 +158,20 @@ public class GameBoardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        hideKeyboard(getContext());
     }
 
+    public static void hideKeyboard(Context ctx) {
+        InputMethodManager inputManager = (InputMethodManager) ctx
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
 
+        // check if no view has focus:
+        View v = ((Activity) ctx).getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -168,41 +187,44 @@ public class GameBoardFragment extends Fragment {
         setPlayerCardViewValues();
 
 
+        if (!_playerState.equals(FIRST_TURN) || _playerState.equals(YOUR_TURN)) {
 
-        v.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    GameBoardPresenter presenter = GameBoardPresenter._SINGLETON;
-                    Pair<RESPONSE_STATUS, String> response;
-                    response = presenter.resolveClickEvent(event.getX(), event.getY());
+            v.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        GameBoardPresenter presenter = GameBoardPresenter._SINGLETON;
+                        Pair<RESPONSE_STATUS, String> response;
+                        response = presenter.resolveClickEvent(event.getX(), event.getY());
 
-                    RESPONSE_STATUS responseCode = response.first;
-                    switch(responseCode){
-                        case TOGGLE_NEEDED : {
-                            toggle();
-                            break;
-                        }
-                        case CITY_CLICKED: {
-                            Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
-                        }
-                        case SECOND_CITY_CLICKED : {
-                            break;
-                        }
-                        case CLAIMED_ROUTE : {
-                            Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG ).show();
-                            invalidateBoard();
-                            break;
-                        }
-                        default: {
-                            Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
-                            break;
+                        RESPONSE_STATUS responseCode = response.first;
+                        switch (responseCode) {
+                            case TOGGLE_NEEDED: {
+                                toggle();
+                                break;
+                            }
+                            case CITY_CLICKED: {
+                                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+                            }
+                            case SECOND_CITY_CLICKED: {
+                                break;
+                            }
+                            case CLAIMED_ROUTE: {
+                                Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
+                                invalidateBoard();
+                                break;
+                            }
+                            default: {
+                                Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
+                                break;
+                            }
                         }
                     }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+            return v;
+        }
         return v;
     }
 

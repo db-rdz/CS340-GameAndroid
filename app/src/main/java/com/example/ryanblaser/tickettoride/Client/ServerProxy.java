@@ -11,9 +11,11 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.*;
 import com.example.ryanblaser.tickettoride.Command.Phase2.BroadcastToChatCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.ClaimRouteCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetFaceUpTableTrainCardCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.GetTopDeckTrainCardCommand;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -23,10 +25,11 @@ import java.util.List;
 
 public class ServerProxy implements IServer {
 
-    public static com.example.ryanblaser.tickettoride.Client.ServerProxy SINGLETON = new com.example.ryanblaser.tickettoride.Client.ServerProxy();
+    public static ServerProxy SINGLETON = new ServerProxy();
+
 
     private ServerProxy() {
-
+        //Need to have plugin functionality here?
     }
 
 
@@ -41,7 +44,7 @@ public class ServerProxy implements IServer {
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, loginCommand);
             clientCommunicator.execute(url);
 
-        } catch (Exception e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return null; //No need to return anything since the command execute methods access the clientmodel already
@@ -190,7 +193,7 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public List<ICommand> claimRoute(Route route, String authenticationCode, int gameId) {
+    public void claimRoute(Route route, String authenticationCode, int gameId) {
         String urlSuffix = "/command";
 
         ICommand claimRouteCommand = new ClaimRouteCommand(gameId, authenticationCode, route);
@@ -202,14 +205,13 @@ public class ServerProxy implements IServer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     @Override
-    public List<ICommand> getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int trainCardIndex, Boolean isWild) {
+    public void getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int FirstSecondCardPick, int trainCardIndex, Boolean isWild) {
         String urlSuffix = "/command";
 
-        ICommand getFirstFaceUpTableTrainCardCommand = new GetFaceUpTableTrainCardCommand(gameId, authenticationCode, trainCardIndex, isWild);
+        ICommand getFirstFaceUpTableTrainCardCommand = new GetFaceUpTableTrainCardCommand(gameId, authenticationCode, FirstSecondCardPick, trainCardIndex, isWild);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -218,6 +220,20 @@ public class ServerProxy implements IServer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+    }
+
+    @Override
+    public void getTopDeckTrainCardCommand(int gameId, String authenticationCode, int firstSecondCardPick) {
+        String urlSuffix = "/command";
+
+        ICommand getTopDeckTrainCardCommand = new GetTopDeckTrainCardCommand(gameId, authenticationCode, firstSecondCardPick);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, getTopDeckTrainCardCommand);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

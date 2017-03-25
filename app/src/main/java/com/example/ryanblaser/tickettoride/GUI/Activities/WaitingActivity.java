@@ -54,7 +54,7 @@ public class WaitingActivity extends AppCompatActivity {
 //                }
 //                else {
 //                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
-//                } //TODO: Uncomment to actually play game
+//                } //TODO: Uncomment to actually play game with 2-5 players
 
             }
         });
@@ -64,19 +64,19 @@ public class WaitingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getBaseContext(), "Refreshed game lobby", Toast.LENGTH_SHORT).show();
-
-                onResume(); //Refreshes the fragment view to show new data.
+                refreshList(); //Refreshes the fragment view to show new data.
 
             }
         });
     }
 
-    private Boolean isAtLeastTwoPlayers() {
+    private Boolean isTwoToFivePlayers() {
         int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
-        if (ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size() < 2) {
+        int gameSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+        if (gameSize < 2 || gameSize > 5) { //If the amount of players is less than 2 or greater than 5,
             return false;
         }
-        else { //If there's 2 or more players then the game will start.
+        else { //If there's 2-5 players then the game will start.
             return true;
         }
     }
@@ -157,7 +157,6 @@ public class WaitingActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getBaseContext(), "Switching to the game board!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getBaseContext(), BoardActivity.class);
                 startActivity(intent);
 

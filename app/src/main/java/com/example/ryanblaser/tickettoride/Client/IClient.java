@@ -48,7 +48,8 @@ public interface IClient {
     public void broadcastToChat(String message);
     public void claimRoute(Route route);
     public void getDestinationCards();
-    public void getFaceUpTableTrainCardCommand(int id, Boolean isWild);
+    public void getFaceUpTableTrainCardCommand(int FirstSecondCardPick, int id, Boolean isWild);
+    public void getTopDeckTrainCardCommand(int FirstSecondCardPick);
     public void selectRequestedDestinationCard();
 
     public void showMessage(List<String> messages);

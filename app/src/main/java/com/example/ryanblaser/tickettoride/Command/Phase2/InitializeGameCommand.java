@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.IClient;
@@ -39,6 +40,7 @@ public class InitializeGameCommand implements ICommand {
         ClientFacade.SINGLETON.getClientModel().getPlayer_hand().initializeHand(hand);
         ClientFacade.SINGLETON.getClientModel().setList_dest_cards(destinationCards);
         PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(faceupTrainCards);
+		ClientFacade.SINGLETON.getClientModel().setState(ClientModel.State.FIRST_TURN); //Pick DestCard on first turn
 		ClientFacade.SINGLETON.getClientModel().getGameActivity().switchToGameBoard();
 		return null;
 	}

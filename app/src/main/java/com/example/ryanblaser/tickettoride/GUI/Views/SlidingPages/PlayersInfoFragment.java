@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ExpandableListView;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
@@ -48,10 +50,23 @@ public class PlayersInfoFragment extends Fragment {
         return fragment;
     }
 
+    public static void hideKeyboard(Context ctx) {
+        InputMethodManager inputManager = (InputMethodManager) ctx
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View v = ((Activity) ctx).getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PlayerInfoPresenter._SINGLETON.set_playersInfoFragment(this);
+        hideKeyboard(getContext());
     }
 
     @Override
@@ -74,11 +89,6 @@ public class PlayersInfoFragment extends Fragment {
 //
 //        _expListView.setAdapter(listAdapter);
 
-        //TESTING
-//        Pair<List<String>, HashMap<String, String>> scoreboard
-//                = ClientFacade.SINGLETON.getClientModel().getInfoForExpandables();
-//        ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
-//        _expListView.setAdapter(expandableListAdapter);
 
         return v;
     }

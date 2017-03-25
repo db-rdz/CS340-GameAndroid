@@ -17,10 +17,15 @@ import java.util.List;
 
 public class GetTopDeckTrainCardCommand implements ICommand {
     private int gameId;
+    private String authenticationCode;
+    private int FirstSecondCardPick;
 
-    public GetTopDeckTrainCardCommand(int g)
+    public GetTopDeckTrainCardCommand(){}
+    public GetTopDeckTrainCardCommand(int g, String code, int cardPick)
     {
         gameId = g;
+        authenticationCode = code;
+        FirstSecondCardPick = cardPick;
     }
 
     @Override
@@ -31,7 +36,7 @@ public class GetTopDeckTrainCardCommand implements ICommand {
     @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return null;
+        return authenticationCode;
     }
 
     @JsonIgnore
@@ -43,5 +48,9 @@ public class GetTopDeckTrainCardCommand implements ICommand {
     public int getGameId()
     {
         return gameId;
+    }
+
+    public int getFirstSecondCardPick() {
+        return FirstSecondCardPick;
     }
 }

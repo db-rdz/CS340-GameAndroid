@@ -10,15 +10,24 @@ import android.widget.TextView;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.R;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.iDestCard;
 import com.redbooth.SlidingDeck;
+
+import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.FIRST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.PICKING_DEST;
 
 /**
  * Created by benjamin on 28/02/17.
  */
 
 public class SliddingAdapter extends ArrayAdapter<iDestCard> {
+
+    /**
+     * Nathan: Shortened variable to check the player state
+     */
+    private ClientModel.State _playerState = ClientFacade.SINGLETON.getClientModel().getState();
 
     public SliddingAdapter(Context context) {
         super(context, R.layout.sliding_item);
@@ -44,7 +53,7 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
         rejectButton.setTag(view);
 
         //Nathan: If the player is picking destination cards,
-        if(ClientFacade.SINGLETON.getClientModel().getState().equals(ClientModel.State.PICKING_DEST)){
+        if(_playerState.equals(FIRST_TURN) || _playerState.equals(ClientModel.State.YOUR_TURN)){
             rejectButton.setVisibility(View.VISIBLE); //He can see the reject button
         }
         else {
@@ -63,7 +72,9 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
                         final iDestCard slidingDeckModel = (iDestCard) item.getTag();
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
 
-                        ClientFacade.SINGLETON.getClientModel().getCurrent_player().updateCurrentDestinationCards(1);
+                        PlayerActionPresenter._SINGLETON.changePlayerState(PICKING_DEST);
+//                        ClientFacade.SINGLETON.getClientModel().getCurrent_player().updateCurrentDestinationCards(1);
+                        //TODO: SEND COMMAND TO SERVER
                         remove(slidingDeckModel);
                         //TODO: delete the card from the player model...
 //                        GameBoardPresenter._SINGLETON.

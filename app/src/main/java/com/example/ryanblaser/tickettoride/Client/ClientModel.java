@@ -37,10 +37,12 @@ public class ClientModel{
     }
 
     /**
-     * This helps determine what a player can do during his turn
+     * This determines what player action was COMPLETED.
+     * If a player picks a train card, the player's state goes to PICKING_1ST_TRAIN,
+     * if the player claims a route during his turn, the state goes to CLAIMING_ROUTE.
      */
     public enum State {
-        YOUR_TURN, NOT_YOUR_TURN, CLAIMING_ROUTE, PICKING_DEST, PICKING_TRAIN;
+        YOUR_TURN, NOT_YOUR_TURN, CLAIMING_ROUTE, PICKING_DEST, PICKING_1ST_TRAIN, PICKING_2ND_TRAIN, FIRST_TURN;
     }
 
     /**

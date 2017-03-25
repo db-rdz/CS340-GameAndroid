@@ -23,6 +23,7 @@ public class GetFaceUpTableTrainCardCommand implements ICommand {
     //Data member
     private int _i_gameId;
     private String authenticationCode;
+    private int FirstSecondCardPick;
 
     //Ryan: changed TrainCard to cardIndex to match the model
     private int _i_cardIndex;
@@ -30,9 +31,10 @@ public class GetFaceUpTableTrainCardCommand implements ICommand {
 
     //Constructors
     public GetFaceUpTableTrainCardCommand(){}
-    public GetFaceUpTableTrainCardCommand(int g, String code, int index, Boolean wild) {
+    public GetFaceUpTableTrainCardCommand(int g, String code, int FirstSecondCardPick, int index, Boolean wild) {
         _i_cardIndex = index;
         authenticationCode = code;
+        this.FirstSecondCardPick = FirstSecondCardPick;
         isWild = wild;
         _i_gameId = g;
     }
@@ -65,5 +67,7 @@ public class GetFaceUpTableTrainCardCommand implements ICommand {
         return _i_gameId;
     }
 
-
+    public int getFirstSecondCardPick() {
+        return FirstSecondCardPick;
+    }
 }
