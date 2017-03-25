@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -14,8 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.ChatMessagesPresenter;
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.List;
@@ -39,6 +39,24 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hideKeyboard(getContext());
+    }
+
+    /**
+     * Nathan: Closes keyboard on fragment start up.
+     * Keyboard pops up instantly because of the EditText for the chat
+     * @param ctx Context of the fragment
+     */
+    public static void hideKeyboard(Context ctx) {
+        InputMethodManager inputManager = (InputMethodManager) ctx
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View v = ((Activity) ctx).getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     /**
@@ -56,7 +74,7 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        List<String> messages = ClientFacade.SINGLETON.getClientModel().getChat();
+        List<String> messages = ChatMessagesPresenter._SINGLETON.getChat();
         ListView list = (ListView) v.findViewById(R.id.messagesList);
 
         textMessageView = (EditText) v.findViewById(R.id.text_message);
@@ -67,8 +85,8 @@ public class ChatFragment extends Fragment {
             public void onClick(View v) {
                 String textMessage = textMessageView.getText().toString();
 
-                ClientFacade.SINGLETON.getClientModel().getChat().add(textMessage);
-//                GameBoardPresenter._SINGLETON.sendMessage(textMessage);
+                ChatMessagesPresenter._SINGLETON.getChat().add(textMessage); //Comment out when sending to server
+//                ChatMessagesPresenter._SINGLETON.sendMessage(textMessage); //uncomment when sending to server
                 textMessageView.getText().clear(); //Clears the text after you send a message
                 closeKeyboard(getActivity(), textMessageView.getWindowToken());
             }

@@ -40,8 +40,6 @@ import java.util.List;
         @JsonSubTypes.Type(value = UpdatePlayerTrainCardsCommand.class),
         @JsonSubTypes.Type(value = UpdatePlayerDestinationCardsCommand.class),
         @JsonSubTypes.Type(value = UpdatePointsCommand.class),
-        @JsonSubTypes.Type(value = DestCard.class),
-        @JsonSubTypes.Type(value = TrainCard.class),
         @JsonSubTypes.Type(value = DeleteGameCommand.class)
 })
 public interface ICommand {

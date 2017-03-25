@@ -22,11 +22,10 @@ public class Player {
 
     }
 
-//    private PlayerCardHand _Hand = new PlayerCardHand();
     private String _userName = null;
-    private int _noOfTrainCards = 0;
-    private int _noOfDestCards = 0;
-    private int _playerColor = Color.MAGENTA; //Magenta is just an indicator is the correct color wasn't set
+    private int _noOfTrainCards = 4; //Each player starts with 4
+    private int _noOfDestCards = 3; //Each player starts with 3, then just subtracts it as he rejects them
+    private int _playerColor = Color.MAGENTA;
     private int _car_count = 45; //Each player always starts the game with 45 train cars
     private int _points = 0;
 
@@ -63,9 +62,9 @@ public class Player {
     /**
      * Nathan
      * Updates the number of destination cards by adding the gained amount of cards to the current total
-     * @param cardAmountToAdd
+     * @param cardAmountToSub
      */
-    public void updateCurrentDestinationCards(int cardAmountToAdd) { _noOfDestCards += cardAmountToAdd; }
+    public void updateCurrentDestinationCards(int cardAmountToSub) { _noOfDestCards -= cardAmountToSub; }
 
     //-------------------------------------GETTERS AND SETTERS------------------------------------//
 

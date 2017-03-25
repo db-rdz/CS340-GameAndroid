@@ -1,5 +1,7 @@
 package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,12 @@ public class ChatMessagesPresenter {
     List<String> chat;
 
     public ChatMessagesPresenter() {
-        chat = new ArrayList<>();
+        chat = ClientFacade.SINGLETON.getClientModel().getChat();
     }
+    public void sendMessage(String message){
+        ClientFacade.SINGLETON.broadcastToChat(message);
+    }
+
 
     public List<String> getChat() {
         return chat;

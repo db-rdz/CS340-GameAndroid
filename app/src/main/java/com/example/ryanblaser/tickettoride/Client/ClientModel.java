@@ -3,16 +3,21 @@ package com.example.ryanblaser.tickettoride.Client;
 import android.content.Intent;
 import android.util.Pair;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Board;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
+import com.example.ryanblaser.tickettoride.GUI.Activities.BoardActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.WaitingActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.List;
+
+import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.NOT_YOUR_TURN;
 
 /**
  * The ClientModel class will contain all the information needed for the logged in user.
@@ -21,21 +26,6 @@ import java.util.List;
  * and the client model will tell the GameBoardPresenter which data to show in the GUI.
  */
 public class ClientModel{
-    public ClientModel() {
-        gameActivity = null;
-        user = null;
-        current_player = null;
-        list_joinable = new ArrayList<>();
-        gameId_to_usernames = new Hashtable<>();
-        boolean_is_creator_of_game = false;
-        int_curr_gameId = 0;
-        chat = new ArrayList<>();
-        list_dest_cards = null;
-        list_players_in_game = null;
-        player_hand = new PlayerCardHand();
-        state = State.NOT_YOUR_TURN;
-    }
-
     /**
      * This determines what player action was COMPLETED.
      * If a player picks a train card, the player's state goes to PICKING_1ST_TRAIN,
@@ -82,7 +72,9 @@ public class ClientModel{
      * MainActivity used to call methods from it.
      * Used to update the list of games in the lobby
      */
-    private WaitingActivity gameActivity;
+    private WaitingActivity waitingActivity;
+
+    private BoardActivity boardActivity;
 
     /**
      * This determines if a player is the creator of the game.
@@ -107,30 +99,19 @@ public class ClientModel{
 
     private List<DestCard> list_dest_cards;
 
-    private List<Player> list_players_in_game;
-
     private PlayerCardHand player_hand;
 
     /**
      * Nathan:
-     * Determines what the player can do
+     * Determines what player action was just completed
      */
     private State state;
 
-    /**
-     * This will be initialized through the ClientFacade in the MainActivty.
-     * <pre>
-     * pre: mainActivity1 can't be null.
-     * post: All the variables in this clrass must be initialized. User and gameActivity MUST be null.
-     *
-     * </pre>
-     *
-     * @param mainActivity1 the context of the MainActivity
-     *
-     */
-    public ClientModel(MainActivity mainActivity1){
-        mainActivity = mainActivity1;
-        gameActivity = null;
+    private List<Scoreboard> scoreboard;
+
+    //Constructor
+    public ClientModel() {
+        waitingActivity = null;
         user = null;
         current_player = null;
         list_joinable = new ArrayList<>();
@@ -139,10 +120,37 @@ public class ClientModel{
         int_curr_gameId = 0;
         chat = new ArrayList<>();
         list_dest_cards = null;
-        list_players_in_game = null;
         player_hand = new PlayerCardHand();
-        state = State.NOT_YOUR_TURN;
+        state = NOT_YOUR_TURN;
+        scoreboard = new ArrayList<>();
     }
+
+    /**
+     * This will be initialized through the ClientFacade in the MainActivty.
+     * <pre>
+     * pre: mainActivity1 can't be null.
+     * post: All the variables in this clrass must be initialized. User and waitingActivity MUST be null.
+     *
+     * </pre>
+     *
+     * @param mainActivity1 the context of the MainActivity
+     *
+     */
+//    public ClientModel(MainActivity mainActivity1){
+//        mainActivity = mainActivity1;
+//        waitingActivity = null;
+//        user = null;
+//        current_player = null;
+//        list_joinable = new ArrayList<>();
+//        gameId_to_usernames = new Hashtable<>();
+//        boolean_is_creator_of_game = false;
+//        int_curr_gameId = 0;
+//        chat = new ArrayList<>();
+//        list_dest_cards = null;
+//        list_players_in_game = null;
+//        player_hand = new PlayerCardHand();
+//        state = NOT_YOUR_TURN;
+//    }
 
 
     /**
@@ -237,13 +245,12 @@ public class ClientModel{
         user = null;
         gameId_to_usernames.clear();
         mainActivity.logout();
-        gameActivity = null;
+        waitingActivity = null;
         str_authentication_code = "";
         list_dest_cards.clear();
         list_joinable.clear();
-        list_players_in_game.clear();
         chat.clear();
-        state = State.NOT_YOUR_TURN;
+        state = NOT_YOUR_TURN;
 
     }
 
@@ -253,37 +260,20 @@ public class ClientModel{
     }
 
     //---------------------------------------- PHASE 2
-    public Pair<List<String>, HashMap<String, Player>> getInfoForExpandable(){
-        List<Player> playerList = list_players_in_game;
-        List<String> usernameList = new ArrayList<>();
-        HashMap<String, Player> info = new HashMap<>();
-        for(int i = 0; i < playerList.size(); i++){
-            String username = playerList.get(i).get_userName();
-            usernameList.add(username);
-            info.put(username, playerList.get(i));
+
+    /**
+     * Nathan: Used for the PlayerInfoFragment
+     * @return A Pair of a list of usernames and a list of scoreboards for each individual player
+     */
+    public Pair<List<String>, List<Scoreboard>> getInfoForExpandable(){
+        List<String> usernameList = gameId_to_usernames.get(int_curr_gameId);
+        LinkedHashMap<String, Scoreboard> info = new LinkedHashMap<>();
+
+        for(int i = 0; i < usernameList.size(); i++){
+            info.put(usernameList.get(i), scoreboard.get(i)); //Each name will be mapped to their scoreboard
         }
 
-        Pair<List<String>, HashMap<String, Player>> adapterInfo =
-                new Pair<>(usernameList, info);
-
-        return adapterInfo;
-    }
-
-    public Pair<List<String>, HashMap<String, String>> getInfoForExpandables(){
-        List<String> playerList = gameId_to_usernames.get(int_curr_gameId);
-        List<String> usernameList = new ArrayList<>();
-        HashMap<String, String> info = new HashMap<>();
-
-        for(int i = 0; i < playerList.size(); i++){
-            String username = playerList.get(i);
-            usernameList.add(username);
-            info.put(username, playerList.get(i));
-        }
-
-        Pair<List<String>, HashMap<String, String>> adapterInfo =
-                new Pair<>(usernameList, info);
-
-        return adapterInfo;
+        return new Pair<>(usernameList, scoreboard);
     }
 
     //Getters and Setters
@@ -327,12 +317,20 @@ public class ClientModel{
         this.mainActivity = mainActivity;
     }
 
-    public WaitingActivity getGameActivity() {
-        return gameActivity;
+    public WaitingActivity getWaitingActivity() {
+        return waitingActivity;
     }
 
-    public void setGameActivity(WaitingActivity gameActivity) {
-        this.gameActivity = gameActivity;
+    public void setWaitingActivity(WaitingActivity waitingActivity) {
+        this.waitingActivity = waitingActivity;
+    }
+
+    public BoardActivity getBoardActivity() {
+        return boardActivity;
+    }
+
+    public void setBoardActivity(BoardActivity boardActivity) {
+        this.boardActivity = boardActivity;
     }
 
     public Boolean getBoolean_is_creator_of_game() {
@@ -375,14 +373,6 @@ public class ClientModel{
         this.list_dest_cards = list_dest_cards;
     }
 
-    public List<Player> getList_players_in_game() {
-        return list_players_in_game;
-    }
-
-    public void setList_players_in_game(List<Player> list_players_in_game) {
-        this.list_players_in_game = list_players_in_game;
-    }
-
     public PlayerCardHand getPlayer_hand() {
         return player_hand;
     }
@@ -397,5 +387,13 @@ public class ClientModel{
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public List<Scoreboard> getScoreboard() {
+        return scoreboard;
+    }
+
+    public void setScoreboard(List<Scoreboard> scoreboard) {
+        this.scoreboard = scoreboard;
     }
 }

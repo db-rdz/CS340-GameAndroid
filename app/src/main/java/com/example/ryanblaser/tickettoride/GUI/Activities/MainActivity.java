@@ -128,21 +128,9 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getBaseContext(), "Logging in!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "You're logged in!", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public void showRegisterMessage() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getBaseContext(), "Registering new user", Toast.LENGTH_SHORT).show();
-
-
-            }
-        });
-
     }
 
     public void showSocketTimeoutMessage() {

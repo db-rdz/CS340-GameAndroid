@@ -27,9 +27,11 @@ import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerC
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.RESPONSE_STATUS;
 import com.example.ryanblaser.tickettoride.R;
 
+import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.CLAIMING_ROUTE;
 import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.FIRST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.YOUR_TURN;
 import static java.security.AccessController.getContext;
@@ -46,7 +48,7 @@ public class GameBoardFragment extends Fragment {
     /**
      * Nathan: Shortened variable to check the player state
      */
-    private ClientModel.State _playerState = ClientFacade.SINGLETON.getClientModel().getState();
+    private ClientModel.State _playerState = PlayerActionPresenter._SINGLETON.get_playerState();
     //-----------------------VIEWS/LAYOUT-------------------//
     private View mContentView;
     private View mControlsView;
@@ -161,6 +163,12 @@ public class GameBoardFragment extends Fragment {
         hideKeyboard(getContext());
     }
 
+    /**
+     * Nathan: Closes keyboard on fragment start up.
+     * Keyboard pops up instantly because of the EditText for the chat and wouldn't hide
+     * when switching fragments
+     * @param ctx Context of the fragment
+     */
     public static void hideKeyboard(Context ctx) {
         InputMethodManager inputManager = (InputMethodManager) ctx
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -187,7 +195,7 @@ public class GameBoardFragment extends Fragment {
         setPlayerCardViewValues();
 
 
-        if (!_playerState.equals(FIRST_TURN) || _playerState.equals(YOUR_TURN)) {
+        if (!_playerState.equals(FIRST_TURN) && _playerState.equals(YOUR_TURN)) {
 
             v.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -242,7 +250,7 @@ public class GameBoardFragment extends Fragment {
 
     public void setPlayerCardViewValues(){
 //        Player clientPlayer = GameBoardPresenter._SINGLETON.getClientPlayer();
-//        Player clientPlayer = ClientFacade.SINGLETON.getClientModel().getCurrent_player();
+        Player clientPlayer = ClientFacade.SINGLETON.getClientModel().getCurrent_player();
         PlayerCardHand hand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
 
         _blackCardCount.setText(String.valueOf(hand.get_cardCount().get("blackcard")));

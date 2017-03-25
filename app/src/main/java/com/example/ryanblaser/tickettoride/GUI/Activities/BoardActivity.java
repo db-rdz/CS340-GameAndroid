@@ -3,8 +3,11 @@ package com.example.ryanblaser.tickettoride.GUI.Activities;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.PageAdapter;
+import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
 import com.example.ryanblaser.tickettoride.R;
 
 /**
@@ -32,20 +35,16 @@ public class BoardActivity extends AppCompatActivity {
     private PageAdapter mPagerAdapter;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_board);
-
+        ClientFacade.SINGLETON.getClientModel().setBoardActivity(this);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new PageAdapter(this.getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-
-
-
 
 
 //        mContentView.setOnTouchListener(new View.OnTouchListener(){
@@ -73,5 +72,16 @@ public class BoardActivity extends AppCompatActivity {
 
     }
 
+    public void turnGetTrainCardButtonOff() {
+        findViewById(R.id.getTrainCard).setVisibility(View.INVISIBLE);
+    }
+
+    public void turnKeepAllButtonOff() {
+        findViewById(R.id.keep_allCards).setVisibility(View.GONE);
+    }
+
+    public void turnRejectButtonOff() {
+        findViewById(R.id.reject).setVisibility(View.INVISIBLE);
+    }
 
 }

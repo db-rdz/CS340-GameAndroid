@@ -1,12 +1,15 @@
 package com.example.ryanblaser.tickettoride.GUI.Adapters;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ClientModel;
@@ -14,7 +17,6 @@ import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCar
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
-import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
 import com.example.ryanblaser.tickettoride.R;
 import com.redbooth.SlidingDeck;
 
@@ -72,47 +74,25 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
         _getButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final SlidingDeck slidingDeck = (SlidingDeck)parent;
+                final SlidingDeck slidingDeck = (SlidingDeck) parent;
+
                 slidingDeck.swipeItem((View)view.getTag(), new SlidingDeck.SwipeEventListener() {
                     @Override
                     public void onSwipe(SlidingDeck parent, View item) {
                         final TrainCard slidingDeckModel = (TrainCard) item.getTag();
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
 
-                        //TODO: Prevent player from picking a rainbow card if he picked another card from the face up already.
-                        String type = slidingDeckModel.getType();
-                        PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
-                        playerHand.addOneToCardCount(type); //Increases total card count to player hand
+                        pickingTrainCard(slidingDeckModel, item);
+                        if (amountOfCardsTaken == 2) {
+                            _getButton.setVisibility(View.INVISIBLE);
+                            amountOfCardsTaken = 0;
+                            PlayerActionPresenter._SINGLETON.set_playerState(YOUR_TURN);
+                        }
 
-
-                        GameBoardPresenter._SINGLETON.refreshCardCounters();
-                        remove(slidingDeckModel);
-
-                        //TODO: delete the card from the player model...
-                        GameBoardPresenter._SINGLETON.refreshBoard();
-                        PlayerInfoPresenter._SINGLETON.refreshPlayerInfo();
+                        //TODO: refresh fragment to get rid of some buttons
+                        ClientFacade.SINGLETON.getClientModel().getBoardActivity().turnKeepAllButtonOff();
+                        ClientFacade.SINGLETON.getClientModel().getBoardActivity().turnRejectButtonOff();
                         notifyDataSetChanged();
-
-                        if (slidingDeckModel.getType().equals("rainbowcard") && amountOfCardsTaken == 0) {
-                            PlayerActionPresenter._SINGLETON.changePlayerState(NOT_YOUR_TURN);
-                            //TODO: need to refresh the fragment view for the state to take affect on visibility
-                            PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(amountOfCardsTaken, item.getId(), true);
-
-                        }
-                        else {
-                            changePlayerState();
-                            PlayerActionPresenter._SINGLETON.changePlayerState(PICKING_1ST_TRAIN);
-                            amountOfCardsTaken++;
-                            //TODO: need to refresh the fragment view for the state to take affect on visibility
-                            //TODO: SEND COMMAND TO SERVER
-
-//                            PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(item.getId(), false);
-                            if (amountOfCardsTaken == 2) {
-                                amountOfCardsTaken = 0;
-                                PlayerActionPresenter._SINGLETON.changePlayerState(NOT_YOUR_TURN);
-                            }
-
-                        }
                     }
                 });
             }
@@ -121,15 +101,51 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
         return view;
     }
 
+    private void pickingTrainCard(TrainCard slidingDeckModel, View item) {
+        //Can only pick rainbow cards if on first face up train card draw
+        if (slidingDeckModel.getType().equals("rainbowcard") && amountOfCardsTaken == 0) {
+            PlayerActionPresenter._SINGLETON.set_playerState(NOT_YOUR_TURN);
+
+            String type = slidingDeckModel.getType();
+            PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
+            playerHand.addOneToCardCount(type); //Increases total card count to player hand
+            remove(slidingDeckModel);
+
+//            PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(amountOfCardsTaken, item.getId(), true);
+        }
+        else { //Picking any other cards
+            if (slidingDeckModel.getType().equals("rainbowcard")) {
+                String message = "Can only pick rainbow card when picking first card\n Please pick another card";
+                Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
+                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                if( v != null) v.setGravity(Gravity.CENTER);
+                toast.show();
+            }
+            else {
+                changePlayerState();
+                amountOfCardsTaken++;
+
+                String type = slidingDeckModel.getType();
+                PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
+                playerHand.addOneToCardCount(type); //Increases total card count to player hand
+                remove(slidingDeckModel);
+
+                //TODO: SEND COMMAND TO SERVER
+//            PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(amountOfCardsTaken, item.getId(), false);
+
+            }
+        }
+    }
+
     /**
      * Nathan: Determines the state of the player according to how many cards he has draw already
      */
     private void changePlayerState() {
         if (amountOfCardsTaken == 0) {
-            _playerState = PICKING_1ST_TRAIN;
+            PlayerActionPresenter._SINGLETON.set_playerState(PICKING_1ST_TRAIN);
         }
         else if (amountOfCardsTaken == 1) {
-            _playerState = PICKING_2ND_TRAIN;
+            PlayerActionPresenter._SINGLETON.set_playerState(PICKING_2ND_TRAIN);
         }
     }
 
@@ -139,5 +155,9 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
 
     public static void setAmountOfCardsTaken(int amountOfCardsTaken) {
         SlidingTrainCardAdapter.amountOfCardsTaken = amountOfCardsTaken;
+    }
+
+    public Button get_getButton() {
+        return _getButton;
     }
 }

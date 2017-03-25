@@ -9,6 +9,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
+import com.example.ryanblaser.tickettoride.Client.Scoreboard;
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.HashMap;
@@ -22,28 +23,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
     private List<String> _listDataHeader;
-    private HashMap<String, Player> _listDataChild;
-    private HashMap<String, String> _scoreboard; //TESTING
-
+    private List<Scoreboard> _listDataChild;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, Player> listChildData) {
+                                 List<Scoreboard> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
     }
 
-//    //TESTING
-//    public ExpandableListAdapter(Context context, List<String> listDataHeader,
-//                                 HashMap<String, String> _scoreboard) {
-//        this._context = context;
-//        this._listDataHeader = listDataHeader;
-//        this._scoreboard = _scoreboard;
-//    }
-
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition));
+        return this._listDataChild.get(groupPosition);
     }
 
     @Override
@@ -55,8 +46,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final Player childPlayer = (Player) getChild(groupPosition, childPosition);
-//        final String player = (String) getChild(groupPosition, childPosition); //TESTING
+        final Scoreboard childPlayer = (Scoreboard) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -73,9 +63,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView DestinationCards = (TextView) convertView
                 .findViewById(R.id.destinationCards);
 
-        String pointsText = "Points: " + String.valueOf(childPlayer.get_points());
-        String trainCardsText = "Train Cards: " + String.valueOf(childPlayer.get_noOfTrainCards());
-        String destCardsText = "Destination Cards: " + String.valueOf(childPlayer.get_noOfDestCards() );
+        String pointsText = "Points: " + String.valueOf(childPlayer.getPoints());
+        String trainCardsText = "Train Cards: " + String.valueOf(childPlayer.getNumberOfTrainCards());
+        String destCardsText = "Destination Cards: " + String.valueOf(childPlayer.getNumberOfDestCards() );
 
         Points.setText( pointsText );
         TrainCards.setText( trainCardsText );
@@ -86,7 +76,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        if(this._listDataChild.get(this._listDataHeader.get(groupPosition)) != null){
+        if(this._listDataChild.get(groupPosition) != null){
             return 1;
         }
         return 0;
@@ -121,7 +111,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
-        Player currentPlayer = _listDataChild.get(headerTitle);
+        Scoreboard currentPlayer = _listDataChild.get(groupPosition);
         lblListHeader.setBackgroundColor(currentPlayer.get_playerColor());
 
         return convertView;

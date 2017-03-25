@@ -34,14 +34,14 @@ public class LoginRegisterResponseCommand implements ICommand {
             LobbyPresenter.SINGLETON.refreshGameLobby();
         }
         else {
-            if (!validCredentials && !userRegisteredAlready) {
+            if (userRegisteredAlready) { //register
+                LoginPresenter.SINGLETON.showUserRegisteredAlready();
+            }
+            else if (!validCredentials && !userRegisteredAlready) {
                 LoginPresenter.SINGLETON.showBadCredentials();
             }
             else if (userLoggedInAlready && !userRegisteredAlready) {
                 LoginPresenter.SINGLETON.showUserLoggedInAlready();
-            }
-            else if (userRegisteredAlready) { //register
-                LoginPresenter.SINGLETON.showUserRegisteredAlready();
             }
         }
         return null;

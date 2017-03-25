@@ -13,6 +13,7 @@ import android.widget.ExpandableListView;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
+import com.example.ryanblaser.tickettoride.Client.Scoreboard;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.ExpandableListAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
@@ -50,6 +51,12 @@ public class PlayersInfoFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Nathan: Closes keyboard on fragment start up.
+     * Keyboard pops up instantly because of the EditText for the chat and wouldn't hide
+     * when switching fragments
+     * @param ctx Context of the fragment
+     */
     public static void hideKeyboard(Context ctx) {
         InputMethodManager inputManager = (InputMethodManager) ctx
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -80,14 +87,13 @@ public class PlayersInfoFragment extends Fragment {
         List<String> headers = new ArrayList<>();
         headers.add("Players");
 
-        //TODO: Fix the adapter for the player info
-//        Pair<List<String>, HashMap<String, Player>> info
-//                = GameBoardPresenter._SINGLETON.getInfoForExpandable();
-//                = ClientFacade.SINGLETON.getClientModel().getInfoForExpandable();
+        //Nathan: Changed adapter to use the Scoreboard class
+        Pair<List<String>, List<Scoreboard>> info
+                = ClientFacade.SINGLETON.getClientModel().getInfoForExpandable();
 
-//        ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
-//
-//        _expListView.setAdapter(listAdapter);
+        ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
+
+        _expListView.setAdapter(listAdapter);
 
 
         return v;

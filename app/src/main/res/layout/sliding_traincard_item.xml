@@ -4,32 +4,32 @@
     android:layout_height="match_parent">
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/trainCard"
+            android:layout_width="140dp"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bluecard" />
+
+        <Button
+            android:id="@+id/getTrainCard"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="53dp"
+            android:layout_height="40dp"
+            android:elevation="1dp"
+            android:text="GET"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <ImageView
-                android:id="@+id/trainCard"
-                android:layout_width="186dp"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bluecard" />
-
-            <Button
-                android:id="@+id/getTrainCard"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="53dp"
-                android:layout_height="40dp"
-                android:elevation="1dp"
-                android:text="GET"
-                android:textSize="12sp" />
-
-        </RelativeLayout>
 
     </android.support.v7.widget.LinearLayoutCompat>
 

@@ -2,6 +2,7 @@ package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ClientModel;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayerActionFragment;
 import com.example.ryanblaser.tickettoride.R;
@@ -22,7 +23,7 @@ public class PlayerActionPresenter {
     private PlayerActionFragment _playerActionFragment;
     private Map<String, Integer> _trainCardMap = new HashMap<String, Integer>();
     private List<TrainCard> _faceUpTrainCards = new ArrayList<>();
-
+    private List<DestCard> _destCards = new ArrayList<>();
 
     public PlayerActionPresenter(){
 
@@ -62,10 +63,6 @@ public class PlayerActionPresenter {
         ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(FirstSecondCardPick, id, b);
     }
 
-    public void changePlayerState(ClientModel.State state) {
-        ClientFacade.SINGLETON.getClientModel().setState(state);
-    }
-
     public void getTopDeckTrainCardCommand(int FirstSecondCardPick) {
         ClientFacade.SINGLETON.getTopDeckTrainCardCommand(FirstSecondCardPick);
     }
@@ -84,6 +81,14 @@ public class PlayerActionPresenter {
         this._faceUpTrainCards = _faceUpTrainCards;
     }
 
+    public List<DestCard> get_destCards() {
+        return ClientFacade.SINGLETON.getClientModel().getList_dest_cards();
+    }
 
-
+    public ClientModel.State get_playerState() {
+        return ClientFacade.SINGLETON.getClientModel().getState();
+    }
+    public void set_playerState(ClientModel.State _playerState) {
+        ClientFacade.SINGLETON.getClientModel().setState(_playerState);
+    }
 }

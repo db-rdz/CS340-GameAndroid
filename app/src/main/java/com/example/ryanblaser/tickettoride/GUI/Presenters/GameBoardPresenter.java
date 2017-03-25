@@ -185,16 +185,18 @@ public class GameBoardPresenter {
     private Pair<RESPONSE_STATUS, String> claimRoute(Route route){
         if(route.get_Owner() == null){
             changePlayerState(ClientModel.State.CLAIMING_ROUTE);
-            route.set_Owner(get_PlayerUserName());
-//            route.set_Owner(playerUsername());
+//            route.set_Owner(get_PlayerUserName());
             String toastText =  "You have claimed route " + _firstCityClicked.get_S_name() + "-" +
                     _secondCityClicked.get_S_name();
 
-            ClientFacade.SINGLETON.claimRoute(route); //Sends the route claimed
+            //TODO: refresh fragment to get rid of buttons
+            //TODO: get rid of buttons depending on state
+            //TODO: SEND COMMAND TO SERVER
+//            ClientFacade.SINGLETON.claimRoute(route); //Sends the route claimed
+//            ClientFacade.SINGLETON.broadcastToChat(broadcast);
 
             String broadcast = route.get_Owner() + " has claimed route " + _firstCityClicked.get_S_name() + "-" +
                     _secondCityClicked.get_S_name();
-            ClientFacade.SINGLETON.broadcastToChat(broadcast);
 
             resetViewLogicVariables();
             return new Pair<>(RESPONSE_STATUS.CLAIMED_ROUTE, toastText);
@@ -235,10 +237,6 @@ public class GameBoardPresenter {
 
 
     //------------------------------------VIEW COMMANDS-------------------------------------------//
-
-    public void sendMessage(String message){
-        ClientFacade.SINGLETON.broadcastToChat(message);
-    }
 
     public void refreshBoard(){
         _boardFragment.invalidateBoard();

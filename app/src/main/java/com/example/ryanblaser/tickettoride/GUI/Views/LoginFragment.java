@@ -75,12 +75,11 @@ public class LoginFragment extends Fragment {
      *
      * @return A new instance of fragment LoginFragment.
      */
-    public static com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment newInstance(User user) {
-        com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment fragment = new com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment();
+    public static LoginFragment newInstance(User user) {
+        LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
         args.putString(string_username, user.getUsername());
         args.putString(string_password, user.getPassword());
-        //TODO: What about the server and port?
 
         fragment.setArguments(args);
         return fragment;
@@ -112,12 +111,6 @@ public class LoginFragment extends Fragment {
         editText_password = (EditText) view.findViewById(R.id.editText_password);
         editText_server = (EditText) view.findViewById(R.id.editText_server);
         editText_port = (EditText) view.findViewById(R.id.editText_port);
-
-//        try {
-//            editText_server.setText(InetAddress.getLocalHost().getHostAddress());
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//        }
 
 
         //This part links the buttons to the code.
