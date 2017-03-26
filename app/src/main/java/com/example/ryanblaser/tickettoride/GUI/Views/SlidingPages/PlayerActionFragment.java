@@ -48,7 +48,7 @@ public class PlayerActionFragment extends Fragment {
     public static final String ARG_PAGE = "page";
 
 
-    public static PlayerActionFragment newInstance(String param1, String param2) {
+    public static PlayerActionFragment newInstance() {
         PlayerActionFragment fragment = new PlayerActionFragment();
         return fragment;
     }
@@ -61,29 +61,11 @@ public class PlayerActionFragment extends Fragment {
         return fragment;
     }
 
-    /**
-     * Nathan: Closes keyboard on fragment start up.
-     * Keyboard pops up instantly because of the EditText for the chat and wouldn't hide
-     * when switching fragments
-     * @param ctx Context of the fragment
-     */
-    public static void hideKeyboard(Context ctx) {
-        InputMethodManager inputManager = (InputMethodManager) ctx
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        // check if no view has focus:
-        View v = ((Activity) ctx).getCurrentFocus();
-        if (v == null)
-            return;
-
-        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PlayerActionPresenter._SINGLETON.initTrainCardMap();
-        hideKeyboard(getContext());
     }
 
     @Override
@@ -118,10 +100,10 @@ public class PlayerActionFragment extends Fragment {
 
         //Nathan: If the player isn't on his first turn, and is his turn/picking train cards,
         if ((_playerState.equals(PICKING_1ST_TRAIN) || _playerState.equals(YOUR_TURN)) && !_playerState.equals(FIRST_TURN)) {
-            _trainDeck.setClickable(true); //Can press the deck to get a card
+            _trainDeck.setVisibility(View.VISIBLE); //Can press the deck to get a card
         }
         else {
-            _trainDeck.setClickable(false);
+            _trainDeck.setVisibility(View.INVISIBLE);
         }
 
         _keepAllCards.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +142,7 @@ public class PlayerActionFragment extends Fragment {
                     //TODO: refresh fragment to get rid of buttons
                     //TODO: get rid of buttons depending on state
                     //TODO: SEND COMMAND TO SERVER
-//                    PlayerActionPresenter._SINGLETON.getTopDeckTrainCardCommand(SlidingTrainCardAdapter.getAmountOfCardsTaken());
+                    PlayerActionPresenter._SINGLETON.getTopDeckTrainCardCommand(SlidingTrainCardAdapter.getAmountOfCardsTaken());
 
                     //Reset the amount of cards drawn back to 0, and change player state
                     if (SlidingTrainCardAdapter.getAmountOfCardsTaken() == 2) {
@@ -200,4 +182,7 @@ public class PlayerActionFragment extends Fragment {
         super.onDetach();
     }
 
+    public void refreshPlayerAction() {
+
+    }
 }

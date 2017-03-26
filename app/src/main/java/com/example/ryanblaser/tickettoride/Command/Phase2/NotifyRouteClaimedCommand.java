@@ -1,8 +1,10 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Activities.BoardActivity;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,17 +20,20 @@ import java.util.List;
 public class NotifyRouteClaimedCommand implements ICommand {
 
     //Data members
-    private List<String> str_messages;
+    private String str_message;
+    private Route route;
 
     //Constructor
-    public NotifyRouteClaimedCommand(List<String> str_message) {
-        this.str_messages = str_message;
+    public NotifyRouteClaimedCommand(String str_message, Route r) {
+        this.str_message = str_message;
+        route = r;
     }
 
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.showMessage(str_messages);
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyRouteClaimed(str_message);
+        //TODO: Update board with route
         return null;
     }
 
@@ -44,7 +49,13 @@ public class NotifyRouteClaimedCommand implements ICommand {
         return null;
     }
 
-    public List<String> getStr_messages() {
-        return str_messages;
+
+    public String getStr_message() {
+        return str_message;
+    }
+
+    public Route getRoute()
+    {
+        return route;
     }
 }

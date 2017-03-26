@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ClientModel;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.GUI.Activities.BoardActivity;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
@@ -72,7 +73,7 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
                 slidingDeck.swipeItem((View)view.getTag(), new SlidingDeck.SwipeEventListener() {
                     @Override
                     public void onSwipe(SlidingDeck parent, View item) {
-                        final iDestCard slidingDeckModel = (iDestCard) item.getTag();
+                        final DestCard slidingDeckModel = (DestCard) item.getTag();
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
                         View container = (View)item.getParent().getParent();
 
@@ -88,6 +89,7 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
                         //TODO: refresh fragment view to get rid of buttons
                         //TODO: get rid of buttons depending on state
                         //TODO: SEND COMMAND TO SERVER
+                        PlayerActionPresenter._SINGLETON.rejectDestCard(slidingDeckModel);
                         remove(slidingDeckModel);
                         ClientFacade.SINGLETON.getClientModel().getBoardActivity().turnGetTrainCardButtonOff();
                         notifyDataSetChanged();

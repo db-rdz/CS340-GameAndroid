@@ -1,4 +1,5 @@
 package com.example.ryanblaser.tickettoride.Server;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
@@ -11,7 +12,6 @@ import java.util.List;
  */
 
 public interface IServer {
-
 
     public static class GameIsFullException extends Exception {
     }
@@ -27,5 +27,6 @@ public interface IServer {
     public void claimRoute(Route route, String authenticationCode, int gameId);
     public void getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int FirstSecondCardPick, int trainCardIndex, Boolean isWild);
     public void getTopDeckTrainCardCommand(int gameId, String authenticationCode, int firstSecondCardPick);
+    public void rejectDestCard(int gameId, String authenticationCode, DestCard slidingDeckModel);
 
 }

@@ -8,27 +8,29 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.ryanblaser.tickettoride.GUI.Presenters.ChatMessagesPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.ChatPresenter;
 import com.example.ryanblaser.tickettoride.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatFragment extends Fragment {
 
     EditText textMessageView;
+    private ListView listView_chat;
+    private ArrayAdapter<String> list_of_messages;
 
     public ChatFragment() {
         // Required empty public constructor
     }
 
-    public static ChatFragment newInstance(String param1, String param2) {
+    public static ChatFragment newInstance() {
         ChatFragment fragment = new ChatFragment();
         Bundle args = new Bundle();
 
@@ -74,8 +76,7 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        List<String> messages = ChatMessagesPresenter._SINGLETON.getChat();
-        ListView list = (ListView) v.findViewById(R.id.messagesList);
+        listView_chat = (ListView) v.findViewById(R.id.messagesList);
 
         textMessageView = (EditText) v.findViewById(R.id.text_message);
 
@@ -85,17 +86,43 @@ public class ChatFragment extends Fragment {
             public void onClick(View v) {
                 String textMessage = textMessageView.getText().toString();
 
-                ChatMessagesPresenter._SINGLETON.getChat().add(textMessage); //Comment out when sending to server
-//                ChatMessagesPresenter._SINGLETON.sendMessage(textMessage); //uncomment when sending to server
+//                ChatPresenter._SINGLETON.getChat().add(textMessage); //Comment out when sending to server
+                ChatPresenter._SINGLETON.sendMessage(textMessage); //uncomment when sending to server
                 textMessageView.getText().clear(); //Clears the text after you send a message
                 closeKeyboard(getActivity(), textMessageView.getWindowToken());
             }
         });
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(getContext(), R.layout.message_view, messages);
-        list.setAdapter(adapter);
-
         return v;
+    }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        List<String> chatroom = ChatPresenter._SINGLETON.getChat();
+        List<String> messages = new ArrayList<>();
+        for (int i = 0; i < chatroom.size(); i++) {
+            messages.add(chatroom.get(i));
+        }
+
+        list_of_messages = new ArrayAdapter<String>(getContext(), R.layout.row_info, messages);
+        listView_chat.setAdapter(list_of_messages);
+        list_of_messages.notifyDataSetChanged();
+    }
+
+    public void refreshChat() {
+        List<String> chatroom = ChatPresenter._SINGLETON.getChat();
+        List<String> messages = new ArrayList<>();
+        for (int i = 0; i < chatroom.size(); i++) {
+            messages.add(chatroom.get(i));
+        }
+
+        list_of_messages = new ArrayAdapter<String>(getContext(), R.layout.row_info, messages);
+        listView_chat.setAdapter(list_of_messages);
+        list_of_messages.notifyDataSetChanged();
     }
 
     @Override

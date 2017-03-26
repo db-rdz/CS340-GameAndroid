@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.Scoreboard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -15,20 +16,21 @@ import java.util.List;
  * Created by natha on 2/27/2017.
  */
 
-public class UpdatePointsCommand implements ICommand {
+public class UpdateScoreboardCommand implements ICommand {
 
     //Data members
-    private int int_points_to_add;
+    private List<Scoreboard> scoreboards;
 
     //Constructor
-    public UpdatePointsCommand(int int_points_to_add) {
-        this.int_points_to_add = int_points_to_add;
+    public UpdateScoreboardCommand(){}
+    public UpdateScoreboardCommand(List<Scoreboard> s) {
+        scoreboards = s;
     }
 
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.updatePoints(int_points_to_add);
+        ClientFacade.SINGLETON.getClientModel().setScoreboard(scoreboards);
         return null;
     }
 
@@ -45,7 +47,8 @@ public class UpdatePointsCommand implements ICommand {
     }
 
 
-    public int getInt_points_to_add() {
-        return int_points_to_add;
+    public List<Scoreboard> getScoreboards() {
+        return scoreboards;
     }
+
 }

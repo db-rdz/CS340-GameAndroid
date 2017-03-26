@@ -174,6 +174,7 @@ public class LoginFragment extends Fragment {
             Toast.makeText(getContext(), "Please fill in empty fields", Toast.LENGTH_SHORT).show();
         }
         else { //Every field is filled in
+//            Toast.makeText(getContext(), "Logging in", Toast.LENGTH_SHORT).show();
             string_server_address = string_ipAddress + ":"; //static is initialized now
             string_server_port = string_port;
 

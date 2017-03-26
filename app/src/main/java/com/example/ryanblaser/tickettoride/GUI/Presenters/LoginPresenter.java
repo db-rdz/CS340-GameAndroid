@@ -43,7 +43,7 @@ public class LoginPresenter implements ILoginPresenter {
     }
 
     public void switchToLobbyView() {
-        MainActivity.getLoginFragment().switchToLobbyView();
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().getLoginFragment().switchToLobbyView();
     }
 
     @Override

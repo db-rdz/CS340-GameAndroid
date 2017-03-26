@@ -48,7 +48,7 @@ public class SwitchToWaitingActivityCommand implements ICommand { // sent after 
         ClientFacade.SINGLETON.getClientModel().setInt_curr_gameId(gameId);
 
         LobbyPresenter.SINGLETON.switchToWaitingView();
-        return null; //Since client side is all void
+        return null;
     }
 
     public int getGameId() {

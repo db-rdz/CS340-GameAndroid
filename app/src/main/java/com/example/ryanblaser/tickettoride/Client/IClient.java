@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
@@ -12,9 +13,10 @@ import java.util.List;
 
 public interface IClient {
 
+
     /*
-     * Created own Exceptions for when checking login authorization
-     */
+         * Created own Exceptions for when checking login authorization
+         */
     public static class InvalidUsername extends Exception {
 
     }
@@ -50,9 +52,7 @@ public interface IClient {
     public void getDestinationCards();
     public void getFaceUpTableTrainCardCommand(int FirstSecondCardPick, int id, Boolean isWild);
     public void getTopDeckTrainCardCommand(int FirstSecondCardPick);
-    public void selectRequestedDestinationCard();
-
-    public void showMessage(List<String> messages);
+    public void rejectDestCard(DestCard slidingDeckModel);
     public void updateCarCount(int numOfCarsUsed);
     public void updateFaceUpTableTrainCards();
     public void updatePlayerDestinationCards(int addDestCardAmount);

@@ -3,6 +3,7 @@ package com.example.ryanblaser.tickettoride.Command.Phase2;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.ChatPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,6 +24,7 @@ public class ShowMessageCommand implements ICommand {
     private List<String> chatRoom;
 
     //Constructor
+    public ShowMessageCommand(){}
     public ShowMessageCommand(List<String> chat) {
         chatRoom = chat;
     }
@@ -30,7 +32,8 @@ public class ShowMessageCommand implements ICommand {
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.showMessage(chatRoom);
+        ChatPresenter._SINGLETON.setChat(chatRoom);
+        ChatPresenter._SINGLETON.refreshChat(); //ERROR IN THE ArrayAdapter
         return null;
     }
 
@@ -45,6 +48,7 @@ public class ShowMessageCommand implements ICommand {
     public User getUser() {
         return null;
     }
+
 
     public List<String> getChatRoom() {
         return chatRoom;

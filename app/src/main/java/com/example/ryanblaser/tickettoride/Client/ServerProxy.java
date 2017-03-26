@@ -3,6 +3,7 @@ package com.example.ryanblaser.tickettoride.Client;
 
 import android.util.Log;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToServerCommand;
@@ -12,6 +13,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase2.BroadcastToChatCommand
 import com.example.ryanblaser.tickettoride.Command.Phase2.ClaimRouteCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetFaceUpTableTrainCardCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetTopDeckTrainCardCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.RejectDestinationCardCommand;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
@@ -231,6 +233,21 @@ public class ServerProxy implements IServer {
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, getTopDeckTrainCardCommand);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void rejectDestCard(int gameId, String authenticationCode, DestCard slidingDeckModel) {
+        String urlSuffix = "/command";
+
+        ICommand rejectDestCard = new RejectDestinationCardCommand(gameId, authenticationCode, slidingDeckModel);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, rejectDestCard);
             clientCommunicator.execute(url);
         } catch (Exception e) {
             e.printStackTrace();

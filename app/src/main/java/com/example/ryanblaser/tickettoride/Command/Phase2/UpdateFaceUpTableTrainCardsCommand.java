@@ -38,6 +38,7 @@ public class UpdateFaceUpTableTrainCardsCommand implements ICommand {
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(trainCards);
+        //Copy The ChatPresenter chatFragment = new ChatFragment()
         return null;
     }
 

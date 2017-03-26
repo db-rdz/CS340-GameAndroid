@@ -8,11 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.Scoreboard;
 import com.example.ryanblaser.tickettoride.R;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -112,7 +110,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
         Scoreboard currentPlayer = _listDataChild.get(groupPosition);
-        lblListHeader.setBackgroundColor(currentPlayer.get_playerColor());
+        lblListHeader.setBackgroundColor(currentPlayer.get_stringToAndroidColor());
 
         return convertView;
     }

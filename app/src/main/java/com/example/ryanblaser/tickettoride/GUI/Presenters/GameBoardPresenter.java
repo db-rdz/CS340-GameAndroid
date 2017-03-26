@@ -26,7 +26,7 @@ import java.util.List;
 public class GameBoardPresenter {
 
     public static GameBoardPresenter _SINGLETON  = new GameBoardPresenter();
-    public static GameBoardFragment _boardFragment = null;
+    public static GameBoardFragment _boardFragment = new GameBoardFragment();
 
     //---------------------VIEW LOGIC VARIABLES--------------//
     private City _firstCityClicked = null;
@@ -239,7 +239,8 @@ public class GameBoardPresenter {
     //------------------------------------VIEW COMMANDS-------------------------------------------//
 
     public void refreshBoard(){
-        _boardFragment.invalidateBoard();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().setGameBoardFragment(_boardFragment);
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().invalidateBoard();
     }
 
     //------------------------------------INIT FUNCTIONS------------------------------------------//

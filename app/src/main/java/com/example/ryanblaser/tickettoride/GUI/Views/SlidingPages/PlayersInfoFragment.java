@@ -46,7 +46,7 @@ public class PlayersInfoFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static PlayersInfoFragment newInstance(String param1, String param2) {
+    public static PlayersInfoFragment newInstance() {
         PlayersInfoFragment fragment = new PlayersInfoFragment();
         return fragment;
     }
@@ -114,5 +114,7 @@ public class PlayersInfoFragment extends Fragment {
     }
 
 
+    public void refreshPlayerInfo() {
 
+    }
 }

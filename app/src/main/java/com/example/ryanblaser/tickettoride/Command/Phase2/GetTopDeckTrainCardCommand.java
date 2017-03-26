@@ -18,14 +18,14 @@ import java.util.List;
 public class GetTopDeckTrainCardCommand implements ICommand {
     private int gameId;
     private String authenticationCode;
-    private int FirstSecondCardPick;
+    // added turn number to check what turn you're doing
+    private int turnNumber;
 
-    public GetTopDeckTrainCardCommand(){}
-    public GetTopDeckTrainCardCommand(int g, String code, int cardPick)
+    public GetTopDeckTrainCardCommand(int g, String code, int num)
     {
         gameId = g;
         authenticationCode = code;
-        FirstSecondCardPick = cardPick;
+        turnNumber = num;
     }
 
     @Override
@@ -33,7 +33,6 @@ public class GetTopDeckTrainCardCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
     @Override
     public String getAuthenticationCode() {
         return authenticationCode;
@@ -50,7 +49,7 @@ public class GetTopDeckTrainCardCommand implements ICommand {
         return gameId;
     }
 
-    public int getFirstSecondCardPick() {
-        return FirstSecondCardPick;
+    public int getTurnNumber() {
+        return turnNumber;
     }
 }

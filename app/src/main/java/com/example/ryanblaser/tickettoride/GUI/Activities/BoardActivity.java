@@ -3,11 +3,19 @@ package com.example.ryanblaser.tickettoride.GUI.Activities;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.PageAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
+import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
+import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.ChatFragment;
+import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.GameBoardFragment;
+import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayerActionFragment;
+import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayersInfoFragment;
 import com.example.ryanblaser.tickettoride.R;
 
 /**
@@ -16,7 +24,10 @@ import com.example.ryanblaser.tickettoride.R;
  */
 public class BoardActivity extends AppCompatActivity {
 
-
+    private ChatFragment chatFragment;
+    private GameBoardFragment gameBoardFragment;
+    private PlayersInfoFragment playersInfoFragment;
+    private PlayerActionFragment playerActionFragment;
 
     /**
      * The number of pages (wizard steps) to show in this demo.
@@ -46,7 +57,10 @@ public class BoardActivity extends AppCompatActivity {
         mPagerAdapter = new PageAdapter(this.getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
-
+        if (chatFragment == null) { chatFragment = ChatFragment.newInstance(); }
+        if (gameBoardFragment == null) { gameBoardFragment = GameBoardFragment.newInstance(); }
+        if (playersInfoFragment == null) { playersInfoFragment = PlayersInfoFragment.newInstance(); }
+        if (playerActionFragment == null) { playerActionFragment = PlayerActionFragment.newInstance(); }
 //        mContentView.setOnTouchListener(new View.OnTouchListener(){
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
@@ -84,4 +98,116 @@ public class BoardActivity extends AppCompatActivity {
         findViewById(R.id.reject).setVisibility(View.INVISIBLE);
     }
 
+    public void notifyRouteClaimed(final String str_message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast = Toast.makeText(getBaseContext(), str_message, Toast.LENGTH_LONG);
+                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                if( v != null) v.setGravity(Gravity.CENTER);
+                toast.show();
+            }
+        });
+    }
+
+    public void notifyTurn() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "It's your turn!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void refreshChat() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                chatFragment.refreshChat();
+            }
+        });
+    }
+
+
+    public void refreshGameBoard() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                gameBoardFragment.refreshBoard();
+            }
+        });
+    }
+
+
+    public void refreshPlayerAction() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                playerActionFragment.refreshPlayerAction();
+            }
+        });
+    }
+
+
+    public void refreshPlayerInfo() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                playersInfoFragment.refreshPlayerInfo();
+            }
+        });
+    }
+
+
+    public void invalidateBoard() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CanvasImageView touchView = (CanvasImageView) gameBoardFragment.getView().findViewById(R.id.fullscreen_content);
+                gameBoardFragment.get_blackCardCount().invalidate();
+                gameBoardFragment.get_blueCardCount().invalidate();
+                gameBoardFragment.get_greenCardCount().invalidate();
+                gameBoardFragment.get_orangeCardCount().invalidate();
+                gameBoardFragment.get_pinkCardCount().invalidate();
+                gameBoardFragment.get_redCardCount().invalidate();
+                gameBoardFragment.get_whiteCardCount().invalidate();
+                gameBoardFragment.get_yellowCardCount().invalidate();
+                gameBoardFragment.get_rainbowCardCount().invalidate();
+                touchView.invalidate();
+
+            }
+        });
+    }
+
+    public ChatFragment getChatFragment() {
+        return chatFragment;
+    }
+
+    public void setChatFragment(ChatFragment chatFragment) {
+        this.chatFragment = chatFragment;
+    }
+
+    public GameBoardFragment getGameBoardFragment() {
+        return gameBoardFragment;
+    }
+
+    public void setGameBoardFragment(GameBoardFragment gameBoardFragment) {
+        this.gameBoardFragment = gameBoardFragment;
+    }
+
+    public PlayersInfoFragment getPlayersInfoFragment() {
+        return playersInfoFragment;
+    }
+
+    public void setPlayersInfoFragment(PlayersInfoFragment playersInfoFragment) {
+        this.playersInfoFragment = playersInfoFragment;
+    }
+
+    public PlayerActionFragment getPlayerActionFragment() {
+        return playerActionFragment;
+    }
+
+    public void setPlayerActionFragment(PlayerActionFragment playerActionFragment) {
+        this.playerActionFragment = playerActionFragment;
+    }
 }

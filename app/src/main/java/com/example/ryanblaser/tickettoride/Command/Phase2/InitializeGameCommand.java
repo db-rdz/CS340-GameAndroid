@@ -30,7 +30,7 @@ public class InitializeGameCommand implements ICommand {
 	private List<TrainCard> hand; //The 4 starting train cards
 	private List<DestCard> destinationCards; //The 3 starting destination cards where the player picks at least 1.
     private List<TrainCard> faceupTrainCards;
-	private List<Scoreboard> scoreboards = new ArrayList<>();
+	private List<Scoreboard> scoreboards;
 
 	public InitializeGameCommand() {}
 	public InitializeGameCommand(List<TrainCard> hand, List<DestCard> dc)
@@ -44,8 +44,8 @@ public class InitializeGameCommand implements ICommand {
 		ClientFacade.SINGLETON.getClientModel().setCurrent_player(new Player());
         ClientFacade.SINGLETON.getClientModel().getPlayer_hand().initializeHand(hand);
 		ClientFacade.SINGLETON.getClientModel().setList_dest_cards(destinationCards);
-		ClientFacade.SINGLETON.getClientModel().setState(ClientModel.State.FIRST_TURN); //Pick DestCard on first turn
-		initTestScoreboard();
+		ClientFacade.SINGLETON.getClientModel().setState(ClientModel.State.YOUR_TURN); //Pick DestCard on first turn
+//		initTestScoreboard();
 		ClientFacade.SINGLETON.getClientModel().setScoreboard(scoreboards);
 
         PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(faceupTrainCards);
@@ -89,7 +89,7 @@ public class InitializeGameCommand implements ICommand {
 		test2.setPlayerColor("blue");
 
 		scoreboards.add(test);
-		scoreboards.add(test2);
+//		scoreboards.add(test2);
 
 //		ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(1).add("test2");
 	}

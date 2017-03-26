@@ -14,10 +14,10 @@ public class Scoreboard {
     private String playerColor;
 
     public Scoreboard() {
-        points = ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_points();
-        numberOfTrainCards = ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_noOfTrainCards();
-        numberOfDestCards = ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_noOfDestCards();
-        playerColor = "red";
+//        points = ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_points();
+//        numberOfTrainCards = ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_noOfTrainCards();
+//        numberOfDestCards = ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_noOfDestCards();
+//        playerColor = "red";
     }
 
     public int getPoints() { return points; }
@@ -38,7 +38,7 @@ public class Scoreboard {
         numberOfDestCards += addedCard;
     }
 
-    public int get_playerColor() {
+    public int get_stringToAndroidColor() {
         switch (playerColor) {
             case "red":
                 return Color.RED;
@@ -51,6 +51,10 @@ public class Scoreboard {
             default:
                 return Color.MAGENTA;
         }
+    }
+
+    public String getPlayerColor() {
+        return playerColor;
     }
 
     public void setPlayerColor(String playerColor) {

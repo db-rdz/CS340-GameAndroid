@@ -4,6 +4,7 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.iDestCard;
 import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayerActionFragment;
 import com.example.ryanblaser.tickettoride.R;
 
@@ -66,6 +67,10 @@ public class PlayerActionPresenter {
     public void getTopDeckTrainCardCommand(int FirstSecondCardPick) {
         ClientFacade.SINGLETON.getTopDeckTrainCardCommand(FirstSecondCardPick);
     }
+
+    public void rejectDestCard(DestCard slidingDeckModel) {
+        ClientFacade.SINGLETON.rejectDestCard(slidingDeckModel);
+    }
     //----------------------------------GETTERS AND SETTERS--------------------------------------\\
     public Map<String, Integer> get_trainCardMap() {
         return _trainCardMap;
@@ -91,4 +96,6 @@ public class PlayerActionPresenter {
     public void set_playerState(ClientModel.State _playerState) {
         ClientFacade.SINGLETON.getClientModel().setState(_playerState);
     }
+
+
 }

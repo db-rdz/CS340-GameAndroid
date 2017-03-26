@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
@@ -187,14 +188,12 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void selectRequestedDestinationCard() {
-        
+    public void rejectDestCard(DestCard slidingDeckModel) {
+        int gameId = clientmodel.getInt_curr_gameId();
+        String authenticationCode = clientmodel.getStr_authentication_code();
+        ServerProxy.SINGLETON.rejectDestCard(gameId, authenticationCode, slidingDeckModel);
     }
 
-    @Override
-    public void showMessage(List<String> messages) {
-        
-    }
 
     @Override
     public void updateCarCount(int numOfCarsUsed) {

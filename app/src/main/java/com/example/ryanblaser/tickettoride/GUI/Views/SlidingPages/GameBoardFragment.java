@@ -160,26 +160,8 @@ public class GameBoardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hideKeyboard(getContext());
     }
 
-    /**
-     * Nathan: Closes keyboard on fragment start up.
-     * Keyboard pops up instantly because of the EditText for the chat and wouldn't hide
-     * when switching fragments
-     * @param ctx Context of the fragment
-     */
-    public static void hideKeyboard(Context ctx) {
-        InputMethodManager inputManager = (InputMethodManager) ctx
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        // check if no view has focus:
-        View v = ((Activity) ctx).getCurrentFocus();
-        if (v == null)
-            return;
-
-        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -274,6 +256,7 @@ public class GameBoardFragment extends Fragment {
     }
 
     public void invalidateBoard(){
+
         CanvasImageView touchView = (CanvasImageView) getView().findViewById(R.id.fullscreen_content);
         _blackCardCount.invalidate();
         _blueCardCount.invalidate();
@@ -353,4 +336,43 @@ public class GameBoardFragment extends Fragment {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
+    public void refreshBoard() {
+
+    }
+
+    public TextView get_blackCardCount() {
+        return _blackCardCount;
+    }
+
+    public TextView get_blueCardCount() {
+        return _blueCardCount;
+    }
+
+    public TextView get_greenCardCount() {
+        return _greenCardCount;
+    }
+
+    public TextView get_orangeCardCount() {
+        return _orangeCardCount;
+    }
+
+    public TextView get_pinkCardCount() {
+        return _pinkCardCount;
+    }
+
+    public TextView get_redCardCount() {
+        return _redCardCount;
+    }
+
+    public TextView get_whiteCardCount() {
+        return _whiteCardCount;
+    }
+
+    public TextView get_yellowCardCount() {
+        return _yellowCardCount;
+    }
+
+    public TextView get_rainbowCardCount() {
+        return _rainbowCardCount;
+    }
 }

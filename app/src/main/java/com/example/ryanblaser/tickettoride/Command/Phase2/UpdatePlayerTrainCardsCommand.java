@@ -1,8 +1,11 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,17 +22,19 @@ import java.util.List;
 public class UpdatePlayerTrainCardsCommand implements ICommand {
 
     //Data members
-    private int addNewCardAmount;
+    private TrainCard trainCard; //TODO: Should be a List? Depends on Client implementation
 
     //Constructor
-    public UpdatePlayerTrainCardsCommand(int amount) {
-        addNewCardAmount = amount;
+    public UpdatePlayerTrainCardsCommand(){}
+    public UpdatePlayerTrainCardsCommand(TrainCard trainCard) {
+        this.trainCard = trainCard;
     }
 
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.updatePlayerTrainCardAmount(addNewCardAmount);
+        ClientFacade.SINGLETON.getClientModel().getPlayer_hand().addOneToCardCount(trainCard.getType());
+        GameBoardPresenter._SINGLETON.refreshBoard();
         return null;
     }
 
@@ -46,7 +51,8 @@ public class UpdatePlayerTrainCardsCommand implements ICommand {
     }
 
 
-    public int getAddNewCardAmount() {
-        return addNewCardAmount;
+
+    public TrainCard getTrainCard() {
+        return trainCard;
     }
 }

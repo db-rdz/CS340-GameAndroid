@@ -19,8 +19,8 @@ import com.example.ryanblaser.tickettoride.Client.User;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static LoginFragment loginFragment;
-    private static LobbyFragment lobbyFragment;
+    private LoginFragment loginFragment;
+    private LobbyFragment lobbyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,36 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    public void onClick(View v) {
-//
-//        Intent i;
-//
-//        i = new Intent(this, BoardActivity.class);
-//        startActivity(i);
-//
-//        FragmentManager fm = this.getSupportFragmentManager();
-//        loginFragment = (LoginFragment) fm.findFragmentById(R.id.loginFragment);
-//        if (loginFragment == null) {
-//            loginFragment = LoginFragment.newInstance(new User()); //Pass in a User to use inside the LoginFragment
-//            if (ClientFacade.SINGLETON.getClientModel().getUser() == null) {
-//                fm.beginTransaction().add(R.id.loginFragment, loginFragment).commit();
-//
-//            }
-//        }
-//
-//
-//        lobbyFragment = (LobbyFragment) fm.findFragmentById(R.id.lobbyFragment);
-//        if (lobbyFragment == null) {
-//            lobbyFragment = LobbyFragment.newInstance();
-//
-//            if (ClientFacade.SINGLETON.getClientModel().getUser() != null) {
-//                fm.beginTransaction().add(R.id.lobbyFragment, lobbyFragment).commit();
-//            }
-//
-//        }
-//
-//    }
-
     /**
      * Nathan:
      * Refreshes the lobby when a new game is created on the server
@@ -108,19 +78,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static LoginFragment getLoginFragment() {
+    public LoginFragment getLoginFragment() {
         return loginFragment;
     }
 
-    public static void setLoginFragment(LoginFragment login) {
+    public void setLoginFragment(LoginFragment login) {
         loginFragment = login;
     }
 
-    public static LobbyFragment getLobbyFragment() {
+    public LobbyFragment getLobbyFragment() {
         return lobbyFragment;
     }
 
-    public static void setLobbyFragment(LobbyFragment lobby) {
+    public void setLobbyFragment(LobbyFragment lobby) {
         lobbyFragment = lobby;
     }
 

@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -20,14 +21,15 @@ public class NotifyTurnCommand implements ICommand {
     private String str_notify_message;
 
     //Constructor
-    public NotifyTurnCommand(String str_notify_message) {
-        this.str_notify_message = str_notify_message;
+    public NotifyTurnCommand() {
+        this.str_notify_message = "It's your turn!";
     }
 
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        return null; //TODO: Use showMessage() method or make a new one?
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyTurn();
+        return null;
     }
 
     @JsonIgnore

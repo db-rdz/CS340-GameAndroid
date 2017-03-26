@@ -44,11 +44,11 @@ public class LobbyPresenter implements ILobbyPresenter {
 
     public void switchToWaitingView()
     {
-        MainActivity.getLobbyFragment().switchToWaitingView();
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().getLobbyFragment().switchToWaitingView();
     }
 
     public void refreshGameLobby() {
-        MainActivity.getLobbyFragment().refreshGameLobby();
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().getLobbyFragment().refreshGameLobby();
     }
 
 }
