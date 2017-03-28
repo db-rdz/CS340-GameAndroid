@@ -14,9 +14,10 @@ import java.util.List;
 public interface IClient {
 
 
+
     /*
-         * Created own Exceptions for when checking login authorization
-         */
+             * Created own Exceptions for when checking login authorization
+             */
     public static class InvalidUsername extends Exception {
 
     }
@@ -50,12 +51,13 @@ public interface IClient {
     public void broadcastToChat(String message);
     public void claimRoute(Route route);
     public void getDestinationCards();
+    public void firstTurn(List<DestCard> destCardsToKeep);
     public void getFaceUpTableTrainCardCommand(int FirstSecondCardPick, int id, Boolean isWild);
     public void getTopDeckTrainCardCommand(int FirstSecondCardPick);
     public void rejectDestCard(DestCard slidingDeckModel);
     public void updateCarCount(int numOfCarsUsed);
     public void updateFaceUpTableTrainCards();
-    public void updatePlayerDestinationCards(int addDestCardAmount);
+    public void updatePlayerDestinationCards(List<DestCard> rejectedCards);
     public void updatePlayerTrainCardAmount(int addTrainCardAmount);
     public void updatePoints(int pointsToAdd);
 

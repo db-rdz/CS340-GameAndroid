@@ -11,17 +11,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ClientModel;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SliddingAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.R;
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.iDestCard;
 import com.redbooth.SlidingDeck;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.FIRST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.NOT_YOUR_TURN;
@@ -32,6 +32,10 @@ import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.YOUR_
 
 
 public class PlayerActionFragment extends Fragment {
+
+    List<DestCard> copy = new ArrayList<>();
+    private  SliddingAdapter slidingAdapter;
+    private SlidingTrainCardAdapter trainCardAdapter;
 
     public PlayerActionFragment() { }
 
@@ -62,14 +66,33 @@ public class PlayerActionFragment extends Fragment {
     }
 
 
+    /**
+     * Nathan: Closes keyboard on fragment start up.
+     * Keyboard pops up instantly because of the EditText for the chat and wouldn't hide
+     * when switching fragments
+     * @param ctx Context of the fragment
+     */
+    public static void hideKeyboard(Context ctx) {
+        InputMethodManager inputManager = (InputMethodManager) ctx
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View v = ((Activity) ctx).getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PlayerActionPresenter._SINGLETON.initTrainCardMap();
+        hideKeyboard(getContext());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_player_action, container, false);
@@ -79,11 +102,12 @@ public class PlayerActionFragment extends Fragment {
         _trainDeck = (Button) v.findViewById(R.id.trainDeck);
         _keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
 
-        final SliddingAdapter slidingAdapter  = new SliddingAdapter(getContext());
-        final SlidingTrainCardAdapter trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
+        slidingAdapter  = new SliddingAdapter(getContext());
+        trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
 
         //Loads the 3 destination cards from the PlayerActionPresenter
         slidingAdapter.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
+        PlayerActionPresenter._SINGLETON.getCopy().addAll(PlayerActionPresenter._SINGLETON.get_destCards());
         trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());
 
         _slidingDeck.setAdapter(slidingAdapter);
@@ -111,13 +135,21 @@ public class PlayerActionFragment extends Fragment {
             public void onClick(View v) {
 
                 GameBoardPresenter._SINGLETON.set_readyToStart(true);
-                //TODO: add cards to client model
+
+                if (_playerState.equals(FIRST_TURN)) {
+                    //Grab destination cards from view
+                    List<DestCard> destCardsToKeep = new ArrayList<DestCard>();
+                    destCardsToKeep.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
+
+                    PlayerActionPresenter._SINGLETON.firstTurn(destCardsToKeep);
+                    slidingAdapter.notifyDataSetChanged();
+                }
 
                 PlayerActionPresenter._SINGLETON.set_playerState(NOT_YOUR_TURN);
 
                 v.setVisibility(View.GONE);
-                View deck = getView().findViewById(R.id.slidingDeck);
-                final SliddingAdapter deckAdapter = slidingAdapter;
+                container.findViewById(R.id.reject).setVisibility(View.INVISIBLE);
+                slidingAdapter.getRejectButton().setVisibility(View.INVISIBLE);
                 slidingAdapter.notifyDataSetChanged();
 
                 //TODO: SEND COMMAND TO SERVER
@@ -147,7 +179,6 @@ public class PlayerActionFragment extends Fragment {
                     //Reset the amount of cards drawn back to 0, and change player state
                     if (SlidingTrainCardAdapter.getAmountOfCardsTaken() == 2) {
                         SlidingTrainCardAdapter.setAmountOfCardsTaken(0);
-                        PlayerActionPresenter._SINGLETON.set_playerState(NOT_YOUR_TURN);
                     }
                 }
             }
@@ -183,6 +214,15 @@ public class PlayerActionFragment extends Fragment {
     }
 
     public void refreshPlayerAction() {
+        slidingAdapter.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
+        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());
+    }
 
+    public List<DestCard> getCopy() {
+        return copy;
+    }
+
+    public void setCopy(List<DestCard> copy) {
+        this.copy = copy;
     }
 }

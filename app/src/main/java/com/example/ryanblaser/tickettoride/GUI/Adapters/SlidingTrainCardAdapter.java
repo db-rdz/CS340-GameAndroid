@@ -82,16 +82,17 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                         final TrainCard slidingDeckModel = (TrainCard) item.getTag();
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
 
-                        pickingTrainCard(slidingDeckModel, item);
+                        int index = parent.indexOfChild(item); //The index of the card chosen
+                        pickingTrainCard(slidingDeckModel, index);
                         if (amountOfCardsTaken == 2) {
                             _getButton.setVisibility(View.INVISIBLE);
                             amountOfCardsTaken = 0;
-                            PlayerActionPresenter._SINGLETON.set_playerState(YOUR_TURN);
                         }
 
                         //TODO: refresh fragment to get rid of some buttons
                         ClientFacade.SINGLETON.getClientModel().getBoardActivity().turnKeepAllButtonOff();
                         ClientFacade.SINGLETON.getClientModel().getBoardActivity().turnRejectButtonOff();
+
                         notifyDataSetChanged();
                     }
                 });
@@ -101,17 +102,13 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
         return view;
     }
 
-    private void pickingTrainCard(TrainCard slidingDeckModel, View item) {
+    private void pickingTrainCard(TrainCard slidingDeckModel, int cardIndex) {
         //Can only pick rainbow cards if on first face up train card draw
         if (slidingDeckModel.getType().equals("rainbowcard") && amountOfCardsTaken == 0) {
             PlayerActionPresenter._SINGLETON.set_playerState(NOT_YOUR_TURN);
 
-            String type = slidingDeckModel.getType();
-            PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
-            playerHand.addOneToCardCount(type); //Increases total card count to player hand
+            PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(amountOfCardsTaken, cardIndex, true);
             remove(slidingDeckModel);
-
-//            PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(amountOfCardsTaken, item.getId(), true);
         }
         else { //Picking any other cards
             if (slidingDeckModel.getType().equals("rainbowcard")) {
@@ -125,14 +122,8 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                 changePlayerState();
                 amountOfCardsTaken++;
 
-                String type = slidingDeckModel.getType();
-                PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
-                playerHand.addOneToCardCount(type); //Increases total card count to player hand
+                PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(amountOfCardsTaken, cardIndex, false);
                 remove(slidingDeckModel);
-
-                //TODO: SEND COMMAND TO SERVER
-//            PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(amountOfCardsTaken, item.getId(), false);
-
             }
         }
     }

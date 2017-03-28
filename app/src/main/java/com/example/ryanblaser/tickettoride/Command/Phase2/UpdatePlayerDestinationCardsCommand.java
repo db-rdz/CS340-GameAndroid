@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -19,17 +20,18 @@ import java.util.List;
 public class UpdatePlayerDestinationCardsCommand implements ICommand {
 
     //Data members
-    private int addDestCardAmount;
+    private List<DestCard> destCards;
 
     //Constructor
-    public UpdatePlayerDestinationCardsCommand(int amount) {
-        addDestCardAmount = amount;
+    public UpdatePlayerDestinationCardsCommand(){}
+    public UpdatePlayerDestinationCardsCommand(List<DestCard> destCards) {
+        this.destCards = destCards;
     }
 
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.updatePlayerDestinationCards(addDestCardAmount);
+        ClientFacade.SINGLETON.getClientModel().getPlayer_hand().rejectDestinationCards(destCards);
         return null;
     }
 
@@ -45,7 +47,8 @@ public class UpdatePlayerDestinationCardsCommand implements ICommand {
         return null;
     }
 
-    public int getAddDestCardAmount() {
-        return addDestCardAmount;
+
+    public List<DestCard> getDestCards() {
+        return destCards;
     }
 }

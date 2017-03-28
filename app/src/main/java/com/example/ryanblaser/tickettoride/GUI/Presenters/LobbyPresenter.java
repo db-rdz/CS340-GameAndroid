@@ -18,7 +18,7 @@ public class LobbyPresenter implements ILobbyPresenter {
 //        ClientFacade.SINGLETON.attachLobbyObserver(this);
     }
 
-    public static com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter SINGLETON = new com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter(view);
+    public static LobbyPresenter SINGLETON = new LobbyPresenter(view);
 
     @Override
     public void logout(){

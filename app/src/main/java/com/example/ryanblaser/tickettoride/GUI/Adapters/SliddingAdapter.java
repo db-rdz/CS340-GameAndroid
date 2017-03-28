@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
-import com.example.ryanblaser.tickettoride.GUI.Activities.BoardActivity;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.R;
@@ -27,7 +26,7 @@ import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.PICKI
 
 public class SliddingAdapter extends ArrayAdapter<iDestCard> {
 
-
+    private View rejectButton;
     /**
      * Nathan: Shortened variable to check the player state
      */
@@ -53,7 +52,7 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
         ((TextView)view.findViewById(R.id.card_destination)).setText(originToDestination);
         ((TextView)view.findViewById(R.id.card_points)).setText(item.get_points());
 
-        final View rejectButton = view.findViewById(R.id.reject);
+        rejectButton = view.findViewById(R.id.reject);
 
         rejectButton.setTag(view);
 
@@ -68,7 +67,8 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
 
         rejectButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
+
                 final SlidingDeck slidingDeck = (SlidingDeck)parent;
                 slidingDeck.swipeItem((View)view.getTag(), new SlidingDeck.SwipeEventListener() {
                     @Override
@@ -78,20 +78,22 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
                         View container = (View)item.getParent().getParent();
 
                         amountOfCardsTaken++;
-                        PlayerActionPresenter._SINGLETON.set_playerState(PICKING_DEST);
-                        ClientFacade.SINGLETON.getClientModel().getCurrent_player().updateCurrentDestinationCards(1);
-                        if (amountOfCardsTaken == 2) {
+
+                        if (_playerState.equals(FIRST_TURN) && amountOfCardsTaken == 1) {
+                            //Player must keep at least two destination cards in the first turn
+                            container.findViewById(R.id.keep_allCards).setVisibility(View.VISIBLE);
+                        }
+                        else if (amountOfCardsTaken == 2) {
                             amountOfCardsTaken = 0;
-                            _playerState = NOT_YOUR_TURN;
-                            container.findViewById(R.id.keep_allCards).setVisibility(View.GONE);
                         }
 
                         //TODO: refresh fragment view to get rid of buttons
                         //TODO: get rid of buttons depending on state
-                        //TODO: SEND COMMAND TO SERVER
+                        container.findViewById(R.id.keep_allCards).setVisibility(View.VISIBLE); //Makes sure keep all is visible
                         PlayerActionPresenter._SINGLETON.rejectDestCard(slidingDeckModel);
                         remove(slidingDeckModel);
-                        ClientFacade.SINGLETON.getClientModel().getBoardActivity().turnGetTrainCardButtonOff();
+//                        ClientFacade.SINGLETON.getClientModel().getBoardActivity().turnGetTrainCardButtonOff();
+                        rejectButton = view;
                         notifyDataSetChanged();
                     }
                 });
@@ -101,4 +103,7 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
         return view;
     }
 
+    public View getRejectButton() {
+        return rejectButton;
+    }
 }

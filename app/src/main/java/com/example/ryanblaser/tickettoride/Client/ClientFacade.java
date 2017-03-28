@@ -165,6 +165,7 @@ public class ClientFacade implements IClient {
     public void claimRoute(Route route) {
         String code = clientmodel.getStr_authentication_code();
         int gameId = clientmodel.getInt_curr_gameId();
+
         ServerProxy.SINGLETON.claimRoute(route, code, gameId);
     }
 
@@ -185,6 +186,13 @@ public class ClientFacade implements IClient {
         int gameId = clientmodel.getInt_curr_gameId();
         String authenticationCode = clientmodel.getStr_authentication_code();
         ServerProxy.SINGLETON.getTopDeckTrainCardCommand(gameId, authenticationCode, FirstSecondCardPick);
+    }
+
+    @Override
+    public void firstTurn(List<DestCard> destCardsToKeep) {
+        int gameId = clientmodel.getInt_curr_gameId();
+        String authenticationCode = clientmodel.getStr_authentication_code();
+        ServerProxy.SINGLETON.firstTurn(gameId, authenticationCode, destCardsToKeep);
     }
 
     @Override
@@ -213,8 +221,9 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void updatePlayerDestinationCards(int addDestCardAmount) {
-        clientmodel.getCurrent_player().updateCurrentDestinationCards(addDestCardAmount);
+    public void updatePlayerDestinationCards(List<DestCard> rejectedCards) {
+        clientmodel.getPlayer_hand().rejectDestinationCards(rejectedCards);
+        clientmodel.getCurrent_player().updateCurrentDestinationCards(rejectedCards.size());
     }
 
     @Override

@@ -157,9 +157,28 @@ public class GameBoardFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Nathan: Closes keyboard on fragment start up.
+     * Keyboard pops up instantly because of the EditText for the chat and wouldn't hide
+     * when switching fragments
+     * @param ctx Context of the fragment
+     */
+    public static void hideKeyboard(Context ctx) {
+        InputMethodManager inputManager = (InputMethodManager) ctx
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View v = ((Activity) ctx).getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hideKeyboard(getContext());
     }
 
 

@@ -5,6 +5,7 @@ import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.GUI.Activities.BoardActivity;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,6 +34,7 @@ public class NotifyRouteClaimedCommand implements ICommand {
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyRouteClaimed(str_message);
+//        GameBoardPresenter._SINGLETON.
         //TODO: Update board with route
         return null;
     }

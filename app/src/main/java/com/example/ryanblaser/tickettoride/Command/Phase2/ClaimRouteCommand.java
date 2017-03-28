@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
@@ -23,14 +24,16 @@ public class ClaimRouteCommand implements ICommand {
     //Data members
     private Route route;
     private int gameId;
-    String authenticationCode;
+    private String authenticationCode;
+    private List<TrainCard> cardsUsed;
 
     //Constructors
     public ClaimRouteCommand(){}
-    public ClaimRouteCommand(int g, String code, Route route1) {
+    public ClaimRouteCommand(int g, String code, Route route1, List<TrainCard> cards) {
         route = route1;
         gameId = g;
         authenticationCode = code;
+        cardsUsed = cards;
     }
 
     //Functions
@@ -65,4 +68,7 @@ public class ClaimRouteCommand implements ICommand {
         return authenticationCode;
     }
 
+    public List<TrainCard> getCardsUsed() {
+        return cardsUsed;
+    }
 }

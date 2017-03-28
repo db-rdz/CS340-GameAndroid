@@ -10,6 +10,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.DeleteGameCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.ListJoinableCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LoginRegisterResponseCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LogoutResponseCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.EndTurnCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.InitializeGameCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.NotifyTurnCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.ShowMessageCommand;
@@ -37,6 +38,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = InitializeGameCommand.class),
         @JsonSubTypes.Type(value = ShowMessageCommand.class),
         @JsonSubTypes.Type(value = NotifyTurnCommand.class),
+        @JsonSubTypes.Type(value = EndTurnCommand.class),
         @JsonSubTypes.Type(value = UpdateCarCountCommand.class),
         @JsonSubTypes.Type(value = UpdateFaceUpTableTrainCardsCommand.class),
         @JsonSubTypes.Type(value = UpdatePlayerTrainCardsCommand.class),

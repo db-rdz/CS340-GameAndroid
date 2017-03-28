@@ -2,6 +2,10 @@ package com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel;
 
 import android.graphics.Color;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+
+import java.util.List;
+
 /**
  * This class is simply a data storage class for a user's game data.
  * The User class will have a Player variable (this class) to store all the data.
@@ -62,9 +66,11 @@ public class Player {
     /**
      * Nathan
      * Updates the number of destination cards by adding the gained amount of cards to the current total
-     * @param cardAmountToSub
+     * @param amountOfRejectedCards
      */
-    public void updateCurrentDestinationCards(int cardAmountToSub) { _noOfDestCards -= cardAmountToSub; }
+    public void updateCurrentDestinationCards(int amountOfRejectedCards) {
+        _noOfDestCards -= amountOfRejectedCards;
+    }
 
     //-------------------------------------GETTERS AND SETTERS------------------------------------//
 

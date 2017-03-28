@@ -9,42 +9,42 @@ import com.example.ryanblaser.tickettoride.Server.IServer;
 import java.util.List;
 
 /**
- * Created by natha on 3/25/2017.
+ * Created by natha on 3/27/2017.
  */
 
-public class RejectDestinationCardCommand implements ICommand {
-    private int _i_gameId;
-    private String authenticationCode;
-    private DestCard rejectedCard;
+public class FirstTurnCommand implements ICommand {
 
-    public RejectDestinationCardCommand(int id, String code, DestCard card)
-    {
-        _i_gameId = id;
+    private int gameId;
+    private String authenticationCode;
+    private List<DestCard> destCardsToKeep;
+
+    public FirstTurnCommand(){}
+    public FirstTurnCommand(int id, String code, List<DestCard> keepThese) {
+        gameId = id;
         authenticationCode = code;
-        rejectedCard = card;
+        destCardsToKeep = keepThese;
     }
 
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
         return null;
     }
+
     @Override
     public String getAuthenticationCode() {
         return authenticationCode;
     }
+
     @Override
     public User getUser() {
         return null;
     }
 
-    public int get_i_gameId()
-    {
-        return _i_gameId;
+    public int getGameId() {
+        return gameId;
     }
 
-    public DestCard getRejectedCard()
-    {
-        return rejectedCard;
+    public List<DestCard> getDestCardsToKeep() {
+        return destCardsToKeep;
     }
-
 }

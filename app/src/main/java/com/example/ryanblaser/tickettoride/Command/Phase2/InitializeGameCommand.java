@@ -43,9 +43,8 @@ public class InitializeGameCommand implements ICommand {
 	public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
 		ClientFacade.SINGLETON.getClientModel().setCurrent_player(new Player());
         ClientFacade.SINGLETON.getClientModel().getPlayer_hand().initializeHand(hand);
-		ClientFacade.SINGLETON.getClientModel().setList_dest_cards(destinationCards);
+		ClientFacade.SINGLETON.getClientModel().getPlayer_hand().set_destCards(destinationCards);
 		ClientFacade.SINGLETON.getClientModel().setState(ClientModel.State.YOUR_TURN); //Pick DestCard on first turn
-//		initTestScoreboard();
 		ClientFacade.SINGLETON.getClientModel().setScoreboard(scoreboards);
 
         PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(faceupTrainCards);
@@ -82,15 +81,4 @@ public class InitializeGameCommand implements ICommand {
 		return scoreboards;
 	}
 
-	private void initTestScoreboard() {
-		Scoreboard test = new Scoreboard();
-
-		Scoreboard test2 = new Scoreboard();
-		test2.setPlayerColor("blue");
-
-		scoreboards.add(test);
-//		scoreboards.add(test2);
-
-//		ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(1).add("test2");
-	}
 }

@@ -4,7 +4,6 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.iDestCard;
 import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayerActionFragment;
 import com.example.ryanblaser.tickettoride.R;
 
@@ -24,29 +23,19 @@ public class PlayerActionPresenter {
     private PlayerActionFragment _playerActionFragment;
     private Map<String, Integer> _trainCardMap = new HashMap<String, Integer>();
     private List<TrainCard> _faceUpTrainCards = new ArrayList<>();
-    private List<DestCard> _destCards = new ArrayList<>();
 
     public PlayerActionPresenter(){
 
     }
 
     public void refreshFragment(){
-
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
     }
 
     public int convertImageNameToId(String image){
         return _trainCardMap.get(image);
     }
 
-    public List<TrainCard> getFourTrainCards(){
-        List<TrainCard> asdf = new ArrayList<>();
-        asdf.add(new TrainCard("red"));
-        asdf.add(new TrainCard("black"));
-        asdf.add(new TrainCard("rainbow"));
-        asdf.add(new TrainCard("green"));
-        return asdf;
-        //return ActionBoard._SINGLETON.get_fourTrainCards();
-    }
 
     public void initTrainCardMap(){
         _trainCardMap.put("blackcard", R.drawable.blackcard);
@@ -71,6 +60,10 @@ public class PlayerActionPresenter {
     public void rejectDestCard(DestCard slidingDeckModel) {
         ClientFacade.SINGLETON.rejectDestCard(slidingDeckModel);
     }
+
+    public void firstTurn(List<DestCard> destCardsToKeep) {
+        ClientFacade.SINGLETON.firstTurn(destCardsToKeep);
+    }
     //----------------------------------GETTERS AND SETTERS--------------------------------------\\
     public Map<String, Integer> get_trainCardMap() {
         return _trainCardMap;
@@ -87,7 +80,7 @@ public class PlayerActionPresenter {
     }
 
     public List<DestCard> get_destCards() {
-        return ClientFacade.SINGLETON.getClientModel().getList_dest_cards();
+        return ClientFacade.SINGLETON.getClientModel().getPlayer_hand().get_destCards();
     }
 
     public ClientModel.State get_playerState() {
@@ -97,5 +90,11 @@ public class PlayerActionPresenter {
         ClientFacade.SINGLETON.getClientModel().setState(_playerState);
     }
 
+    public List<DestCard> getCopy() {
+        return ClientFacade.SINGLETON.getClientModel().getBoardActivity().getPlayerActionFragment().getCopy();
+    }
+    public void setCopy(List<DestCard> destCards) {
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().getPlayerActionFragment().setCopy(destCards);
+    }
 
 }

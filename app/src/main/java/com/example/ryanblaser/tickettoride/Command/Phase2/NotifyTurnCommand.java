@@ -3,6 +3,7 @@ package com.example.ryanblaser.tickettoride.Command.Phase2;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,6 +29,7 @@ public class NotifyTurnCommand implements ICommand {
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
+        PlayerActionPresenter._SINGLETON.refreshFragment();
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyTurn();
         return null;
     }

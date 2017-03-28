@@ -32,7 +32,7 @@ public class ClientModel{
      * if the player claims a route during his turn, the state goes to CLAIMING_ROUTE.
      */
     public enum State {
-        YOUR_TURN, NOT_YOUR_TURN, CLAIMING_ROUTE, PICKING_DEST, PICKING_1ST_TRAIN, PICKING_2ND_TRAIN, FIRST_TURN;
+        YOUR_TURN, NOT_YOUR_TURN, CLAIMING_ROUTE, PICKING_DEST, PICKING_1ST_TRAIN, PICKING_2ND_TRAIN, FIRST_TURN, LAST_TURN, END_GAME;
     }
 
     /**
@@ -97,8 +97,6 @@ public class ClientModel{
 
     private List<String> chat;
 
-    private List<DestCard> list_dest_cards;
-
     private PlayerCardHand player_hand;
 
     /**
@@ -119,7 +117,6 @@ public class ClientModel{
         boolean_is_creator_of_game = false;
         int_curr_gameId = 0;
         chat = new ArrayList<>();
-        list_dest_cards = null;
         player_hand = new PlayerCardHand();
         state = NOT_YOUR_TURN;
         scoreboard = new ArrayList<>();
@@ -247,7 +244,6 @@ public class ClientModel{
         mainActivity.logout();
         waitingActivity = null;
         str_authentication_code = "";
-        list_dest_cards.clear();
         list_joinable.clear();
         chat.clear();
         state = NOT_YOUR_TURN;
@@ -363,14 +359,6 @@ public class ClientModel{
 
     public void setChat(List<String> chat) {
         this.chat = chat;
-    }
-
-    public List<DestCard> getList_dest_cards() {
-        return list_dest_cards;
-    }
-
-    public void setList_dest_cards(List<DestCard> list_dest_cards) {
-        this.list_dest_cards = list_dest_cards;
     }
 
     public PlayerCardHand getPlayer_hand() {

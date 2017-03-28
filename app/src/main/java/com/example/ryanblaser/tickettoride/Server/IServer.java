@@ -28,5 +28,6 @@ public interface IServer {
     public void getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int FirstSecondCardPick, int trainCardIndex, Boolean isWild);
     public void getTopDeckTrainCardCommand(int gameId, String authenticationCode, int firstSecondCardPick);
     public void rejectDestCard(int gameId, String authenticationCode, DestCard slidingDeckModel);
+    public void firstTurn(int gameId, String authenticationCode, List<DestCard> destCardsToKeep);
 
 }
