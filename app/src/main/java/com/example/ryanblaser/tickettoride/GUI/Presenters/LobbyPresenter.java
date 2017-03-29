@@ -1,10 +1,8 @@
 package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Command.Phase1.*;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Views.ILobbyView;
-import com.example.ryanblaser.tickettoride.Server.IServer;
 
 import java.util.List;
 
@@ -20,16 +18,16 @@ public class LobbyPresenter implements ILobbyPresenter {
 //        ClientFacade.SINGLETON.attachLobbyObserver(this);
     }
 
-    public static com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter SINGLETON = new com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter(view);
+    public static LobbyPresenter SINGLETON = new LobbyPresenter(view);
 
     @Override
     public void logout(){
-        ClientFacade.SINGLETON.logout(ClientFacade.SINGLETON.getClientModel().getAuthenticationKey());
+        ClientFacade.SINGLETON.logout(ClientFacade.SINGLETON.getClientModel().getUser());
     }
 
     @Override
-    public CommandContainer addJoinableGame() {
-        return ClientFacade.SINGLETON.addJoinableGame();
+    public void addJoinableGame() {
+        ClientFacade.SINGLETON.addJoinableGameToServer();
     }
 
     @Override
@@ -37,43 +35,20 @@ public class LobbyPresenter implements ILobbyPresenter {
         return ClientFacade.SINGLETON.getClientModel().getJoinableGames();
     }
 
-//    @Override
-    public List<Integer> getWaitingGames() {
-//        ClientFacade.SINGLETON.getClientModel().setWaitingGames(ServerModel.SINGLETON.getAvailableGames());
-        return ClientFacade.SINGLETON.getClientModel().getWaitingGames();
+    @Override
+    public void addPlayer(int gameId) {
+        String authenticationCode = ClientFacade.SINGLETON.getCurrentUser().getStr_authentication_code();
+        ClientFacade.SINGLETON.addPlayerToServerModel(authenticationCode, gameId);
     }
 
-    @Override
-    public CommandContainer update() throws IServer.GameIsFullException {
-//        CommandContainer result = ServerProxy.SINGLETON.checkForCommands();
-//        ICommand command;
-//        for (int i = 0; i < result.str_type.size(); i++)
-//        {
-//            switch (result.str_type.get(i)) {
-//                case "AddJoinableCommand" :
-//                    command = new AddJoinableToClientCommand(result.icommand.get(i).getGame());
-//                    break;
-//                case "DeleteGameCommand" :
-//                    command = (DeleteGameCommand) result.icommand.get(i);
-//                    break;
-//                case "AddResumableToClientCommand" :
-//                    command = (AddResumableToClientCommand) result.icommand.get(i);
-//                    break;
-//                case "AddPlayerToClientCommand" :
-//                    command = (AddPlayerToClientCommand) result.icommand.get(i);
-//                    break;
-//                default:
-//                    command = null;
-//                    break;
-//            }
-//            command.execute();
-//        }
-//        return result;
-        return null;
-    }
+
     public void switchToWaitingView()
     {
-        MainActivity.getLobbyFragment().switchToWaitingView();
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().getLobbyFragment().switchToWaitingView();
+    }
+
+    public void refreshGameLobby() {
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().getLobbyFragment().refreshGameLobby();
     }
 
 }

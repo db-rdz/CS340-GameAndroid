@@ -1,12 +1,6 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddJoinableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddResumableToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
-import com.example.ryanblaser.tickettoride.Command.Phase1.DeleteGameCommand;
-import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.Server.IServer.GameIsFullException;
 
 import java.util.Timer;
@@ -22,35 +16,45 @@ public class Poller implements Runnable {
     private final Timer timer = new Timer();
     private TimerTask timerTask;
     private User user;
+    private int lastCommandRecievedIndex;
     
     public Poller()
     {
-        
+        lastCommandRecievedIndex = 0;
+
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 try {
-                    checkForCommands();
+                    checkForCommands(lastCommandRecievedIndex);
                 } catch (GameIsFullException e) {
                     e.printStackTrace();
                 }
             }
         };
-        
+
+        long fastDelay = 2500; //2.5 seconds
         long delay = 10000; //10 seconds
         
-        timer.schedule(timerTask, delay, delay);
-        
+        timer.schedule(timerTask, fastDelay, fastDelay);
+//        timer.schedule(timerTask, delay, delay);
+
         user = null;
     }
     
-    public CommandContainer checkForCommands() throws GameIsFullException
+    public void checkForCommands(int lastCommandIndex) throws GameIsFullException
     {
         if (user != null) {
-            CommandContainer result = ServerProxy.SINGLETON.checkForCommands(user.getUsername());
-            return result;
+            int increment = ServerProxy.SINGLETON.checkForCommands(user.getUsername(), lastCommandIndex);
+
+            lastCommandRecievedIndex += increment;
         }
-        return null;
+    }
+
+    public void logout() {
+        lastCommandRecievedIndex = 0;
+        timer.cancel(); //Stop the poller from working anymore
+//        timer.purge();
     }
     
     public TimerTask getTimerTask() { return timerTask; }

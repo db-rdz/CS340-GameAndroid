@@ -1,8 +1,5 @@
 package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
-import com.example.ryanblaser.tickettoride.Server.IServer;
-
 import java.util.List;
 
 /**
@@ -11,7 +8,7 @@ import java.util.List;
 
 public interface ILobbyPresenter {
     public void logout();
-    public CommandContainer addJoinableGame();
+    public void addJoinableGame();
     public List<Integer> getJoinableGames();
-    public CommandContainer update() throws IServer.GameIsFullException;
+    public void addPlayer(int gameId);
 }

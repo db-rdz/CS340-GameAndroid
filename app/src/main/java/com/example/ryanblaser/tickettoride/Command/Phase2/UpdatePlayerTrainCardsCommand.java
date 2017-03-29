@@ -4,10 +4,12 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 /**
  * FROM SERVER -> CLIENT
@@ -23,14 +25,17 @@ public class UpdatePlayerTrainCardsCommand implements ICommand {
     private TrainCard trainCard; //TODO: Should be a List? Depends on Client implementation
 
     //Constructor
+    public UpdatePlayerTrainCardsCommand(){}
     public UpdatePlayerTrainCardsCommand(TrainCard trainCard) {
         this.trainCard = trainCard;
     }
 
     //Functions
     @Override
-    public CommandContainer execute() throws IServer.GameIsFullException {
-        return ClientFacade.SINGLETON.updatePlayerTrainCards(); //TODO: Need an argument for the ClientFacade
+    public List<ICommand> execute() throws IServer.GameIsFullException {
+        ClientFacade.SINGLETON.getClientModel().getPlayer_hand().addOneToCardCount(trainCard.getType());
+        GameBoardPresenter._SINGLETON.refreshBoard();
+        return null;
     }
 
     @JsonIgnore
@@ -45,11 +50,7 @@ public class UpdatePlayerTrainCardsCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
+
 
     public TrainCard getTrainCard() {
         return trainCard;

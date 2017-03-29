@@ -1,11 +1,15 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ClientModel;
+import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 /**
  * FROM SERVER -> CLIENT
@@ -20,14 +24,18 @@ public class NotifyTurnCommand implements ICommand {
     private String str_notify_message;
 
     //Constructor
-    public NotifyTurnCommand(String str_notify_message) {
-        this.str_notify_message = str_notify_message;
+    public NotifyTurnCommand() {
+        this.str_notify_message = "It's your turn!";
     }
 
     //Functions
     @Override
-    public CommandContainer execute() throws IServer.GameIsFullException {
-        return null; //TODO: Use showMessage() method or make a new one?
+    public List<ICommand> execute() throws IServer.GameIsFullException {
+
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyTurn();
+        ClientFacade.SINGLETON.getClientModel().setState(State.YOUR_TURN);
+        //PlayerActionPresenter._SINGLETON.refreshFragment();
+        return null;
     }
 
     @JsonIgnore
@@ -39,12 +47,6 @@ public class NotifyTurnCommand implements ICommand {
     @JsonIgnore
     @Override
     public User getUser() {
-        return null;
-    }
-
-    @JsonIgnore
-    @Override
-    public Game getGame() {
         return null;
     }
 

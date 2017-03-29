@@ -68,28 +68,28 @@
             android:layout_alignLeft="@+id/textView_server" />
 
         <EditText
+            android:id="@+id/editText_server"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editText_server"
-            android:hint="e.g. 192.168.1.172"
-            android:layout_below="@+id/editText_password"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="10.14.183.82" />
+            android:layout_below="@+id/editText_password"
+            android:ems="10"
+            android:hint="e.g. 192.168.1.172"
+            android:inputType="textPersonName"
+            android:text="10.37.40.210" />
 
         <EditText
+            android:id="@+id/editText_port"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editText_port"
-            android:hint="e.g. 8080"
-            android:layout_below="@+id/editText_server"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="8011" />
+            android:layout_below="@+id/editText_server"
+            android:ems="10"
+            android:hint="e.g. 8080"
+            android:inputType="number"
+            android:text="8080" />
 
         <Button
             android:text="LOG IN"

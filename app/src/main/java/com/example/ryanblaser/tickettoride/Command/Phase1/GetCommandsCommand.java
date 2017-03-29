@@ -1,40 +1,49 @@
 package com.example.ryanblaser.tickettoride.Command.Phase1;
-import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Server.ClientProxy;
+
 import com.example.ryanblaser.tickettoride.Client.User;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.List;
+
 public class GetCommandsCommand implements ICommand {
-  private String username;
-  public GetCommandsCommand(){}
-  public GetCommandsCommand(String username){
-    this.username = username;}
+    private String username;
+    private int lastCommandRecievedIndex;
+    public GetCommandsCommand(){}
+    public GetCommandsCommand(String username, int index){
+      this.username = username;
+        lastCommandRecievedIndex = index;}
 
-  @JsonIgnore
-  @Override
-  public String getAuthenticationCode() {
-    return null;
-  }
+    @JsonIgnore
+    @Override
+    public String getAuthenticationCode() {
+      return null;
+    }
 
-  @JsonIgnore
-  @Override
-  public User getUser() {
-    return null;
-  }
+    @JsonIgnore
+    @Override
+    public User getUser() {
+      return null;
+    }
 
-  @Override
-  public CommandContainer execute(){
-    return ClientProxy.SINGLETON.getUserCommands(getUser().getUsername());
-  }
+    @Override
+    public List<ICommand> execute(){
+      return null;
+    }
 
-  @Override
-  public Game getGame() {
-    return null;
-  }
 
-  public String getUsername()
-  {
-    return username;
-  }
+
+    public String getUsername()
+    {
+      return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getLastCommandRecievedIndex() {
+        return lastCommandRecievedIndex;
+    }
+
 }

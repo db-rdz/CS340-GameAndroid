@@ -1,11 +1,11 @@
 package com.example.ryanblaser.tickettoride.Client;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
+
 import java.util.List;
-
-
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
-
-import com.example.ryanblaser.tickettoride.Server.IServer;
 
 /**
  * Created by natha on 2/1/2017.
@@ -13,9 +13,11 @@ import com.example.ryanblaser.tickettoride.Server.IServer;
 
 public interface IClient {
 
+
+
     /*
-     * Created own Exceptions for when checking login authorization
-     */
+             * Created own Exceptions for when checking login authorization
+             */
     public static class InvalidUsername extends Exception {
 
     }
@@ -30,32 +32,35 @@ public interface IClient {
 
     }
 
-    public CommandContainer login(User user) throws InvalidUsername, InvalidPassword;
-    public CommandContainer register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists;
-    public CommandContainer addResumableGame(int gameId);
-    public CommandContainer addJoinableGame();
-    public CommandContainer addWaitingGame(int gameId);
-    public CommandContainer removeGame(int gameId);
-    public CommandContainer startGame(int gameId, String authorizationCode);
-    public CommandContainer addPlayer(String username, int gameId) throws IServer.GameIsFullException;
-    public CommandContainer logout(String str_authentication_code);
-    public CommandContainer listJoinableGames(List<Integer> listJoinableGames);
-    public CommandContainer listResumableGames(List<Integer> listResumableGames);
-    public CommandContainer listWaitingGames(List<Integer> listWaitingGames);
-    public CommandContainer loginRegisterSucceeded(User user);
-    public CommandContainer logoutSucceeded();
+    public void login(User user) throws InvalidUsername, InvalidPassword;
+    public void register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists;
+    public void addJoinableGameToServer();
+    public void switchToWaitingView();
+    public void removeGame(int gameId);
+    public void startGame(int gameId, List<String> usernamesInGame);
+    public void addPlayerToServerModel(String authenticationCode, int gameId);
+    public void logout(User user);
+    public void listJoinableGames(List<Integer> listJoinableGames);
+    public void loginRegisterSucceeded(User user);
+    public void logoutSucceeded();
+    public void attachLoginObserver(LoginPresenter loginPresenter);
+    public void attachLobbyObserver(LobbyPresenter lobbyPresenter);
+
 
     // Phase 2 additions - Ryan Blaser
-    public CommandContainer broadcastToChat(String message);
-    public CommandContainer getDestinationCards();
-    public CommandContainer selectRequestedDestinationCard();
-    public CommandContainer showMessage(String message);
-    public CommandContainer updateCarCount(int numOfCarsUsed);
-    public CommandContainer updateFaceUpTableTrainCards();
-    public CommandContainer updatePlayerDestinationCards();
-    public CommandContainer updatePlayerTrainCards();
-    public CommandContainer updatePoints(int pointsToAdd);
+    public void broadcastToChat(String message);
+    public void claimRoute(Route route);
+    public void getDestinationCards();
+    public void firstTurn(List<DestCard> destCardsToKeep, String type);
+    public void getFaceUpTableTrainCardCommand(int FirstSecondCardPick, int id, Boolean isWild);
+    public void getTopDeckTrainCardCommand(int FirstSecondCardPick);
+    public void rejectDestCard(DestCard slidingDeckModel);
+    public void updateCarCount(int numOfCarsUsed);
+    public void updateFaceUpTableTrainCards();
+    public void updatePlayerDestinationCards(List<DestCard> rejectedCards);
+    public void updatePlayerTrainCardAmount(int addTrainCardAmount);
+    public void updatePoints(int pointsToAdd);
 
-    public void attachObserver(/* Observer object */);
-    public void detachObserver(/* Observer object */);
+
+
 }

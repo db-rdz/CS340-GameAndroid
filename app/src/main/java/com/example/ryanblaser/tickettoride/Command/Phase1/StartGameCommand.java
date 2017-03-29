@@ -1,17 +1,21 @@
 package com.example.ryanblaser.tickettoride.Command.Phase1;
-import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Server.ServerFacade;
+
 import com.example.ryanblaser.tickettoride.Client.User;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
+import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 public class StartGameCommand implements ICommand {
     private int gameId;
-    private String str_authentication_code;
+    private List<String> usernamesInGame;
+    private String authenticationCode;
     private StartGameCommand(){}
-    public StartGameCommand(int g, String k){
+    public StartGameCommand(int g, List<String> k, String code){
         gameId = g;
-        str_authentication_code = k;}
+        usernamesInGame = k;
+        authenticationCode = code;
+    }
 
     @JsonIgnore
     @Override
@@ -20,15 +24,21 @@ public class StartGameCommand implements ICommand {
     }
 
     @Override
-    public CommandContainer execute(){
-        return ServerFacade.SINGLETON.startGame(gameId, str_authentication_code);}
-    @Override
-    public String getAuthenticationCode(){
-        return str_authentication_code;}
-
-    @JsonIgnore
-    @Override
-    public Game getGame() {
+    public List<ICommand> execute(){
         return null;
     }
+
+    @Override
+    public String getAuthenticationCode(){
+        return authenticationCode;}
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public List<String> getUsernamesInGame() {
+        return usernamesInGame;
+    }
+
+
 }

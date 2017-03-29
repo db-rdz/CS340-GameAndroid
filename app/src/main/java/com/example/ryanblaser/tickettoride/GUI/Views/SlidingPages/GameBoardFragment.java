@@ -1,57 +1,96 @@
 package com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.ClientModel;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
+import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
+import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
+import com.example.ryanblaser.tickettoride.Client.State;
+import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.RESPONSE_STATUS;
 import com.example.ryanblaser.tickettoride.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * interface
- * to handle interaction events.
- * Use the {@link GameBoardFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+//import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.CLAIMING_ROUTE;
+//import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.FIRST_TURN;
+//import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.YOUR_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.YOUR_TURN;
+import static java.security.AccessController.getContext;
+
+
 public class GameBoardFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
+    public GameBoardFragment() {
+    }
+
+
+    //----------------------------------FRAGMENT VARIABLES----------------------------------------//
 
     /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
+     * Nathan: Shortened variable to check the player state
      */
+    private State _playerState = PlayerActionPresenter._SINGLETON.get_playerState();
+    //-----------------------VIEWS/LAYOUT-------------------//
+    private View mContentView;
+    private View mControlsView;
+
+    //Card count views
+    private TextView _blackCardCount;
+    private TextView _blueCardCount;
+    private TextView _greenCardCount;
+    private TextView _orangeCardCount;
+    private TextView _pinkCardCount;
+    private TextView _redCardCount;
+    private TextView _whiteCardCount;
+    private TextView _yellowCardCount;
+    private TextView _rainbowCardCount;
+
+
+    //-----------------------CONFIGURATION VARIABLES--------//
+
+    //BOARD IMAGE CONFIGURATION
+    public static final String ARG_PAGE = "page";
+
+
+    //MENU HIDING CONFIGURATION
+    private boolean mVisible;
     private static final boolean AUTO_HIDE = true;
-
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
+    //Some older devices needs a small delay between UI widget updates
+    // and a change of the status and navigation bar.
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
 
-    private View mContentView;
-    private boolean mVisible;
+    //-------------END OF CONFIGURATION VARIABLES------------//
 
-    public static final String ARG_PAGE = "page";
+
+
+
+    //-------------END OF VIEW LOGIC VARIABLES--------------//
+
 
     public static GameBoardFragment create(int pageNumber){
         GameBoardFragment fragment = new GameBoardFragment();
@@ -78,7 +117,7 @@ public class GameBoardFragment extends Fragment {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
-    private View mControlsView;
+
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -114,62 +153,145 @@ public class GameBoardFragment extends Fragment {
     };
 
 
-
-
-    public GameBoardFragment() {
-        // Required empty public constructor
+    public static GameBoardFragment newInstance() {
+        GameBoardFragment fragment = new GameBoardFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GameBoardFragment.
+     * Nathan: Closes keyboard on fragment start up.
+     * Keyboard pops up instantly because of the EditText for the chat and wouldn't hide
+     * when switching fragments
+     * @param ctx Context of the fragment
      */
-    // TODO: Rename and change types and number of parameters
-    public static GameBoardFragment newInstance(String param1, String param2) {
-        GameBoardFragment fragment = new GameBoardFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static void hideKeyboard(Context ctx) {
+        InputMethodManager inputManager = (InputMethodManager) ctx
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View v = ((Activity) ctx).getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        hideKeyboard(getContext());
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_game_board, container, false);
-
         mVisible = true;
+
         mControlsView = v.findViewById(R.id.fullscreen_content_controls);
         mContentView = v.findViewById(R.id.fullscreen_content);
 
-        // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });
+        setPlayerCardsViews(v);
+        setPlayerCardViewValues();
 
+
+        if (!_playerState.equals(FIRST_TURN) && _playerState.equals(YOUR_TURN)) {
+
+            v.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        GameBoardPresenter presenter = GameBoardPresenter._SINGLETON;
+                        Pair<RESPONSE_STATUS, String> response;
+                        response = presenter.resolveClickEvent(event.getX(), event.getY());
+
+                        RESPONSE_STATUS responseCode = response.first;
+                        switch (responseCode) {
+                            case TOGGLE_NEEDED: {
+                                toggle();
+                                break;
+                            }
+                            case CITY_CLICKED: {
+                                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+                            }
+                            case SECOND_CITY_CLICKED: {
+                                break;
+                            }
+                            case CLAIMED_ROUTE: {
+                                Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
+                                invalidateBoard();
+                                break;
+                            }
+                            default: {
+                                Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
+                                break;
+                            }
+                        }
+                    }
+                    return true;
+                }
+            });
+            return v;
+        }
         return v;
-
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-
+    public void setPlayerCardsViews(View v){
+        _blackCardCount = (TextView) v.findViewById(R.id.blackCardCount);
+        _blueCardCount = (TextView) v.findViewById(R.id.blueCardCount);
+        _greenCardCount = (TextView) v.findViewById(R.id.greenCardCount);
+        _orangeCardCount = (TextView) v.findViewById(R.id.orangeCardCount);
+        _pinkCardCount = (TextView) v.findViewById(R.id.pinkCardCount);
+        _redCardCount = (TextView) v.findViewById(R.id.redCardCount);
+        _whiteCardCount = (TextView) v.findViewById(R.id.whiteCardCount);
+        _yellowCardCount = (TextView) v.findViewById(R.id.yellowCardCount);
+        _rainbowCardCount = (TextView) v.findViewById(R.id.rainbowCardCount);
     }
+
+    public void setPlayerCardViewValues(){
+//        Player clientPlayer = GameBoardPresenter._SINGLETON.getClientPlayer();
+        Player clientPlayer = ClientFacade.SINGLETON.getClientModel().getCurrent_player();
+        PlayerCardHand hand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
+
+        _blackCardCount.setText(String.valueOf(hand.get_cardCount().get("blackcard")));
+        _blueCardCount.setText(String.valueOf(hand.get_cardCount().get("bluecard")));
+        _greenCardCount.setText(String.valueOf(hand.get_cardCount().get("greencard")));
+        _orangeCardCount.setText(String.valueOf(hand.get_cardCount().get("orangecard")));
+        _pinkCardCount.setText(String.valueOf(hand.get_cardCount().get("pinkcard")));
+        _redCardCount.setText(String.valueOf(hand.get_cardCount().get("redcard")));
+        _whiteCardCount.setText(String.valueOf(hand.get_cardCount().get("whitecard")));
+        _yellowCardCount.setText(String.valueOf(hand.get_cardCount().get("yellowcard")));
+        _rainbowCardCount.setText(String.valueOf(hand.get_cardCount().get("rainbowcard")));
+        _blackCardCount.invalidate();
+        _blueCardCount.invalidate();
+        _greenCardCount.invalidate();
+        _orangeCardCount.invalidate();
+        _pinkCardCount.invalidate();
+        _redCardCount.invalidate();
+        _whiteCardCount.invalidate();
+        _yellowCardCount.invalidate();
+        _rainbowCardCount.invalidate();
+    }
+
+    public void invalidateBoard(){
+
+        CanvasImageView touchView = (CanvasImageView) getView().findViewById(R.id.fullscreen_content);
+        _blackCardCount.invalidate();
+        _blueCardCount.invalidate();
+        _greenCardCount.invalidate();
+        _orangeCardCount.invalidate();
+        _pinkCardCount.invalidate();
+        _redCardCount.invalidate();
+        _whiteCardCount.invalidate();
+        _yellowCardCount.invalidate();
+        _rainbowCardCount.invalidate();
+        touchView.invalidate();
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -181,25 +303,19 @@ public class GameBoardFragment extends Fragment {
         super.onDetach();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
+        if(!Route.are_RoutesSet()){
+            Route.initAllRoutes();
+            City.initAllCities();
+            City.initAdjacentCities();
+            City.initCityPoints();
+            GameBoardPresenter._SINGLETON.getScreenToImageRatio(getContext());
+        }
+        GameBoardPresenter._SINGLETON.set_boardFragment(this);
         delayedHide(100);
     }
 
@@ -237,12 +353,48 @@ public class GameBoardFragment extends Fragment {
         mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public void refreshBoard() {
+
+    }
+
+    public TextView get_blackCardCount() {
+        return _blackCardCount;
+    }
+
+    public TextView get_blueCardCount() {
+        return _blueCardCount;
+    }
+
+    public TextView get_greenCardCount() {
+        return _greenCardCount;
+    }
+
+    public TextView get_orangeCardCount() {
+        return _orangeCardCount;
+    }
+
+    public TextView get_pinkCardCount() {
+        return _pinkCardCount;
+    }
+
+    public TextView get_redCardCount() {
+        return _redCardCount;
+    }
+
+    public TextView get_whiteCardCount() {
+        return _whiteCardCount;
+    }
+
+    public TextView get_yellowCardCount() {
+        return _yellowCardCount;
+    }
+
+    public TextView get_rainbowCardCount() {
+        return _rainbowCardCount;
     }
 }

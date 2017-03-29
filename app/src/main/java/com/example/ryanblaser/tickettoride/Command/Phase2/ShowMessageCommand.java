@@ -3,10 +3,11 @@ package com.example.ryanblaser.tickettoride.Command.Phase2;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.ChatPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 /**
  * FROM SERVER -> CLIENT
@@ -19,17 +20,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ShowMessageCommand implements ICommand {
 
     //Data members
-    private String str_message;
+    //Ryan: updated entire list instead of just adding one message
+    private List<String> chatRoom;
 
     //Constructor
-    public ShowMessageCommand(String str_message) {
-        this.str_message = str_message;
+    public ShowMessageCommand(){}
+    public ShowMessageCommand(List<String> chat) {
+        chatRoom = chat;
     }
 
     //Functions
     @Override
-    public CommandContainer execute() throws IServer.GameIsFullException {
-        return ClientFacade.SINGLETON.showMessage(str_message);
+    public List<ICommand> execute() throws IServer.GameIsFullException {
+        ChatPresenter._SINGLETON.setChat(chatRoom);
+        ChatPresenter._SINGLETON.refreshChat(); //ERROR IN THE ArrayAdapter
+        return null;
     }
 
     @JsonIgnore
@@ -44,13 +49,8 @@ public class ShowMessageCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
 
-    public String getStr_message() {
-        return str_message;
+    public List<String> getChatRoom() {
+        return chatRoom;
     }
 }

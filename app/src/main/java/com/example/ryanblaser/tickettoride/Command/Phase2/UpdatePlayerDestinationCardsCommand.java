@@ -4,10 +4,10 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.CommandContainer;
 import com.example.ryanblaser.tickettoride.Server.IServer;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 /**
  * FROM SERVER -> CLIENT
@@ -20,17 +20,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class UpdatePlayerDestinationCardsCommand implements ICommand {
 
     //Data members
-    private DestCard destCard;
+    private List<DestCard> destCards;
 
     //Constructor
-    public UpdatePlayerDestinationCardsCommand(DestCard destCard) {
-        this.destCard = destCard;
+    public UpdatePlayerDestinationCardsCommand(){}
+    public UpdatePlayerDestinationCardsCommand(List<DestCard> destCards) {
+        this.destCards = destCards;
     }
 
     //Functions
     @Override
-    public CommandContainer execute() throws IServer.GameIsFullException {
-        return ClientFacade.SINGLETON.updatePlayerDestinationCards(); //TODO: Need an argument for the client
+    public List<ICommand> execute() throws IServer.GameIsFullException {
+        ClientFacade.SINGLETON.getClientModel().getPlayer_hand().rejectDestinationCards(destCards);
+        return null;
     }
 
     @JsonIgnore
@@ -45,13 +47,8 @@ public class UpdatePlayerDestinationCardsCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public Game getGame() {
-        return null;
-    }
 
-    public DestCard getDestCard() {
-        return destCard;
+    public List<DestCard> getDestCards() {
+        return destCards;
     }
 }

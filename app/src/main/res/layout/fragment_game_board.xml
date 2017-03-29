@@ -1,17 +1,19 @@
 <!-- fragment_screen_slide_page.xml -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/content"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:fillViewport="true">
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:id="@+id/content"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:fillViewport="false">-->
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.GameBoardFragment">
 
-        <ImageView
+        <com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView
             android:id="@+id/fullscreen_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,14 +55,6 @@
                     android:layout_gravity="top|left"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:text="Messages"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/button4"
-                        android:elevation="0dp"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -87,6 +81,7 @@
                             android:scaleType = "centerCrop"/>
 
                         <TextView
+                            android:id="@+id/blackCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="95dp"
@@ -109,6 +104,7 @@
                             android:scaleType="centerCrop" />
 
                         <TextView
+                            android:id="@+id/blueCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="95dp"
@@ -131,6 +127,7 @@
                             android:scaleType="centerCrop" />
 
                         <TextView
+                            android:id="@+id/greenCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="94dp"
@@ -153,6 +150,7 @@
                             android:scaleType="centerCrop" />
 
                         <TextView
+                            android:id="@+id/orangeCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="92dp"
@@ -175,6 +173,7 @@
                             android:scaleType="centerCrop" />
 
                         <TextView
+                            android:id="@+id/pinkCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="fill_parent"
@@ -197,6 +196,7 @@
                             android:scaleType="centerCrop" />
 
                         <TextView
+                            android:id="@+id/redCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="fill_parent"
@@ -219,6 +219,7 @@
                             android:scaleType = "centerCrop" />
 
                         <TextView
+                            android:id="@+id/whiteCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="fill_parent"
@@ -240,6 +241,7 @@
                             android:scaleType = "centerCrop"/>
 
                         <TextView
+                            android:id="@+id/yellowCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="match_parent"
@@ -262,6 +264,7 @@
                             android:scaleType = "centerCrop"/>
 
                         <TextView
+                            android:id="@+id/rainbowCardCount"
                             android:text="0"
                             android:textStyle="bold"
                             android:layout_height="94dp"
@@ -280,5 +283,5 @@
         </FrameLayout>
 
     </FrameLayout>
-</ScrollView>
+<!--</ScrollView>-->
 

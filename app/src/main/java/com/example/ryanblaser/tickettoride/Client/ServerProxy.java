@@ -1,17 +1,27 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 
+import android.util.Log;
+
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToServerCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
 
 import com.example.ryanblaser.tickettoride.Command.Phase1.*;
+import com.example.ryanblaser.tickettoride.Command.Phase2.BroadcastToChatCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.ClaimRouteCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.FirstTurnCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.GetFaceUpTableTrainCardCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.GetTopDeckTrainCardCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.KeepAllDestCardsCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.RejectDestinationCardCommand;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
-import com.example.ryanblaser.tickettoride.ServerModel.GameModels.Game;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,47 +30,36 @@ import java.util.List;
 
 public class ServerProxy implements IServer {
 
-    public static com.example.ryanblaser.tickettoride.Client.ServerProxy SINGLETON = new com.example.ryanblaser.tickettoride.Client.ServerProxy();
+    public static ServerProxy SINGLETON = new ServerProxy();
+
 
     private ServerProxy() {
-
+        //Need to have plugin functionality here?
     }
 
 
     @Override
-    public CommandContainer login(User user) throws com.example.ryanblaser.tickettoride.Client.IClient.InvalidUsername, com.example.ryanblaser.tickettoride.Client.IClient.InvalidPassword {
+    public List<ICommand> login(User user) throws com.example.ryanblaser.tickettoride.Client.IClient.InvalidUsername, com.example.ryanblaser.tickettoride.Client.IClient.InvalidPassword {
         String urlSuffix = "/command";
 
-        List<String> types = new ArrayList<>();
-        types.add("LoginCommand");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new LoginCommand(user));
-
-        CommandContainer loginCommand = new CommandContainer(types, commands);
+        ICommand loginCommand = new LoginCommand(user);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, loginCommand);
             clientCommunicator.execute(url);
 
-        } catch (Exception e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        return loginCommand;
+        return null; //No need to return anything since the command execute methods access the clientmodel already
     }
 
     @Override
-    public CommandContainer register(String username, String password) throws IClient.UsernameAlreadyExists {
+    public List<ICommand> register(String username, String password) throws IClient.UsernameAlreadyExists {
         String urlSuffix = "/command";
 
-        List<String> types = new ArrayList<>();
-        types.add("RegisterCommand");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new RegisterCommand(new User(username, password)));
-
-        CommandContainer registerCommand = new CommandContainer(types, commands);
+        ICommand registerCommand = new RegisterCommand(new User(username, password));
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -70,49 +69,21 @@ public class ServerProxy implements IServer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return registerCommand;
+        return null; //No need to return anything since the command execute methods access the clientmodel already
     }
 
 
-    @Override
-    public CommandContainer addResumableGame(int gameId) {
-//        String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("AddResumable");
-//
-//        List<ICommand> commands = new ArrayList<>();
-//        commands.add(new AddResumableToClientCommand(game));
-//
-////        CommandContainer addGameCommand = new CommandContainer("hello");
-//        CommandContainer addGameCommand = new CommandContainer(types, commands);
-//
-//        try {
-//            ClientCommunicator_old.SINGLETON.send(urlSuffix, addGameCommand);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return addGameCommand;
-        return null;
-    }
 
     @Override
-    public int addJoinableGame(String str_authentication_code) {
+    public int addJoinableGameToServer(String str_authentication_code) {
         String urlSuffix = "/command";
 
-        List<String> types = new ArrayList<>();
-        types.add("AddJoinableCommand");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new AddGameToServerCommand(str_authentication_code));
-
-        CommandContainer addGameCommand = new CommandContainer(types, commands);
+        ICommand addGameCommand = new AddGameToServerCommand(str_authentication_code);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, addGameCommand);
-            ICommand cmd = clientCommunicator.execute(url).get();
+            int cmd = clientCommunicator.execute(url).get();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,65 +91,12 @@ public class ServerProxy implements IServer {
         return 0;
     }
 
-    @Override
-    public CommandContainer addWaitingGame(int gameId) {
-//        String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("AddWaiting");
-//
-//        List<ICommand> commands = new ArrayList<>();
-//        commands.add(new AddWaitingToClientCommand(game.get_S_gameName()));
-//
-////        CommandContainer addGameCommand = new CommandContainer("hello");
-//        CommandContainer addGameCommand = new CommandContainer(types, commands);
-//
-//        try {
-//            ClientCommunicator_old.SINGLETON.send(urlSuffix, addGameCommand);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return addGameCommand;
-        return null;
-    }
-
 
     @Override
-    public CommandContainer removeGame(Game game) {
+    public List<ICommand> startGame(int gameId, List<String> usernamesInGame, String authenticationCode) {
         String urlSuffix = "/command";
 
-        List<String> types = new ArrayList<>();
-        types.add("DeleteGame");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new DeleteGameCommand(game.get_i_gameId()));
-
-//        CommandContainer removeGameCommand = new CommandContainer("hello");
-        CommandContainer removeGameCommand = new CommandContainer(types, commands);
-
-        try {
-            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
-            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, removeGameCommand);
-            clientCommunicator.execute(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-		return null;
-    }
-
-    @Override
-    public CommandContainer startGame(int gameId, String authorizationCode) {
-        String urlSuffix = "/command";
-
-        List<String> types = new ArrayList<>();
-        types.add("StartGame");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new StartGameCommand(gameId, authorizationCode));
-
-//        CommandContainer startGameCommand = new CommandContainer("hello");
-        CommandContainer startGameCommand = new CommandContainer(types, commands);
+        ICommand startGameCommand = new StartGameCommand(gameId, usernamesInGame, authenticationCode);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -187,21 +105,14 @@ public class ServerProxy implements IServer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return startGameCommand;
+        return null; //No need to return anything since the command execute methods access the clientmodel already
     }
 
     @Override
-    public CommandContainer addPlayer(String authenticationCode, int gameId) {
+    public List<ICommand> addPlayerToServerModel(String authenticationCode, int gameId) {
         String urlSuffix = "/command";
 
-        List<String> types = new ArrayList<>();
-        types.add("AddPlayer");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new AddPlayerToClientCommand(authenticationCode, gameId));
-
-//        CommandContainer addPlayerCommand = new CommandContainer("hello");
-        CommandContainer addPlayerCommand = new CommandContainer(types, commands);
+        ICommand addPlayerCommand = new AddPlayerToServerCommand(authenticationCode, gameId);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -210,21 +121,14 @@ public class ServerProxy implements IServer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return addPlayerCommand;
+        return null; //No need to return anything since the command execute methods access the clientmodel already
     }
 
-    //Added these functions after seeing the Command package
-    public CommandContainer logout(String authenticationCode) {
+    @Override
+    public List<ICommand> logout(User user) {
         String urlSuffix = "/command";
 
-        List<String> types = new ArrayList<>();
-        types.add("LogoutCommand");
-
-        List<ICommand> commands = new ArrayList<>();
-//        commands.add(new LogoutCommand(authenticationCode));
-//        commands.add(authenticationCode);
-
-        CommandContainer logoutCommand = new CommandContainer(types, commands);
+        ICommand logoutCommand = new LogoutCommand(user);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -233,206 +137,153 @@ public class ServerProxy implements IServer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return logoutCommand;
+        return null; //No need to return anything since the command execute methods access the clientmodel already
     }
-//
-//    public void listJoinableGames(Set<Game> listJoinableGames) {
-//        String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("ListJoinable");
-//
-//        List<ICommand> commands = new ArrayList<>();
-////        commands.add(new ListJoinableCommand(listJoinableGames));
-//
-//        CommandContainer listJoinableCommand = new CommandContainer(types, commands);
-//
-//        try {
-//            ClientCommunicator_old.SINGLETON.send(urlSuffix, listJoinableCommand);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void listResumableGames(Set<Game> listResumableGames) {
-//        String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("ListResumable");
-//
-//        List<ICommand> commands = new ArrayList<>();
-////        commands.add(new ListResumableCommand(listResumableGames));
-//
-//        CommandContainer listResumableCommand = new CommandContainer(types, commands);
-//
-//        try {
-//            ClientCommunicator_old.SINGLETON.send(urlSuffix, listResumableCommand);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void listWaitingGames(Set<Game> listWaitingGames) {
-//        String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("ListWaiting");
-//
-//        List<ICommand> commands = new ArrayList<>();
-////        commands.add(new ListWaitingCommand(listWaitingGames));
-//
-//        CommandContainer listWaitingCommand = new CommandContainer(types, commands);
-//
-//        try {
-//            ClientCommunicator_old.SINGLETON.send(urlSuffix, listWaitingCommand);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void loginRegisterSucceeded(User user, String authenticationCode) {
-//        String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("LoginRegisterResponse");
-//
-//        List<ICommand> commands = new ArrayList<>();
-//        commands.add(new LoginRegisterResponseCommand(user, authenticationCode));
-//
-//        CommandContainer loginRegisterResponseCommand = new CommandContainer(types, commands);
-//
-//        try {
-//            ClientCommunicator_old.SINGLETON.send(urlSuffix, loginRegisterResponseCommand);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void logoutSucceeded() {
-//        String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("LogoutResponse");
-//
-//        List<ICommand> commands = new ArrayList<>();
-//        commands.add(new LogoutResponseCommand());
-//
-//        CommandContainer logoutResponseCommand = new CommandContainer(types, commands);
-//
-//        try {
-//            ClientCommunicator_old.SINGLETON.send(urlSuffix, logoutResponseCommand);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
-    public CommandContainer checkForCommands(String username)
+    public int checkForCommands(String username, int lastCommandRecievedIndex)
     {
         String urlSuffix = "/update";
 
-        List<String> types = new ArrayList<>();
-        types.add("GetCommandsCommand");
-
-        List<ICommand> commands = new ArrayList<>();
-        commands.add(new GetCommandsCommand(username));
-
-        CommandContainer checkForCommands = new CommandContainer(types, commands);
+        ICommand checkForCommands = new GetCommandsCommand(username,lastCommandRecievedIndex);
+        Log.d("GetCommandsCommand", "Checking commands for " + username);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, checkForCommands);
             clientCommunicator.execute(url);
+            int returnValue = clientCommunicator.get();
+            return returnValue;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return checkForCommands;
+        return 0;
+    }
+
+    /**
+     * Nathan
+     * This function allows the commands gotten with checkForCommands be deleted. So they're never repeated
+     * @param
+     */
+//    public void deleteGottenCommands(String username) {
+//        String urlSuffix = "/update";
+//
+//        ICommand deleteGottenCommands = new DeleteGottenCommands(username);
+//        Log.d("DeleteGottenCommands", "Deleting commands for " + username);
+//
+//        try {
+//            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+//            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, deleteGottenCommands);
+//            clientCommunicator.execute(url);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+
+    public ICommand broadcastToChat(int gameId, String authenticationCode, String message) {
+        String urlSuffix = "/command";
+
+        ICommand broadcastToChat = new BroadcastToChatCommand(gameId, authenticationCode, message);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, broadcastToChat);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void claimRoute(Route route, String authenticationCode, int gameId, List<TrainCard> cardsUsed) {
+        String urlSuffix = "/command";
+
+        ICommand claimRouteCommand = new ClaimRouteCommand(gameId, authenticationCode, route, cardsUsed);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, claimRouteCommand);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int FirstSecondCardPick, int trainCardIndex, Boolean isWild) {
+        String urlSuffix = "/command";
+
+        ICommand getFirstFaceUpTableTrainCardCommand = new GetFaceUpTableTrainCardCommand(gameId, authenticationCode, FirstSecondCardPick, trainCardIndex, isWild);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, getFirstFaceUpTableTrainCardCommand);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getTopDeckTrainCardCommand(int gameId, String authenticationCode, int firstSecondCardPick) {
+        String urlSuffix = "/command";
+
+        ICommand getTopDeckTrainCardCommand = new GetTopDeckTrainCardCommand(gameId, authenticationCode, firstSecondCardPick);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, getTopDeckTrainCardCommand);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void rejectDestCard(int gameId, String authenticationCode, DestCard slidingDeckModel) {
+        String urlSuffix = "/command";
+
+        ICommand rejectDestCard = new RejectDestinationCardCommand(gameId, authenticationCode, slidingDeckModel);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, rejectDestCard);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
-	@Override
-	public CommandContainer addGame(Game game) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void firstTurn(int gameId, String authenticationCode, List<DestCard> destCardsToKeep, String type) {
+        String urlSuffix = "/command";
 
+        ICommand firstTurn = new FirstTurnCommand(gameId, authenticationCode, destCardsToKeep, type);
 
-//	@Override
-//	public CommandContainer logout(String str_authentication_code) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, firstTurn);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void keepAllDestCards(List<DestCard> cards)
+    {
+        String urlSuffix = "/command";
 
-//	@Override
-//	public CommandContainer logout(String str_authentication_code) {
-//		String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("LogoutCommand");
-//
-//        List<ICommand> commands = new ArrayList<>();
-//        commands.add(str_authentication_code);
-//
-//        CommandContainer logout = new CommandContainer(types, commands);
-//
-//        try {
-//            return ClientCommunicator_old.SINGLETON.send(urlSuffix, logout);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//		return null;
-//	}
-//	
-//	public ICommand createGame(String authenticationCode)
-//	{
-//		String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("AddGameToServerCommand");
-//
-//        List<ICommand> commands = new ArrayList<>();
-//        commands.add(authenticationCode);
-//        
-//        CommandContainer createGame = new CommandContainer(types, commands);
-//
-//        try {
-//            return ClientCommunicator_old.SINGLETON.send(urlSuffix, createGame);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//	}
-//	
-//	public ICommand joinGame(String authenticationCode, int gameId)
-//	{
-//		String urlSuffix = "/command";
-//
-//        List<String> types = new ArrayList<>();
-//        types.add("AddPlayerToServerCommand");
-//
-//        List<ICommand> commands = new ArrayList<>();
-//        commands.add(authenticationCode);
-//        commands.add(gameId);
-//        
-//        CommandContainer joinGame = new CommandContainer(types, commands);
-//
-//        try {
-//            return ClientCommunicator_old.SINGLETON.send(urlSuffix, joinGame);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//		return null;
-//	}
+        ICommand keepAll = new KeepAllDestCardsCommand();
 
-    public CommandContainer broadcastToChat(String message) {
-        return null;
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, keepAll);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

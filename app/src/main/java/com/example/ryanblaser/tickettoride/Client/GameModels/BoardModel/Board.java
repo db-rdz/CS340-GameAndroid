@@ -5,5 +5,5 @@ package com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel;
  */
 
 public class Board implements iBoard {
-
+    
 }

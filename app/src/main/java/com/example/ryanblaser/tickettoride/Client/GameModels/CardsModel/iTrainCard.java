@@ -5,4 +5,6 @@ package com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel;
  */
 public interface iTrainCard {
 
+    public void shuffle();
+
 }
