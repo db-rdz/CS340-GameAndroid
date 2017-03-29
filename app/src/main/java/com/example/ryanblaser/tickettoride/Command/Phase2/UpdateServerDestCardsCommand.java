@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.Client.User;
@@ -10,47 +11,40 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 /**
- * Created by RyanBlaser on 3/28/17.
+ * Created by RyanBlaser on 3/29/17.
  */
 
-public class KeepAllDestCardsCommand implements ICommand {
+public class UpdateServerDestCardsCommand implements ICommand {
 
-    private int gameId;
-    private String authenticationCode;
-    private List<DestCard> cardsKept;
+    private List<DestCard> destCards;
 
-    public KeepAllDestCardsCommand(){}
-
-    public KeepAllDestCardsCommand(int id, String code, List<DestCard> list)
-    {
-        gameId = id;
-        authenticationCode = code;
-        cardsKept = list;
+    public UpdateServerDestCardsCommand(){}
+    public UpdateServerDestCardsCommand(List<DestCard> cards) {
+        destCards = cards;
     }
 
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
+        ClientFacade.SINGLETON.getClientModel().setDestCardsFromServer(destCards);
         return null;
     }
 
+    @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return authenticationCode;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @JsonIgnore
     @Override
     public User getUser() {
+        // TODO Auto-generated method stub
         return null;
     }
 
-    public int getGameId()
-    {
-        return gameId;
+    public List<DestCard> getDestCards() {
+        return destCards;
     }
 
-    public List<DestCard> getCardsKept()
-    {
-        return cardsKept;
-    }
 }

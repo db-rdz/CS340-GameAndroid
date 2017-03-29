@@ -24,6 +24,7 @@ import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.AllRoutes;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
@@ -199,7 +200,7 @@ public class GameBoardFragment extends Fragment {
         setPlayerCardViewValues();
 
 
-        if (!_playerState.equals(FIRST_TURN) && _playerState.equals(YOUR_TURN)) {
+//        if (!_playerState.equals(FIRST_TURN) && _playerState.equals(YOUR_TURN)) {
 
             v.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -236,8 +237,8 @@ public class GameBoardFragment extends Fragment {
                 }
             });
             return v;
-        }
-        return v;
+  //      }
+    //    return v;
     }
 
     public void setPlayerCardsViews(View v){
@@ -308,8 +309,8 @@ public class GameBoardFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(!Route.are_RoutesSet()){
-            Route.initAllRoutes();
+        if(!AllRoutes.are_RoutesSet()){
+            AllRoutes.initAllRoutes();
             City.initAllCities();
             City.initAdjacentCities();
             City.initCityPoints();

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.PageAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
 import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
@@ -183,6 +184,18 @@ public class BoardActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void removeFromSliddingApadter(final DestCard destCard) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                playerActionFragment.getSlidingAdapter().remove(destCard);
+                playerActionFragment.getSlidingAdapter().notifyDataSetChanged();
+            }
+        });
+    }
+
 
     public ChatFragment getChatFragment() {
         return chatFragment;

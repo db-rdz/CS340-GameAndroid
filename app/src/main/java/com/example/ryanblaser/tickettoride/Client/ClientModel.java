@@ -101,6 +101,8 @@ public class ClientModel{
 
     private PlayerCardHand player_hand;
 
+    private List<DestCard> destCardsFromServer;
+
     /**
      * Nathan:
      * Determines what player action was just completed
@@ -385,5 +387,13 @@ public class ClientModel{
 
     public void setScoreboard(List<Scoreboard> scoreboard) {
         this.scoreboard = scoreboard;
+    }
+
+    public List<DestCard> getDestCardsFromServer() {
+        return destCardsFromServer;
+    }
+
+    public void setDestCardsFromServer(List<DestCard> destCardsFromServer) {
+        this.destCardsFromServer = destCardsFromServer;
     }
 }

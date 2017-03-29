@@ -30,5 +30,6 @@ public interface IServer {
     public void getTopDeckTrainCardCommand(int gameId, String authenticationCode, int firstSecondCardPick);
     public void rejectDestCard(int gameId, String authenticationCode, DestCard slidingDeckModel);
     public void firstTurn(int gameId, String authenticationCode, List<DestCard> destCardsToKeep, String type);
+    public void getDestCards(int gameId, String authenticationCode);
 
 }

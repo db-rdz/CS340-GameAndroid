@@ -82,7 +82,7 @@ public class PlayerActionPresenter {
     }
 
     public List<DestCard> get_destCards() {
-        return ClientFacade.SINGLETON.getClientModel().getPlayer_hand().get_destCards();
+        return ClientFacade.SINGLETON.getClientModel().getDestCardsFromServer();
     }
 
     public State get_playerState() {
@@ -101,7 +101,7 @@ public class PlayerActionPresenter {
 
     public void makeToast(String toast)
     {
-        Toast.makeText(_playerActionFragment.getContext(), toast, Toast.LENGTH_SHORT);
+        Toast.makeText(_playerActionFragment.getContext(), toast, Toast.LENGTH_SHORT).show();
     }
 
     public void set_playerActionFragment(PlayerActionFragment playerActionFragment)

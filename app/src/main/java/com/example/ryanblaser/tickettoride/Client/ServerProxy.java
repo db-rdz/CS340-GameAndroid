@@ -13,6 +13,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.*;
 import com.example.ryanblaser.tickettoride.Command.Phase2.BroadcastToChatCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.ClaimRouteCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.FirstTurnCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.GetDestinationCardsCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetFaceUpTableTrainCardCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetTopDeckTrainCardCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.KeepAllDestCardsCommand;
@@ -216,7 +217,7 @@ public class ServerProxy implements IServer {
     public void getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int FirstSecondCardPick, int trainCardIndex, Boolean isWild) {
         String urlSuffix = "/command";
 
-        ICommand getFirstFaceUpTableTrainCardCommand = new GetFaceUpTableTrainCardCommand(gameId, authenticationCode, FirstSecondCardPick, trainCardIndex, isWild);
+        ICommand getFirstFaceUpTableTrainCardCommand = new GetFaceUpTableTrainCardCommand(gameId, trainCardIndex, isWild, authenticationCode, FirstSecondCardPick);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -272,15 +273,30 @@ public class ServerProxy implements IServer {
         }
     }
 
-    public void keepAllDestCards(List<DestCard> cards)
+    public void keepAllDestCards(int gameId, String authenticationCode, List<DestCard> cards)
     {
         String urlSuffix = "/command";
 
-        ICommand keepAll = new KeepAllDestCardsCommand();
+        ICommand keepAll = new KeepAllDestCardsCommand(gameId, authenticationCode, cards);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, keepAll);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getDestCards(int gameId, String authenticationCode) {
+        String urlSuffix = "/command";
+
+        ICommand getDestCards = new GetDestinationCardsCommand(gameId, authenticationCode);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, getDestCards);
             clientCommunicator.execute(url);
         } catch (Exception e) {
             e.printStackTrace();

@@ -222,7 +222,9 @@ public class ClientFacade implements IClient {
 
     @Override
     public void getDestinationCards() {
-        
+        String code = clientmodel.getStr_authentication_code();
+        int gameId = clientmodel.getInt_curr_gameId();
+        ServerProxy.SINGLETON.getDestCards(gameId, code);
     }
 
     @Override
@@ -294,7 +296,9 @@ public class ClientFacade implements IClient {
 
     public void keepAllDestCards(List<DestCard> cards)
     {
-        ServerProxy.SINGLETON.keepAllDestCards(cards);
+        int gameId = clientmodel.getInt_curr_gameId();
+        String authenticationCode = clientmodel.getStr_authentication_code();
+        ServerProxy.SINGLETON.keepAllDestCards(gameId, authenticationCode, cards);
     }
 
 }

@@ -46,7 +46,7 @@ public class InitializeGameCommand implements ICommand {
 	public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
 		ClientFacade.SINGLETON.getClientModel().setCurrent_player(new Player());
         ClientFacade.SINGLETON.getClientModel().getPlayer_hand().initializeHand(hand);
-		ClientFacade.SINGLETON.getClientModel().getPlayer_hand().set_destCards(destinationCards);
+		ClientFacade.SINGLETON.getClientModel().setDestCardsFromServer(destinationCards);
 		ClientFacade.SINGLETON.getClientModel().setState(State.FIRST_TURN); //Pick DestCard on first turn
 		ClientFacade.SINGLETON.getClientModel().setScoreboard(scoreboards);
 

@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.State;
@@ -58,6 +59,7 @@ public class PlayerActionFragment extends Fragment {
 
     //-----------------------------VIEW VARIABLES-----------------------------//
     private Button _keepAllCards;
+    private Button _getDestCards;
     private SlidingDeck _slidingDeck;
     private SlidingDeck _slidingTrainCards;
     private Button _trainDeck;
@@ -116,6 +118,7 @@ public class PlayerActionFragment extends Fragment {
         _slidingTrainCards = (SlidingDeck)v.findViewById(R.id.slidingTrainCards);
         _trainDeck = (Button) v.findViewById(R.id.trainDeck);
         _keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
+        _getDestCards = (Button) v.findViewById(R.id.getDestCardsButton);
 
         slidingAdapter  = new SliddingAdapter(getContext());
         trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
@@ -144,6 +147,15 @@ public class PlayerActionFragment extends Fragment {
 //        else {
 //            _trainDeck.setVisibility(View.INVISIBLE);
 //        }
+
+        _getDestCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameBoardPresenter._SINGLETON.set_readyToStart(true);
+
+                ClientFacade.SINGLETON.getClientModel().getState().getDestCards();
+            }
+        });
 
         _keepAllCards.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,6 +212,7 @@ public class PlayerActionFragment extends Fragment {
             }
         });
 
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().setPlayerActionFragment(this);
         return v;
     }
 

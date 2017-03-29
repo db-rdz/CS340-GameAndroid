@@ -35,6 +35,22 @@ public enum State {
                 @Override
                 public void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild)
                 {
+                    switch (index) {
+                        case 0:
+                            index = 4;
+                            break;
+                        case 1:
+                            index = 3;
+                            break;
+                        case 3:
+                            index = 1;
+                            break;
+                        case 4:
+                            index = 0;
+                            break;
+                        default:
+                            break;
+                    }
                     ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(firstSecondCardPick, index, isWild);
                 }
 
@@ -42,7 +58,7 @@ public enum State {
                 public void rejectDestionationCard(DestCard rejectedCard, int amountOfCardsTaken) {
                     if (amountOfCardsTaken <= 2) {
                         PlayerActionPresenter._SINGLETON.rejectDestCard(rejectedCard);
-                        ClientFacade.SINGLETON.getClientModel().getPlayer_hand().get_destCards().remove(rejectedCard);
+                        PlayerActionPresenter._SINGLETON.get_destCards().remove(rejectedCard);
                         PlayerActionPresenter._SINGLETON.get_playerActionFragment().getSlidingAdapter().remove(rejectedCard);
                         PlayerActionPresenter._SINGLETON.get_playerActionFragment().getSlidingAdapter().notifyDataSetChanged();
                     }
@@ -283,9 +299,11 @@ public enum State {
                         List<DestCard> list = new ArrayList<>();
                         list.add(rejectedCard);
                         PlayerActionPresenter._SINGLETON.firstTurn(list, "REJECT");
+                        PlayerActionPresenter._SINGLETON.get_destCards().remove(rejectedCard);
+                        PlayerActionPresenter._SINGLETON.get_playerActionFragment().getSlidingAdapter().remove(rejectedCard);
+                        PlayerActionPresenter._SINGLETON.get_playerActionFragment().getSlidingAdapter().notifyDataSetChanged();
                     }
                     else
-                        //make toast
                         PlayerActionPresenter._SINGLETON.makeToast("You cannot reject any more destination cards!");
                 }
                 @Override

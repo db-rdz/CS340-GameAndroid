@@ -3,6 +3,7 @@ package com.example.ryanblaser.tickettoride.Client.GameModels.CityModel;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.AllRoutes;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 
 import java.util.ArrayList;
@@ -86,16 +87,16 @@ public class City implements  iCity{
 
         //Vancouver to Calgary
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Vancouver-Calgary");
+        r = AllRoutes.get_RoutesMap().get("Vancouver-Calgary");
         routeList.add(r);
         routes.put("Calgary", routeList);
 
         //Seattle to vancouver routes
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Seattle-Vancouver-1");
+        r = AllRoutes.get_RoutesMap().get("Seattle-Vancouver-1");
         routeList.add(r);
 
-        r = Route.get_RoutesMap().get("Seattle-Vancouver-2");
+        r = AllRoutes.get_RoutesMap().get("Seattle-Vancouver-2");
         routeList.add(r);
         routes.put("Seattle", routeList);
 
@@ -108,22 +109,22 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Vancouver-Calgary");
+        r = AllRoutes.get_RoutesMap().get("Vancouver-Calgary");
         routeList.add(r);
         routes.put("Vancouver", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Seattle-Calgary");
+        r = AllRoutes.get_RoutesMap().get("Seattle-Calgary");
         routeList.add(r);
         routes.put("Seattle-1", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Calgary-Helena");
+        r = AllRoutes.get_RoutesMap().get("Calgary-Helena");
         routeList.add(r);
         routes.put("Helena", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Calgary-Winnipeg");
+        r = AllRoutes.get_RoutesMap().get("Calgary-Winnipeg");
         routeList.add(r);
         routes.put("Winnipeg", routeList);
 
@@ -135,26 +136,26 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Seattle-Calgary");
+        r = AllRoutes.get_RoutesMap().get("Seattle-Calgary");
         routeList.add(r);
         routes.put("Calgary", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Seattle-Vancouver-1");
+        r = AllRoutes.get_RoutesMap().get("Seattle-Vancouver-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Seattle-Vancouver-2");
+        r = AllRoutes.get_RoutesMap().get("Seattle-Vancouver-2");
         routeList.add(r);
         routes.put("Vancouver", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Seattle-Helena");
+        r = AllRoutes.get_RoutesMap().get("Seattle-Helena");
         routeList.add(r);
         routes.put("Helena", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Portland-Seattle-1");
+        r = AllRoutes.get_RoutesMap().get("Portland-Seattle-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Portland-Seattle-2");
+        r = AllRoutes.get_RoutesMap().get("Portland-Seattle-2");
         routeList.add(r);
         routes.put("Portland", routeList);
 
@@ -166,21 +167,21 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Portland-Seattle-1");
+        r = AllRoutes.get_RoutesMap().get("Portland-Seattle-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Portland-Seattle-2");
+        r = AllRoutes.get_RoutesMap().get("Portland-Seattle-2");
         routeList.add(r);
         routes.put("Seattle", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SanFrancisco-Portland-1");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-Portland-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("SanFrancisco-Portland-2");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-Portland-2");
         routeList.add(r);
         routes.put("SanFrancisco", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Portland-SaltLakeCity");
+        r = AllRoutes.get_RoutesMap().get("Portland-SaltLakeCity");
         routeList.add(r);
         routes.put("SaltLakeCity", routeList);
 
@@ -192,23 +193,23 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SanFrancisco-Portland-1");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-Portland-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("SanFrancisco-Portland-2");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-Portland-2");
         routeList.add(r);
         routes.put("Portland", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SanFrancisco-SaltLakeCity-1");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-SaltLakeCity-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("SanFrancisco-SaltLakeCity-2");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-SaltLakeCity-2");
         routeList.add(r);
         routes.put("SaltLakeCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SanFrancisco-LosAngeles-1");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-LosAngeles-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("SanFrancisco-LosAngeles-2");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-LosAngeles-2");
         routeList.add(r);
         routes.put("LosAngeles", routeList);
 
@@ -221,24 +222,24 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SanFrancisco-LosAngeles-1");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-LosAngeles-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("SanFrancisco-LosAngeles-2");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-LosAngeles-2");
         routeList.add(r);
         routes.put("SanFrancisco", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LosAngeles-LasVegas");
+        r = AllRoutes.get_RoutesMap().get("LosAngeles-LasVegas");
         routeList.add(r);
         routes.put("LasVegas", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LosAngeles-Phoenix");
+        r = AllRoutes.get_RoutesMap().get("LosAngeles-Phoenix");
         routeList.add(r);
         routes.put("Phoenix", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LosAngeles-ElPaso");
+        r = AllRoutes.get_RoutesMap().get("LosAngeles-ElPaso");
         routeList.add(r);
         routes.put("ElPaso", routeList);
 
@@ -252,12 +253,12 @@ public class City implements  iCity{
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LasVegas-SaltLakeCity");
+        r = AllRoutes.get_RoutesMap().get("LasVegas-SaltLakeCity");
         routeList.add(r);
         routes.put("SaltLakeCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LosAngeles-LasVegas");
+        r = AllRoutes.get_RoutesMap().get("LosAngeles-LasVegas");
         routeList.add(r);
         routes.put("LosAngeles", routeList);
 
@@ -270,22 +271,22 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LosAngeles-Phoenix");
+        r = AllRoutes.get_RoutesMap().get("LosAngeles-Phoenix");
         routeList.add(r);
         routes.put("LosAngeles", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Phoenix-Denver");
+        r = AllRoutes.get_RoutesMap().get("Phoenix-Denver");
         routeList.add(r);
         routes.put("Denver", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Phoenix-SantaFe");
+        r = AllRoutes.get_RoutesMap().get("Phoenix-SantaFe");
         routeList.add(r);
         routes.put("SantaFe", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Phoenix-ElPaso");
+        r = AllRoutes.get_RoutesMap().get("Phoenix-ElPaso");
         routeList.add(r);
         routes.put("ElPaso", routeList);
 
@@ -297,32 +298,32 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LosAngeles-ElPaso");
+        r = AllRoutes.get_RoutesMap().get("LosAngeles-ElPaso");
         routeList.add(r);
         routes.put("LosAngeles", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Phoenix-ElPaso");
+        r = AllRoutes.get_RoutesMap().get("Phoenix-ElPaso");
         routeList.add(r);
         routes.put("Phoenix", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("ElPaso-SantaFe");
+        r = AllRoutes.get_RoutesMap().get("ElPaso-SantaFe");
         routeList.add(r);
         routes.put("SantaFe", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("ElPaso-OklahomaCity");
+        r = AllRoutes.get_RoutesMap().get("ElPaso-OklahomaCity");
         routeList.add(r);
         routes.put("OklahomaCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("ElPaso-Dallas");
+        r = AllRoutes.get_RoutesMap().get("ElPaso-Dallas");
         routeList.add(r);
         routes.put("Dallas", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("ElPaso-Houston");
+        r = AllRoutes.get_RoutesMap().get("ElPaso-Houston");
         routeList.add(r);
         routes.put("Houston", routeList);
 
@@ -335,22 +336,22 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("ElPaso-SantaFe");
+        r = AllRoutes.get_RoutesMap().get("ElPaso-SantaFe");
         routeList.add(r);
         routes.put("ElPaso", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SantaFe-OklahomaCity");
+        r = AllRoutes.get_RoutesMap().get("SantaFe-OklahomaCity");
         routeList.add(r);
         routes.put("OklahomaCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SantaFe-Denver");
+        r = AllRoutes.get_RoutesMap().get("SantaFe-Denver");
         routeList.add(r);
         routes.put("Denver", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Phoenix-SantaFe");
+        r = AllRoutes.get_RoutesMap().get("Phoenix-SantaFe");
         routeList.add(r);
         routes.put("Phoenix", routeList);
 
@@ -362,39 +363,39 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SantaFe-Denver");
+        r = AllRoutes.get_RoutesMap().get("SantaFe-Denver");
         routeList.add(r);
         routes.put("SantaFe", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Phoenix-Denver");
+        r = AllRoutes.get_RoutesMap().get("Phoenix-Denver");
         routeList.add(r);
         routes.put("Phoenix", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Denver-OklahomaCity");
+        r = AllRoutes.get_RoutesMap().get("Denver-OklahomaCity");
         routeList.add(r);
         routes.put("OklahomaCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Denver-KansasCity");
+        r = AllRoutes.get_RoutesMap().get("Denver-KansasCity");
         routeList.add(r);
         routes.put("KansasCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Denver-Omaha");
+        r = AllRoutes.get_RoutesMap().get("Denver-Omaha");
         routeList.add(r);
         routes.put("Omaha", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Helena-Denver");
+        r = AllRoutes.get_RoutesMap().get("Helena-Denver");
         routeList.add(r);
         routes.put("Helena", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaltLakeCity-Denver-1");
+        r = AllRoutes.get_RoutesMap().get("SaltLakeCity-Denver-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("SaltLakeCity-Denver-2");
+        r = AllRoutes.get_RoutesMap().get("SaltLakeCity-Denver-2");
         routeList.add(r);
         routes.put("SaltLakeCity", routeList);
 
@@ -406,31 +407,31 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SanFrancisco-SaltLakeCity-1");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-SaltLakeCity-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("SanFrancisco-SaltLakeCity-2");
+        r = AllRoutes.get_RoutesMap().get("SanFrancisco-SaltLakeCity-2");
         routeList.add(r);
         routes.put("SanFrancisco", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LasVegas-SaltLakeCity");
+        r = AllRoutes.get_RoutesMap().get("LasVegas-SaltLakeCity");
         routeList.add(r);
         routes.put("LasVegas", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Portland-SaltLakeCity");
+        r = AllRoutes.get_RoutesMap().get("Portland-SaltLakeCity");
         routeList.add(r);
         routes.put("Portland", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaltLakeCity-Helena");
+        r = AllRoutes.get_RoutesMap().get("SaltLakeCity-Helena");
         routeList.add(r);
         routes.put("Helena", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaltLakeCity-Denver-1");
+        r = AllRoutes.get_RoutesMap().get("SaltLakeCity-Denver-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("SaltLakeCity-Denver-2");
+        r = AllRoutes.get_RoutesMap().get("SaltLakeCity-Denver-2");
         routeList.add(r);
         routes.put("Denver", routeList);
 
@@ -442,37 +443,37 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaltLakeCity-Helena");
+        r = AllRoutes.get_RoutesMap().get("SaltLakeCity-Helena");
         routeList.add(r);
         routes.put("Helena", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Seattle-Helena");
+        r = AllRoutes.get_RoutesMap().get("Seattle-Helena");
         routeList.add(r);
         routes.put("Seattle", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Calgary-Helena");
+        r = AllRoutes.get_RoutesMap().get("Calgary-Helena");
         routeList.add(r);
         routes.put("Calgary", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Helena-Winnipeg");
+        r = AllRoutes.get_RoutesMap().get("Helena-Winnipeg");
         routeList.add(r);
         routes.put("Winnipeg", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Helena-Duluth");
+        r = AllRoutes.get_RoutesMap().get("Helena-Duluth");
         routeList.add(r);
         routes.put("Duluth", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Helena-KansasCity");
+        r = AllRoutes.get_RoutesMap().get("Helena-KansasCity");
         routeList.add(r);
         routes.put("KansasCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Helena-Denver");
+        r = AllRoutes.get_RoutesMap().get("Helena-Denver");
         routeList.add(r);
         routes.put("Denver", routeList);
 
@@ -485,22 +486,22 @@ public class City implements  iCity{
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Calgary-Winnipeg");
+        r = AllRoutes.get_RoutesMap().get("Calgary-Winnipeg");
         routeList.add(r);
         routes.put("Calgary", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Helena-Winnipeg");
+        r = AllRoutes.get_RoutesMap().get("Helena-Winnipeg");
         routeList.add(r);
         routes.put("Helena", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Winnipeg-Duluth");
+        r = AllRoutes.get_RoutesMap().get("Winnipeg-Duluth");
         routeList.add(r);
         routes.put("Duluth", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Winnipeg-SaultSt.Marie");
+        r = AllRoutes.get_RoutesMap().get("Winnipeg-SaultSt.Marie");
         routeList.add(r);
         routes.put("SaultSt.Marie", routeList);
 
@@ -513,34 +514,34 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Winnipeg-Duluth");
+        r = AllRoutes.get_RoutesMap().get("Winnipeg-Duluth");
         routeList.add(r);
         routes.put("Winnipeg", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Duluth-SaultSt.Marie");
+        r = AllRoutes.get_RoutesMap().get("Duluth-SaultSt.Marie");
         routeList.add(r);
         routes.put("SaultSt.Marie", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Duluth-Toronto");
+        r = AllRoutes.get_RoutesMap().get("Duluth-Toronto");
         routeList.add(r);
         routes.put("Toronto", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Duluth-Chicago");
+        r = AllRoutes.get_RoutesMap().get("Duluth-Chicago");
         routeList.add(r);
         routes.put("Chicago", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Omaha-Duluth-1");
+        r = AllRoutes.get_RoutesMap().get("Omaha-Duluth-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Omaha-Duluth-2");
+        r = AllRoutes.get_RoutesMap().get("Omaha-Duluth-2");
         routeList.add(r);
         routes.put("Omaha", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Helena-Duluth");
+        r = AllRoutes.get_RoutesMap().get("Helena-Duluth");
         routeList.add(r);
         routes.put("Helena", routeList);
 
@@ -552,31 +553,31 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Omaha-Duluth-1");
+        r = AllRoutes.get_RoutesMap().get("Omaha-Duluth-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Omaha-Duluth-2");
+        r = AllRoutes.get_RoutesMap().get("Omaha-Duluth-2");
         routeList.add(r);
         routes.put("Duluth", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Helena-Omaha");
+        r = AllRoutes.get_RoutesMap().get("Helena-Omaha");
         routeList.add(r);
         routes.put("Helena", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Omaha-Chicago");
+        r = AllRoutes.get_RoutesMap().get("Omaha-Chicago");
         routeList.add(r);
         routes.put("Chicago", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Omaha-KansasCity-1");
+        r = AllRoutes.get_RoutesMap().get("Omaha-KansasCity-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Omaha-KansasCity-2");
+        r = AllRoutes.get_RoutesMap().get("Omaha-KansasCity-2");
         routeList.add(r);
         routes.put("KansasCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Denver-Omaha");
+        r = AllRoutes.get_RoutesMap().get("Denver-Omaha");
         routeList.add(r);
         routes.put("Denver", routeList);
 
@@ -588,30 +589,30 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Denver-KansasCity");
+        r = AllRoutes.get_RoutesMap().get("Denver-KansasCity");
         routeList.add(r);
         routes.put("Denver", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Omaha-KansasCity-1");
+        r = AllRoutes.get_RoutesMap().get("Omaha-KansasCity-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Omaha-KansasCity-2");
+        r = AllRoutes.get_RoutesMap().get("Omaha-KansasCity-2");
         routeList.add(r);
         routes.put("Omaha", routeList);
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("KansasCity-SaintLouis-1");
+        r = AllRoutes.get_RoutesMap().get("KansasCity-SaintLouis-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("KansasCity-SaintLouis-2");
+        r = AllRoutes.get_RoutesMap().get("KansasCity-SaintLouis-2");
         routeList.add(r);
         routes.put("SaintLouis", routeList);
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("OklahomaCity-KansasCity-1");
+        r = AllRoutes.get_RoutesMap().get("OklahomaCity-KansasCity-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("OklahomaCity-KansasCity-2");
+        r = AllRoutes.get_RoutesMap().get("OklahomaCity-KansasCity-2");
         routeList.add(r);
         routes.put("OklahomaCity", routeList);
 
@@ -623,37 +624,37 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Denver-OklahomaCity");
+        r = AllRoutes.get_RoutesMap().get("Denver-OklahomaCity");
         routeList.add(r);
         routes.put("Denver", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("OklahomaCity-KansasCity-1");
+        r = AllRoutes.get_RoutesMap().get("OklahomaCity-KansasCity-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("OklahomaCity-KansasCity-2");
+        r = AllRoutes.get_RoutesMap().get("OklahomaCity-KansasCity-2");
         routeList.add(r);
         routes.put("KansasCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("OklahomaCity-LittleRock");
+        r = AllRoutes.get_RoutesMap().get("OklahomaCity-LittleRock");
         routeList.add(r);
         routes.put("LittleRock", routeList);
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("OklahomaCity-Dallas-1");
+        r = AllRoutes.get_RoutesMap().get("OklahomaCity-Dallas-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("OklahomaCity-Dallas-2");
+        r = AllRoutes.get_RoutesMap().get("OklahomaCity-Dallas-2");
         routeList.add(r);
         routes.put("Dallas", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("ElPaso-OklahomaCity");
+        r = AllRoutes.get_RoutesMap().get("ElPaso-OklahomaCity");
         routeList.add(r);
         routes.put("ElPaso", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SantaFe-OklahomaCity");
+        r = AllRoutes.get_RoutesMap().get("SantaFe-OklahomaCity");
         routeList.add(r);
         routes.put("SantaFe", routeList);
 
@@ -666,27 +667,27 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("ElPaso-Dallas");
+        r = AllRoutes.get_RoutesMap().get("ElPaso-Dallas");
         routeList.add(r);
         routes.put("ElPaso", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("OklahomaCity-Dallas-1");
+        r = AllRoutes.get_RoutesMap().get("OklahomaCity-Dallas-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("OklahomaCity-Dallas-2");
+        r = AllRoutes.get_RoutesMap().get("OklahomaCity-Dallas-2");
         routeList.add(r);
         routes.put("OklahomaCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Dallas-LittleRock");
+        r = AllRoutes.get_RoutesMap().get("Dallas-LittleRock");
         routeList.add(r);
         routes.put("LittleRock", routeList);
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Dallas-Houston-1");
+        r = AllRoutes.get_RoutesMap().get("Dallas-Houston-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Dallas-Houston-2");
+        r = AllRoutes.get_RoutesMap().get("Dallas-Houston-2");
         routeList.add(r);
         routes.put("Houston", routeList);
 
@@ -700,19 +701,19 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("ElPaso-Houston");
+        r = AllRoutes.get_RoutesMap().get("ElPaso-Houston");
         routeList.add(r);
         routes.put("ElPaso", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Dallas-Houston-1");
+        r = AllRoutes.get_RoutesMap().get("Dallas-Houston-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Dallas-Houston-2");
+        r = AllRoutes.get_RoutesMap().get("Dallas-Houston-2");
         routeList.add(r);
         routes.put("Dallas", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Houston-NewOrleans");
+        r = AllRoutes.get_RoutesMap().get("Houston-NewOrleans");
         routeList.add(r);
         routes.put("NewOrleans", routeList);
 
@@ -724,24 +725,24 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Houston-NewOrleans");
+        r = AllRoutes.get_RoutesMap().get("Houston-NewOrleans");
         routeList.add(r);
         routes.put("Houston", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LittleRock-NewOrleans");
+        r = AllRoutes.get_RoutesMap().get("LittleRock-NewOrleans");
         routeList.add(r);
         routes.put("LittleRock", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("NewOrleans-Atlanta-1");
+        r = AllRoutes.get_RoutesMap().get("NewOrleans-Atlanta-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("NewOrleans-Atlanta-2");
+        r = AllRoutes.get_RoutesMap().get("NewOrleans-Atlanta-2");
         routeList.add(r);
         routes.put("Atlanta", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("NewOrleans-Miami");
+        r = AllRoutes.get_RoutesMap().get("NewOrleans-Miami");
         routeList.add(r);
         routes.put("Miami", routeList);
 
@@ -754,27 +755,27 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("OklahomaCity-LittleRock");
+        r = AllRoutes.get_RoutesMap().get("OklahomaCity-LittleRock");
         routeList.add(r);
         routes.put("OklahomaCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LittleRock-SaintLouis");
+        r = AllRoutes.get_RoutesMap().get("LittleRock-SaintLouis");
         routeList.add(r);
         routes.put("SaintLouis", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LittleRock-Nashville");
+        r = AllRoutes.get_RoutesMap().get("LittleRock-Nashville");
         routeList.add(r);
         routes.put("Nashville", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LittleRock-NewOrleans");
+        r = AllRoutes.get_RoutesMap().get("LittleRock-NewOrleans");
         routeList.add(r);
         routes.put("NewOrleans", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Dallas-LittleRock");
+        r = AllRoutes.get_RoutesMap().get("Dallas-LittleRock");
         routeList.add(r);
         routes.put("Dallas", routeList);
 
@@ -788,32 +789,32 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("KansasCity-SaintLouis-1");
+        r = AllRoutes.get_RoutesMap().get("KansasCity-SaintLouis-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("KansasCity-SaintLouis-2");
+        r = AllRoutes.get_RoutesMap().get("KansasCity-SaintLouis-2");
         routeList.add(r);
         routes.put("KansasCity", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaintLouis-Chicago-1");
+        r = AllRoutes.get_RoutesMap().get("SaintLouis-Chicago-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("SaintLouis-Chicago-2");
+        r = AllRoutes.get_RoutesMap().get("SaintLouis-Chicago-2");
         routeList.add(r);
         routes.put("Chicago", routeList);
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaintLouis-Pittsburgh");
+        r = AllRoutes.get_RoutesMap().get("SaintLouis-Pittsburgh");
         routeList.add(r);
         routes.put("Pittsburgh", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaintLouis-Nashville");
+        r = AllRoutes.get_RoutesMap().get("SaintLouis-Nashville");
         routeList.add(r);
         routes.put("Nashville", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LittleRock-SaintLouis");
+        r = AllRoutes.get_RoutesMap().get("LittleRock-SaintLouis");
         routeList.add(r);
         routes.put("LittleRock", routeList);
 
@@ -825,31 +826,31 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaintLouis-Chicago-1");
+        r = AllRoutes.get_RoutesMap().get("SaintLouis-Chicago-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("SaintLouis-Chicago-2");
+        r = AllRoutes.get_RoutesMap().get("SaintLouis-Chicago-2");
         routeList.add(r);
         routes.put("SaintLouis", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Omaha-Chicago");
+        r = AllRoutes.get_RoutesMap().get("Omaha-Chicago");
         routeList.add(r);
         routes.put("Omaha", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Duluth-Chicago");
+        r = AllRoutes.get_RoutesMap().get("Duluth-Chicago");
         routeList.add(r);
         routes.put("Duluth", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Chicago-Toronto");
+        r = AllRoutes.get_RoutesMap().get("Chicago-Toronto");
         routeList.add(r);
         routes.put("Toronto", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Chicago-Pittsburgh-1");
+        r = AllRoutes.get_RoutesMap().get("Chicago-Pittsburgh-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Chicago-Pittsburgh-2");
+        r = AllRoutes.get_RoutesMap().get("Chicago-Pittsburgh-2");
         routeList.add(r);
         routes.put("Pittsburgh", routeList);
 
@@ -864,22 +865,22 @@ public class City implements  iCity{
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Winnipeg-SaultSt.Marie");
+        r = AllRoutes.get_RoutesMap().get("Winnipeg-SaultSt.Marie");
         routeList.add(r);
         routes.put("Winnipeg", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Duluth-SaultSt.Marie");
+        r = AllRoutes.get_RoutesMap().get("Duluth-SaultSt.Marie");
         routeList.add(r);
         routes.put("Duluth", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaultSt.Marie-Toronto");
+        r = AllRoutes.get_RoutesMap().get("SaultSt.Marie-Toronto");
         routeList.add(r);
         routes.put("Toronto", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaultSt.Marie-Montreal");
+        r = AllRoutes.get_RoutesMap().get("SaultSt.Marie-Montreal");
         routeList.add(r);
         routes.put("Montreal", routeList);
 
@@ -892,28 +893,28 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Chicago-Toronto");
+        r = AllRoutes.get_RoutesMap().get("Chicago-Toronto");
         routeList.add(r);
         routes.put("Toronto", routeList);
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Duluth-Toronto");
+        r = AllRoutes.get_RoutesMap().get("Duluth-Toronto");
         routeList.add(r);
         routes.put("Duluth", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaultSt.Marie-Toronto");
+        r = AllRoutes.get_RoutesMap().get("SaultSt.Marie-Toronto");
         routeList.add(r);
         routes.put("SaultSt.Marie", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Toronto-Montreal");
+        r = AllRoutes.get_RoutesMap().get("Toronto-Montreal");
         routeList.add(r);
         routes.put("Montreal", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Toronto-Pittsburgh");
+        r = AllRoutes.get_RoutesMap().get("Toronto-Pittsburgh");
         routeList.add(r);
         routes.put("Pittsburgh", routeList);
 
@@ -929,42 +930,42 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Chicago-Pittsburgh-1");
+        r = AllRoutes.get_RoutesMap().get("Chicago-Pittsburgh-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Chicago-Pittsburgh-2");
+        r = AllRoutes.get_RoutesMap().get("Chicago-Pittsburgh-2");
         routeList.add(r);
         routes.put("Chicago", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Toronto-Pittsburgh");
+        r = AllRoutes.get_RoutesMap().get("Toronto-Pittsburgh");
         routeList.add(r);
         routes.put("Toronto", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Pittsburgh-NewYork-1");
+        r = AllRoutes.get_RoutesMap().get("Pittsburgh-NewYork-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Pittsburgh-NewYork-2");
+        r = AllRoutes.get_RoutesMap().get("Pittsburgh-NewYork-2");
         routeList.add(r);
         routes.put("NewYork", routeList);
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Pittsburgh-Washington");
+        r = AllRoutes.get_RoutesMap().get("Pittsburgh-Washington");
         routeList.add(r);
         routes.put("Washington", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Pittsburgh-Raleigh");
+        r = AllRoutes.get_RoutesMap().get("Pittsburgh-Raleigh");
         routeList.add(r);
         routes.put("Raleigh", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Nashville-Pittsburgh");
+        r = AllRoutes.get_RoutesMap().get("Nashville-Pittsburgh");
         routeList.add(r);
         routes.put("Nashville", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaintLouis-Pittsburgh");
+        r = AllRoutes.get_RoutesMap().get("SaintLouis-Pittsburgh");
         routeList.add(r);
         routes.put("SaintLouis", routeList);
 
@@ -980,28 +981,28 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("LittleRock-Nashville");
+        r = AllRoutes.get_RoutesMap().get("LittleRock-Nashville");
         routeList.add(r);
         routes.put("LittleRock", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaintLouis-Nashville");
+        r = AllRoutes.get_RoutesMap().get("SaintLouis-Nashville");
         routeList.add(r);
         routes.put("SaintLouis", routeList);
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Nashville-Pittsburgh");
+        r = AllRoutes.get_RoutesMap().get("Nashville-Pittsburgh");
         routeList.add(r);
         routes.put("Pittsburgh", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Nashville-Raleigh");
+        r = AllRoutes.get_RoutesMap().get("Nashville-Raleigh");
         routeList.add(r);
         routes.put("Raleigh", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Nashville-Atlanta");
+        r = AllRoutes.get_RoutesMap().get("Nashville-Atlanta");
         routeList.add(r);
         routes.put("Atlanta", routeList);
 
@@ -1015,31 +1016,31 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Nashville-Atlanta");
+        r = AllRoutes.get_RoutesMap().get("Nashville-Atlanta");
         routeList.add(r);
         routes.put("Nashville", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Atlanta-Raleigh-1");
+        r = AllRoutes.get_RoutesMap().get("Atlanta-Raleigh-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Atlanta-Raleigh-2");
+        r = AllRoutes.get_RoutesMap().get("Atlanta-Raleigh-2");
         routeList.add(r);
         routes.put("Raleigh", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Atlanta-Charleston");
+        r = AllRoutes.get_RoutesMap().get("Atlanta-Charleston");
         routeList.add(r);
         routes.put("Charleston", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Atlanta-Miami");
+        r = AllRoutes.get_RoutesMap().get("Atlanta-Miami");
         routeList.add(r);
         routes.put("Miami", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("NewOrleans-Atlanta-1");
+        r = AllRoutes.get_RoutesMap().get("NewOrleans-Atlanta-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("NewOrleans-Atlanta-2");
+        r = AllRoutes.get_RoutesMap().get("NewOrleans-Atlanta-2");
         routeList.add(r);
         routes.put("NewOrleans", routeList);
 
@@ -1051,17 +1052,17 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("NewOrleans-Miami");
+        r = AllRoutes.get_RoutesMap().get("NewOrleans-Miami");
         routeList.add(r);
         routes.put("NewOrleans", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Atlanta-Miami");
+        r = AllRoutes.get_RoutesMap().get("Atlanta-Miami");
         routeList.add(r);
         routes.put("Atlanta", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Charleston-Miami");
+        r = AllRoutes.get_RoutesMap().get("Charleston-Miami");
         routeList.add(r);
         routes.put("Charleston", routeList);
 
@@ -1074,17 +1075,17 @@ public class City implements  iCity{
         routes = new HashMap<>();
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Atlanta-Charleston");
+        r = AllRoutes.get_RoutesMap().get("Atlanta-Charleston");
         routeList.add(r);
         routes.put("Atlanta", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Raleigh-Charleston");
+        r = AllRoutes.get_RoutesMap().get("Raleigh-Charleston");
         routeList.add(r);
         routes.put("Raleigh", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Charleston-Miami");
+        r = AllRoutes.get_RoutesMap().get("Charleston-Miami");
         routeList.add(r);
         routes.put("Miami", routeList);
 
@@ -1098,32 +1099,32 @@ public class City implements  iCity{
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Atlanta-Raleigh-1");
+        r = AllRoutes.get_RoutesMap().get("Atlanta-Raleigh-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Atlanta-Raleigh-2");
+        r = AllRoutes.get_RoutesMap().get("Atlanta-Raleigh-2");
         routeList.add(r);
         routes.put("Atlanta", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Nashville-Raleigh");
+        r = AllRoutes.get_RoutesMap().get("Nashville-Raleigh");
         routeList.add(r);
         routes.put("Nashville", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Pittsburgh-Raleigh");
+        r = AllRoutes.get_RoutesMap().get("Pittsburgh-Raleigh");
         routeList.add(r);
         routes.put("Pittsburgh", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Raleigh-Washington-1");
+        r = AllRoutes.get_RoutesMap().get("Raleigh-Washington-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Raleigh-Washington-2");
+        r = AllRoutes.get_RoutesMap().get("Raleigh-Washington-2");
         routeList.add(r);
         routes.put("Washington", routeList);
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Raleigh-Charleston");
+        r = AllRoutes.get_RoutesMap().get("Raleigh-Charleston");
         routeList.add(r);
         routes.put("Charleston", routeList);
 
@@ -1138,21 +1139,21 @@ public class City implements  iCity{
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Raleigh-Washington-1");
+        r = AllRoutes.get_RoutesMap().get("Raleigh-Washington-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Raleigh-Washington-2");
+        r = AllRoutes.get_RoutesMap().get("Raleigh-Washington-2");
         routeList.add(r);
         routes.put("Raleigh", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Pittsburgh-Washington");
+        r = AllRoutes.get_RoutesMap().get("Pittsburgh-Washington");
         routeList.add(r);
         routes.put("Pittsburgh", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("NewYork-Washington-1");
+        r = AllRoutes.get_RoutesMap().get("NewYork-Washington-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("NewYork-Washington-2");
+        r = AllRoutes.get_RoutesMap().get("NewYork-Washington-2");
         routeList.add(r);
         routes.put("NewYork", routeList);
 
@@ -1166,28 +1167,28 @@ public class City implements  iCity{
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("NewYork-Washington-1");
+        r = AllRoutes.get_RoutesMap().get("NewYork-Washington-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("NewYork-Washington-2");
+        r = AllRoutes.get_RoutesMap().get("NewYork-Washington-2");
         routeList.add(r);
         routes.put("Washington", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Pittsburgh-NewYork-1");
+        r = AllRoutes.get_RoutesMap().get("Pittsburgh-NewYork-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Pittsburgh-NewYork-2");
+        r = AllRoutes.get_RoutesMap().get("Pittsburgh-NewYork-2");
         routeList.add(r);
         routes.put("Pittsburgh", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Montreal-NewYork");
+        r = AllRoutes.get_RoutesMap().get("Montreal-NewYork");
         routeList.add(r);
         routes.put("Montreal", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("NewYork-Boston-1");
+        r = AllRoutes.get_RoutesMap().get("NewYork-Boston-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("NewYork-Boston-2");
+        r = AllRoutes.get_RoutesMap().get("NewYork-Boston-2");
         routeList.add(r);
         routes.put("Boston", routeList);
 
@@ -1201,16 +1202,16 @@ public class City implements  iCity{
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("NewYork-Boston-1");
+        r = AllRoutes.get_RoutesMap().get("NewYork-Boston-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("NewYork-Boston-2");
+        r = AllRoutes.get_RoutesMap().get("NewYork-Boston-2");
         routeList.add(r);
         routes.put("NewYork", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Montreal-Boston-1");
+        r = AllRoutes.get_RoutesMap().get("Montreal-Boston-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Montreal-Boston-2");
+        r = AllRoutes.get_RoutesMap().get("Montreal-Boston-2");
         routeList.add(r);
         routes.put("Montreal", routeList);
 
@@ -1224,25 +1225,25 @@ public class City implements  iCity{
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Montreal-NewYork");
+        r = AllRoutes.get_RoutesMap().get("Montreal-NewYork");
         routeList.add(r);
         routes.put("NewYork", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Toronto-Montreal");
+        r = AllRoutes.get_RoutesMap().get("Toronto-Montreal");
         routeList.add(r);
         routes.put("Toronto", routeList);
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("SaultSt.Marie-Montreal");
+        r = AllRoutes.get_RoutesMap().get("SaultSt.Marie-Montreal");
         routeList.add(r);
         routes.put("SaultSt.Marie", routeList);
 
 
         routeList = new ArrayList<>();
-        r = Route.get_RoutesMap().get("Montreal-Boston-1");
+        r = AllRoutes.get_RoutesMap().get("Montreal-Boston-1");
         routeList.add(r);
-        r = Route.get_RoutesMap().get("Montreal-Boston-2");
+        r = AllRoutes.get_RoutesMap().get("Montreal-Boston-2");
         routeList.add(r);
         routes.put("Boston", routeList);
 

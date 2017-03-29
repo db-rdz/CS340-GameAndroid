@@ -35,6 +35,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase2.UpdateFaceUpTableTrain
 import com.example.ryanblaser.tickettoride.Command.Phase2.UpdatePlayerDestinationCardsCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.UpdatePlayerTrainCardsCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.UpdateScoreboardCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.UpdateServerDestCardsCommand;
 import com.example.ryanblaser.tickettoride.Server.IServer.GameIsFullException;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -77,6 +78,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = UpdateFaceUpTableTrainCardsCommand.class),
         @JsonSubTypes.Type(value = UpdatePlayerDestinationCardsCommand.class),
         @JsonSubTypes.Type(value = UpdatePlayerTrainCardsCommand.class),
+        @JsonSubTypes.Type(value = UpdateServerDestCardsCommand.class),
         @JsonSubTypes.Type(value = UpdateScoreboardCommand.class)
 
 })

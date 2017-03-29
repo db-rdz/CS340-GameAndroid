@@ -29,6 +29,7 @@ public class UpdateFaceUpTableTrainCardsCommand implements ICommand {
     //Data members
     private List<TrainCard> trainCards;
 
+    public UpdateFaceUpTableTrainCardsCommand(){}
     //Constructor
     public UpdateFaceUpTableTrainCardsCommand(List<TrainCard> list) {
         trainCards = list;
