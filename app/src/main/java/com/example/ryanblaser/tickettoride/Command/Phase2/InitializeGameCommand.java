@@ -1,7 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
@@ -13,7 +12,6 @@ import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,7 +46,7 @@ public class InitializeGameCommand implements ICommand {
         ClientFacade.SINGLETON.getClientModel().getPlayer_hand().initializeHand(hand);
 		ClientFacade.SINGLETON.getClientModel().setDestCardsFromServer(destinationCards);
 		ClientFacade.SINGLETON.getClientModel().setState(State.FIRST_TURN); //Pick DestCard on first turn
-		ClientFacade.SINGLETON.getClientModel().setScoreboard(scoreboards);
+		ClientFacade.SINGLETON.getClientModel().setScoreboards(scoreboards);
 
         PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(faceupTrainCards);
 		ClientFacade.SINGLETON.getClientModel().getWaitingActivity().switchToGameBoard();

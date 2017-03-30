@@ -12,8 +12,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ExpandableListView;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.AllRoutes;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.Scoreboard;
+import com.example.ryanblaser.tickettoride.GUI.Adapters.DestinationListAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.ExpandableListAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
@@ -35,6 +39,7 @@ public class PlayersInfoFragment extends Fragment {
     }
 
     private ExpandableListView _expListView;
+    private ExpandableListView _playerDestCardsView;
     public static final String ARG_PAGE = "page";
 
     public static PlayersInfoFragment create(int pageNumber){
@@ -82,6 +87,7 @@ public class PlayersInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_players_info, container, false);
         _expListView = (ExpandableListView) v.findViewById(R.id.lvExp);
+        _playerDestCardsView = (ExpandableListView) v.findViewById(R.id.destCardsList);
 
 
         List<String> headers = new ArrayList<>();
@@ -90,12 +96,15 @@ public class PlayersInfoFragment extends Fragment {
         //Nathan: Changed adapter to use the Scoreboard class
         Pair<List<String>, List<Scoreboard>> info
                 = ClientFacade.SINGLETON.getClientModel().getInfoForExpandable();
-
         ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
-
         _expListView.setAdapter(listAdapter);
 
-
+        Pair<List<String>, List<Integer>> destCardInfo
+                = ClientFacade.SINGLETON.getClientModel().destCardExpandableInfo();
+        if (destCardInfo.first.size() > 0 && destCardInfo.second.size() > 0) {
+            DestinationListAdapter destinationListAdapter = new DestinationListAdapter(getContext(), destCardInfo.first, destCardInfo.second);
+            _playerDestCardsView.setAdapter(destinationListAdapter);
+        }
         return v;
     }
 

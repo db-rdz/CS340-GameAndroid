@@ -3,17 +3,16 @@ package com.example.ryanblaser.tickettoride.Client;
 import android.content.Intent;
 import android.util.Pair;
 
-import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Board;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.AllRoutes;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.Activities.BoardActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.WaitingActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
-import com.example.ryanblaser.tickettoride.Client.State;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -109,7 +108,7 @@ public class ClientModel{
      */
     private State state;
 
-    private List<Scoreboard> scoreboard;
+    private List<Scoreboard> scoreboards;
 
     //Constructor
     public ClientModel() {
@@ -123,7 +122,7 @@ public class ClientModel{
         chat = new ArrayList<>();
         player_hand = new PlayerCardHand();
         state = NOT_YOUR_TURN;
-        scoreboard = new ArrayList<>();
+        scoreboards = new ArrayList<>();
     }
 
     /**
@@ -270,10 +269,22 @@ public class ClientModel{
         LinkedHashMap<String, Scoreboard> info = new LinkedHashMap<>();
 
         for(int i = 0; i < usernameList.size(); i++){
-            info.put(usernameList.get(i), scoreboard.get(i)); //Each name will be mapped to their scoreboard
+            info.put(usernameList.get(i), scoreboards.get(i)); //Each name will be mapped to their scoreboards
         }
 
-        return new Pair<>(usernameList, scoreboard);
+        return new Pair<>(usernameList, scoreboards);
+    }
+
+    public Pair<List<String>, List<Integer>> destCardExpandableInfo() {
+        List<String> routeNames = new ArrayList<>();
+        List<Integer> cardPoints = new ArrayList<>();
+        for (DestCard card : player_hand.get_destCards()) {
+            String destination = card.get_origin() + " -> " + card.get_routeDestination();
+            routeNames.add(destination);
+            cardPoints.add(card.getPoints());
+        }
+        return new Pair<>(routeNames, cardPoints);
+
     }
 
     //Getters and Setters
@@ -381,12 +392,12 @@ public class ClientModel{
         this.state = state;
     }
 
-    public List<Scoreboard> getScoreboard() {
-        return scoreboard;
+    public List<Scoreboard> getScoreboards() {
+        return scoreboards;
     }
 
-    public void setScoreboard(List<Scoreboard> scoreboard) {
-        this.scoreboard = scoreboard;
+    public void setScoreboards(List<Scoreboard> scoreboards) {
+        this.scoreboards = scoreboards;
     }
 
     public List<DestCard> getDestCardsFromServer() {

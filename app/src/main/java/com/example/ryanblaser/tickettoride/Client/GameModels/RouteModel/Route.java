@@ -64,5 +64,7 @@ public class Route {
     public String get_S_Color() { return _S_Color; }
     public void set_S_Color(String _S_Color) { this._S_Color = _S_Color; }
 
-
+    public int get_i_pointValue() {
+        return _i_pointValue;
+    }
 }

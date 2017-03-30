@@ -4,7 +4,6 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.Scoreboard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +31,7 @@ public class UpdateScoreboardCommand implements ICommand {
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.getClientModel().setScoreboard(scoreboards);
+        ClientFacade.SINGLETON.getClientModel().setScoreboards(scoreboards);
         PlayerInfoPresenter._SINGLETON.refreshPlayerInfo();
         return null;
     }
