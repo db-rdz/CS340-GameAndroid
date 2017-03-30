@@ -197,12 +197,9 @@ public class PlayerActionFragment extends Fragment {
                     SlidingTrainCardAdapter.setAmountOfCardsTaken(count);
 
                     GameBoardPresenter._SINGLETON.set_readyToStart(true);
-                    Toast.makeText(getContext(), "You got a card", Toast.LENGTH_SHORT).show();
 
                     //TODO: refresh fragment to get rid of buttons
                     //TODO: get rid of buttons depending on state
-                    //TODO: SEND COMMAND TO SERVER
-                    //PlayerActionPresenter._SINGLETON.getTopDeckTrainCardCommand(SlidingTrainCardAdapter.getAmountOfCardsTaken());
                     PlayerActionPresenter._SINGLETON.get_playerState().getTopDeckTrainCard(count);
                     //Reset the amount of cards drawn back to 0, and change player state
                     if (SlidingTrainCardAdapter.getAmountOfCardsTaken() == 2) {

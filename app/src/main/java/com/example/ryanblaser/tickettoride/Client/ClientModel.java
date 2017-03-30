@@ -3,11 +3,10 @@ package com.example.ryanblaser.tickettoride.Client;
 import android.content.Intent;
 import android.util.Pair;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
-import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.AllRoutes;
-import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.Activities.BoardActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.WaitingActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;

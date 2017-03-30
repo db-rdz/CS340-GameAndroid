@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.security.AccessController.getContext;
+
 /**
  * Created by benjamin on 7/03/17.
  */
@@ -113,4 +115,6 @@ public class PlayerActionPresenter {
     {
         return _playerActionFragment;
     }
+
+
 }

@@ -41,10 +41,7 @@ public class Player {
      * @param numOfCarsUsed
      */
     public void updateCarCount(int numOfCarsUsed) {
-        int holder = _car_count;
-        if ((holder -= numOfCarsUsed) >= 0) {
-            _car_count -= numOfCarsUsed;
-        }
+        _car_count -= numOfCarsUsed;
     }
 
     /**

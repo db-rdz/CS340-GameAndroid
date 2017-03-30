@@ -1,4 +1,4 @@
-package com.example.ryanblaser.tickettoride.Client;
+package com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel;
 
 import android.graphics.Color;
 
@@ -12,13 +12,9 @@ public class Scoreboard {
     private int numberOfTrainCards;
     private int numberOfDestCards;
     private String playerColor;
+    private int playerCarCount;
 
-    public Scoreboard() {
-//        points = ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_points();
-//        numberOfTrainCards = ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_noOfTrainCards();
-//        numberOfDestCards = ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_noOfDestCards();
-//        playerColor = "red";
-    }
+    public Scoreboard() {}
 
     public int getPoints() { return points; }
     public void addPoints(int addedPoints)
@@ -57,7 +53,7 @@ public class Scoreboard {
         return playerColor;
     }
 
-    public void setPlayerColor(String playerColor) {
-        this.playerColor = playerColor;
+    public int getPlayerCarCount() {
+        return playerCarCount;
     }
 }

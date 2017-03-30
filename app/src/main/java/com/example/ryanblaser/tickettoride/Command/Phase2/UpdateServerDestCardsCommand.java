@@ -26,6 +26,7 @@ public class UpdateServerDestCardsCommand implements ICommand {
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
         ClientFacade.SINGLETON.getClientModel().setDestCardsFromServer(destCards);
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyPickNewDestCards();
         return null;
     }
 

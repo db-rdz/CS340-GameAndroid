@@ -12,19 +12,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ExpandableListView;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
-import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
-import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.AllRoutes;
-import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
-import com.example.ryanblaser.tickettoride.Client.Scoreboard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.DestinationListAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.ExpandableListAdapter;
-import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 /*
 *   IMPORTANT NOTE:

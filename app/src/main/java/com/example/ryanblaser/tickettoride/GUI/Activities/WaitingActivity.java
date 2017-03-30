@@ -23,6 +23,14 @@ public class WaitingActivity extends AppCompatActivity {
     private TextView textView_waiting_text;
     private ArrayAdapter<String> list_of_users;
 
+    private void debugPlayWithOnePlayer() {
+        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+        int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+        List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
+
+        ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
+        Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +53,17 @@ public class WaitingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                if (isTwoToFivePlayers()) {
-                    int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
-                    int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
-                    List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
-
-                    ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
-                    Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
+//                    int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+//                    int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+//                    List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
+//
+//                    ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
+//                    Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
 //                }
 //                else {
 //                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
 //                } //TODO: Uncomment to actually play game with 2-5 players
+                debugPlayWithOnePlayer();
 
             }
         });

@@ -199,46 +199,42 @@ public class GameBoardFragment extends Fragment {
         setPlayerCardsViews(v);
         setPlayerCardViewValues();
 
+        v.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    GameBoardPresenter presenter = GameBoardPresenter._SINGLETON;
+                    Pair<RESPONSE_STATUS, String> response;
+                    response = presenter.resolveClickEvent(event.getX(), event.getY());
 
-//        if (!_playerState.equals(FIRST_TURN) && _playerState.equals(YOUR_TURN)) {
-
-            v.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        GameBoardPresenter presenter = GameBoardPresenter._SINGLETON;
-                        Pair<RESPONSE_STATUS, String> response;
-                        response = presenter.resolveClickEvent(event.getX(), event.getY());
-
-                        RESPONSE_STATUS responseCode = response.first;
-                        switch (responseCode) {
-                            case TOGGLE_NEEDED: {
-                                toggle();
-                                break;
-                            }
-                            case CITY_CLICKED: {
-                                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
-                            }
-                            case SECOND_CITY_CLICKED: {
-                                break;
-                            }
-                            case CLAIMED_ROUTE: {
-                                Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
-                                invalidateBoard();
-                                break;
-                            }
-                            default: {
-                                Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
-                                break;
-                            }
+                    RESPONSE_STATUS responseCode = response.first;
+                    switch (responseCode) {
+                        case TOGGLE_NEEDED: {
+                            toggle();
+                            break;
+                        }
+                        case CITY_CLICKED: {
+                            Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+                        }
+                        case SECOND_CITY_CLICKED: {
+                            break;
+                        }
+                        case CLAIMED_ROUTE: {
+                            Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
+                            invalidateBoard();
+                            break;
+                        }
+                        default: {
+                            Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
+                            break;
                         }
                     }
-                    return true;
                 }
-            });
-            return v;
-  //      }
-    //    return v;
+                return true;
+            }
+        });
+        return v;
+
     }
 
     public void setPlayerCardsViews(View v){

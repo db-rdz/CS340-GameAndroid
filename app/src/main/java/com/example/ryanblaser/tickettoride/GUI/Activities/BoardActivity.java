@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.PageAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
 import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
@@ -125,6 +126,24 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
+    public void notifyCardReceived(final String type) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "You got a " + type, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void notifyPickNewDestCards() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Pick your Destination Cards", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void refreshChat() {
         runOnUiThread(new Runnable() {
             @Override
@@ -228,4 +247,6 @@ public class BoardActivity extends AppCompatActivity {
     public void setPlayerActionFragment(PlayerActionFragment playerActionFragment) {
         this.playerActionFragment = playerActionFragment;
     }
+
+
 }

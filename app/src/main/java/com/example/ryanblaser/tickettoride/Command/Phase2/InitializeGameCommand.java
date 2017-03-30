@@ -5,7 +5,7 @@ import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.IClient;
-import com.example.ryanblaser.tickettoride.Client.Scoreboard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
 import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
@@ -50,6 +50,7 @@ public class InitializeGameCommand implements ICommand {
 
         PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(faceupTrainCards);
 		ClientFacade.SINGLETON.getClientModel().getWaitingActivity().switchToGameBoard();
+		ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyPickNewDestCards();
 		return null;
 	}
 

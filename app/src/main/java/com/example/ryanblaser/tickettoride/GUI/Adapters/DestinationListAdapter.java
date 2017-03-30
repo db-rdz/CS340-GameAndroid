@@ -1,7 +1,6 @@
 package com.example.ryanblaser.tickettoride.GUI.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -10,10 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
-import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.AllRoutes;
-import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
-import com.example.ryanblaser.tickettoride.Client.Scoreboard;
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.List;
