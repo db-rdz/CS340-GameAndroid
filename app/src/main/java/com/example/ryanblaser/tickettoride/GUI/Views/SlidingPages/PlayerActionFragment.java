@@ -33,6 +33,7 @@ import java.util.List;
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.PICKING_DEST;
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.YOUR_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.NOT_YOUR_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.PICKING_1ST_TRAIN;
 import static com.example.ryanblaser.tickettoride.Client.State.PICKING_2ND_TRAIN;
@@ -129,6 +130,9 @@ public class PlayerActionFragment extends Fragment {
         }
         else if (ClientFacade.SINGLETON.getClientModel().getState().equals(NOT_YOUR_TURN)) {
             _turnState.setText("It's NOT your turn");
+        }
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN)) {
+            _turnState.setText("It's the last turn!");
         }
 
         slidingAdapter  = new SliddingAdapter(getContext());

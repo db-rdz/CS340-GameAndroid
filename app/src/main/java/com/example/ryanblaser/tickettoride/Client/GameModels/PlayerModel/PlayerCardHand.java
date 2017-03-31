@@ -1,6 +1,5 @@
 package com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel;
 
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.CardType;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 

@@ -108,7 +108,6 @@ public class GameBoardPresenter {
             else{
                 if (canClaimRoute(_selectedRouteList.get(0)))
                 {
-         //           changePlayerState(State.CLAIMING_ROUTE);
                     Route selectedRoute = _selectedRouteList.get(0);
                     //TODO: refresh fragment to get rid of buttons
                     //TODO: get rid of buttons depending on state

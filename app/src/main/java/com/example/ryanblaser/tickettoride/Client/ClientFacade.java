@@ -211,14 +211,45 @@ public class ClientFacade implements IClient {
         List<TrainCard> cardsUsed = new ArrayList<>();
         PlayerCardHand playerHand = clientmodel.getPlayer_hand();
 
+        int cardType = 0;
+        switch(routeToClaim.get_S_Color()) { //Determines which train cards to use for claiming gray routes
+            case "RED":
+                cardType = playerHand.getRedCardAmount();
+                break;
+            case "ORANGE":
+                cardType = playerHand.getOrangeCardAmount();
+                break;
+            case "YELLOW":
+                cardType = playerHand.getYellowCardAmount();
+                break;
+            case "GREEN":
+                cardType = playerHand.getGreenCardAmount();
+                break;
+            case "BLUE":
+                cardType = playerHand.getBlueCardAmount();
+                break;
+            case "WHITE":
+                cardType = playerHand.getWhiteCardAmount();
+                break;
+            case "BLACK":
+                cardType = playerHand.getBlackCardAmount();
+                break;
+            case "RAINBOW":
+                cardType = playerHand.getRainbowCardAmount();
+                break;
+            case "PINK":
+                cardType = playerHand.getPinkCardAmount();
+                break;
+        }
+
         if (!routeToClaim.get_S_Color().equals("GRAY")) {
-            cardsUsed = fillListOfCards(playerHand.getRedCardAmount(), playerHand.getRainbowCardAmount(), routeToClaim.get_Weight(), routeToClaim.get_S_Color());
+            cardsUsed = fillListOfCards(cardType, playerHand.getRainbowCardAmount(), routeToClaim.get_Weight(), routeToClaim.get_S_Color());
         } else {
             // determine color to use
         }
 
         //Check if the player has enough cards to claim the route
-        if (carCount >= 3) {
+        if (carCount >= 3) { //TODO: put a check so LastTurnCommand is called once
             ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);
         }
         else if (carCount < 3) {

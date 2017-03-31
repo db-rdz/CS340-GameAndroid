@@ -4,6 +4,8 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.GameBoardFragment;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,6 +37,7 @@ public class UpdateCarCountAndHandCommand implements ICommand {
     public List<ICommand> execute() throws IServer.GameIsFullException {
         ClientFacade.SINGLETON.updateCarCount(int_cars_used);
         ClientFacade.SINGLETON.removeCardsUsed(cardsUsedToClaimRoute);
+
         return null;
     }
 
