@@ -64,8 +64,7 @@ public class PlayerActionFragment extends Fragment {
     private SlidingDeck _slidingDeck;
     private SlidingDeck _slidingTrainCards;
     private Button _trainDeck;
-    private TextView _yourTurn;
-    private TextView _notYourTurn;
+    private TextView _turnState;
     private static PlayerActionFragment _playerActionFragment;
     public static final String ARG_PAGE = "page";
 
@@ -122,21 +121,14 @@ public class PlayerActionFragment extends Fragment {
         _trainDeck = (Button) v.findViewById(R.id.trainDeck);
         _keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
         _getDestCards = (Button) v.findViewById(R.id.getDestCardsButton);
-        _yourTurn = (TextView) v.findViewById(R.id.textView_yourTurn);
-        _notYourTurn = (TextView) v.findViewById(R.id.textView_notYourTurn);
+        _turnState = (TextView) v.findViewById(R.id.textView_turnState);
 
-        if (ClientFacade.SINGLETON.getClientModel().getState().equals(YOUR_TURN)) {
-            _yourTurn.setVisibility(View.VISIBLE);
-            _notYourTurn.setVisibility(View.INVISIBLE);
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN)) {
+            _turnState.setText("Pick destination cards first");
+
         }
-        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN) ||
-                ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_DEST)) {
-            _yourTurn.setText("Pick destination cards");
-            _notYourTurn.setVisibility(View.INVISIBLE);
-        }
-        else {
-            _yourTurn.setVisibility(View.INVISIBLE);
-            _notYourTurn.setVisibility(View.VISIBLE);
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(NOT_YOUR_TURN)) {
+            _turnState.setText("It's NOT your turn");
         }
 
         slidingAdapter  = new SliddingAdapter(getContext());
@@ -269,8 +261,9 @@ public class PlayerActionFragment extends Fragment {
         this.copy = copy;
     }
 
-public PlayerActionFragment get_playerActionFragment()
+    public PlayerActionFragment get_playerActionFragment()
 {
     return _playerActionFragment;
 }
+
 }
