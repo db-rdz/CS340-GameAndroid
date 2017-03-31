@@ -127,18 +127,6 @@ public class LobbyFragment extends Fragment {
             String[] split = gameSelected.split(" ");
             int gameId = Integer.parseInt(split[1]); //gameId is in position 1 of array.
             LobbyPresenter.SINGLETON.addPlayer(gameId);
-
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(getContext(), WaitingActivity.class);
-                    intent.putExtra("GAME", gameSelected);
-                    startActivity(intent);
-                }
-            }, 5000); //Runs the activity AFTER 5 seconds.
-
-
         }
     };
 
@@ -146,11 +134,6 @@ public class LobbyFragment extends Fragment {
     {
         Intent intent = new Intent(getContext(), WaitingActivity.class);
         startActivity(intent);
-
-//        MainActivity sudo_mainActivity = ClientFacade.SINGLETON.getClientModel().getMainActivity();
-//        FragmentTransaction ft = sudo_mainActivity.getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.lobbyFragment, sudo_mainActivity.getWaitingFragment()); //TODO: lobby doesn't go away
-//        ft.commit();
     }
 
     /**
