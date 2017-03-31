@@ -211,17 +211,19 @@ public class ClientFacade implements IClient {
         List<TrainCard> cardsUsed = new ArrayList<>();
         PlayerCardHand playerHand = clientmodel.getPlayer_hand();
 
-        //Check if the player has enough cards to claim the route
-        if(!routeToClaim.get_S_Color().equals("GRAY"))
-        {
+        if (!routeToClaim.get_S_Color().equals("GRAY")) {
             cardsUsed = fillListOfCards(playerHand.getRedCardAmount(), playerHand.getRainbowCardAmount(), routeToClaim.get_Weight(), routeToClaim.get_S_Color());
-        }
-        else
-        {
+        } else {
             // determine color to use
         }
 
-        ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);
+        //Check if the player has enough cards to claim the route
+        if (carCount >= 3) {
+            ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);
+        }
+        else if (carCount < 3) {
+            ServerProxy.SINGLETON.lastTurn(routeToClaim, code, gameId, cardsUsed);
+        }
 
     }
 

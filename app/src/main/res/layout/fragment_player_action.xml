@@ -91,6 +91,32 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="21dp" />
 
+            <TextView
+                android:id="@+id/textView_yourTurn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView_notYourTurn"
+                android:layout_alignBottom="@+id/textView_notYourTurn"
+                android:layout_alignStart="@+id/textView_notYourTurn"
+                android:text="It's your turn!"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/textView_notYourTurn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/getDestCardsButton"
+                android:layout_centerHorizontal="true"
+                android:text="It's your turn!"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
+
 
         </RelativeLayout>
 

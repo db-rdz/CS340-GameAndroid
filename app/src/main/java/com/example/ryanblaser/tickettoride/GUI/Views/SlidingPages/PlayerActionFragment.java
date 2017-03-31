@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
@@ -63,6 +64,8 @@ public class PlayerActionFragment extends Fragment {
     private SlidingDeck _slidingDeck;
     private SlidingDeck _slidingTrainCards;
     private Button _trainDeck;
+    private TextView _yourTurn;
+    private TextView _notYourTurn;
     private static PlayerActionFragment _playerActionFragment;
     public static final String ARG_PAGE = "page";
 
@@ -119,6 +122,22 @@ public class PlayerActionFragment extends Fragment {
         _trainDeck = (Button) v.findViewById(R.id.trainDeck);
         _keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
         _getDestCards = (Button) v.findViewById(R.id.getDestCardsButton);
+        _yourTurn = (TextView) v.findViewById(R.id.textView_yourTurn);
+        _notYourTurn = (TextView) v.findViewById(R.id.textView_notYourTurn);
+
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(YOUR_TURN)) {
+            _yourTurn.setVisibility(View.VISIBLE);
+            _notYourTurn.setVisibility(View.INVISIBLE);
+        }
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN) ||
+                ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_DEST)) {
+            _yourTurn.setText("Pick destination cards");
+            _notYourTurn.setVisibility(View.INVISIBLE);
+        }
+        else {
+            _yourTurn.setVisibility(View.INVISIBLE);
+            _notYourTurn.setVisibility(View.VISIBLE);
+        }
 
         slidingAdapter  = new SliddingAdapter(getContext());
         trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
@@ -179,8 +198,6 @@ public class PlayerActionFragment extends Fragment {
 //                container.findViewById(R.id.reject).setVisibility(View.INVISIBLE);
 //                slidingAdapter.getRejectButton().setVisibility(View.INVISIBLE);
                // slidingAdapter.notifyDataSetChanged();
-
-                //TODO: SEND COMMAND TO SERVER
             }
         });
 

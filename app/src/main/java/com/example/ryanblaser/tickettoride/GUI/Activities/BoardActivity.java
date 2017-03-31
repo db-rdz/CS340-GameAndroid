@@ -139,7 +139,7 @@ public class BoardActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getBaseContext(), "Pick your Destination Cards", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Pick your new Destination Cards", Toast.LENGTH_SHORT).show();
             }
         });
     }

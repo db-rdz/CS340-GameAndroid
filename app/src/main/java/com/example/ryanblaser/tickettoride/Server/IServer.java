@@ -14,6 +14,7 @@ import java.util.List;
 
 public interface IServer {
 
+
     public static class GameIsFullException extends Exception {
     }
 
@@ -31,5 +32,6 @@ public interface IServer {
     public void rejectDestCard(int gameId, String authenticationCode, DestCard slidingDeckModel);
     public void firstTurn(int gameId, String authenticationCode, List<DestCard> destCardsToKeep, String type);
     public void getDestCards(int gameId, String authenticationCode);
+    public void lastTurn(Route routeToClaim, String code, int gameId, List<TrainCard> cardsUsed);
 
 }
