@@ -23,9 +23,10 @@ public class UpdateCarCountAndHandCommand implements ICommand {
 
     //Data members
     private int int_cars_used;
-    private List<TrainCard> cardsUsed;
+    private List<TrainCard> cardsUsedToClaimRoute;
 
     //Constructor
+    public UpdateCarCountAndHandCommand(){}
     public UpdateCarCountAndHandCommand(int int_used_cars) {
         this.int_cars_used = int_used_cars;
     }
@@ -33,7 +34,7 @@ public class UpdateCarCountAndHandCommand implements ICommand {
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         ClientFacade.SINGLETON.updateCarCount(int_cars_used);
-
+        ClientFacade.SINGLETON.removeCardsUsed(cardsUsedToClaimRoute);
         return null;
     }
 
@@ -49,9 +50,12 @@ public class UpdateCarCountAndHandCommand implements ICommand {
         return null;
     }
 
-
-
     public int getInt_cars_used() {
         return int_cars_used;
+    }
+
+    public List<TrainCard> getCardsUsedToClaimRoute()
+    {
+        return cardsUsedToClaimRoute;
     }
 }

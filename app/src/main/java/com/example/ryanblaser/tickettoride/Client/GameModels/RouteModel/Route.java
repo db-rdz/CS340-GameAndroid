@@ -67,4 +67,8 @@ public class Route {
     public int get_i_pointValue() {
         return _i_pointValue;
     }
+
+    public String get_S_MappingName() {
+        return _S_MappingName;
+    }
 }

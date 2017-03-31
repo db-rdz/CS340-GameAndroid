@@ -25,7 +25,7 @@ public class ClaimRouteCommand implements ICommand {
     private Route route;
     private int gameId;
     private String authenticationCode;
-    private List<TrainCard> cardsUsed;
+    List<TrainCard> cardsUsedToClaimRoute;
 
     //Constructors
     public ClaimRouteCommand(){}
@@ -33,7 +33,7 @@ public class ClaimRouteCommand implements ICommand {
         route = route1;
         gameId = g;
         authenticationCode = code;
-        cardsUsed = cards;
+        cardsUsedToClaimRoute = cards;
     }
 
     //Functions
@@ -42,7 +42,6 @@ public class ClaimRouteCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
     @Override
     public String getAuthenticationCode() {
         return authenticationCode;
@@ -63,12 +62,8 @@ public class ClaimRouteCommand implements ICommand {
         return gameId;
     }
 
-    public String getStrAuthenticationCode()
+    public List<TrainCard> getCardsUsedToClaimRoute()
     {
-        return authenticationCode;
-    }
-
-    public List<TrainCard> getCardsUsed() {
-        return cardsUsed;
+        return cardsUsedToClaimRoute;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
@@ -16,8 +17,8 @@ public interface IClient {
 
 
     /*
-             * Created own Exceptions for when checking login authorization
-             */
+    * Created own Exceptions for when checking login authorization
+    */
     public static class InvalidUsername extends Exception {
 
     }
@@ -60,6 +61,7 @@ public interface IClient {
     public void updatePlayerDestinationCards(List<DestCard> rejectedCards);
     public void updatePlayerTrainCardAmount(int addTrainCardAmount);
     public void updatePoints(int pointsToAdd);
+    public void removeCardsUsed(List<TrainCard> cardsUsed);
 
 
 

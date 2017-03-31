@@ -25,6 +25,7 @@ public class NotifyRouteClaimedCommand implements ICommand {
     private Route route;
 
     //Constructor
+    public NotifyRouteClaimedCommand(){}
     public NotifyRouteClaimedCommand(String str_message, Route r) {
         this.str_message = str_message;
         route = r;

@@ -308,4 +308,10 @@ public class ClientFacade implements IClient {
         ServerProxy.SINGLETON.keepAllDestCards(gameId, authenticationCode, cards);
     }
 
+    @Override
+    public void removeCardsUsed(List<TrainCard> cardsUsed) {
+        for (int i = 0; i < cardsUsed.size(); i++) {
+            clientmodel.getPlayer_hand().subtractToCardCount(cardsUsed.get(i).getType());
+        }
+    }
 }
