@@ -249,15 +249,25 @@ public class GameBoardPresenter {
         if(route.get_Owner() == null){
 
   //          route.set_Owner(playerUsername());
-            String toastText =  "You have claimed route " + _firstCityClicked.get_S_name() + "-" +
-                    _secondCityClicked.get_S_name();
+//            String toastText =  "You have claimed route " + _firstCityClicked.get_S_name() + "-" +
+//                    _secondCityClicked.get_S_name();
 //
 //            String broadcast = route.get_Owner() + " has claimed route " + _firstCityClicked.get_S_name() + "-" +
 //                    _secondCityClicked.get_S_name();
 //            ClientFacade.SINGLETON.broadcastToChat(broadcast);
-
-            resetViewLogicVariables();
-            return new Pair<>(RESPONSE_STATUS.CLAIMED_ROUTE, toastText);
+            if (canClaimRoute(_selectedRouteList.get(0)))
+            {
+                Route selectedRoute = _selectedRouteList.get(0);
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
+                Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
+                return pair;
+            }
+            else
+            {
+                Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
+                resetViewLogicVariables();
+                return pair;
+            }
         }
 
         return new Pair<>(RESPONSE_STATUS.ROUTE_NOT_AVAILABLE,"Route Already Taken");
