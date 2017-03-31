@@ -189,7 +189,7 @@ public class AllRoutes {
 
 
         //-------------------ORANGE ROUTES------------------//
-        color = 0xFFA500; //android Color.rgb(255, 165,0);
+        color = -1672650; //Custom number for orange
         weight = 5;
         p = Pair.of("San Francisco", "Salt Lake City");
         mappingName = "SanFrancisco-SaltLakeCity-1";
@@ -555,7 +555,7 @@ public class AllRoutes {
 
         //-------------------PINK ROUTES------------------//
         //----------------SanFrancisco-Portland-2-----------//
-        color = 0xFFC0CB; //android Color.rgb(255,192,203);
+        color = -170300; //custom number for pink
         weight = 5;
         p = Pair.of("San Francisco", "Portland");
         mappingName = "SanFrancisco-Portland-2";
