@@ -21,6 +21,10 @@ public class AllRoutes {
     static int FIVE = 10;
     static int SIX = 15;
 
+    public AllRoutes() {
+        initAllRoutes();
+    }
+
     //---------------------------------------CLASS VARIABLES------------------------------------//
     private static Boolean _B_areRoutesSet = false;
     private static List<Route> _L_allRoutes = new ArrayList<>();

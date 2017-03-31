@@ -38,6 +38,7 @@ public class Route {
     private Pair<String, String> _P_ConnectingCities = null;
     private String _S_MappingName = null;
     private int _i_pointValue;
+    private Boolean isClaimed = false;
 
     private Point point1;
     private Point point2;
@@ -70,5 +71,13 @@ public class Route {
 
     public String get_S_MappingName() {
         return _S_MappingName;
+    }
+
+    public Boolean getClaimed() {
+        return isClaimed;
+    }
+
+    public void setClaimed(Boolean claimed) {
+        isClaimed = claimed;
     }
 }

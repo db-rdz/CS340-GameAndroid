@@ -324,52 +324,55 @@ public class GameBoardPresenter {
     }
 
     private Boolean canClaimRoute(Route routeToClaim) {
-        PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
-        if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() >= routeToClaim.get_Weight()) {
-            switch (routeToClaim.get_S_Color()) {
-                case "GRAY":
-                case "RED":
-                    if (playerHand.getRedCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
-                        return true;
-                    }
-                    break;
-                case "WHITE":
-                    if (playerHand.getWhiteCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
-                        return true;
-                    }
-                    break;
-                case "ORANGE":
-                    if (playerHand.getOrangeCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
-                        return true;
-                    }
-                    break;
-                case "GREEN":
-                    if (playerHand.getGreenCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
-                        return true;
-                    }
-                    break;
-                case "BLUE":
-                    if (playerHand.getBlueCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
-                        return true;
-                    }
-                    break;
-                case "BLACK":
-                    if (playerHand.getBlackCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
-                        return true;
-                    }
-                    break;
-                case "YELLOW":
-                    if (playerHand.getYellowCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
-                        return true;
-                    }
-                    break;
-                case "PINK":
-                    if (playerHand.getPinkCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
-                        return true;
-                    }
-                    break;
-                default:
-                    return false;
+
+        if (!routeToClaim.getClaimed()) {
+            PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
+            if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() >= routeToClaim.get_Weight()) {
+                switch (routeToClaim.get_S_Color()) {
+                    case "GRAY":
+                    case "RED":
+                        if (playerHand.getRedCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            return true;
+                        }
+                        break;
+                    case "WHITE":
+                        if (playerHand.getWhiteCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            return true;
+                        }
+                        break;
+                    case "ORANGE":
+                        if (playerHand.getOrangeCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            return true;
+                        }
+                        break;
+                    case "GREEN":
+                        if (playerHand.getGreenCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            return true;
+                        }
+                        break;
+                    case "BLUE":
+                        if (playerHand.getBlueCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            return true;
+                        }
+                        break;
+                    case "BLACK":
+                        if (playerHand.getBlackCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            return true;
+                        }
+                        break;
+                    case "YELLOW":
+                        if (playerHand.getYellowCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            return true;
+                        }
+                        break;
+                    case "PINK":
+                        if (playerHand.getPinkCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            return true;
+                        }
+                        break;
+                    default:
+                        return false;
+                }
             }
         }
         return false;
