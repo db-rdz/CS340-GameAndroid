@@ -50,7 +50,6 @@ public class InitializeGameCommand implements ICommand {
 
         PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(faceupTrainCards);
 		ClientFacade.SINGLETON.getClientModel().getWaitingActivity().switchToGameBoard();
-		ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyPickNewDestCards();
 		return null;
 	}
 
