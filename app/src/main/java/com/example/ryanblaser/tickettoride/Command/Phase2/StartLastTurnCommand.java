@@ -1,8 +1,10 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.IClient;
+import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -17,46 +19,25 @@ import java.util.List;
 
 public class StartLastTurnCommand implements ICommand {
 
-    //Data members
-    private Route route;
-    private int gameId;
-    private String authenticationCode;
-    private List<TrainCard> cardsUsed;
-
     //Constructors
     public StartLastTurnCommand(){}
-    public StartLastTurnCommand(int g, String code, Route route1, List<TrainCard> cards) {
-        route = route1;
-        gameId = g;
-        authenticationCode = code;
-        cardsUsed = cards;
-    }
+
 
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
+        ClientFacade.SINGLETON.getClientModel().setState(State.LAST_TURN);
         return null;
     }
 
+    @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return authenticationCode;
+        return null;
     }
 
     @JsonIgnore
     @Override
     public User getUser() {
         return null;
-    }
-
-    public Route getRoute() {
-        return route;
-    }
-
-    public int getGameId() {
-        return gameId;
-    }
-
-    public List<TrainCard> getCardsUsed() {
-        return cardsUsed;
     }
 }

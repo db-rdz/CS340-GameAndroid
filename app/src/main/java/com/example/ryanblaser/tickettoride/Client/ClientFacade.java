@@ -247,10 +247,7 @@ public class ClientFacade implements IClient {
         }
 
         //Check if the player has enough cards to claim the route
-        if (carCount < 3 && !ClientFacade.SINGLETON.getClientModel().getState().equals(State.LAST_TURN)) {
-            ServerProxy.SINGLETON.startLastTurn(routeToClaim, code, gameId, cardsUsed);
-        }
-        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(State.LAST_TURN)) {
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(State.LAST_TURN)) {
             //TODO: Do EndGameCommand functionality
         }
         else { //Runs if the car count is greater or equal to 3, less than 3 but IS the last turn of the game

@@ -303,19 +303,4 @@ public class ServerProxy implements IServer {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void startLastTurn(Route routeToClaim, String code, int gameId, List<TrainCard> cardsUsed) {
-        String urlSuffix = "/command";
-
-        ICommand lastTurn = new StartLastTurnCommand(gameId, code, routeToClaim, cardsUsed);
-
-        try {
-            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
-            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, lastTurn);
-            clientCommunicator.execute(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
