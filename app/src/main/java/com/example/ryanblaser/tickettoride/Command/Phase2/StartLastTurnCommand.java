@@ -15,7 +15,7 @@ import java.util.List;
  * Created by natha on 3/30/2017.
  */
 
-public class LastTurnCommand implements ICommand {
+public class StartLastTurnCommand implements ICommand {
 
     //Data members
     private Route route;
@@ -24,8 +24,8 @@ public class LastTurnCommand implements ICommand {
     private List<TrainCard> cardsUsed;
 
     //Constructors
-    public LastTurnCommand(){}
-    public LastTurnCommand(int g, String code, Route route1, List<TrainCard> cards) {
+    public StartLastTurnCommand(){}
+    public StartLastTurnCommand(int g, String code, Route route1, List<TrainCard> cards) {
         route = route1;
         gameId = g;
         authenticationCode = code;

@@ -144,6 +144,15 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
+    public void notifyLastTurn() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "It's the last turn!\n", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void refreshChat() {
         runOnUiThread(new Runnable() {
             @Override
@@ -247,6 +256,7 @@ public class BoardActivity extends AppCompatActivity {
     public void setPlayerActionFragment(PlayerActionFragment playerActionFragment) {
         this.playerActionFragment = playerActionFragment;
     }
+
 
 
 }

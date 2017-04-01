@@ -1,7 +1,5 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import android.graphics.Color;
-
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
@@ -249,11 +247,14 @@ public class ClientFacade implements IClient {
         }
 
         //Check if the player has enough cards to claim the route
-        if (carCount >= 3) { //TODO: put a check so LastTurnCommand is called once
-            ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);
+        if (carCount < 3 && !ClientFacade.SINGLETON.getClientModel().getState().equals(State.LAST_TURN)) {
+            ServerProxy.SINGLETON.startLastTurn(routeToClaim, code, gameId, cardsUsed);
         }
-        else if (carCount < 3) {
-            ServerProxy.SINGLETON.lastTurn(routeToClaim, code, gameId, cardsUsed);
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(State.LAST_TURN)) {
+            //TODO: Do EndGameCommand functionality
+        }
+        else { //Runs if the car count is greater or equal to 3, less than 3 but IS the last turn of the game
+            ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);
         }
 
     }

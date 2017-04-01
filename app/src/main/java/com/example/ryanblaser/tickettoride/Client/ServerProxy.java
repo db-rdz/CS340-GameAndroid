@@ -17,7 +17,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase2.GetDestinationCardsCom
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetFaceUpTableTrainCardCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetTopDeckTrainCardCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.KeepAllDestCardsCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase2.LastTurnCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.StartLastTurnCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.RejectDestinationCardCommand;
 import com.example.ryanblaser.tickettoride.GUI.Views.LoginFragment;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -305,10 +305,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void lastTurn(Route routeToClaim, String code, int gameId, List<TrainCard> cardsUsed) {
+    public void startLastTurn(Route routeToClaim, String code, int gameId, List<TrainCard> cardsUsed) {
         String urlSuffix = "/command";
 
-        ICommand lastTurn = new LastTurnCommand(gameId, code, routeToClaim, cardsUsed);
+        ICommand lastTurn = new StartLastTurnCommand(gameId, code, routeToClaim, cardsUsed);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
