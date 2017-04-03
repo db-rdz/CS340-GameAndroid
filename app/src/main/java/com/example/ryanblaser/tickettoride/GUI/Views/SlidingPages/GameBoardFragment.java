@@ -185,6 +185,10 @@ public class GameBoardFragment extends Fragment {
         hideKeyboard(getContext());
     }
 
+    public void refreshBoard() {
+        invalidateBoard();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -355,9 +359,7 @@ public class GameBoardFragment extends Fragment {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    public void refreshBoard() {
 
-    }
 
     public TextView get_blackCardCount() {
         return _blackCardCount;

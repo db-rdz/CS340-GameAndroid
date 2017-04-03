@@ -75,6 +75,12 @@ public class PlayersInfoFragment extends Fragment {
         hideKeyboard(getContext());
     }
 
+
+    public void refreshPlayerInfo() {
+        _expListView.invalidate();
+        _playerDestCardsView.invalidate();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -117,7 +123,4 @@ public class PlayersInfoFragment extends Fragment {
     }
 
 
-    public void refreshPlayerInfo() {
-
-    }
 }

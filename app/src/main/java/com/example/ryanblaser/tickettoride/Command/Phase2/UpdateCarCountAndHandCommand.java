@@ -40,6 +40,7 @@ public class UpdateCarCountAndHandCommand implements ICommand {
         if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() < 3) {
             ClientFacade.SINGLETON.initiateLastTurn();
         }
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
         return null;
     }
 

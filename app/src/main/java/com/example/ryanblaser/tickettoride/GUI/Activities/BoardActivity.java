@@ -169,7 +169,9 @@ public class BoardActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                chatFragment.refreshChat();
+                if (chatFragment.isVisible()) {
+                    chatFragment.refreshChat();
+                }
             }
         });
     }
@@ -179,7 +181,9 @@ public class BoardActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                gameBoardFragment.refreshBoard();
+                if (gameBoardFragment.isVisible()) {
+                    gameBoardFragment.refreshBoard();
+                }
             }
         });
     }
@@ -189,8 +193,11 @@ public class BoardActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                playerActionFragment.refreshPlayerAction();
+                if (playerActionFragment.isVisible()) {
+                    playerActionFragment.refreshPlayerAction();
+                }
             }
+
         });
     }
 
@@ -199,7 +206,9 @@ public class BoardActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                playersInfoFragment.refreshPlayerInfo();
+                if (playersInfoFragment.isVisible()) {
+                    playersInfoFragment.refreshPlayerInfo();
+                }
             }
         });
     }

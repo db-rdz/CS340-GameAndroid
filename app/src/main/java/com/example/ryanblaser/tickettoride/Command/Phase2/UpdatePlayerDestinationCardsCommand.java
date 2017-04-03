@@ -37,6 +37,8 @@ public class UpdatePlayerDestinationCardsCommand implements ICommand {
         for (DestCard card : destCards) {
             ClientFacade.SINGLETON.getClientModel().getBoardActivity().removeFromSliddingApadter(card);
         }
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
         return null;
     }
 

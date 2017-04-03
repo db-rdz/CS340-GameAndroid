@@ -107,6 +107,12 @@ public class PlayerActionFragment extends Fragment {
         hideKeyboard(getContext());
     }
 
+    public void refreshPlayerAction() {
+        _turnState.invalidate();
+        _slidingDeck.invalidate();
+        _slidingTrainCards.invalidate();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -144,22 +150,6 @@ public class PlayerActionFragment extends Fragment {
         _slidingDeck.setAdapter(slidingAdapter);
         _slidingTrainCards.setAdapter(trainCardAdapter);
 
-        //Nathan: If the player is picking destination cards,
-//        if(PlayerActionPresenter._SINGLETON.get_playerState().equals(FIRST_TURN) || PlayerActionPresenter._SINGLETON.get_playerState().equals(YOUR_TURN) ||
-//                PlayerActionPresenter._SINGLETON.get_playerState().equals(PICKING_DEST)){
-//            _keepAllCards.setVisibility(View.VISIBLE); //He can see the keep all button
-//        }
-//        else {
-//            _keepAllCards.setVisibility(View.GONE); //He cannot see the keep all button
-//        }
-
-        //Nathan: If the player isn't on his first turn, and is his turn/picking train cards,
-//        if ((PlayerActionPresenter._SINGLETON.get_playerState().equals(PICKING_1ST_TRAIN) || PlayerActionPresenter._SINGLETON.get_playerState().equals(YOUR_TURN)) && !PlayerActionPresenter._SINGLETON.get_playerState().equals(FIRST_TURN)) {
-//            _trainDeck.setVisibility(View.VISIBLE); //Can press the deck to get a card
-//        }
-//        else {
-//            _trainDeck.setVisibility(View.INVISIBLE);
-//        }
 
         _getDestCards.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,23 +165,10 @@ public class PlayerActionFragment extends Fragment {
             public void onClick(View v) {
 
                 GameBoardPresenter._SINGLETON.set_readyToStart(true);
-
-//                if (_playerState.equals(FIRST_TURN)) {
-//                    //Grab destination cards from view
-                    List<DestCard> destCardsToKeep = new ArrayList<DestCard>();
-                    destCardsToKeep.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
-                    PlayerActionPresenter._SINGLETON.get_playerState().keepAllDestCards(destCardsToKeep);
-//
-//                    PlayerActionPresenter._SINGLETON.firstTurn(destCardsToKeep, "KEEP");
-//                    slidingAdapter.notifyDataSetChanged();
-//                }
-
-                //PlayerActionPresenter._SINGLETON.set_playerState(NOT_YOUR_TURN);
-
-//                v.setVisibility(View.GONE);
-//                container.findViewById(R.id.reject).setVisibility(View.INVISIBLE);
-//                slidingAdapter.getRejectButton().setVisibility(View.INVISIBLE);
-               // slidingAdapter.notifyDataSetChanged();
+//              Grab destination cards from view
+                List<DestCard> destCardsToKeep = new ArrayList<DestCard>();
+                destCardsToKeep.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
+                PlayerActionPresenter._SINGLETON.get_playerState().keepAllDestCards(destCardsToKeep);
             }
         });
 
@@ -238,10 +215,6 @@ public class PlayerActionFragment extends Fragment {
         super.onDetach();
     }
 
-    public void refreshPlayerAction() {
-        slidingAdapter.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
-        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());
-    }
 
     public List<DestCard> getCopy() {
         return copy;
