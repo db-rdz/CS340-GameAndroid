@@ -57,12 +57,11 @@ public interface IClient {
     public void getTopDeckTrainCardCommand(int FirstSecondCardPick);
     public void rejectDestCard(DestCard slidingDeckModel);
     public void updateCarCount(int numOfCarsUsed);
-    public void updateFaceUpTableTrainCards();
     public void updatePlayerDestinationCards(List<DestCard> rejectedCards);
     public void updatePlayerTrainCardAmount(int addTrainCardAmount);
     public void updatePoints(int pointsToAdd);
     public void removeCardsUsed(List<TrainCard> cardsUsed);
-
+    public void lastTurnCompleted();
 
 
 }

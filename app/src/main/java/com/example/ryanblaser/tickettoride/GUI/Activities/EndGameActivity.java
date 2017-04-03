@@ -45,17 +45,6 @@ public class EndGameActivity extends AppCompatActivity {
         results.notifyDataSetChanged();
     }
 
-    private List<Scoreboard> TESTinitScoreboards() {
-        List<Scoreboard> scoreboards = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            Scoreboard scoreboard = new Scoreboard();
-            scoreboard.addPoints(10 + (i * 2));
-            scoreboards.add(scoreboard);
-        }
-        return scoreboards;
-    }
-
     private void updatePlayerResult(List<String> playerResults) {
 //        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
 //        List<String> usernames = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
@@ -83,5 +72,16 @@ public class EndGameActivity extends AppCompatActivity {
             String info = map.getValue() + ": " + map.getKey();
             playerResults.add(info);
         }
+    }
+
+    private List<Scoreboard> TESTinitScoreboards() {
+        List<Scoreboard> scoreboards = new ArrayList<>();
+
+        for (int i = 0; i < 5; i++) {
+            Scoreboard scoreboard = new Scoreboard();
+            scoreboard.addPoints(10 + (i * 2));
+            scoreboards.add(scoreboard);
+        }
+        return scoreboards;
     }
 }

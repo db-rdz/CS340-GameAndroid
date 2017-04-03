@@ -247,13 +247,7 @@ public class ClientFacade implements IClient {
         }
 
         //Check if the player has enough cards to claim the route
-        if (ClientFacade.SINGLETON.getClientModel().getState().equals(State.LAST_TURN)) {
-            //TODO: Do EndGameCommand functionality
-        }
-        else { //Runs if the car count is greater or equal to 3, less than 3 but IS the last turn of the game
-            ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);
-        }
-
+        ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);
     }
 
     @Override
@@ -305,11 +299,6 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void updateFaceUpTableTrainCards() {
-        
-    }
-
-    @Override
     public void updatePlayerDestinationCards(List<DestCard> rejectedCards) {
         clientmodel.getPlayer_hand().rejectDestinationCards(rejectedCards);
         clientmodel.getCurrent_player().updateCurrentDestinationCards(rejectedCards.size());
@@ -342,5 +331,13 @@ public class ClientFacade implements IClient {
         for (int i = 0; i < cardsUsed.size(); i++) {
             clientmodel.getPlayer_hand().subtractToCardCount(cardsUsed.get(i).getType());
         }
+    }
+
+    @Override
+    public void lastTurnCompleted() { //TODO: Change later
+        int gameId = clientmodel.getInt_curr_gameId();
+        String authenticationCode = clientmodel.getStr_authentication_code();
+        ServerProxy.SINGLETON.lastTurnCompleted(gameId, authenticationCode);
+
     }
 }

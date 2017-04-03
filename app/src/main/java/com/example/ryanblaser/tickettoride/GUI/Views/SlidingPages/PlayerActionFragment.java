@@ -126,12 +126,11 @@ public class PlayerActionFragment extends Fragment {
 
         if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN)) {
             _turnState.setText("Pick destination cards first");
-
         }
         else if (ClientFacade.SINGLETON.getClientModel().getState().equals(NOT_YOUR_TURN)) {
             _turnState.setText("It's NOT your turn");
         }
-        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN)) {
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN)) {
             _turnState.setText("It's the last turn!");
         }
 

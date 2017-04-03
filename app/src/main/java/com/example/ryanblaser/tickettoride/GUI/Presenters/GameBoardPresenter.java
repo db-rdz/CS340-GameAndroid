@@ -2,14 +2,11 @@ package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Client.ClientModel;
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
@@ -17,10 +14,8 @@ import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.AllRoute
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.GameBoardFragment;
-import com.example.ryanblaser.tickettoride.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -323,9 +318,10 @@ public class GameBoardPresenter {
         ClientFacade.SINGLETON.getClientModel().setState(state);
     }
 
+    @NonNull
     private Boolean canClaimRoute(Route routeToClaim) {
 
-        if (!routeToClaim.getClaimed()) {
+        if (!routeToClaim.getClaimed()) { //TODO: keeps running on what seems to be an infinite loop
             PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
             if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() >= routeToClaim.get_Weight()) {
                 switch (routeToClaim.get_S_Color()) {
@@ -379,4 +375,8 @@ public class GameBoardPresenter {
     }
 
 
+    public void switchToEndGameView() {
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().switchToEndGameView();
+
+    }
 }

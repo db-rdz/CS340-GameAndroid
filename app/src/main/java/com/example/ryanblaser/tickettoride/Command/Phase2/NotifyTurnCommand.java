@@ -33,7 +33,7 @@ public class NotifyTurnCommand implements ICommand {
     public List<ICommand> execute() throws IServer.GameIsFullException {
 
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyTurn();
-        ClientFacade.SINGLETON.getClientModel().setState(State.YOUR_TURN);
+        ClientFacade.SINGLETON.getClientModel().setState(ClientFacade.SINGLETON.getClientModel().getState().notifyTurn());
         //PlayerActionPresenter._SINGLETON.refreshFragment();
         return null;
     }

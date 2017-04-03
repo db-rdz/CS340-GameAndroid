@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.GUI.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Command.Phase2.EndTurnCommand;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.PageAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
 import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
@@ -224,6 +226,10 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
+    public void switchToEndGameView() {
+        Intent intent = new Intent(getBaseContext(), EndGameActivity.class);
+        startActivity(intent);
+    }
 
     public ChatFragment getChatFragment() {
         return chatFragment;

@@ -1,11 +1,8 @@
 package com.example.ryanblaser.tickettoride.Client;
 
-import android.widget.Toast;
-
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
-import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayerActionFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -329,14 +326,17 @@ public enum State {
                 @Override
                 public void getDestCards()
                 {
+                    ClientFacade.SINGLETON.getDestinationCards();
                 }
                 @Override
                 public void getTopDeckTrainCard(int firstSecondCardPick)
                 {
+                    ClientFacade.SINGLETON.getTopDeckTrainCardCommand(firstSecondCardPick);
                 }
                 @Override
                 public void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild)
                 {
+                    ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(firstSecondCardPick, index, isWild);
                 }
                 @Override
                 public void rejectDestionationCard(DestCard rejectedCard, int amountOfCardsTaken) {
@@ -352,7 +352,7 @@ public enum State {
                 }
                 @Override
                 public State notifyTurn() {
-                    return YOUR_TURN;
+                    return LAST_TURN;
                 }
                 @Override
                 public State endTurn() {

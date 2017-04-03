@@ -6,6 +6,7 @@ import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -21,12 +22,14 @@ public class NotifyLastTurnCommand implements ICommand {
 		return null;
 	}
 
+	@JsonIgnore
 	@Override
 	public String getAuthenticationCode() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@JsonIgnore
 	@Override
 	public User getUser() {
 		// TODO Auto-generated method stub
