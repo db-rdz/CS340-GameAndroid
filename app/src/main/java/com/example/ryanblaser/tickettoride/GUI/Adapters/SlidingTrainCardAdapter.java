@@ -23,8 +23,6 @@ import com.redbooth.SlidingDeck;
 
 import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.NOT_YOUR_TURN;
-import static com.example.ryanblaser.tickettoride.Client.State.PICKING_1ST_TRAIN;
-import static com.example.ryanblaser.tickettoride.Client.State.PICKING_2ND_TRAIN;
 import static com.example.ryanblaser.tickettoride.Client.State.YOUR_TURN;
 
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.FIRST_TURN;

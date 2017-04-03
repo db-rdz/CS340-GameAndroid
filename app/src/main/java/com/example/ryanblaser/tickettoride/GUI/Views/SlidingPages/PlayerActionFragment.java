@@ -35,9 +35,7 @@ import java.util.List;
 import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.NOT_YOUR_TURN;
-import static com.example.ryanblaser.tickettoride.Client.State.PICKING_1ST_TRAIN;
-import static com.example.ryanblaser.tickettoride.Client.State.PICKING_2ND_TRAIN;
-import static com.example.ryanblaser.tickettoride.Client.State.PICKING_DEST;
+import static com.example.ryanblaser.tickettoride.Client.State.WAITING_FOR_LAST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.YOUR_TURN;
 
 
@@ -127,11 +125,12 @@ public class PlayerActionFragment extends Fragment {
         if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN)) {
             _turnState.setText("Pick destination cards first");
         }
-        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(NOT_YOUR_TURN)) {
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(NOT_YOUR_TURN) ||
+                ClientFacade.SINGLETON.getClientModel().getState().equals(WAITING_FOR_LAST_TURN)) {
             _turnState.setText("It's NOT your turn");
         }
         if (ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN)) {
-            _turnState.setText("It's the last turn!");
+            _turnState.setText("It's your last turn!");
         }
 
         slidingAdapter  = new SliddingAdapter(getContext());
@@ -223,18 +222,6 @@ public class PlayerActionFragment extends Fragment {
 
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().setPlayerActionFragment(this);
         return v;
-    }
-
-    /**
-     * Nathan: Determines the state of the player according to how many cards he has draw already
-     */
-    private void changePlayerState() {
-        if (SlidingTrainCardAdapter.getAmountOfCardsTaken() == 0) {
-            PlayerActionPresenter._SINGLETON.set_playerState(PICKING_1ST_TRAIN);
-        }
-        else if (SlidingTrainCardAdapter.getAmountOfCardsTaken() == 1) {
-            PlayerActionPresenter._SINGLETON.set_playerState(PICKING_2ND_TRAIN);
-        }
     }
 
     public void invalidate(){

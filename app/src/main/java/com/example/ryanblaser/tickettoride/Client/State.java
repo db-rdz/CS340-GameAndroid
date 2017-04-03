@@ -118,156 +118,48 @@ public enum State {
                     return NOT_YOUR_TURN;
                 }
             },
-    CLAIMING_ROUTE
+
+    WAITING_FOR_LAST_TURN
             {
                 @Override
                 public void claimRoute(Route route)
                 {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot claim another route while claiming a route!");
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
                 }
                 @Override
                 public void getDestCards()
                 {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot get destination cards while claiming a route!");
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
                 }
                 @Override
                 public void getTopDeckTrainCard(int firstSecondCardPick)
                 {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot get train cards while claiming a route!");
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
                 }
                 @Override
                 public void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild)
                 {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot get train cards while claiming a route!");
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
                 }
                 @Override
                 public void rejectDestionationCard(DestCard rejectedCard, int amountOfCardsTaken) {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot reject a destination cards while claiming a route!");
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
                 }
                 @Override
                 public void keepAllDestCards(List<DestCard> keepCards) {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot keep destination cards while claiming a route!");
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
                 }
                 @Override
                 public State notifyTurn() {
-                    return YOUR_TURN;
+                    ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyLastTurn();
+                    return LAST_TURN;
                 }
                 @Override
                 public State endTurn() {
-                    return NOT_YOUR_TURN;
+                    return LAST_TURN;
                 }
             },
-    PICKING_DEST
-            {
-                @Override
-                public void claimRoute(Route route)
-                {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot claim a route while picking destination cards!");
-                }
-                @Override
-                public void getDestCards()
-                {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot pick more destination cards!");
-                }
-                @Override
-                public void getTopDeckTrainCard(int firstSecondCardPick)
-                {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot pick train cards!");
-                }
-                @Override
-                public void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild)
-                {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot pick train cards!");
-                }
-                @Override
-                public void rejectDestionationCard(DestCard rejectedCard, int amountOfCardsTaken) {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot reject any more destination cards!");
-                }
-                @Override
-                public void keepAllDestCards(List<DestCard> keepCards) {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot keep more destination cards!");
-                }
-                @Override
-                public State notifyTurn() {
-                    return YOUR_TURN;
-                }
-                @Override
-                public State endTurn() {
-                    return NOT_YOUR_TURN;
-                }
-            },
-    PICKING_1ST_TRAIN
-            {
-                @Override
-                public void claimRoute(Route route)
-                {
-                    // make a toast saying you cannot pick a route and train cards in the same turn
-                }
-                @Override
-                public void getDestCards()
-                {
-                }
-                @Override
-                public void getTopDeckTrainCard(int firstSecondCardPick)
-                {
-                }
-                @Override
-                public void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild)
-                {
-                }
-                @Override
-                public void rejectDestionationCard(DestCard rejectedCard, int amountOfCardsTaken) {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot reject destination cards while picking train cards!");
-                }
-                @Override
-                public void keepAllDestCards(List<DestCard> keepCards) {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot keep more destination cards!");
-                }
-                @Override
-                public State notifyTurn() {
-                    return YOUR_TURN;
-                }
-                @Override
-                public State endTurn() {
-                    return NOT_YOUR_TURN;
-                }
-            },
-    PICKING_2ND_TRAIN
-            {
-                @Override
-                public void claimRoute(Route route)
-                {
-                    // make a toast saying you cannot pick a route and train cards in the same turn
-                }
-                @Override
-                public void getDestCards()
-                {
-                }
-                @Override
-                public void getTopDeckTrainCard(int firstSecondCardPick)
-                {
-                }
-                @Override
-                public void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild)
-                {
-                }
-                @Override
-                public void rejectDestionationCard(DestCard rejectedCard, int amountOfCardsTaken) {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot reject destination cards while picking train cards!");
-                }
-                @Override
-                public void keepAllDestCards(List<DestCard> keepCards) {
-                    PlayerActionPresenter._SINGLETON.makeToast("You cannot keep more destination cards!");
-                }
-                @Override
-                public State notifyTurn() {
-                    return YOUR_TURN;
-                }
-                @Override
-                public State endTurn() {
-                    return NOT_YOUR_TURN;
-                }
-            },
+
     FIRST_TURN
             {
                 @Override
@@ -356,6 +248,7 @@ public enum State {
                 }
                 @Override
                 public State endTurn() {
+                    ClientFacade.SINGLETON.lastTurnCompleted();
                     return END_GAME;
                 }
             },

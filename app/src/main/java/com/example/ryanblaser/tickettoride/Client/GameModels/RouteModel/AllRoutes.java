@@ -1099,7 +1099,10 @@ public class AllRoutes {
         r = new Route(color, weight, null, p, p1, p2, "GRAY", mappingName, TWO);
         _M_nameToRoute.put(mappingName, r);
 
+
+        _B_areRoutesSet = true;
     }
+
 
 
 }

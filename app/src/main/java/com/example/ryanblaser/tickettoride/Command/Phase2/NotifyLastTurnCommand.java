@@ -17,8 +17,8 @@ public class NotifyLastTurnCommand implements ICommand {
 
 	@Override
 	public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
-		ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyLastTurn();
-		ClientFacade.SINGLETON.getClientModel().setState(State.LAST_TURN);
+		ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyUpcomingLastTurn();
+		ClientFacade.SINGLETON.getClientModel().setState(State.WAITING_FOR_LAST_TURN);
 		return null;
 	}
 

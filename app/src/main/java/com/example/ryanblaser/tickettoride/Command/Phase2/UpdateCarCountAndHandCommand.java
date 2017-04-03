@@ -37,7 +37,9 @@ public class UpdateCarCountAndHandCommand implements ICommand {
     public List<ICommand> execute() throws IServer.GameIsFullException {
         ClientFacade.SINGLETON.updateCarCount(int_cars_used);
         ClientFacade.SINGLETON.removeCardsUsed(cardsUsedToClaimRoute);
-
+        if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() < 3) {
+            ClientFacade.SINGLETON.initiateLastTurn();
+        }
         return null;
     }
 

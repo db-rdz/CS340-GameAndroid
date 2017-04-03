@@ -62,6 +62,7 @@ public interface IClient {
     public void updatePoints(int pointsToAdd);
     public void removeCardsUsed(List<TrainCard> cardsUsed);
     public void lastTurnCompleted();
+    public void initiateLastTurn();
 
 
 }

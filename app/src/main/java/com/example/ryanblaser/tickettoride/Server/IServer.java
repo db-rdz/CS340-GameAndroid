@@ -33,5 +33,5 @@ public interface IServer {
     public void firstTurn(int gameId, String authenticationCode, List<DestCard> destCardsToKeep, String type);
     public void getDestCards(int gameId, String authenticationCode);
     public void lastTurnCompleted(int gameId, String authenticationCode);
-
+    public void initiateLastTurn(int gameId, String authenticationCode);
 }

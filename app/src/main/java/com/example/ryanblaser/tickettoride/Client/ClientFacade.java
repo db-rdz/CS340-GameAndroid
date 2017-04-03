@@ -334,10 +334,18 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public void lastTurnCompleted() { //TODO: Change later
+    public void lastTurnCompleted() {
         int gameId = clientmodel.getInt_curr_gameId();
         String authenticationCode = clientmodel.getStr_authentication_code();
         ServerProxy.SINGLETON.lastTurnCompleted(gameId, authenticationCode);
+
+    }
+
+    @Override
+    public void initiateLastTurn() {
+        int gameId = clientmodel.getInt_curr_gameId();
+        String authenticationCode = clientmodel.getStr_authentication_code();
+        ServerProxy.SINGLETON.initiateLastTurn(gameId, authenticationCode);
 
     }
 }

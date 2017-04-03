@@ -46,18 +46,18 @@ public class EndGameActivity extends AppCompatActivity {
     }
 
     private void updatePlayerResult(List<String> playerResults) {
-//        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
-//        List<String> usernames = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
-//        List<Scoreboard> scoreboards = ClientFacade.SINGLETON.getClientModel().getScoreboards();
+        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+        List<String> usernames = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
+        List<Scoreboard> scoreboards = ClientFacade.SINGLETON.getClientModel().getScoreboards();
 
         //dummy data for testing
-        List<String> usernames = new ArrayList<>();
-        usernames.add("Nathan");
-        usernames.add("Daniel");
-        usernames.add("Ryan");
-        usernames.add("Raul");
-        usernames.add("Scott Woodfield");
-        List<Scoreboard> scoreboards = TESTinitScoreboards();
+//        List<String> usernames = new ArrayList<>();
+//        usernames.add("Nathan");
+//        usernames.add("Daniel");
+//        usernames.add("Ryan");
+//        usernames.add("Raul");
+//        usernames.add("Scott Woodfield");
+//        List<Scoreboard> scoreboards = TESTinitScoreboards();
 
         //Use TreeMap to automatically sort point value from highest to lowest
         TreeMap<Integer, String> highestToLowest = new TreeMap<>(Collections.<Integer>reverseOrder());

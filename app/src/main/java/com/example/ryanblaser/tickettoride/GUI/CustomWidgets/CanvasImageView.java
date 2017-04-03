@@ -68,11 +68,15 @@ public class CanvasImageView extends ImageView {
 
                 int pathColor = r.get_Color();
 
-                if(r.get_Owner() == null){
+                int count = -1;
+                if (r.getClaimed()) {
+                    count = 9;
+                }
+                else {
+                    count = -1;
+                }
+                if(!r.getClaimed()){
 
-                    if(r.get_Owner() == "Daniel"){
-                        int asdf = 1;
-                    }
                     float x1 = r.getPoint1().x;
                     float x2 = r.getPoint2().x;
                     float y1 = r.getPoint1().y;

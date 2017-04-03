@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.util.Pair;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
@@ -107,8 +108,7 @@ public class GameBoardPresenter {
                     //TODO: refresh fragment to get rid of buttons
                     //TODO: get rid of buttons depending on state
                     ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                    //ClientFacade.SINGLETON.claimRoute(selectedRoute); //Sends the route claimed
-                    Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
+                    Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
                     return pair;
                 }
                 else
@@ -158,10 +158,13 @@ public class GameBoardPresenter {
 
     private Pair<RESPONSE_STATUS, String> solveRoutesOfSameColor(){
         if(_selectedRouteList.get(0).get_Owner() == null) {
-            if (canClaimRoute(_selectedRouteList.get(0))) {
+            if (canClaimRoute(_selectedRouteList.get(0)))
+            {
                 Route selectedRoute = _selectedRouteList.get(0);
+                //TODO: refresh fragment to get rid of buttons
+                //TODO: get rid of buttons depending on state
                 ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
+                Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
                 return pair;
             }
             else
@@ -175,8 +178,10 @@ public class GameBoardPresenter {
             if (canClaimRoute(_selectedRouteList.get(1)))
             {
                 Route selectedRoute = _selectedRouteList.get(1);
+                //TODO: refresh fragment to get rid of buttons
+                //TODO: get rid of buttons depending on state
                 ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
+                Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
                 return pair;
             }
             else
@@ -198,8 +203,10 @@ public class GameBoardPresenter {
             if (canClaimRoute(_selectedRouteList.get(0)))
             {
                 Route selectedRoute = _selectedRouteList.get(0);
+                //TODO: refresh fragment to get rid of buttons
+                //TODO: get rid of buttons depending on state
                 ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
+                Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
                 return pair;
             }
             else
@@ -213,8 +220,10 @@ public class GameBoardPresenter {
             if (canClaimRoute(_selectedRouteList.get(1)))
             {
                 Route selectedRoute = _selectedRouteList.get(1);
+                //TODO: refresh fragment to get rid of buttons
+                //TODO: get rid of buttons depending on state
                 ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
+                Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
                 return pair;
             }
             else
@@ -240,21 +249,45 @@ public class GameBoardPresenter {
         }
     }
 
-    private Pair<RESPONSE_STATUS, String> claimRoute(Route route){
-        if(route.get_Owner() == null){
+    private int getPlayerColor(String owner) {
+        int color = -1;
+        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+        List<String> usernames = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
 
-  //          route.set_Owner(playerUsername());
-//            String toastText =  "You have claimed route " + _firstCityClicked.get_S_name() + "-" +
-//                    _secondCityClicked.get_S_name();
-//
-//            String broadcast = route.get_Owner() + " has claimed route " + _firstCityClicked.get_S_name() + "-" +
-//                    _secondCityClicked.get_S_name();
-//            ClientFacade.SINGLETON.broadcastToChat(broadcast);
+        int playerIndex = -1;
+        for (int i = 0; i < usernames.size(); i++) {
+            if (owner.equals(usernames.get(i))) {
+                playerIndex = i;
+                break;
+            }
+        }
+
+        if (playerIndex != -1) {
+            Scoreboard scoreboard = ClientFacade.SINGLETON.getClientModel().getScoreboards().get(playerIndex);
+            color = scoreboard.get_stringToAndroidColor();
+        }
+        return color;
+    }
+
+    public Pair<RESPONSE_STATUS, String> claimRoute(Route route, String claimRouteMessage){
+
+        route.set_Color(getPlayerColor(route.get_Owner()));
+        AllRoutes.get_RoutesMap().put(route.get_S_MappingName(), route); //replace the current route with the updated one
+        Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CLAIMED_ROUTE, claimRouteMessage);
+        resetViewLogicVariables();
+        return pair;
+    }
+
+    private Pair<RESPONSE_STATUS, String> claimUserChoice(City c){
+
+        if(c == _firstCityClicked){
             if (canClaimRoute(_selectedRouteList.get(0)))
             {
                 Route selectedRoute = _selectedRouteList.get(0);
+                //TODO: refresh fragment to get rid of buttons
+                //TODO: get rid of buttons depending on state
                 ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
+                Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
                 return pair;
             }
             else
@@ -265,18 +298,21 @@ public class GameBoardPresenter {
             }
         }
 
-        return new Pair<>(RESPONSE_STATUS.ROUTE_NOT_AVAILABLE,"Route Already Taken");
-    }
-
-    private Pair<RESPONSE_STATUS, String> claimUserChoice(City c){
-
-        if(c == _firstCityClicked){
-            Route selectedRoute = _selectedRouteList.get(0);
-            return claimRoute(selectedRoute);
+        if (canClaimRoute(_selectedRouteList.get(1)))
+        {
+            Route selectedRoute = _selectedRouteList.get(1);
+            //TODO: refresh fragment to get rid of buttons
+            //TODO: get rid of buttons depending on state
+            ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
+            Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
+            return pair;
         }
-
-        Route selectedRoute  = _selectedRouteList.get(1);
-        return claimRoute(selectedRoute);
+        else
+        {
+            Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
+            resetViewLogicVariables();
+            return pair;
+        }
     }
 
     public void refreshCardCounters(){
