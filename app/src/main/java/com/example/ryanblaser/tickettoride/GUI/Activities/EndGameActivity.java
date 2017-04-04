@@ -14,7 +14,9 @@ import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboa
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
@@ -60,17 +62,36 @@ public class EndGameActivity extends AppCompatActivity {
 //        List<Scoreboard> scoreboards = TESTinitScoreboards();
 
         //Use TreeMap to automatically sort point value from highest to lowest
-        TreeMap<Integer, String> highestToLowest = new TreeMap<>(Collections.<Integer>reverseOrder());
+        TreeMap<Integer, List<String>> highestToLowest = new TreeMap<>(Collections.<Integer>reverseOrder());
         for (int i = 0; i < scoreboards.size(); i++) {
             int points = scoreboards.get(i).getPoints();
             String username = usernames.get(i);
+            if (usernames.get(i).equals(ClientFacade.SINGLETON.getClientModel().getUser().getUsername())) {
+                username += " (YOU)";
+            }
 
-            highestToLowest.put(points, username);
+            if (highestToLowest.containsKey(points) && !highestToLowest.get(points).contains(username)) { //If point value exists already
+                highestToLowest.get(points).add(username); //Add user to the list of people with the same points
+            }
+            else if (!highestToLowest.containsKey(points)) { //If point value doesn't exist yet
+                List<String> player = new ArrayList<>();
+                player.add(username); //Need to make a new List<String> for Map.put()
+                highestToLowest.put(points, player);
+            }
         }
 
-        for (TreeMap.Entry<Integer, String> map : highestToLowest.entrySet()) {
-            String info = map.getValue() + ": " + map.getKey();
-            playerResults.add(info);
+        for (TreeMap.Entry<Integer, List<String>> map : highestToLowest.entrySet()) {
+            String info = "";
+            if (map.getValue().size() > 1) { //If two+ players have the same amount of points
+                for (int i = 0; i < map.getValue().size(); i++) {
+                    info = map.getValue().get(i) + ": " + map.getKey(); //Add their info to the list
+                    playerResults.add(info);
+                }
+            }
+            else {
+                info = map.getValue().get(0) + ": " + map.getKey();
+                playerResults.add(info);
+            }
         }
     }
 

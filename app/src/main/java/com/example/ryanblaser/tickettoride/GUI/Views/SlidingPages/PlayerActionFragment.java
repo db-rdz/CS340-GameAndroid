@@ -134,6 +134,9 @@ public class PlayerActionFragment extends Fragment {
                 ClientFacade.SINGLETON.initiateLastTurn();
             }
         });
+        if (!ClientFacade.SINGLETON.getClientModel().getBoolean_is_creator_of_game()) {
+            debugEndGame.setVisibility(View.INVISIBLE);
+        }
 
         if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN)) {
             _turnState.setText("Pick destination cards first");

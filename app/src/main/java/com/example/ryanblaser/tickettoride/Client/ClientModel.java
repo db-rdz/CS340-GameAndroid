@@ -128,34 +128,6 @@ public class ClientModel{
     }
 
     /**
-     * This will be initialized through the ClientFacade in the MainActivty.
-     * <pre>
-     * pre: mainActivity1 can't be null.
-     * post: All the variables in this clrass must be initialized. User and waitingActivity MUST be null.
-     *
-     * </pre>
-     *
-     * @param mainActivity1 the context of the MainActivity
-     *
-     */
-//    public ClientModel(MainActivity mainActivity1){
-//        mainActivity = mainActivity1;
-//        waitingActivity = null;
-//        user = null;
-//        current_player = null;
-//        list_joinable = new ArrayList<>();
-//        gameId_to_usernames = new Hashtable<>();
-//        boolean_is_creator_of_game = false;
-//        int_curr_gameId = 0;
-//        chat = new ArrayList<>();
-//        list_dest_cards = null;
-//        list_players_in_game = null;
-//        player_hand = new PlayerCardHand();
-//        state = NOT_YOUR_TURN;
-//    }
-
-
-    /**
      * The method does a deep copy of the list being passed in.
      * The deep copy avoids issues of the data changing randomly.
      * <pre>
