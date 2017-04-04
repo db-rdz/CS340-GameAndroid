@@ -165,6 +165,15 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
+    public void notifyGameOver() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "The game is over!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void refreshChat() {
         runOnUiThread(new Runnable() {
             @Override
@@ -245,6 +254,7 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
+
     public void switchToEndGameView() {
         Intent intent = new Intent(getBaseContext(), EndGameActivity.class);
         startActivity(intent);
@@ -281,6 +291,7 @@ public class BoardActivity extends AppCompatActivity {
     public void setPlayerActionFragment(PlayerActionFragment playerActionFragment) {
         this.playerActionFragment = playerActionFragment;
     }
+
 
 
 }

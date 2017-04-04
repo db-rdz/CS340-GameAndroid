@@ -18,6 +18,7 @@ public class SwitchBackToLobbyViewCommand implements ICommand {
 
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyGameOver();
         LobbyPresenter.SINGLETON.refreshGameLobby();
         ClientFacade.SINGLETON.getClientModel().getEndGameActivity().switchBackToLobbyView();
         return null;
