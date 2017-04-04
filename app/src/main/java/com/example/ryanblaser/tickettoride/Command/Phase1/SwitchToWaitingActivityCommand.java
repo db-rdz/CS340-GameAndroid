@@ -32,12 +32,6 @@ public class SwitchToWaitingActivityCommand implements ICommand { // sent after 
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
     @Override
     public List<ICommand> execute() {
 

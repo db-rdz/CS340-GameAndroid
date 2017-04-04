@@ -8,6 +8,7 @@ import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
 import com.example.ryanblaser.tickettoride.GUI.Activities.BoardActivity;
+import com.example.ryanblaser.tickettoride.GUI.Activities.EndGameActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.WaitingActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 
@@ -75,6 +76,8 @@ public class ClientModel{
     private WaitingActivity waitingActivity;
 
     private BoardActivity boardActivity;
+
+    private EndGameActivity endGameActivity;
 
     /**
      * This determines if a player is the creator of the game.
@@ -165,8 +168,7 @@ public class ClientModel{
      *
      */
     public void setJoinableGames(List<Integer> list){
-        for(int gameId : list)
-            addJoinableGame(gameId);
+        this.list_joinable = list;
     }
 
     public List<Integer> getJoinableGames(){
@@ -341,6 +343,14 @@ public class ClientModel{
 
     public void setBoardActivity(BoardActivity boardActivity) {
         this.boardActivity = boardActivity;
+    }
+
+    public EndGameActivity getEndGameActivity() {
+        return endGameActivity;
+    }
+
+    public void setEndGameActivity(EndGameActivity endGameActivity) {
+        this.endGameActivity = endGameActivity;
     }
 
     public Boolean getBoolean_is_creator_of_game() {

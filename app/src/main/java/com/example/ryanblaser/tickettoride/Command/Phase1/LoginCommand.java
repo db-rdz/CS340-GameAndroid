@@ -28,7 +28,6 @@ public class LoginCommand implements ICommand {
         return user.getStr_authentication_code();
     }
 
-    @Override
     public User getUser() {
         return user;
     }

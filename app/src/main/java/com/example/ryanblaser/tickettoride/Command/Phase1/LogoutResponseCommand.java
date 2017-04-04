@@ -23,10 +23,4 @@ public class LogoutResponseCommand implements ICommand {
     return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-    return null;
-    }
-
 }

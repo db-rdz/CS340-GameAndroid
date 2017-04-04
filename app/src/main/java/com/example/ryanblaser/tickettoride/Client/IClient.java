@@ -16,9 +16,10 @@ public interface IClient {
 
 
 
+
     /*
-    * Created own Exceptions for when checking login authorization
-    */
+     * Created own Exceptions for when checking login authorization
+     */
     public static class InvalidUsername extends Exception {
 
     }
@@ -63,6 +64,6 @@ public interface IClient {
     public void removeCardsUsed(List<TrainCard> cardsUsed);
     public void lastTurnCompleted();
     public void initiateLastTurn();
-
+    public void endGame();
 
 }

@@ -133,7 +133,7 @@ public class ClientFacade implements IClient {
 
     @Override
     public void listJoinableGames(List<Integer> listJoinableGames) {
-        clientmodel.setJoinableGames(listJoinableGames); //TODO: Change type of game
+        clientmodel.setJoinableGames(listJoinableGames);
 //        lobbypresenter.refreshGameLobby();
         //lobbypresenter
 		
@@ -205,7 +205,6 @@ public class ClientFacade implements IClient {
         String code = clientmodel.getStr_authentication_code();
         int gameId = clientmodel.getInt_curr_gameId();
 
-        int carCount = clientmodel.getCurrent_player().get_car_count();
         List<TrainCard> cardsUsed = new ArrayList<>();
         PlayerCardHand playerHand = clientmodel.getPlayer_hand();
 
@@ -347,5 +346,12 @@ public class ClientFacade implements IClient {
         String authenticationCode = clientmodel.getStr_authentication_code();
         ServerProxy.SINGLETON.initiateLastTurn(gameId, authenticationCode);
 
+    }
+
+    @Override
+    public void endGame() {
+        int gameId = clientmodel.getInt_curr_gameId();
+        String authenticationCode = clientmodel.getStr_authentication_code();
+        ServerProxy.SINGLETON.endGame(gameId, authenticationCode);
     }
 }

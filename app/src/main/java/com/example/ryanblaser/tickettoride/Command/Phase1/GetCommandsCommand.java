@@ -20,12 +20,6 @@ public class GetCommandsCommand implements ICommand {
       return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-      return null;
-    }
-
     @Override
     public List<ICommand> execute(){
       return null;

@@ -59,12 +59,6 @@ public class InitializeGameCommand implements ICommand {
 		return null;
 	}
 
-	@JsonIgnore
-	@Override
-	public com.example.ryanblaser.tickettoride.Client.User getUser() {
-		return null;
-	}
-
 	public List<TrainCard> getHand()
 	{
 		return hand;

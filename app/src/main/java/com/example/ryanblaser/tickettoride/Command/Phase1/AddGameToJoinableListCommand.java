@@ -26,12 +26,6 @@ public class AddGameToJoinableListCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
     @Override
     public List<ICommand> execute() {
         ClientFacade.SINGLETON.getClientModel().addJoinableGame(gameId);

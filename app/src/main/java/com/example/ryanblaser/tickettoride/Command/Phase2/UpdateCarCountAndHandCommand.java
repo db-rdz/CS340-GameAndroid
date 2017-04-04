@@ -50,12 +50,6 @@ public class UpdateCarCountAndHandCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
     public int getInt_cars_used() {
         return int_cars_used;
     }

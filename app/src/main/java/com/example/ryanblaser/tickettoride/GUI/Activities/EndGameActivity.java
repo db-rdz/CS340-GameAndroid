@@ -25,13 +25,13 @@ public class EndGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_game);
+        ClientFacade.SINGLETON.getClientModel().setEndGameActivity(this);
 
         Button returnToLobby = (Button) findViewById(R.id.returnToLobby);
         returnToLobby.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class); //Goes back to list of games
-                startActivity(intent);
+                ClientFacade.SINGLETON.endGame();
             }
         });
 
@@ -83,5 +83,15 @@ public class EndGameActivity extends AppCompatActivity {
             scoreboards.add(scoreboard);
         }
         return scoreboards;
+    }
+
+    public void switchBackToLobbyView() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class); //Goes back to list of games
+                startActivity(intent);
+            }
+        });
     }
 }

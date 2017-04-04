@@ -27,7 +27,6 @@ public class LogoutCommand implements ICommand {
         return null;
     }
 
-    @Override
     public User getUser() {
         return user;
     }

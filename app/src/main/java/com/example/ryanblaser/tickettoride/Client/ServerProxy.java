@@ -12,6 +12,7 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToServerCommand
 import com.example.ryanblaser.tickettoride.Command.Phase1.*;
 import com.example.ryanblaser.tickettoride.Command.Phase2.BroadcastToChatCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.ClaimRouteCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.EndGameCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.FirstTurnCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetDestinationCardsCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetFaceUpTableTrainCardCommand;
@@ -329,6 +330,20 @@ public class ServerProxy implements IServer {
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
             ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, initiateLastTurn);
+            clientCommunicator.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void endGame(int gameId, String authenticationCode) {
+        String urlSuffix = "/command";
+
+        ICommand endGame = new EndGameCommand(gameId, authenticationCode);
+
+        try {
+            URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
+            ClientCommunicator clientCommunicator = new ClientCommunicator(urlSuffix, endGame);
             clientCommunicator.execute(url);
         } catch (Exception e) {
             e.printStackTrace();

@@ -21,7 +21,6 @@ public class LoginRegisterResponseCommand implements ICommand {
     }
 
 
-    @Override
     public User getUser() {
     return user;
     }

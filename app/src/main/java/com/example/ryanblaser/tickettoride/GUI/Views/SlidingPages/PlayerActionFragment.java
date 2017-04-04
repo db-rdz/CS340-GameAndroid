@@ -127,6 +127,13 @@ public class PlayerActionFragment extends Fragment {
         _keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
         _getDestCards = (Button) v.findViewById(R.id.getDestCardsButton);
         _turnState = (TextView) v.findViewById(R.id.textView_turnState);
+        Button debugEndGame = (Button) v.findViewById(R.id.debug_endGame);
+        debugEndGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClientFacade.SINGLETON.initiateLastTurn();
+            }
+        });
 
         if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN)) {
             _turnState.setText("Pick destination cards first");

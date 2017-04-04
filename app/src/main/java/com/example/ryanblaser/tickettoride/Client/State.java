@@ -119,47 +119,6 @@ public enum State {
                 }
             },
 
-    WAITING_FOR_LAST_TURN
-            {
-                @Override
-                public void claimRoute(Route route)
-                {
-                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
-                }
-                @Override
-                public void getDestCards()
-                {
-                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
-                }
-                @Override
-                public void getTopDeckTrainCard(int firstSecondCardPick)
-                {
-                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
-                }
-                @Override
-                public void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild)
-                {
-                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
-                }
-                @Override
-                public void rejectDestionationCard(DestCard rejectedCard, int amountOfCardsTaken) {
-                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
-                }
-                @Override
-                public void keepAllDestCards(List<DestCard> keepCards) {
-                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
-                }
-                @Override
-                public State notifyTurn() {
-                    ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyLastTurn();
-                    return LAST_TURN;
-                }
-                @Override
-                public State endTurn() {
-                    return LAST_TURN;
-                }
-            },
-
     FIRST_TURN
             {
                 @Override
@@ -208,6 +167,48 @@ public enum State {
                     return NOT_YOUR_TURN;
                 }
             },
+
+    WAITING_FOR_LAST_TURN
+            {
+                @Override
+                public void claimRoute(Route route)
+                {
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
+                }
+                @Override
+                public void getDestCards()
+                {
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
+                }
+                @Override
+                public void getTopDeckTrainCard(int firstSecondCardPick)
+                {
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
+                }
+                @Override
+                public void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild)
+                {
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
+                }
+                @Override
+                public void rejectDestionationCard(DestCard rejectedCard, int amountOfCardsTaken) {
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
+                }
+                @Override
+                public void keepAllDestCards(List<DestCard> keepCards) {
+                    PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
+                }
+                @Override
+                public State notifyTurn() {
+                    ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyLastTurn();
+                    return LAST_TURN;
+                }
+                @Override
+                public State endTurn() {
+                    return LAST_TURN;
+                }
+            },
+
     LAST_TURN
             {
                 @Override

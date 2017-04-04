@@ -43,13 +43,6 @@ public class UpdateScoreboardCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
-
     public List<Scoreboard> getScoreboards() {
         return scoreboards;
     }

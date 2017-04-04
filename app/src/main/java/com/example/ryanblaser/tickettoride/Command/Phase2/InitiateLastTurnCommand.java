@@ -32,12 +32,6 @@ public class InitiateLastTurnCommand implements ICommand {
         return authenticationCode;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
     public int getGameId() {
         return gameId;
     }

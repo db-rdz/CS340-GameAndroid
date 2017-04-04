@@ -87,9 +87,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="bottom|left"
                 android:text="Get Dest Cards"
+                android:layout_marginBottom="19dp"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="21dp" />
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:id="@+id/textView_turnState"
@@ -102,6 +102,14 @@
                 android:textSize="18sp"
                 android:layout_above="@+id/getDestCardsButton"
                 android:layout_alignParentStart="true" />
+
+            <Button
+                android:id="@+id/debug_endGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Game"
+                android:layout_below="@+id/textView_turnState"
+                android:layout_alignParentEnd="true" />
 
 
         </RelativeLayout>

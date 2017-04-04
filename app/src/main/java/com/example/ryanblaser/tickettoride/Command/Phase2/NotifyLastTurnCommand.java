@@ -29,11 +29,4 @@ public class NotifyLastTurnCommand implements ICommand {
 		return null;
 	}
 
-	@JsonIgnore
-	@Override
-	public User getUser() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

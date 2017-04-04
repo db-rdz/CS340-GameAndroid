@@ -17,12 +17,6 @@ public class AddPlayerToServerCommand implements ICommand {
         i_game_id = gameId;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-      return null;
-    }
-
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException { // auth key must be changed to Username somewhere
 

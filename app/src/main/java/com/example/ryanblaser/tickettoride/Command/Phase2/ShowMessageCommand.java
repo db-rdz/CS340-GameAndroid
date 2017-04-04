@@ -43,12 +43,6 @@ public class ShowMessageCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
 
     public List<String> getChatRoom() {
         return chatRoom;

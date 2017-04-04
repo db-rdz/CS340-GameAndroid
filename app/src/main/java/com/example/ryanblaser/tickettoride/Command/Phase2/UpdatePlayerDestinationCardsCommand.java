@@ -48,12 +48,6 @@ public class UpdatePlayerDestinationCardsCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
 
     public List<DestCard> getDestCards() {
         return destCards;
