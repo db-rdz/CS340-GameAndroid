@@ -2,6 +2,7 @@ package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
@@ -23,13 +24,10 @@ import java.util.List;
 public class UpdatePlayerTrainCardsCommand implements ICommand {
 
     //Data members
-    private TrainCard trainCard; //TODO: Should be a List? Depends on Client implementation
+    private TrainCard trainCard;
 
     //Constructor
     public UpdatePlayerTrainCardsCommand(){}
-    public UpdatePlayerTrainCardsCommand(TrainCard trainCard) {
-        this.trainCard = trainCard;
-    }
 
     //Functions
     @Override
@@ -49,4 +47,5 @@ public class UpdatePlayerTrainCardsCommand implements ICommand {
     public TrainCard getTrainCard() {
         return trainCard;
     }
+
 }

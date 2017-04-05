@@ -26,8 +26,10 @@ import com.example.ryanblaser.tickettoride.Command.Phase2.GetFaceUpTableTrainCar
 import com.example.ryanblaser.tickettoride.Command.Phase2.GetTopDeckTrainCardCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.InitializeGameCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.KeepAllDestCardsCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.NotifyDestCardCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.NotifyLastTurnCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.NotifyRouteClaimedCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase2.NotifyTrainCardPickedCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.NotifyTurnCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.RejectDestinationCardCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.ShowMessageCommand;
@@ -75,6 +77,8 @@ import java.util.List;
         @JsonSubTypes.Type(value = KeepAllDestCardsCommand.class),
         @JsonSubTypes.Type(value = NotifyRouteClaimedCommand.class),
         @JsonSubTypes.Type(value = NotifyTurnCommand.class),
+        @JsonSubTypes.Type(value = NotifyTrainCardPickedCommand.class),
+        @JsonSubTypes.Type(value = NotifyDestCardCommand.class),
         @JsonSubTypes.Type(value = NotifyLastTurnCommand.class),
         @JsonSubTypes.Type(value = RejectDestinationCardCommand.class),
         @JsonSubTypes.Type(value = ShowMessageCommand.class),

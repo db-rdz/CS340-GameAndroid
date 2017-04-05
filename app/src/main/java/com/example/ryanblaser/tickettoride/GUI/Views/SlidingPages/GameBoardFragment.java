@@ -251,7 +251,7 @@ public class GameBoardFragment extends Fragment {
         _blackCardCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "you chose a black card", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "you used black", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("BLACK");
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
@@ -261,7 +261,7 @@ public class GameBoardFragment extends Fragment {
         _redCardCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "you chose a red card", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "you used red", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("RED");
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
@@ -271,7 +271,7 @@ public class GameBoardFragment extends Fragment {
         _orangeCardCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "you chose an orange card", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "you used orange", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("ORANGE");
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
@@ -281,7 +281,7 @@ public class GameBoardFragment extends Fragment {
         _yellowCardCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "you chose a yellow card", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "you used yellow", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("YELLOW");
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
@@ -291,7 +291,7 @@ public class GameBoardFragment extends Fragment {
         _greenCardCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "you chose a green card", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "you used green", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("GREEN");
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
@@ -301,7 +301,7 @@ public class GameBoardFragment extends Fragment {
         _blueCardCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "you chose a blue card", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "you used blue", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("BLUE");
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
@@ -311,7 +311,7 @@ public class GameBoardFragment extends Fragment {
         _pinkCardCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "you chose a pink card", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "you used pink", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("PINK");
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
@@ -321,7 +321,7 @@ public class GameBoardFragment extends Fragment {
         _whiteCardCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "you chose a white card", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "you used white", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("WHITE");
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
@@ -331,7 +331,7 @@ public class GameBoardFragment extends Fragment {
         _rainbowCardCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "you chose a rainbow card", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "you used rainbow", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("RAINBOW");
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();

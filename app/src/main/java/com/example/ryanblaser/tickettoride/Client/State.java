@@ -79,6 +79,7 @@ public enum State {
                     return NOT_YOUR_TURN;
                 }
             },
+
     NOT_YOUR_TURN
             {
                 @Override
@@ -112,6 +113,116 @@ public enum State {
                 @Override
                 public State notifyTurn() {
                     return YOUR_TURN;
+                }
+                @Override
+                public State endTurn() {
+                    return NOT_YOUR_TURN;
+                }
+            },
+
+    PICKING_DEST_CARD
+            {
+                @Override
+                public void claimRoute(Route route)
+                {
+                    PlayerActionPresenter._SINGLETON.makeToast("Pick your destination cards");
+                }
+                @Override
+                public void getDestCards()
+                {
+                    PlayerActionPresenter._SINGLETON.makeToast("Pick your destination cards");
+                }
+                @Override
+                public void getTopDeckTrainCard(int firstSecondCardPick)
+                {
+                    PlayerActionPresenter._SINGLETON.makeToast("Pick your destination cards");
+                }
+                @Override
+                public void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild)
+                {
+                    PlayerActionPresenter._SINGLETON.makeToast("Pick your destination cards");
+                }
+                @Override
+                public void rejectDestionationCard(DestCard rejectedCard, int amountOfCardsTaken) {
+                    if (amountOfCardsTaken <= 2) {
+                        List<DestCard> list = new ArrayList<>();
+                        list.add(rejectedCard);
+                        PlayerActionPresenter._SINGLETON.firstTurn(list, "REJECT");
+                        PlayerActionPresenter._SINGLETON.get_destCards().remove(rejectedCard);
+                        PlayerActionPresenter._SINGLETON.get_playerActionFragment().getSlidingAdapter().remove(rejectedCard);
+                        PlayerActionPresenter._SINGLETON.get_playerActionFragment().getSlidingAdapter().notifyDataSetChanged();
+                    }
+                    else
+                        PlayerActionPresenter._SINGLETON.makeToast("You cannot reject any more destination cards!");
+                }
+                @Override
+                public void keepAllDestCards(List<DestCard> keepCards) {
+                    PlayerActionPresenter._SINGLETON.firstTurn(keepCards, "KEEP");
+                }
+                @Override
+                public State notifyTurn() {
+                    return NOT_YOUR_TURN;
+                }
+                @Override
+                public State endTurn() {
+                    return NOT_YOUR_TURN;
+                }
+            },
+
+    PICKING_TRAIN_CARD
+            {
+                @Override
+                public void claimRoute(Route route)
+                {
+                    PlayerActionPresenter._SINGLETON.makeToast("Pick your second train card");
+                }
+                @Override
+                public void getDestCards()
+                {
+                    PlayerActionPresenter._SINGLETON.makeToast("Pick your second train card");
+                }
+                @Override
+                public void getTopDeckTrainCard(int firstSecondCardPick)
+                {
+                    ClientFacade.SINGLETON.getTopDeckTrainCardCommand(firstSecondCardPick);
+                }
+                @Override
+                public void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild)
+                {
+                    if (!isWild) { //If the second card picked isn't a rainbow card, get it
+                        switch (index) {
+                            case 0:
+                                index = 4;
+                                break;
+                            case 1:
+                                index = 3;
+                                break;
+                            case 3:
+                                index = 1;
+                                break;
+                            case 4:
+                                index = 0;
+                                break;
+                            default:
+                                break;
+                        }
+                        ClientFacade.SINGLETON.getFaceUpTableTrainCardCommand(firstSecondCardPick, index, isWild);
+                    }
+                    else {
+                        PlayerActionPresenter._SINGLETON.makeToast("Can't pick a rainbow as 2nd card\nPick another card");
+                    }
+                }
+                @Override
+                public void rejectDestionationCard(DestCard rejectedCard, int amountOfCardsTaken) {
+                    PlayerActionPresenter._SINGLETON.makeToast("Pick your second train card");
+                }
+                @Override
+                public void keepAllDestCards(List<DestCard> keepCards) {
+                    PlayerActionPresenter._SINGLETON.makeToast("Pick your second train card");
+                }
+                @Override
+                public State notifyTurn() {
+                    return NOT_YOUR_TURN;
                 }
                 @Override
                 public State endTurn() {

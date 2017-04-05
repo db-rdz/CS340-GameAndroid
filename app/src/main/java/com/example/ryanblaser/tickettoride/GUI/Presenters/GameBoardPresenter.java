@@ -112,7 +112,7 @@ public class GameBoardPresenter {
         }
 
         //If no city have been clicked before then the selected city is the first city clicked
-        if(!_clickedOnCityOnce){
+        if(!_clickedOnCityOnce && ClientFacade.SINGLETON.getClientModel().getState().equals(State.YOUR_TURN)){
 
             _firstCityClicked = selectedCity;
             _clickedOnCityOnce = true;
@@ -120,7 +120,7 @@ public class GameBoardPresenter {
             return new Pair<>(RESPONSE_STATUS.CITY_CLICKED, "Click a second city adjacent to the first one");
 
         } //If not second city has been clicked then that means that the selected city is the second city clicked
-        else if(!_clickedOnCityTwice){
+        else if(!_clickedOnCityTwice && ClientFacade.SINGLETON.getClientModel().getState().equals(State.YOUR_TURN)) {
             _secondCityClicked = selectedCity;
             _clickedOnCityTwice = true;
             //Get the routes that go from city one to city two.
@@ -143,7 +143,6 @@ public class GameBoardPresenter {
                 {
                     Route selectedRoute = _selectedRouteList.get(0);
                     ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-
                     resetViewLogicVariables();
                     return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
                 }
@@ -154,10 +153,10 @@ public class GameBoardPresenter {
                 }
             }
         }
-        else if(_furtherActionNeeded){
+        else if(_furtherActionNeeded && ClientFacade.SINGLETON.getClientModel().getState().equals(State.YOUR_TURN)){
             return claimUserChoice(selectedCity);
         }
-        return null;
+        return new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "Can't claim route right now");
     }
 
     private Pair<RESPONSE_STATUS, String> solveDoubleRoutes(){

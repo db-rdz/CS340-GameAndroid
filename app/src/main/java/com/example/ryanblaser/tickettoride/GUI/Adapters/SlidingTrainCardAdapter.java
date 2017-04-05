@@ -23,6 +23,7 @@ import com.redbooth.SlidingDeck;
 
 import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.NOT_YOUR_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.PICKING_TRAIN_CARD;
 import static com.example.ryanblaser.tickettoride.Client.State.YOUR_TURN;
 
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.FIRST_TURN;
@@ -60,15 +61,6 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
         _trainCardImage = (ImageView) view.findViewById(R.id.trainCard);
         _getButton = (Button)view.findViewById(R.id.getTrainCard);
 
-        //Nathan: If the player's turn just started or is already picking a card,
-//        if ((_playerState.equals(YOUR_TURN) || _playerState.equals(PICKING_1ST_TRAIN)) &&
-//                !_playerState.equals(FIRST_TURN)) {
-//            _getButton.setVisibility(View.VISIBLE); //Player can see the get button
-//        }
-//        else {
-//            _getButton.setVisibility(View.GONE); //Player can't see the get button
-//        }
-
         TrainCard item = getItem(position);
         view.setTag(item);
 
@@ -87,20 +79,19 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                         final TrainCard slidingDeckModel = (TrainCard) item.getTag();
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
 
-                        amountOfCardsTaken++;
                         int index = parent.indexOfChild(item); //The index of the card chosen
                         if (slidingDeckModel.getType().equals("rainbowcard")) {
                             PlayerActionPresenter._SINGLETON.get_playerState().getFaceUpTrainCard(amountOfCardsTaken, index, true);
                         }
                         else
                         {
+                            amountOfCardsTaken++;
                             PlayerActionPresenter._SINGLETON.get_playerState().getFaceUpTrainCard(amountOfCardsTaken, index, false);
                         }
+
                         if (amountOfCardsTaken == 2) {
                             amountOfCardsTaken = 0;
                         }
-
-                        //TODO: refresh fragment to get rid of some button
                     }
                 });
             }

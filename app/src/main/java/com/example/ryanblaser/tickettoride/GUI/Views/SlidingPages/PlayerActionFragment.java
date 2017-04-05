@@ -35,6 +35,8 @@ import java.util.List;
 import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.NOT_YOUR_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.PICKING_DEST_CARD;
+import static com.example.ryanblaser.tickettoride.Client.State.PICKING_TRAIN_CARD;
 import static com.example.ryanblaser.tickettoride.Client.State.WAITING_FOR_LAST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.YOUR_TURN;
 
@@ -138,12 +140,16 @@ public class PlayerActionFragment extends Fragment {
             debugEndGame.setVisibility(View.INVISIBLE);
         }
 
-        if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN)) {
-            _turnState.setText("Pick destination cards first");
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN) ||
+                ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_DEST_CARD)) {
+            _turnState.setText("Pick your destination cards");
         }
         else if (ClientFacade.SINGLETON.getClientModel().getState().equals(NOT_YOUR_TURN) ||
                 ClientFacade.SINGLETON.getClientModel().getState().equals(WAITING_FOR_LAST_TURN)) {
             _turnState.setText("It's NOT your turn");
+        }
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_TRAIN_CARD)) {
+            _turnState.setText("Get your 2nd train card");
         }
         if (ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN)) {
             _turnState.setText("It's your last turn!");
@@ -195,9 +201,6 @@ public class PlayerActionFragment extends Fragment {
                     SlidingTrainCardAdapter.setAmountOfCardsTaken(count);
 
                     GameBoardPresenter._SINGLETON.set_readyToStart(true);
-
-                    //TODO: refresh fragment to get rid of buttons
-                    //TODO: get rid of buttons depending on state
                     PlayerActionPresenter._SINGLETON.get_playerState().getTopDeckTrainCard(count);
                     //Reset the amount of cards drawn back to 0, and change player state
                     if (SlidingTrainCardAdapter.getAmountOfCardsTaken() == 2) {
