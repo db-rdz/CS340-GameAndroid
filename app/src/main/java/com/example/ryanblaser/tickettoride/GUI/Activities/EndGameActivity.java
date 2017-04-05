@@ -81,19 +81,22 @@ public class EndGameActivity extends AppCompatActivity {
             }
         }
 
+        int playerPosition = 0;
         for (TreeMap.Entry<Integer, List<String>> map : highestToLowest.entrySet()) {
             String info = "";
             if (map.getValue().size() > 1) { //If two+ players have the same amount of points
                 for (int i = 0; i < map.getValue().size(); i++) {
                     info = map.getValue().get(i) + ": " + map.getKey(); //Add their info to the list
-                    if (i == 0) { info += " *~~ WINNER ~~*"; }
+                    if (playerPosition == 0) { info += "        *~~ TIED FOR WINNER ~~*"; }
                     playerResults.add(info);
                 }
             }
             else {
                 info = map.getValue().get(0) + ": " + map.getKey();
+                if (playerPosition == 0) { info += "         *~~ WINNER ~~*"; }
                 playerResults.add(info);
             }
+            playerPosition++;
         }
     }
 

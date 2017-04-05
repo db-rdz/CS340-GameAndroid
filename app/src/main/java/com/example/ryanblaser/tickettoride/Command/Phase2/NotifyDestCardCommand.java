@@ -24,9 +24,12 @@ public class NotifyDestCardCommand implements ICommand {
         }
         else {
             ClientFacade.SINGLETON.getClientModel().setState(State.PICKING_DEST_CARD);
-        }        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
-
-        return null;
+        }
+        //Refresh all views
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();        return null;
     }
 
     @JsonIgnore
