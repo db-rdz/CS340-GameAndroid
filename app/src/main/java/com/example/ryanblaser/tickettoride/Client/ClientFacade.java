@@ -239,11 +239,8 @@ public class ClientFacade implements IClient {
                 break;
         }
 
-        if (!routeToClaim.get_S_Color().equals("GRAY")) {
-            cardsUsed = fillListOfCards(cardType, playerHand.getRainbowCardAmount(), routeToClaim.get_Weight(), routeToClaim.get_S_Color());
-        } else {
-            // determine color to use
-        }
+        cardsUsed = fillListOfCards(cardType, playerHand.getRainbowCardAmount(), routeToClaim.get_Weight(), routeToClaim.get_S_Color());
+
 
         //Check if the player has enough cards to claim the route
         ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);

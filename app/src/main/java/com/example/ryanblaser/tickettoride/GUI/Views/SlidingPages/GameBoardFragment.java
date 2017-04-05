@@ -14,18 +14,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
-import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.AllRoutes;
-import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
@@ -36,9 +31,6 @@ import com.example.ryanblaser.tickettoride.R;
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.CLAIMING_ROUTE;
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.FIRST_TURN;
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.YOUR_TURN;
-import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
-import static com.example.ryanblaser.tickettoride.Client.State.YOUR_TURN;
-import static java.security.AccessController.getContext;
 
 
 public class GameBoardFragment extends Fragment {
@@ -187,6 +179,8 @@ public class GameBoardFragment extends Fragment {
 
     public void refreshBoard() {
         invalidateBoard();
+        setPlayerCardViewValues();
+        turnOffCardOnClickListeners();
     }
 
 
@@ -214,6 +208,7 @@ public class GameBoardFragment extends Fragment {
                     RESPONSE_STATUS responseCode = response.first;
                     switch (responseCode) {
                         case TOGGLE_NEEDED: {
+                            turnOffCardOnClickListeners();
                             toggle();
                             break;
                         }
@@ -228,7 +223,13 @@ public class GameBoardFragment extends Fragment {
                             invalidateBoard();
                             break;
                         }
+                        case CLAIM_GRAY_ROUTE: {
+                            Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+                            selectTrainCardColor(event.getX(), event.getY());
+                            break;
+                        }
                         default: {
+                            turnOffCardOnClickListeners();
                             Toast.makeText(getContext(), response.second, Toast.LENGTH_LONG).show();
                             break;
                         }
@@ -239,6 +240,116 @@ public class GameBoardFragment extends Fragment {
         });
         return v;
 
+    }
+
+    private void selectTrainCardColor(float x, float y) {
+        show();
+        selectTrainCardForGrayRoute(x, y);
+    }
+
+    private void selectTrainCardForGrayRoute(final float x, final float y) {
+        _blackCardCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "you chose a black card", Toast.LENGTH_SHORT).show();
+                GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("BLACK");
+                Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
+                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        _redCardCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "you chose a red card", Toast.LENGTH_SHORT).show();
+                GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("RED");
+                Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
+                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        _orangeCardCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "you chose an orange card", Toast.LENGTH_SHORT).show();
+                GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("ORANGE");
+                Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
+                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        _yellowCardCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "you chose a yellow card", Toast.LENGTH_SHORT).show();
+                GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("YELLOW");
+                Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
+                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        _greenCardCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "you chose a green card", Toast.LENGTH_SHORT).show();
+                GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("GREEN");
+                Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
+                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        _blueCardCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "you chose a blue card", Toast.LENGTH_SHORT).show();
+                GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("BLUE");
+                Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
+                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        _pinkCardCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "you chose a pink card", Toast.LENGTH_SHORT).show();
+                GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("PINK");
+                Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
+                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        _whiteCardCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "you chose a white card", Toast.LENGTH_SHORT).show();
+                GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("WHITE");
+                Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
+                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        _rainbowCardCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "you chose a rainbow card", Toast.LENGTH_SHORT).show();
+                GameBoardPresenter._SINGLETON.set_trainCardForGrayRoute("RAINBOW");
+                Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
+                Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void turnOffCardOnClickListeners() {
+
+        _blackCardCount.setClickable(false);
+        _blueCardCount.setClickable(false);
+        _greenCardCount.setClickable(false);
+        _orangeCardCount.setClickable(false);
+        _pinkCardCount.setClickable(false);
+        _redCardCount.setClickable(false);
+        _whiteCardCount.setClickable(false);
+        _yellowCardCount.setClickable(false);
+        _rainbowCardCount.setClickable(false);
     }
 
     public void setPlayerCardsViews(View v){
@@ -254,8 +365,6 @@ public class GameBoardFragment extends Fragment {
     }
 
     public void setPlayerCardViewValues(){
-//        Player clientPlayer = GameBoardPresenter._SINGLETON.getClientPlayer();
-        Player clientPlayer = ClientFacade.SINGLETON.getClientModel().getCurrent_player();
         PlayerCardHand hand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
 
         _blackCardCount.setText(String.valueOf(hand.get_cardCount().get("blackcard")));

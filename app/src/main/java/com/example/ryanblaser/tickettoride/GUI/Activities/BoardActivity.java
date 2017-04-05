@@ -146,6 +146,15 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
+    public void notifyDestCardsGotten(final int size) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "You got " + size + "\nDestination Cards", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void notifyLastTurn() {
         runOnUiThread(new Runnable() {
             @Override
@@ -291,7 +300,5 @@ public class BoardActivity extends AppCompatActivity {
     public void setPlayerActionFragment(PlayerActionFragment playerActionFragment) {
         this.playerActionFragment = playerActionFragment;
     }
-
-
 
 }
