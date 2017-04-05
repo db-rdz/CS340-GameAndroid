@@ -183,11 +183,11 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
-    public void notifyGameOver() {
+    public void notifySwitchBackToLobby() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getBaseContext(), "The game is over!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Back to the games lobby", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -274,6 +274,12 @@ public class BoardActivity extends AppCompatActivity {
 
 
     public void switchToEndGameView() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Game over!", Toast.LENGTH_SHORT).show();
+            }
+        });
         Intent intent = new Intent(getBaseContext(), EndGameActivity.class);
         startActivity(intent);
     }

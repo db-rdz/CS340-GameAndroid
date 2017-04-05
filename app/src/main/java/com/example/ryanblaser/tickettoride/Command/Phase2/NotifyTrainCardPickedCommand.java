@@ -20,7 +20,12 @@ public class NotifyTrainCardPickedCommand implements ICommand {
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyPickTrainCard();
-        ClientFacade.SINGLETON.getClientModel().setState(State.PICKING_TRAIN_CARD);
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(State.LAST_TURN)) {
+            ClientFacade.SINGLETON.getClientModel().setState(State.LAST_TURN_PICKING_TRAIN_CARD);
+        }
+        else {
+            ClientFacade.SINGLETON.getClientModel().setState(State.PICKING_TRAIN_CARD);
+        }
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
         return null;
     }

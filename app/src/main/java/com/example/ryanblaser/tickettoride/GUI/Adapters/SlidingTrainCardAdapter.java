@@ -127,8 +127,4 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
     public static void setAmountOfCardsTaken(int amountOfCardsTaken) {
         SlidingTrainCardAdapter.amountOfCardsTaken = amountOfCardsTaken;
     }
-
-    public Button get_getButton() {
-        return _getButton;
-    }
 }
