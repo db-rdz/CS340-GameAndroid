@@ -233,7 +233,9 @@ public class BoardActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                playersInfoFragment.refreshPlayerInfo();
+                if (playersInfoFragment.isVisible()) {
+                    playersInfoFragment.refreshPlayerInfo();
+                }
             }
         });
     }

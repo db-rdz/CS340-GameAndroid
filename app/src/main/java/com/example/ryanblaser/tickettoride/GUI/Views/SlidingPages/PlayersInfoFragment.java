@@ -32,6 +32,7 @@ public class PlayersInfoFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private final Context context = getContext();
     private ExpandableListView _expListView;
     private ExpandableListView _playerDestCardsView;
     public static final String ARG_PAGE = "page";
@@ -97,7 +98,6 @@ public class PlayersInfoFragment extends Fragment {
         View v =  inflater.inflate(R.layout.fragment_players_info, container, false);
         _expListView = (ExpandableListView) v.findViewById(R.id.lvExp);
         _playerDestCardsView = (ExpandableListView) v.findViewById(R.id.destCardsList);
-
 
         List<String> headers = new ArrayList<>();
         headers.add("Players");
