@@ -25,7 +25,7 @@ public class ClaimRouteCommand implements ICommand {
     private Route route;
     private int gameId;
     private String authenticationCode;
-    List<TrainCard> cardsUsedToClaimRoute;
+    private List<TrainCard> cardsUsedToClaimRoute;
 
     //Constructors
     public ClaimRouteCommand(){}

@@ -34,7 +34,12 @@ public class NotifyTurnCommand implements ICommand {
 
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyTurn();
         ClientFacade.SINGLETON.getClientModel().setState(ClientFacade.SINGLETON.getClientModel().getState().notifyTurn());
-        //PlayerActionPresenter._SINGLETON.refreshFragment();
+
+        //Refresh all views
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
         return null;
     }
 

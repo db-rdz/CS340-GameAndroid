@@ -20,6 +20,8 @@ public class NotifyDestCardCommand implements ICommand {
     public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyPickNewDestCards();
         ClientFacade.SINGLETON.getClientModel().setState(State.PICKING_DEST_CARD);
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
+
         return null;
     }
 

@@ -77,8 +77,17 @@ public class PlayersInfoFragment extends Fragment {
 
 
     public void refreshPlayerInfo() {
-        _expListView.invalidate();
-        _playerDestCardsView.invalidate();
+        Pair<List<String>, List<Scoreboard>> info
+                = ClientFacade.SINGLETON.getClientModel().getInfoForExpandable();
+        ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
+        _expListView.setAdapter(listAdapter);
+
+        Pair<List<String>, List<Integer>> destCardInfo
+                = ClientFacade.SINGLETON.getClientModel().destCardExpandableInfo();
+        if (destCardInfo.first.size() > 0 && destCardInfo.second.size() > 0) {
+            DestinationListAdapter destinationListAdapter = new DestinationListAdapter(getContext(), destCardInfo.first, destCardInfo.second);
+            _playerDestCardsView.setAdapter(destinationListAdapter);
+        }
     }
 
     @Override

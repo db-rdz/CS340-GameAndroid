@@ -36,7 +36,7 @@ public class GameBoardPresenter {
     private Boolean _clickedOnCityTwice = false;
     private Boolean _furtherActionNeeded = false;
     private List<Route> _selectedRouteList = new ArrayList<>();
-    private String _trainCardForGrayRoute = "";
+    private String _trainCardColor = "";
 
     //---------------------TEST VARIABLES--------------------//
     List<Player> asdf = new ArrayList<>();
@@ -66,12 +66,12 @@ public class GameBoardPresenter {
 
     }
 
-    public String get_trainCardForGrayRoute() {
-        return _trainCardForGrayRoute;
+    public String get_trainCardColor() {
+        return _trainCardColor;
     }
 
-    public void set_trainCardForGrayRoute(String _trainCardForGrayRoute) {
-        this._trainCardForGrayRoute = _trainCardForGrayRoute;
+    public void set_trainCardColor(String _trainCardColor) {
+        this._trainCardColor = _trainCardColor;
     }
 
     //-----------------------------------------VIEW LOGIC-----------------------------------------//
@@ -142,7 +142,7 @@ public class GameBoardPresenter {
                 else if (canClaimRoute(_selectedRouteList.get(0)))
                 {
                     Route selectedRoute = _selectedRouteList.get(0);
-                    ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
+                    ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
                     resetViewLogicVariables();
                     return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
                 }
@@ -179,7 +179,7 @@ public class GameBoardPresenter {
             else if (canClaimRoute(_selectedRouteList.get(0)))
             {
                 Route selectedRoute = _selectedRouteList.get(0);
-                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
                 resetViewLogicVariables();
                 return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
             }
@@ -200,7 +200,7 @@ public class GameBoardPresenter {
             else if (canClaimRoute(_selectedRouteList.get(1)))
             {
                 Route selectedRoute = _selectedRouteList.get(1);
-                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
                 resetViewLogicVariables();
                 return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
             }
@@ -223,7 +223,7 @@ public class GameBoardPresenter {
             if (canClaimRoute(_selectedRouteList.get(0)))
             {
                 Route selectedRoute = _selectedRouteList.get(0);
-                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
                 resetViewLogicVariables();
                 return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
             }
@@ -237,7 +237,7 @@ public class GameBoardPresenter {
             if (canClaimRoute(_selectedRouteList.get(1)))
             {
                 Route selectedRoute = _selectedRouteList.get(1);
-                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
                 resetViewLogicVariables();
                 return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
             }
@@ -305,7 +305,7 @@ public class GameBoardPresenter {
             if (canClaimRoute(_selectedRouteList.get(0)))
             {
                 Route selectedRoute = _selectedRouteList.get(0);
-                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
                 resetViewLogicVariables();
                 return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
             }
@@ -319,7 +319,7 @@ public class GameBoardPresenter {
         if (canClaimRoute(_selectedRouteList.get(1)))
         {
             Route selectedRoute = _selectedRouteList.get(1);
-            ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
+            ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
             resetViewLogicVariables();
             return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
         }
@@ -373,45 +373,53 @@ public class GameBoardPresenter {
             if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() >= routeToClaim.get_Weight()) {
                 switch (routeToClaim.get_S_Color()) {
                     case "GRAY":
-                        return selectTrainCardToUseForGrayRoute(routeToClaim, _trainCardForGrayRoute);
+                        return selectTrainCardToUseForGrayRoute(routeToClaim, _trainCardColor);
 
                     case "RED":
                         if (playerHand.getRedCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "RED";
                             return true;
                         }
                         break;
                     case "WHITE":
                         if (playerHand.getWhiteCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "WHITE";
                             return true;
                         }
                         break;
                     case "ORANGE":
                         if (playerHand.getOrangeCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "ORANGE";
                             return true;
                         }
                         break;
                     case "GREEN":
                         if (playerHand.getGreenCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "GREEN";
                             return true;
                         }
                         break;
                     case "BLUE":
                         if (playerHand.getBlueCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "BLUE";
                             return true;
                         }
                         break;
                     case "BLACK":
                         if (playerHand.getBlackCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "BLACK";
                             return true;
                         }
                         break;
                     case "YELLOW":
                         if (playerHand.getYellowCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "YELLOW";
                             return true;
                         }
                         break;
                     case "PINK":
                         if (playerHand.getPinkCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "PINK";
                             return true;
                         }
                         break;
@@ -423,6 +431,13 @@ public class GameBoardPresenter {
         return false;
     }
 
+    /**
+     * Nathan: Checks if a player has enough train cards of the same color to claim a grey route
+     * Same implementation as canClaimRoute();
+     * @param routeToClaim
+     * @param trainCardColor
+     * @return
+     */
     private Boolean selectTrainCardToUseForGrayRoute(Route routeToClaim, String trainCardColor) {
         PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
         switch (trainCardColor) {

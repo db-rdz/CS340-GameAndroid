@@ -43,8 +43,6 @@ import static com.example.ryanblaser.tickettoride.Client.State.YOUR_TURN;
 
 public class PlayerActionFragment extends Fragment {
 
-    List<DestCard> copy = new ArrayList<>();
-
     public SliddingAdapter getSlidingAdapter() {
         return slidingAdapter;
     }
@@ -110,9 +108,39 @@ public class PlayerActionFragment extends Fragment {
     }
 
     public void refreshPlayerAction() {
-        _turnState.invalidate();
+        decideTurnStateText(_turnState);
+        slidingAdapter  = new SliddingAdapter(getContext());
+        trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
+
+        //Loads the 3 destination cards from the PlayerActionPresenter
+        slidingAdapter.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
+        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());
+
+        _slidingDeck.setAdapter(slidingAdapter);
+        _slidingTrainCards.setAdapter(trainCardAdapter);
+
         _slidingDeck.invalidate();
         _slidingTrainCards.invalidate();
+    }
+
+    private void decideTurnStateText(TextView turnState) {
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN) ||
+                ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_DEST_CARD)) {
+            _turnState.setText("Pick your destination cards");
+        }
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(NOT_YOUR_TURN) ||
+                ClientFacade.SINGLETON.getClientModel().getState().equals(WAITING_FOR_LAST_TURN)) {
+            _turnState.setText("It's NOT your turn");
+        }
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_TRAIN_CARD)) {
+            _turnState.setText("Get your 2nd train card");
+        }
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(YOUR_TURN)) {
+            _turnState.setText("It's your turn!");
+        }
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN)) {
+            _turnState.setText("It's your last turn!");
+        }
     }
 
     @Override
@@ -140,27 +168,13 @@ public class PlayerActionFragment extends Fragment {
             debugEndGame.setVisibility(View.INVISIBLE);
         }
 
-        if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN) ||
-                ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_DEST_CARD)) {
-            _turnState.setText("Pick your destination cards");
-        }
-        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(NOT_YOUR_TURN) ||
-                ClientFacade.SINGLETON.getClientModel().getState().equals(WAITING_FOR_LAST_TURN)) {
-            _turnState.setText("It's NOT your turn");
-        }
-        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_TRAIN_CARD)) {
-            _turnState.setText("Get your 2nd train card");
-        }
-        if (ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN)) {
-            _turnState.setText("It's your last turn!");
-        }
+        decideTurnStateText(_turnState);
 
         slidingAdapter  = new SliddingAdapter(getContext());
         trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
 
         //Loads the 3 destination cards from the PlayerActionPresenter
         slidingAdapter.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
-        PlayerActionPresenter._SINGLETON.getCopy().addAll(PlayerActionPresenter._SINGLETON.get_destCards());
         trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());
 
         _slidingDeck.setAdapter(slidingAdapter);
@@ -228,14 +242,6 @@ public class PlayerActionFragment extends Fragment {
         super.onDetach();
     }
 
-
-    public List<DestCard> getCopy() {
-        return copy;
-    }
-
-    public void setCopy(List<DestCard> copy) {
-        this.copy = copy;
-    }
 
     public PlayerActionFragment get_playerActionFragment()
 {

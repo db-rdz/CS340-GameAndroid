@@ -41,7 +41,6 @@ public class UpdateFaceUpTableTrainCardsCommand implements ICommand {
     public List<ICommand> execute() throws IServer.GameIsFullException {
         PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(trainCards);
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
-        //Copy The ChatPresenter chatFragment = new ChatFragment()
         return null;
     }
 

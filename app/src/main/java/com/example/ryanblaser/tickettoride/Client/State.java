@@ -15,9 +15,9 @@ public enum State {
     YOUR_TURN
             {
                 @Override
-                public void claimRoute(Route route)
+                public void claimRoute(Route route, String trainCardColor)
                 {
-                    ClientFacade.SINGLETON.claimRoute(route);
+                    ClientFacade.SINGLETON.claimRoute(route, trainCardColor);
                 }
                 @Override
                 public void getDestCards()
@@ -83,7 +83,7 @@ public enum State {
     NOT_YOUR_TURN
             {
                 @Override
-                public void claimRoute(Route route)
+                public void claimRoute(Route route, String trainCardColor)
                 {
                     PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
                 }
@@ -123,7 +123,7 @@ public enum State {
     PICKING_DEST_CARD
             {
                 @Override
-                public void claimRoute(Route route)
+                public void claimRoute(Route route, String trainCardColor)
                 {
                     PlayerActionPresenter._SINGLETON.makeToast("Pick your destination cards");
                 }
@@ -172,7 +172,7 @@ public enum State {
     PICKING_TRAIN_CARD
             {
                 @Override
-                public void claimRoute(Route route)
+                public void claimRoute(Route route, String trainCardColor)
                 {
                     PlayerActionPresenter._SINGLETON.makeToast("Pick your second train card");
                 }
@@ -233,7 +233,7 @@ public enum State {
     FIRST_TURN
             {
                 @Override
-                public void claimRoute(Route route)
+                public void claimRoute(Route route, String trainCardColor)
                 {
                     PlayerActionPresenter._SINGLETON.makeToast("You must select your destination cards before you can claim a route!");
                 }
@@ -282,7 +282,7 @@ public enum State {
     WAITING_FOR_LAST_TURN
             {
                 @Override
-                public void claimRoute(Route route)
+                public void claimRoute(Route route, String trainCardColor)
                 {
                     PlayerActionPresenter._SINGLETON.makeToast("It is not your turn!");
                 }
@@ -323,9 +323,9 @@ public enum State {
     LAST_TURN
             {
                 @Override
-                public void claimRoute(Route route)
+                public void claimRoute(Route route, String trainCardColor)
                 {
-                    ClientFacade.SINGLETON.claimRoute(route);
+                    ClientFacade.SINGLETON.claimRoute(route, trainCardColor);
                 }
                 @Override
                 public void getDestCards()
@@ -367,7 +367,7 @@ public enum State {
     END_GAME
             {
                 @Override
-                public void claimRoute(Route route)
+                public void claimRoute(Route route, String trainCardColor)
                 {
                     PlayerActionPresenter._SINGLETON.makeToast("The game is over!");
                 }
@@ -405,7 +405,7 @@ public enum State {
             };
 
     // Methods presenter calls
-    public abstract void claimRoute(Route route);
+    public abstract void claimRoute(Route route, String trainCardColor);
     public abstract void getDestCards();
     public abstract void getTopDeckTrainCard(int firstSecondCardPick);
     public abstract void getFaceUpTrainCard(int firstSecondCardPick, int index, Boolean isWild);

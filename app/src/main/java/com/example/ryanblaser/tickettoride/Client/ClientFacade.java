@@ -201,7 +201,12 @@ public class ClientFacade implements IClient {
         return cardsUsed;
     }
 
-    public void claimRoute(Route routeToClaim) {
+    /**
+     * Nathan: added trainCardColor param for help in claiming gray routes
+     * @param routeToClaim The route the player is going to claim
+     * @param trainCardColor Determines which color train cards to use in claiming a gray route
+     */
+    public void claimRoute(Route routeToClaim, String trainCardColor) {
         String code = clientmodel.getStr_authentication_code();
         int gameId = clientmodel.getInt_curr_gameId();
 
@@ -209,7 +214,7 @@ public class ClientFacade implements IClient {
         PlayerCardHand playerHand = clientmodel.getPlayer_hand();
 
         int cardType = 0;
-        switch(routeToClaim.get_S_Color()) { //Determines which train cards to use for claiming gray routes
+        switch(trainCardColor) { //Determines which train cards to use for claiming gray routes
             case "RED":
                 cardType = playerHand.getRedCardAmount();
                 break;
@@ -239,7 +244,7 @@ public class ClientFacade implements IClient {
                 break;
         }
 
-        cardsUsed = fillListOfCards(cardType, playerHand.getRainbowCardAmount(), routeToClaim.get_Weight(), routeToClaim.get_S_Color());
+        cardsUsed = fillListOfCards(cardType, playerHand.getRainbowCardAmount(), routeToClaim.get_Weight(), trainCardColor);
 
 
         //Check if the player has enough cards to claim the route

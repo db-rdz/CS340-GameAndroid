@@ -32,10 +32,6 @@ public class PlayerActionPresenter {
     public PlayerActionPresenter(){
     }
 
-    public void refreshFragment(){
-        _playerActionFragment.refreshPlayerAction();
-    }
-
     public int convertImageNameToId(String image){
         return _trainCardMap.get(image);
     }
@@ -92,13 +88,6 @@ public class PlayerActionPresenter {
     }
     public void set_playerState(State _playerState) {
         ClientFacade.SINGLETON.getClientModel().setState(_playerState);
-    }
-
-    public List<DestCard> getCopy() {
-        return ClientFacade.SINGLETON.getClientModel().getBoardActivity().getPlayerActionFragment().getCopy();
-    }
-    public void setCopy(List<DestCard> destCards) {
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().getPlayerActionFragment().setCopy(destCards);
     }
 
     public void makeToast(String toast)

@@ -35,7 +35,7 @@ public class NotifyRouteClaimedCommand implements ICommand {
     public List<ICommand> execute() throws IServer.GameIsFullException {
         GameBoardPresenter._SINGLETON.claimRoute(route, str_message);
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
-
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
         return null;
     }
 

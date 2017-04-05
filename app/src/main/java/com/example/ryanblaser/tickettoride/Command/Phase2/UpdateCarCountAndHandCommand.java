@@ -41,6 +41,7 @@ public class UpdateCarCountAndHandCommand implements ICommand {
             ClientFacade.SINGLETON.initiateLastTurn();
         }
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
         return null;
     }
 
