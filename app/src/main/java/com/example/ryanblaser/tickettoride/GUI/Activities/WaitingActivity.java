@@ -19,7 +19,7 @@ import java.util.List;
 public class WaitingActivity extends AppCompatActivity {
 
     private ListView listView_players;
-    private Button button_start_game, button_refresh;
+    private Button button_start_game;
     private TextView textView_waiting_text;
     private ArrayAdapter<String> list_of_users;
 
@@ -64,16 +64,6 @@ public class WaitingActivity extends AppCompatActivity {
 //                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
 //                } //TODO: Uncomment to actually play game with 2-5 players
                 debugPlayWithOnePlayer();
-
-            }
-        });
-
-        button_refresh = (Button) findViewById(R.id.button_refresh);
-        button_refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Refreshed game lobby", Toast.LENGTH_SHORT).show();
-                refreshList(); //Refreshes the fragment view to show new data.
 
             }
         });

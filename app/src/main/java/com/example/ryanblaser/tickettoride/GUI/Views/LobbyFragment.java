@@ -31,7 +31,7 @@ import java.util.TimerTask;
 
 public class LobbyFragment extends Fragment {
 
-    private Button button_logout, button_new_game, button_refresh;
+    private Button button_logout, button_new_game;
     private ListView listView_joinable_games;
     private TextView textView_welcome;
     private static int game_Id;
@@ -85,20 +85,6 @@ public class LobbyFragment extends Fragment {
                 LobbyPresenter.SINGLETON.addJoinableGame();
             }
         });
-
-        //TODO: Need to connect the Poller to this funtionality!!
-        button_refresh = (Button) view.findViewById(R.id.button_refresh);
-        button_refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Refreshed game lobby", Toast.LENGTH_SHORT).show();
-                onResume(); //Refreshes the fragment view to show new data.
-
-            }
-        });
-
-
-
         return view;
     }
 
@@ -152,6 +138,14 @@ public class LobbyFragment extends Fragment {
             list_of_Games = new ArrayAdapter<String>(getContext(), R.layout.row_info, gamesList);
             listView_joinable_games.setAdapter(list_of_Games);
             listView_joinable_games.setOnItemClickListener(gameItemClickListener);
+            list_of_Games.notifyDataSetChanged();
+        }
+        else { //show nothing
+            List<String> empty = new ArrayList<String>();
+            empty.add("There are no available games :(");
+            list_of_Games = new ArrayAdapter<String>(getContext(), R.layout.row_info, empty);
+            listView_joinable_games.setAdapter(list_of_Games);
+//            listView_joinable_games.setOnItemClickListener(gameItemClickListener);
             list_of_Games.notifyDataSetChanged();
         }
     }

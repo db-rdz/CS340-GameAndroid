@@ -30,7 +30,6 @@ public class LoginRegisterResponseCommand implements ICommand {
 
         if (validCredentials && !userLoggedInAlready && userRegisteredAlready) { //login true false true
             ClientFacade.SINGLETON.loginRegisterSucceeded(user);
-            LobbyPresenter.SINGLETON.refreshGameLobby();
         }
         else {
             if (userRegisteredAlready) { //register

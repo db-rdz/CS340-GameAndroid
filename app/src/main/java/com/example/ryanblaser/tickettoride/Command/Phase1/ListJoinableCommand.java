@@ -26,7 +26,7 @@ public class ListJoinableCommand implements ICommand { // sent to clients after 
     @Override
     public List<ICommand> execute(){
         ClientFacade.SINGLETON.listJoinableGames(list_gameIds);
-
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().refreshLobbyView();
         return null;
     }
 

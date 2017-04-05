@@ -293,7 +293,12 @@ public class GameBoardPresenter {
     public Pair<RESPONSE_STATUS, String> claimRoute(Route route, String claimRouteMessage){
 
         route.set_Color(getPlayerColor(route.get_Owner()));
-        AllRoutes.get_RoutesMap().put(route.get_S_MappingName(), route); //replace the current route with the updated one
+        if (AllRoutes.get_RoutesMap().containsKey(route.get_S_MappingName())) { //manually update the route info
+            AllRoutes.get_RoutesMap().get(route.get_S_MappingName()).setClaimed(true);
+            AllRoutes.get_RoutesMap().get(route.get_S_MappingName()).set_Owner(route.get_Owner());
+            AllRoutes.get_RoutesMap().get(route.get_S_MappingName()).set_Color(route.get_Color());
+        }
+//        AllRoutes.get_RoutesMap().put(route.get_S_MappingName(), route); //replace the current route with the updated one
         Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CLAIMED_ROUTE, claimRouteMessage);
         resetViewLogicVariables();
         return pair;
