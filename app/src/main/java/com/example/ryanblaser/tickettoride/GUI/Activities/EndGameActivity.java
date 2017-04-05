@@ -70,6 +70,7 @@ public class EndGameActivity extends AppCompatActivity {
                 username += " (YOU)";
             }
 
+
             if (highestToLowest.containsKey(points) && !highestToLowest.get(points).contains(username)) { //If point value exists already
                 highestToLowest.get(points).add(username); //Add user to the list of people with the same points
             }
@@ -85,6 +86,7 @@ public class EndGameActivity extends AppCompatActivity {
             if (map.getValue().size() > 1) { //If two+ players have the same amount of points
                 for (int i = 0; i < map.getValue().size(); i++) {
                     info = map.getValue().get(i) + ": " + map.getKey(); //Add their info to the list
+                    if (i == 0) { info += " *~~ WINNER ~~*"; }
                     playerResults.add(info);
                 }
             }
