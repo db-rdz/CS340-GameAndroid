@@ -15,6 +15,7 @@ public class DestCard implements iDestCard {
     @JsonProperty("_destination")
     private Pair<String, String> _destination;
     private int points;
+    private Boolean _isCompleted = false;
 
     public DestCard(){}
     public DestCard(String city1, String city2){
@@ -50,5 +51,13 @@ public class DestCard implements iDestCard {
     @Override
     public String get_routeDestination() {
         return _destination.getRight();
+    }
+
+    public Boolean get_isCompleted() {
+        return _isCompleted;
+    }
+
+    public void set_isCompleted(Boolean _isCompleted) {
+        this._isCompleted = _isCompleted;
     }
 }

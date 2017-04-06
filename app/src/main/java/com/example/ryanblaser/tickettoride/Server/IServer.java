@@ -26,7 +26,7 @@ public interface IServer {
     public List<ICommand> logout(User user);
 
     //PHASE2
-    public void claimRoute(Route route, String authenticationCode, int gameId, List<TrainCard> cardsUsed);
+    public void claimRoute(Route route, String authenticationCode, int gameId, List<TrainCard> cardsUsed, List<DestCard> destCards);
     public void getFaceUpTableTrainCardCommand(int gameId, String authenticationCode, int FirstSecondCardPick, int trainCardIndex, Boolean isWild);
     public void getTopDeckTrainCardCommand(int gameId, String authenticationCode, int firstSecondCardPick);
     public void rejectDestCard(int gameId, String authenticationCode, DestCard slidingDeckModel);

@@ -109,13 +109,13 @@ public class AllRoutes {
         _M_nameToRoute.put(mappingName, r);
 
         //-------------------NewYork-Boston------------------//
-        weight = 6;
+        weight = 2;
         p = Pair.of("New York", "Boston");
         mappingName = "NewYork-Boston-2";
         p1 = new Point(1972, 386);
         p2 = new Point(1874, 466);
 
-        r = new Route(color, weight, null, p, p1, p2, "RED", mappingName, SIX);
+        r = new Route(color, weight, null, p, p1, p2, "RED", mappingName, TWO);
         _M_nameToRoute.put(mappingName, r);
 
 
@@ -378,7 +378,7 @@ public class AllRoutes {
         //-------------------KansasCity-SaintLouis------------------//
         weight = 2;
         p = Pair.of("Kansas City", "Saint Louis");
-        mappingName = "KansasCity-SaintLouis-2";
+        mappingName = "KansasCity-SaintLouis-1";
         p1 = new Point(1226, 721);
         p2 = new Point(1348, 718);
 
@@ -554,7 +554,7 @@ public class AllRoutes {
         p1 = new Point(1957, 369);
         p2 = new Point(1867, 453);
 
-        r = new Route(color, weight, null, p, p1, p2, "YELLOW", mappingName, FOUR);
+        r = new Route(color, weight, null, p, p1, p2, "YELLOW", mappingName, TWO);
         _M_nameToRoute.put(mappingName, r);
 
         //-------------------PINK ROUTES------------------//

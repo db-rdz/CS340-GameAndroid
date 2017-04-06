@@ -211,6 +211,7 @@ public class ClientFacade implements IClient {
         int gameId = clientmodel.getInt_curr_gameId();
 
         List<TrainCard> cardsUsed = new ArrayList<>();
+        List<DestCard> destCards = clientmodel.getPlayer_hand().get_destCards();
         PlayerCardHand playerHand = clientmodel.getPlayer_hand();
 
         int cardType = 0;
@@ -248,7 +249,7 @@ public class ClientFacade implements IClient {
 
 
         //Check if the player has enough cards to claim the route
-        ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);
+        ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed, destCards);
     }
 
     @Override

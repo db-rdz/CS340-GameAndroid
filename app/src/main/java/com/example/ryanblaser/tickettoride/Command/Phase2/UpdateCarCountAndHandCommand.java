@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
@@ -26,6 +27,7 @@ public class UpdateCarCountAndHandCommand implements ICommand {
     //Data members
     private int int_cars_used;
     private List<TrainCard> cardsUsedToClaimRoute;
+    private List<DestCard> allDestCardsOfPlayer;
 
     //Constructor
     public UpdateCarCountAndHandCommand(){}
@@ -37,6 +39,7 @@ public class UpdateCarCountAndHandCommand implements ICommand {
     public List<ICommand> execute() throws IServer.GameIsFullException {
         ClientFacade.SINGLETON.updateCarCount(int_cars_used);
         ClientFacade.SINGLETON.removeCardsUsed(cardsUsedToClaimRoute);
+        ClientFacade.SINGLETON.getClientModel().getPlayer_hand().set_destCards(allDestCardsOfPlayer);
         if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() < 3) {
             ClientFacade.SINGLETON.initiateLastTurn();
         }
@@ -58,5 +61,9 @@ public class UpdateCarCountAndHandCommand implements ICommand {
     public List<TrainCard> getCardsUsedToClaimRoute()
     {
         return cardsUsedToClaimRoute;
+    }
+
+    public List<DestCard> getAllDestCardsOfPlayer() {
+        return allDestCardsOfPlayer;
     }
 }

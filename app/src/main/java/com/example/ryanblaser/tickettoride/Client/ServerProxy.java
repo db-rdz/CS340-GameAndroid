@@ -202,10 +202,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void claimRoute(Route route, String authenticationCode, int gameId, List<TrainCard> cardsUsed) {
+    public void claimRoute(Route route, String authenticationCode, int gameId, List<TrainCard> cardsUsed, List<DestCard> destCards) {
         String urlSuffix = "/command";
 
-        ICommand claimRouteCommand = new ClaimRouteCommand(gameId, authenticationCode, route, cardsUsed);
+        ICommand claimRouteCommand = new ClaimRouteCommand(gameId, authenticationCode, route, cardsUsed, destCards);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
