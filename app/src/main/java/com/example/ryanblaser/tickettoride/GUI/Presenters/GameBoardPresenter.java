@@ -524,8 +524,8 @@ public class GameBoardPresenter {
     }
 
 
-    public void switchToEndGameView() {
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().switchToEndGameView();
+    public void switchToEndGameView(String longestPathHolder) {
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().switchToEndGameView(longestPathHolder);
 
     }
 }

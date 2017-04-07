@@ -5,6 +5,7 @@ import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class SwitchBackToLobbyViewCommand implements ICommand {
         return null;
     }
 
+    @JsonIgnore
     @Override
     public String getAuthenticationCode() {
         return null;

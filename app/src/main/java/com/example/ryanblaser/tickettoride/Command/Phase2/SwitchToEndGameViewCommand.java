@@ -12,9 +12,13 @@ import java.util.List;
 
 public class SwitchToEndGameViewCommand implements ICommand {
 
+	private String longestPathHolder;
+
+	public SwitchToEndGameViewCommand(){}
+
 	@Override
 	public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
-		GameBoardPresenter._SINGLETON.switchToEndGameView();
+		GameBoardPresenter._SINGLETON.switchToEndGameView(longestPathHolder);
 		return null;
 	}
 
@@ -24,5 +28,7 @@ public class SwitchToEndGameViewCommand implements ICommand {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	public String getLongestPathHolder() {
+		return longestPathHolder;
+	}
 }

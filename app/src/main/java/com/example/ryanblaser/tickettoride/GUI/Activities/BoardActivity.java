@@ -282,14 +282,16 @@ public class BoardActivity extends AppCompatActivity {
     }
 
 
-    public void switchToEndGameView() {
+    public void switchToEndGameView(final String longestPathHolder) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Toast.makeText(getBaseContext(), longestPathHolder + " had longest path!", Toast.LENGTH_SHORT).show();
                 Toast.makeText(getBaseContext(), "Game over!", Toast.LENGTH_SHORT).show();
             }
         });
         Intent intent = new Intent(getBaseContext(), EndGameActivity.class);
+//        intent.putExtra("LONGEST_PATH", longestPathHolder); //TODO:
         startActivity(intent);
     }
 
