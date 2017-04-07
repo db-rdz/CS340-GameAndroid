@@ -281,7 +281,7 @@ public class AllRoutes {
 
         //-------------------ElPaso-Houston------------------//
         weight = 6;
-        p = Pair.of("ElPaso", "Houston");
+        p = Pair.of("El Paso", "Houston");
         mappingName = "ElPaso-Houston";
         p1 = new Point(880, 1122);
         p2 = new Point(1259, 1153);
@@ -829,23 +829,23 @@ public class AllRoutes {
         _M_nameToRoute.put(mappingName, r);
 
         //-----------------Omaha-KansasCity-1----------------//
-        weight = 2;
+        weight = 1;
         p = Pair.of("Omaha", "Kansas City");
         mappingName = "Omaha-KansasCity-1";
         p1 = new Point(1190, 714);
         p2 = new Point(1168, 662);
 
-        r = new Route(color, weight, null, p, p1, p2, "GRAY", mappingName, TWO);
+        r = new Route(color, weight, null, p, p1, p2, "GRAY", mappingName, ONE);
         _M_nameToRoute.put(mappingName, r);
 
         //-----------------Omaha-KansasCity-2----------------//
-        weight = 2;
+        weight = 1;
         p = Pair.of("Omaha", "Kansas City");
         mappingName = "Omaha-KansasCity-2";
         p1 = new Point(1210, 706);
         p2 = new Point(1188, 653);
 
-        r = new Route(color, weight, null, p, p1, p2, "GRAY", mappingName, TWO);
+        r = new Route(color, weight, null, p, p1, p2, "GRAY", mappingName, ONE);
         _M_nameToRoute.put(mappingName, r);
 
 
@@ -881,7 +881,7 @@ public class AllRoutes {
 
         //-----------------Oklahoma-Dallas-2----------------//
         weight = 2;
-        p = Pair.of("Oklahoma", "Kansas City");
+        p = Pair.of("Oklahoma", "Dallas");
         mappingName = "Oklahoma-Dallas-2";
         p1 = new Point(1214, 1040);
         p2 = new Point(1194, 920);

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.List;
@@ -20,10 +21,10 @@ import java.util.List;
 public class DestinationListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
-    private List<String> _listDataHeader;
+    private List<DestCard> _listDataHeader;
     private List<Integer> _listDataChild;
 
-    public DestinationListAdapter(Context _context, List<String> _listDataHeader, List<Integer> _listDataChild) {
+    public DestinationListAdapter(Context _context, List<DestCard> _listDataHeader, List<Integer> _listDataChild) {
         this._context = _context;
         this._listDataHeader = _listDataHeader;
         this._listDataChild = _listDataChild;
@@ -43,7 +44,7 @@ public class DestinationListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String mappingName = (String) getGroup(childPosition);
+        final DestCard destCard = (DestCard) getGroup(childPosition);
         final int points = (Integer) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
@@ -56,8 +57,12 @@ public class DestinationListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.destinationName);
 
 
-        String destinationText = "Route: " + mappingName +
-                ",\tPoints: " + points;
+        String destinationText = "";
+        if (destCard.get_isCompleted()) { //If the route is completed, show it on the player info screen
+            destinationText += "*~~ COMPLETED ~~*     ";
+        }
+        destinationText += "Route: " + destCard.get_destination().getLeft() + " - > " +
+                destCard.get_destination().getRight() + ",\t\tPoints: " + points;
 
         destinationName.setText( destinationText );
 
@@ -66,9 +71,6 @@ public class DestinationListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-//        if(this._listDataChild.get(groupPosition) != null){
-//            return 1;
-//        }
         return _listDataHeader.size();
     }
 

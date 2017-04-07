@@ -445,7 +445,7 @@ public class City implements  iCity{
         routeList = new ArrayList<>();
         r = AllRoutes.get_RoutesMap().get("SaltLakeCity-Helena");
         routeList.add(r);
-        routes.put("Helena", routeList);
+        routes.put("SaltLakeCity", routeList);
 
         routeList = new ArrayList<>();
         r = AllRoutes.get_RoutesMap().get("Seattle-Helena");

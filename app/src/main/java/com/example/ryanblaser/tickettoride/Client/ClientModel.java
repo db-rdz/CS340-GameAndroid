@@ -248,15 +248,12 @@ public class ClientModel{
         return new Pair<>(usernameList, scoreboards);
     }
 
-    public Pair<List<String>, List<Integer>> destCardExpandableInfo() {
-        List<String> routeNames = new ArrayList<>();
+    public Pair<List<DestCard>, List<Integer>> destCardExpandableInfo() {
         List<Integer> cardPoints = new ArrayList<>();
         for (DestCard card : player_hand.get_destCards()) {
-            String destination = card.get_origin() + " -> " + card.get_routeDestination();
-            routeNames.add(destination);
             cardPoints.add(card.getPoints());
         }
-        return new Pair<>(routeNames, cardPoints);
+        return new Pair<>(player_hand.get_destCards(), cardPoints);
 
     }
 

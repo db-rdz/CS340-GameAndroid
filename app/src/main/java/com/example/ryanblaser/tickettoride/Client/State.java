@@ -157,7 +157,7 @@ public enum State {
                 }
                 @Override
                 public void keepAllDestCards(List<DestCard> keepCards) {
-                    PlayerActionPresenter._SINGLETON.firstTurn(keepCards, "KEEP");
+                    ClientFacade.SINGLETON.keepAllDestCards(keepCards);
                 }
                 @Override
                 public State notifyTurn() {

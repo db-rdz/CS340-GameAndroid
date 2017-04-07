@@ -248,11 +248,13 @@ public class GameBoardFragment extends Fragment {
     }
 
     private void selectTrainCardForGrayRoute(final float x, final float y) {
+
         _blackCardCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "you used black", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardColor("BLACK");
+                GameBoardPresenter._SINGLETON.set_choseTrainCard(true);
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
             }
@@ -263,6 +265,7 @@ public class GameBoardFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "you used red", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardColor("RED");
+                GameBoardPresenter._SINGLETON.set_choseTrainCard(true);
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
             }
@@ -273,6 +276,7 @@ public class GameBoardFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "you used orange", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardColor("ORANGE");
+                GameBoardPresenter._SINGLETON.set_choseTrainCard(true);
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
             }
@@ -283,6 +287,7 @@ public class GameBoardFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "you used yellow", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardColor("YELLOW");
+                GameBoardPresenter._SINGLETON.set_choseTrainCard(true);
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
             }
@@ -293,6 +298,7 @@ public class GameBoardFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "you used green", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardColor("GREEN");
+                GameBoardPresenter._SINGLETON.set_choseTrainCard(true);
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
             }
@@ -303,6 +309,7 @@ public class GameBoardFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "you used blue", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardColor("BLUE");
+                GameBoardPresenter._SINGLETON.set_choseTrainCard(true);
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
             }
@@ -313,6 +320,7 @@ public class GameBoardFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "you used pink", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardColor("PINK");
+                GameBoardPresenter._SINGLETON.set_choseTrainCard(true);
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
             }
@@ -323,6 +331,7 @@ public class GameBoardFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "you used white", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardColor("WHITE");
+                GameBoardPresenter._SINGLETON.set_choseTrainCard(true);
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
             }
@@ -333,6 +342,7 @@ public class GameBoardFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "you used rainbow", Toast.LENGTH_SHORT).show();
                 GameBoardPresenter._SINGLETON.set_trainCardColor("RAINBOW");
+                GameBoardPresenter._SINGLETON.set_choseTrainCard(true);
                 Pair<RESPONSE_STATUS, String> response = GameBoardPresenter._SINGLETON.resolveClickEvent(x, y);
                 Toast.makeText(getContext(), response.second, Toast.LENGTH_SHORT).show();
             }

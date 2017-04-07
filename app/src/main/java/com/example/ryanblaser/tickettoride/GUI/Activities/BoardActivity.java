@@ -155,6 +155,15 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
+    public void notifyDestCardCompleted(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     public void notifyPickTrainCard() {
         runOnUiThread(new Runnable() {
             @Override
@@ -315,6 +324,7 @@ public class BoardActivity extends AppCompatActivity {
     public void setPlayerActionFragment(PlayerActionFragment playerActionFragment) {
         this.playerActionFragment = playerActionFragment;
     }
+
 
 
 }

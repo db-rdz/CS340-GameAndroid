@@ -27,17 +27,14 @@ public class ClaimRouteCommand implements ICommand {
     private int gameId;
     private String authenticationCode;
     private List<TrainCard> cardsUsedToClaimRoute;
-    private List<DestCard> allDestCardsOfPlayer;
-
 
     //Constructors
     public ClaimRouteCommand(){}
-    public ClaimRouteCommand(int g, String code, Route route1, List<TrainCard> cards, List<DestCard> destCards) {
+    public ClaimRouteCommand(int g, String code, Route route1, List<TrainCard> cards) {
         route = route1;
         gameId = g;
         authenticationCode = code;
         cardsUsedToClaimRoute = cards;
-        allDestCardsOfPlayer = destCards;
     }
 
     //Functions
@@ -63,9 +60,5 @@ public class ClaimRouteCommand implements ICommand {
     public List<TrainCard> getCardsUsedToClaimRoute()
     {
         return cardsUsedToClaimRoute;
-    }
-
-    public List<DestCard> getAllDestCardsOfPlayer() {
-        return allDestCardsOfPlayer;
     }
 }

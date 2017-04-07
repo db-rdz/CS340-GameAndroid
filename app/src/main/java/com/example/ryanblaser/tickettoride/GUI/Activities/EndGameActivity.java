@@ -86,14 +86,14 @@ public class EndGameActivity extends AppCompatActivity {
             String info = "";
             if (map.getValue().size() > 1) { //If two+ players have the same amount of points
                 for (int i = 0; i < map.getValue().size(); i++) {
-                    info = map.getValue().get(i) + ": " + map.getKey(); //Add their info to the list
-                    if (playerPosition == 0) { info += "        *~~ TIED FOR WINNER ~~*"; }
+                    if (playerPosition == 0) { info += "*~~ TIED FOR WINNER ~~*"; }
+                    info += "                       " + map.getValue().get(i) + ": " + map.getKey(); //Add their info to the list
                     playerResults.add(info);
                 }
             }
             else {
-                info = map.getValue().get(0) + ": " + map.getKey();
-                if (playerPosition == 0) { info += "         *~~ WINNER ~~*"; }
+                if (playerPosition == 0) { info += "*~~ WINNER ~~*"; }
+                info += "               " + map.getValue().get(0) + ": " + map.getKey();
                 playerResults.add(info);
             }
             playerPosition++;

@@ -76,6 +76,14 @@ public class GameBoardPresenter {
         this._trainCardColor = _trainCardColor;
     }
 
+    public Boolean get_choseTrainCard() {
+        return _choseTrainCard;
+    }
+
+    public void set_choseTrainCard(Boolean _choseTrainCard) {
+        this._choseTrainCard = _choseTrainCard;
+    }
+
     //-----------------------------------------VIEW LOGIC-----------------------------------------//
 
     private City getCityByCoodinates(float x, float y){
@@ -124,10 +132,17 @@ public class GameBoardPresenter {
         } //If not second city has been clicked then that means that the selected city is the second city clicked
         else if(!_clickedOnCityTwice && ClientFacade.SINGLETON.getClientModel().getState().equals(State.YOUR_TURN)) {
             _secondCityClicked = selectedCity;
+            if (_secondCityClicked == _firstCityClicked) { //If the same city is picked,
+                _secondCityClicked = null; //reset only the second city and send a toast saying to pick an adjacent city
+                return new Pair<>(RESPONSE_STATUS.CITY_CLICKED, "Click a second city adjacent to the first one");
+            }
             _clickedOnCityTwice = true;
             //Get the routes that go from city one to city two.
             _selectedRouteList = _firstCityClicked.get_M_Routes().get(_secondCityClicked.get_S_name());
 
+            if (_selectedRouteList == null) { //DEBUG: if it crashes need to fix it!
+                return null;
+            }
             //If there are more than one routes then further action is required
             if(_selectedRouteList.size() > 1 ) {
                 return solveDoubleRoutes();
@@ -172,8 +187,6 @@ public class GameBoardPresenter {
 
             if (_selectedRouteList.get(0).get_S_Color().equals("GRAY")) { //If the route is gray
                 _furtherActionNeeded = true;
-//                String toast = "Click the color card you would like to use to claim\nRainbow Cards will be used automatically if needed";
-//                return new Pair<>(RESPONSE_STATUS.CLAIM_GRAY_ROUTE, toast);
                 String toastText = "Click on " + _firstCityClicked.get_S_name() + " to claim the RIGHT route" +
                         " or click on " + _secondCityClicked.get_S_name() + " to claim the" +
                         " LEFT route";
@@ -196,8 +209,6 @@ public class GameBoardPresenter {
 
             if (_selectedRouteList.get(1).get_S_Color().equals("GRAY")) { //If the route is gray
                 _furtherActionNeeded = true;
-//                String toast = "Click the color card you would like to use to claim\nRainbow Cards will be used automatically if needed";
-//                return new Pair<>(RESPONSE_STATUS.CLAIM_GRAY_ROUTE, toast);
                 String toastText = "Click on " + _firstCityClicked.get_S_name() + " to claim the RIGHT route" +
                         " or click on " + _secondCityClicked.get_S_name() + " to claim the" +
                         " LEFT route";
@@ -265,8 +276,6 @@ public class GameBoardPresenter {
         else{
             _furtherActionNeeded = true;
             if (_selectedRouteList.get(0).get_S_Color().equals("GRAY")) { //If the route is gray
-//                String toast = "Click the color card you would like to use to claim\nRainbow Cards will be used automatically if needed";
-//                return new Pair<>(RESPONSE_STATUS.CLAIM_GRAY_ROUTE, toast);
                 String toastText = "Click on " + _firstCityClicked.get_S_name() + " to claim the RIGHT route" +
                         " or click on " + _secondCityClicked.get_S_name() + " to claim the" +
                         " LEFT route";

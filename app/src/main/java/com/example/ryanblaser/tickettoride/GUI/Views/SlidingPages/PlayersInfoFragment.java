@@ -13,6 +13,7 @@ import android.widget.ExpandableListView;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.DestinationListAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.ExpandableListAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
@@ -83,7 +84,7 @@ public class PlayersInfoFragment extends Fragment {
         ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
         _expListView.setAdapter(listAdapter);
 
-        Pair<List<String>, List<Integer>> destCardInfo
+        Pair<List<DestCard>, List<Integer>> destCardInfo
                 = ClientFacade.SINGLETON.getClientModel().destCardExpandableInfo();
         if (destCardInfo.first.size() > 0 && destCardInfo.second.size() > 0) {
             DestinationListAdapter destinationListAdapter = new DestinationListAdapter(getContext(), destCardInfo.first, destCardInfo.second);
@@ -108,7 +109,7 @@ public class PlayersInfoFragment extends Fragment {
         ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
         _expListView.setAdapter(listAdapter);
 
-        Pair<List<String>, List<Integer>> destCardInfo
+        Pair<List<DestCard>, List<Integer>> destCardInfo
                 = ClientFacade.SINGLETON.getClientModel().destCardExpandableInfo();
         if (destCardInfo.first.size() > 0 && destCardInfo.second.size() > 0) {
             DestinationListAdapter destinationListAdapter = new DestinationListAdapter(getContext(), destCardInfo.first, destCardInfo.second);

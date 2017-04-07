@@ -249,7 +249,7 @@ public class ClientFacade implements IClient {
 
 
         //Check if the player has enough cards to claim the route
-        ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed, destCards);
+        ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);
     }
 
     @Override
