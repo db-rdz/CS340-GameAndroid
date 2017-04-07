@@ -286,7 +286,7 @@ public class BoardActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getBaseContext(), longestPathHolder + " had longest path!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), longestPathHolder + " had the longest path!", Toast.LENGTH_SHORT).show();
                 Toast.makeText(getBaseContext(), "Game over!", Toast.LENGTH_SHORT).show();
             }
         });
