@@ -8,26 +8,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 public class LogoutCommand implements ICommand {
-    private User user;
+    private String authenticationCode;
+
     private LogoutCommand(){}
-    public LogoutCommand(User user){
-        this.user = user;
+    public LogoutCommand(String authenticationCode){
+        this.authenticationCode = authenticationCode;
     }
-
-
 
     @Override
     public List<ICommand> execute(){
         return null;
     }
 
-    @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return null;
+        return authenticationCode;
     }
 
-    public User getUser() {
-        return user;
-    }
 }

@@ -86,14 +86,14 @@ public class EndGameActivity extends AppCompatActivity {
             String info = "";
             if (map.getValue().size() > 1) { //If two+ players have the same amount of points
                 for (int i = 0; i < map.getValue().size(); i++) {
-                    if (playerPosition == 0) { info += "*~~ TIED FOR WINNER ~~*"; }
-                    info += "                       " + map.getValue().get(i) + ": " + map.getKey(); //Add their info to the list
+                    if (playerPosition == 0) { info += "*~~ TIED FOR WINNER ~~*  "; }
+                    info += map.getValue().get(0) + ": " + map.getKey();
                     playerResults.add(info);
                 }
             }
             else {
-                if (playerPosition == 0) { info += "*~~ WINNER ~~*"; }
-                info += "               " + map.getValue().get(0) + ": " + map.getKey();
+                if (playerPosition == 0) { info += "*~~ WINNER ~~*  "; }
+                info += map.getValue().get(0) + ": " + map.getKey();
                 playerResults.add(info);
             }
             playerPosition++;
@@ -115,9 +115,20 @@ public class EndGameActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class); //Goes back to list of games
-                startActivity(intent);
+
             }
         });
+        Intent intent = new Intent(getBaseContext(), MainActivity.class); //Goes back to list of games
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == 1)
+        {
+            setResult(1);
+            finish();
+        }
     }
 }

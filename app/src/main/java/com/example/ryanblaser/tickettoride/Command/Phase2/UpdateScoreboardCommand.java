@@ -31,8 +31,13 @@ public class UpdateScoreboardCommand implements ICommand {
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.getClientModel().setScoreboards(scoreboards);
+        //Refresh all views
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
+
+        ClientFacade.SINGLETON.getClientModel().setScoreboards(scoreboards);
         return null;
     }
 

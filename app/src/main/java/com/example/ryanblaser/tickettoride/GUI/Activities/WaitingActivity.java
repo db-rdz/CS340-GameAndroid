@@ -52,18 +52,18 @@ public class WaitingActivity extends AppCompatActivity {
         button_start_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (isTwoToFivePlayers()) {
-//                    int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
-//                    int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
-//                    List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
-//
-//                    ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
-//                    Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
-//                } //TODO: Uncomment to actually play game with 2-5 players
-                debugPlayWithOnePlayer();
+                if (isTwoToFivePlayers()) {
+                    int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+                    int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+                    List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
+
+                    ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
+                    Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
+                }
+//                debugPlayWithOnePlayer();
 
             }
         });
@@ -156,11 +156,21 @@ public class WaitingActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getBaseContext(), BoardActivity.class);
-                startActivity(intent);
 
             }
         });
+        Intent intent = new Intent(getBaseContext(), BoardActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == 1)
+        {
+            setResult(1);
+            finish();
+        }
     }
 
 }

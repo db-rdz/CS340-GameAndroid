@@ -292,7 +292,7 @@ public class BoardActivity extends AppCompatActivity {
         });
         Intent intent = new Intent(getBaseContext(), EndGameActivity.class);
 //        intent.putExtra("LONGEST_PATH", longestPathHolder); //TODO:
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     public ChatFragment getChatFragment() {
@@ -327,6 +327,14 @@ public class BoardActivity extends AppCompatActivity {
         this.playerActionFragment = playerActionFragment;
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == 1)
+        {
+            setResult(1);
+            finish();
+        }
+    }
 
 }

@@ -1,7 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command;
 
 import com.example.ryanblaser.tickettoride.Client.IClient;
-import com.example.ryanblaser.tickettoride.Client.User;
 
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToJoinableListCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddGameToServerCommand;
@@ -9,14 +8,13 @@ import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToServerComma
 import com.example.ryanblaser.tickettoride.Command.Phase1.GetCommandsCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LoginCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LogoutCommand;
+import com.example.ryanblaser.tickettoride.Command.Phase1.LogoutResponseCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.RegisterCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.StartGameCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.SwitchToWaitingActivityCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.AddPlayerToClientCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.DeleteGameCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.ListJoinableCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase1.LoginRegisterResponseCommand;
-import com.example.ryanblaser.tickettoride.Command.Phase1.LogoutResponseCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.BroadcastToChatCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.ClaimRouteCommand;
 import com.example.ryanblaser.tickettoride.Command.Phase2.EndTurnCommand;
@@ -57,12 +55,12 @@ import java.util.List;
         @JsonSubTypes.Type(value = AddGameToServerCommand.class),
         @JsonSubTypes.Type(value = AddPlayerToClientCommand.class),
         @JsonSubTypes.Type(value = AddPlayerToServerCommand.class),
-        @JsonSubTypes.Type(value = DeleteGameCommand.class),
         @JsonSubTypes.Type(value = GetCommandsCommand.class),
         @JsonSubTypes.Type(value = ListJoinableCommand.class),
         @JsonSubTypes.Type(value = LoginCommand.class),
         @JsonSubTypes.Type(value = LoginRegisterResponseCommand.class),
         @JsonSubTypes.Type(value = LogoutCommand.class),
+        @JsonSubTypes.Type(value = LogoutResponseCommand.class),
         @JsonSubTypes.Type(value = RegisterCommand.class),
         @JsonSubTypes.Type(value = StartGameCommand.class),
         @JsonSubTypes.Type(value = SwitchToWaitingActivityCommand.class),

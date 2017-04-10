@@ -22,6 +22,8 @@ import com.example.ryanblaser.tickettoride.R;
 import com.redbooth.SlidingDeck;
 
 import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN_PICKING_TRAIN_CARD;
 import static com.example.ryanblaser.tickettoride.Client.State.NOT_YOUR_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.PICKING_TRAIN_CARD;
 import static com.example.ryanblaser.tickettoride.Client.State.YOUR_TURN;
@@ -85,7 +87,12 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                         }
                         else
                         {
-                            amountOfCardsTaken++;
+                            if (ClientFacade.SINGLETON.getClientModel().getState().equals(YOUR_TURN) ||
+                                    ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_TRAIN_CARD)||
+                                    ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN) ||
+                                    ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN_PICKING_TRAIN_CARD)) {
+                                amountOfCardsTaken++; //Doesn't accidentally increment
+                            }
                             PlayerActionPresenter._SINGLETON.get_playerState().getFaceUpTrainCard(amountOfCardsTaken, index, false);
                         }
 

@@ -25,7 +25,6 @@ public class SwitchToEndGameViewCommand implements ICommand {
 	@JsonIgnore
 	@Override
 	public String getAuthenticationCode() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	public String getLongestPathHolder() {

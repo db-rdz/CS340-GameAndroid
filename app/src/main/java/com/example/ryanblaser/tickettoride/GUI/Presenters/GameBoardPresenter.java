@@ -140,9 +140,9 @@ public class GameBoardPresenter {
             //Get the routes that go from city one to city two.
             _selectedRouteList = _firstCityClicked.get_M_Routes().get(_secondCityClicked.get_S_name());
 
-            if (_selectedRouteList == null) { //DEBUG: if it crashes need to fix it!
-                return null;
-            }
+//            if (_selectedRouteList == null) { //DEBUG: if it crashes need to fix it!
+//                return null;
+//            }
             //If there are more than one routes then further action is required
             if(_selectedRouteList.size() > 1 ) {
                 return solveDoubleRoutes();

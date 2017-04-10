@@ -20,6 +20,7 @@ import static com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresen
 
 
 /**
+ * DON'T CHANGE THE ImageView CLASS
  * Created by benjamin on 3/03/17.
  */
 
@@ -28,13 +29,11 @@ public class CanvasImageView extends ImageView {
 
         public CanvasImageView(Context context) {
             super(context);
-            // TODO Auto-generated constructor stub
         }
 
         public CanvasImageView(Context context, AttributeSet attrs)
         {
             super(context, attrs);
-            // TODO Auto-generated constructor stub
         }
 
         @Override

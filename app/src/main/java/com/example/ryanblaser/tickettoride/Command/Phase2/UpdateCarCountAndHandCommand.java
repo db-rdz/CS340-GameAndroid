@@ -37,14 +37,18 @@ public class UpdateCarCountAndHandCommand implements ICommand {
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
+        //Refresh all views
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
+
         ClientFacade.SINGLETON.updateCarCount(int_cars_used);
         ClientFacade.SINGLETON.removeCardsUsed(cardsUsedToClaimRoute);
         ClientFacade.SINGLETON.getClientModel().getPlayer_hand().set_destCards(allDestCardsOfPlayer);
         if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() < 3) {
             ClientFacade.SINGLETON.initiateLastTurn();
         }
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
         return null;
     }
 

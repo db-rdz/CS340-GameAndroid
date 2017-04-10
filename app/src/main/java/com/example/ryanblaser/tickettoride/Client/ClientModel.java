@@ -90,7 +90,7 @@ public class ClientModel{
      * Nathan
      * Since there's only one game a user can join, we need this variable.
      */
-    private int int_curr_gameId;
+    private int int_curr_gameId; //TODO: Can't have this for joining multiple games
 
     /**
      * This stores the data as a Player once a game is started.
@@ -217,13 +217,12 @@ public class ClientModel{
         player_hand = null;
         user = null;
         gameId_to_usernames.clear();
-        mainActivity.logout();
+//        mainActivity.logout();
         waitingActivity = null;
         str_authentication_code = "";
         list_joinable.clear();
         chat.clear();
         state = NOT_YOUR_TURN;
-
     }
 
     public void backToLogin() {

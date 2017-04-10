@@ -34,7 +34,6 @@ public class UpdateServerDestCardsCommand implements ICommand {
     @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        // TODO Auto-generated method stub
         return null;
     }
 

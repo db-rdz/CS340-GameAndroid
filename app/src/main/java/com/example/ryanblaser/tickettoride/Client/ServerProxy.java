@@ -63,7 +63,7 @@ public class ServerProxy implements IServer {
     public List<ICommand> register(String username, String password) throws IClient.UsernameAlreadyExists {
         String urlSuffix = "/command";
 
-        ICommand registerCommand = new RegisterCommand(new User(username, password));
+        ICommand registerCommand = new RegisterCommand(username, password);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);
@@ -129,10 +129,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public List<ICommand> logout(User user) {
+    public List<ICommand> logout(String authenticationCode) {
         String urlSuffix = "/command";
 
-        ICommand logoutCommand = new LogoutCommand(user);
+        ICommand logoutCommand = new LogoutCommand(authenticationCode);
 
         try {
             URL url = new URL("http://" + LoginFragment.string_server_address + LoginFragment.string_server_port + urlSuffix);

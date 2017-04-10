@@ -3,7 +3,6 @@ package com.example.ryanblaser.tickettoride.Command.Phase1;
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

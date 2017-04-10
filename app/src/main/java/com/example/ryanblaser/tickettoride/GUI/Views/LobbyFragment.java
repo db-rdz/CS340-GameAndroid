@@ -39,7 +39,7 @@ public class LobbyFragment extends Fragment {
     private Poller poller;
 
     public LobbyFragment() {
-        ClientFacade.SINGLETON.attachLobbyObserver(this); // does this belong in onCreate?
+//        ClientFacade.SINGLETON.attachLobbyObserver(this); // does this belong in onCreate?
         game_Id = 0;
     }
 
@@ -72,7 +72,6 @@ public class LobbyFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Logging out!", Toast.LENGTH_SHORT).show();
                 LobbyPresenter.SINGLETON.logout();
-                startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
 
@@ -119,7 +118,7 @@ public class LobbyFragment extends Fragment {
     public void switchToWaitingView()
     {
         Intent intent = new Intent(getContext(), WaitingActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     /**
@@ -147,6 +146,22 @@ public class LobbyFragment extends Fragment {
             listView_joinable_games.setAdapter(list_of_Games);
 //            listView_joinable_games.setOnItemClickListener(gameItemClickListener);
             list_of_Games.notifyDataSetChanged();
+        }
+    }
+
+    public void logout() {
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == 1)
+        {
+                getActivity().setResult(1);
+                getActivity().finish();
         }
     }
 }

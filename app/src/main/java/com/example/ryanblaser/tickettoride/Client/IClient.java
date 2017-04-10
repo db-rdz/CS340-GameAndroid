@@ -41,7 +41,7 @@ public interface IClient {
     public void removeGame(int gameId);
     public void startGame(int gameId, List<String> usernamesInGame);
     public void addPlayerToServerModel(String authenticationCode, int gameId);
-    public void logout(User user);
+    public void logout(String authenticationCode);
     public void listJoinableGames(List<Integer> listJoinableGames);
     public void loginRegisterSucceeded(User user);
     public void logoutSucceeded();
@@ -58,9 +58,6 @@ public interface IClient {
     public void getTopDeckTrainCardCommand(int FirstSecondCardPick);
     public void rejectDestCard(DestCard slidingDeckModel);
     public void updateCarCount(int numOfCarsUsed);
-    public void updatePlayerDestinationCards(List<DestCard> rejectedCards);
-    public void updatePlayerTrainCardAmount(int addTrainCardAmount);
-    public void updatePoints(int pointsToAdd);
     public void removeCardsUsed(List<TrainCard> cardsUsed);
     public void lastTurnCompleted();
     public void initiateLastTurn();

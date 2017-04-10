@@ -23,13 +23,13 @@ public class NotifyLastTurnCommand implements ICommand {
 		ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
 		ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
 		ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
-		ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();		return null;
+		ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
+		return null;
 	}
 
 	@JsonIgnore
 	@Override
 	public String getAuthenticationCode() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

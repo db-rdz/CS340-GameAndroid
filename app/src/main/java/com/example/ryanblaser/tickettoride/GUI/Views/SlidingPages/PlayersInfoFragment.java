@@ -46,7 +46,6 @@ public class PlayersInfoFragment extends Fragment {
         return fragment;
     }
 
-    // TODO: Rename and change types and number of parameters
     public static PlayersInfoFragment newInstance() {
         PlayersInfoFragment fragment = new PlayersInfoFragment();
         return fragment;

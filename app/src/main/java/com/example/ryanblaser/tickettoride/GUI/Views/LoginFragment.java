@@ -35,7 +35,7 @@ public class LoginFragment extends Fragment {
     //EditText data members are the parts where the user types in their login info.
     private EditText editText_username;
     private EditText editText_password;
-    private EditText editText_server; //TODO: How do we pass in the server address and port to connect to the server??
+    private EditText editText_server;
     private EditText editText_port;
 
     //Button data members will contact the server through the client side

@@ -23,7 +23,7 @@ public interface IServer {
     public int addJoinableGameToServer(String str_authentication_code);
     public List<ICommand> startGame(int gameId, List<String> usernamesInGame, String authenticationCode);
     public List<ICommand> addPlayerToServerModel(String str_authentication_code, int gameId) throws GameIsFullException;
-    public List<ICommand> logout(User user);
+    public List<ICommand> logout(String authenticationCode);
 
     //PHASE2
     public void claimRoute(Route route, String authenticationCode, int gameId, List<TrainCard> cardsUsed);

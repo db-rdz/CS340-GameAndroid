@@ -6,7 +6,6 @@ import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerC
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
-import com.example.ryanblaser.tickettoride.GUI.Views.LobbyFragment;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 
 import java.util.ArrayList;
@@ -17,21 +16,35 @@ import java.util.List;
  * The ClientFacade talks to the ServerProxy class to use these methods.
  * The ClientFacade allows us to communicate to the server from the client side.
  *
- * Created by natha on 2/4/2017.
- *
- * The following note added by 0joshuaolson1 on 2/10/2017:
-
- * IClient should only have methods the server 'calls' on the CProxy.
- * All other methods (without @Override) are called by presenters/fragments/MainActivity.
+ * Created by Nathan on 2/4/2017.
  */
 
 public class ClientFacade implements IClient {
 
-
+    /**
+     * A public access point to the Client Facade;
+     */
     public static ClientFacade SINGLETON = new ClientFacade();
+
+    /**
+     * The client model is only accessable through the Client Facade to follow the facade pattern properly
+     * It contains all the user data and player data when a game is started.
+     */
     private ClientModel clientmodel;
+
+    /**
+     * The login observer so the program will be updated whenever the login view needs to be changed.
+     */
     private LoginPresenter loginpresenter;
+
+    /**
+     * The login observer so the program will be updated whenever the lobby view needs to be changed.
+     */
     private LobbyPresenter lobbypresenter;
+
+    /**
+     * The poller talkes to the server every few seconds and receives commands from the server.
+     */
     private Poller poller;
 
 
@@ -39,16 +52,16 @@ public class ClientFacade implements IClient {
         clientmodel = new ClientModel();
         attachLoginObserver(LoginPresenter.SINGLETON);
         attachLobbyObserver(LobbyPresenter.SINGLETON);
-//        poller = new Poller();
     }
 
     /**
-     * ClientModel is initilized in the MainActivity so no need to reinitialize it in the constructor
+     * sends the server the username and password to the server to login.
+     * This User is essentially a Data Transfer Object (DTO) from client to server.
+     *
+     * @param user A DTO to send the username and password to the server
+     * @throws InvalidUsername If the username is invalid, this throws a custom exception
+     * @throws InvalidPassword If the password is invalid, this throws a custom exception
      */
-//    public void initilizeClientModel(MainActivity mainActivity) {
-//        this.clientmodel = new ClientModel(mainActivity);
-//    }
-
     @Override
     public void login(User user) throws InvalidUsername, InvalidPassword {
         try {
@@ -62,6 +75,15 @@ public class ClientFacade implements IClient {
         
     }
 
+    /**
+     *  Sends the server the username and password to the server to register the user.
+     *
+     * @param username Desired username of user
+     * @param password Desiered password of user
+     * @throws InvalidPassword If the password is invalid, this throws a custom exception
+     * @throws InvalidUsername If the username is invalid, this throws a custom exception
+     * @throws UsernameAlreadyExists
+     */
     @Override
     public void register(String username, String password) throws InvalidPassword, InvalidUsername, UsernameAlreadyExists {
         try {
@@ -73,72 +95,112 @@ public class ClientFacade implements IClient {
         
     }
 
+    /**
+     * Simply tells the server to create a game on the server.
+     * The player authentication code is sent so the server knows who created the game.
+     */
     @Override
     public void addJoinableGameToServer() {
         ServerProxy.SINGLETON.addJoinableGameToServer(clientmodel.getUser().getStr_authentication_code());
-//        lobbypresenter.refreshGameLobby();
-        //lobbypresenter
-		
+
     }
 
+    /**
+     * A SwitchToWaitingView command from the server calls this method.
+     * It switches the player from the game lobby view to the game waiting view.
+     */
     @Override
     public void switchToWaitingView() {
         lobbypresenter.switchToWaitingView();
-        //lobbypresenter
-		
+
     }
 
+    /**
+     * Tells the server to delete a game he's apart of
+     * @param gameId The game to be deleted on the server
+     */
     @Override
     public void removeGame(int gameId) {
         clientmodel.deleteGame(gameId);
-        //lobbypresenter
-		
+
     }
 
-    
+    /**
+     * Sends a start game command to the server.
+     * Tells the server which game to start, and all the players in the game.
+     * @param gameId The specific game to be started
+     * @param usernamesInGame The list of all the players in the game
+     */
     @Override
-    public void startGame(int gameId, List<String> usernamesInGame) { // just gameId?
+    public void startGame(int gameId, List<String> usernamesInGame) {
         String code = clientmodel.getStr_authentication_code();
         ServerProxy.SINGLETON.startGame(gameId, usernamesInGame, code);
-        //lobbypresenter
-        
+
     }
 
-    public void addPlayerToModel(String str_authentication_code, int gameId) throws IServer.GameIsFullException { // which exception?
-        ServerProxy.SINGLETON.addPlayerToServerModel(str_authentication_code, gameId); //server will get username
-        //lobbypresenter
-        
-    }
+//    public void addPlayerToModel(String str_authentication_code, int gameId) throws IServer.GameIsFullException {
+//        ServerProxy.SINGLETON.addPlayerToServerModel(str_authentication_code, gameId); //server will get username
+//
+//    }
 
+    /**
+     * Sends a command to the server to add them to a specific game.
+     *
+     * @param authenticationCode The authentication code of the specific player. Used to confirm user on server
+     * @param gameId The specific game to be started
+     */
     @Override
     public void addPlayerToServerModel(String authenticationCode, int gameId) {
         ServerProxy.SINGLETON.addPlayerToServerModel(authenticationCode, gameId);
     }
 
+    /**
+     * Allows the Client Facade to access Lobby Presenter/Observer methods to follow the Model-View-Presenter pattern
+     * @param lobbyPresenter An object of the Lobby Presenter
+     */
     @Override
     public void attachLobbyObserver(LobbyPresenter lobbyPresenter) { //necessary?
         this.lobbypresenter = lobbyPresenter;
     }
 
+    /**
+     * Allows the Client Facade to access Login Presenter/Observer methods to follow the Model-View-Presenter pattern
+     * @param loginPresenter An object of the Login Presenter
+     */
     @Override
     public void attachLoginObserver(LoginPresenter loginPresenter) { //necessary?
         this.loginpresenter = loginPresenter;
     }
 
+    /**
+     * Sends a command to the server to logout the user.
+     * The user authentication code will be null after this.
+     *
+     * @param authenticationCode The authentication code of the specific player. Used to confirm user on server
+     */
     @Override
-    public void logout(User user) {
-        ServerProxy.SINGLETON.logout(user);
-        poller.logout(); //Stops the poller from working anymore
+    public void logout(String authenticationCode) {
+        ServerProxy.SINGLETON.logout(authenticationCode);
     }
 
+    /**
+     * Grabes the list of all joinable games on the server
+     * @param listJoinableGames A list of Integers containing game ids
+     */
     @Override
     public void listJoinableGames(List<Integer> listJoinableGames) {
         clientmodel.setJoinableGames(listJoinableGames);
-//        lobbypresenter.refreshGameLobby();
-        //lobbypresenter
 		
     }
 
+    /**
+     * This method is always called from a LoginRegisterResponse command.
+     * Whenver a user is logging in or registering for the first time, the user is logged in.
+     * The poller starts running as soon as the user is logged in.
+     * This method makes the view switch from the Login view to the Lobby view.
+     *
+     * @param user The object containing the username, password, and authentication code of the user
+     */
     @Override
     public void loginRegisterSucceeded(User user) {
         LoginPresenter.SINGLETON.showLoginMessage();
@@ -151,19 +213,38 @@ public class ClientFacade implements IClient {
 		
     }
 
+    /**
+     * This method is called from the LogoutResponse command.
+     * This makes the Android project go all the way back to the login view and destroys previous views
+     */
     @Override
     public void logoutSucceeded() {
         clientmodel.logout();
-        clientmodel.backToLogin();
+        clientmodel.getMainActivity().setLoginFragment(null);
+        clientmodel.getMainActivity().getLobbyFragment().logout();
     }
 
 
     //Phase 2
+
+    /**
+     * Tells the server what toast or chat message to send to everyone else.
+     * @param message The message the user is sending
+     */
     @Override
     public void broadcastToChat(String message) {
         ServerProxy.SINGLETON.broadcastToChat(clientmodel.getInt_curr_gameId(), clientmodel.getStr_authentication_code(), message);
     }
 
+    /**
+     * Helper function for sending the list of train cards used.
+     * Depending on the type of train card used, the method will take cards from the client model.
+     * @param cardAmount The amount of a specific color train card needed.
+     * @param rainbowAmount The amount of rainbow cards needed.
+     * @param weight The route length = the amount of train cars to use.
+     * @param type The card color type
+     * @return A list of Train Cards to be used to claim the route through the server.
+     */
     public List<TrainCard> fillListOfCards(int cardAmount, int rainbowAmount, int weight, String type)
     {
         List<TrainCard> cardsUsed = new ArrayList<>();
@@ -252,6 +333,9 @@ public class ClientFacade implements IClient {
         ServerProxy.SINGLETON.claimRoute(routeToClaim, code, gameId, cardsUsed);
     }
 
+    /**
+     * Requests more destination cards from the server.
+     */
     @Override
     public void getDestinationCards() {
         String code = clientmodel.getStr_authentication_code();
@@ -259,6 +343,13 @@ public class ClientFacade implements IClient {
         ServerProxy.SINGLETON.getDestCards(gameId, code);
     }
 
+    /**
+     * Tells the server to give this user the train card they picked.
+     *
+     * @param FirstSecondCardPick If it's the 1st or 2nd train card picked
+     * @param id The index of where the card is in the list
+     * @param isWild Determines if the card is a rainbow card or not
+     */
     @Override
     public void getFaceUpTableTrainCardCommand(int FirstSecondCardPick, int id, Boolean isWild) {
         int gameId = clientmodel.getInt_curr_gameId();
@@ -266,6 +357,11 @@ public class ClientFacade implements IClient {
         ServerProxy.SINGLETON.getFaceUpTableTrainCardCommand(gameId, authenticationCode, FirstSecondCardPick, id, isWild);
     }
 
+    /**
+     * Tells the server to give this user the train card they picked.
+     *
+     * @param FirstSecondCardPick If it's the 1st or 2nd train card picked
+     */
     @Override
     public void getTopDeckTrainCardCommand(int FirstSecondCardPick) {
         int gameId = clientmodel.getInt_curr_gameId();
@@ -273,6 +369,13 @@ public class ClientFacade implements IClient {
         ServerProxy.SINGLETON.getTopDeckTrainCardCommand(gameId, authenticationCode, FirstSecondCardPick);
     }
 
+    /**
+     * This is only called on the very first turn of the game.
+     * Tells the server which destination cards the user wants to claim.
+     *
+     * @param destCardsToKeep The destination cards the player wants to keep
+     * @param type The operation the server will do
+     */
     @Override
     public void firstTurn(List<DestCard> destCardsToKeep, String type) {
         int gameId = clientmodel.getInt_curr_gameId();
@@ -280,6 +383,10 @@ public class ClientFacade implements IClient {
         ServerProxy.SINGLETON.firstTurn(gameId, authenticationCode, destCardsToKeep, type);
     }
 
+    /**
+     * Tells the server that the rejected card should go back to the destination card deck on the server
+     * @param slidingDeckModel The destination card being rejected
+     */
     @Override
     public void rejectDestCard(DestCard slidingDeckModel) {
         int gameId = clientmodel.getInt_curr_gameId();
@@ -288,39 +395,22 @@ public class ClientFacade implements IClient {
     }
 
 
+    /**
+     * Simply updates the car count of the player whenever a route is claimed.
+     *
+     * @param numOfCarsUsed The amount of cars used
+     */
     @Override
     public void updateCarCount(int numOfCarsUsed) {
         clientmodel.getCurrent_player().updateCarCount(numOfCarsUsed);
         
     }
 
-    @Override
-    public void updatePoints(int pointsToAdd) {
-        clientmodel.getCurrent_player().updatePoints(pointsToAdd);
-        
-    }
 
-    @Override
-    public void updatePlayerDestinationCards(List<DestCard> rejectedCards) {
-        clientmodel.getPlayer_hand().rejectDestinationCards(rejectedCards);
-        clientmodel.getCurrent_player().updateCurrentDestinationCards(rejectedCards.size());
-    }
-
-    @Override
-    public void updatePlayerTrainCardAmount(int addTrainCardAmount) {
-        clientmodel.getCurrent_player().updateCurrentTrainCards(addTrainCardAmount);
-    }
-
-    public User getCurrentUser() { return clientmodel.getUser(); }
-    public void setCurrentUser(User user) { clientmodel.setUser(user);}
-    
-    public ClientModel getClientModel() { return clientmodel; }
-
-    public void attachLobbyObserver(LobbyFragment lobbyFragment) {
-    }
-
-    public Poller getPoller() { return poller; }
-
+    /**
+     * The method tells the server which destination cards the player chooses to keep
+     * @param cards The list of the Destination cards being sent.
+     */
     public void keepAllDestCards(List<DestCard> cards)
     {
         int gameId = clientmodel.getInt_curr_gameId();
@@ -328,6 +418,10 @@ public class ClientFacade implements IClient {
         ServerProxy.SINGLETON.keepAllDestCards(gameId, authenticationCode, cards);
     }
 
+    /**
+     * This sends the type of train cards used so the client model properly subtracts the amount.
+     * @param cardsUsed The specific train cards used to claim a route.
+     */
     @Override
     public void removeCardsUsed(List<TrainCard> cardsUsed) {
         for (int i = 0; i < cardsUsed.size(); i++) {
@@ -335,6 +429,10 @@ public class ClientFacade implements IClient {
         }
     }
 
+    /**
+     * This method is only used when the user has completed their last turn.
+     * Tells the server the user's last turn is over.
+     */
     @Override
     public void lastTurnCompleted() {
         int gameId = clientmodel.getInt_curr_gameId();
@@ -343,6 +441,10 @@ public class ClientFacade implements IClient {
 
     }
 
+    /**
+     * This method is only called once a player's car count is less than 3.
+     * Tells the server to start the last turn of every player.
+     */
     @Override
     public void initiateLastTurn() {
         int gameId = clientmodel.getInt_curr_gameId();
@@ -351,10 +453,25 @@ public class ClientFacade implements IClient {
 
     }
 
+    /**
+     * This method is only called from the EndGame view where the user presses a button
+     * to go back to the game lobby.
+     * This tells the server that the game is ended.
+     */
     @Override
     public void endGame() {
         int gameId = clientmodel.getInt_curr_gameId();
         String authenticationCode = clientmodel.getStr_authentication_code();
         ServerProxy.SINGLETON.endGame(gameId, authenticationCode);
+    }
+
+    //Getters and setters
+    public User getCurrentUser() { return clientmodel.getUser(); }
+    public void setCurrentUser(User user) { clientmodel.setUser(user);}
+
+    public ClientModel getClientModel() { return clientmodel; }
+
+    public Poller getPoller() {
+        return poller;
     }
 }

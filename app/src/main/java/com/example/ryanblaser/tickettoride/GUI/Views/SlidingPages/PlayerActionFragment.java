@@ -34,6 +34,7 @@ import java.util.List;
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.YOUR_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN_PICKING_TRAIN_CARD;
 import static com.example.ryanblaser.tickettoride.Client.State.NOT_YOUR_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.PICKING_DEST_CARD;
 import static com.example.ryanblaser.tickettoride.Client.State.PICKING_TRAIN_CARD;
@@ -209,11 +210,16 @@ public class PlayerActionFragment extends Fragment {
                 if (SlidingTrainCardAdapter.getAmountOfCardsTaken() < 2) { //Check if player can still draw a card
                     //changePlayerState(); //Change player state first before incrementing
 
-                    //Increase the card drawn amount by 1
-                    int count = SlidingTrainCardAdapter.getAmountOfCardsTaken();
-                    count++;
-                    SlidingTrainCardAdapter.setAmountOfCardsTaken(count);
-
+                    int count = 0;
+                    if (ClientFacade.SINGLETON.getClientModel().getState().equals(YOUR_TURN) ||
+                            ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_TRAIN_CARD)||
+                            ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN) ||
+                            ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN_PICKING_TRAIN_CARD)) {
+                        //Increase the card drawn amount by 1
+                        count = SlidingTrainCardAdapter.getAmountOfCardsTaken();
+                        count++;
+                        SlidingTrainCardAdapter.setAmountOfCardsTaken(count);
+                    }
                     GameBoardPresenter._SINGLETON.set_readyToStart(true);
                     PlayerActionPresenter._SINGLETON.get_playerState().getTopDeckTrainCard(count);
                     //Reset the amount of cards drawn back to 0, and change player state

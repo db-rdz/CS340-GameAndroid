@@ -59,15 +59,6 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
 
         rejectButton.setTag(view);
 
-        //Nathan: If it's the player's first turn or had started to pick destination cards (and picked less than 2),
-//        if(_playerState.equals(YOUR_TURN) || _playerState.equals(FIRST_TURN) ||
-//            _playerState.equals(PICKING_DEST) ){
-//            rejectButton.setVisibility(View.VISIBLE); //He can see the reject button
-//        }
-//        else {
-//            rejectButton.setVisibility(View.INVISIBLE); //He cannot see the reject button
-//        }
-
         rejectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -78,37 +69,13 @@ public class SliddingAdapter extends ArrayAdapter<iDestCard> {
                     public void onSwipe(SlidingDeck parent, View item) {
                         final DestCard slidingDeckModel = (DestCard) item.getTag();
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
-                        View container = (View)item.getParent().getParent();
-
                         amountOfCardsTaken++;
-//
-//                        if (_playerState.equals(FIRST_TURN) && amountOfCardsTaken == 1) {
-//                            //Player must keep at least two destination cards in the first turn
-//                            container.findViewById(R.id.keep_allCards).setVisibility(View.VISIBLE);
-//                        }
-//                        else if (amountOfCardsTaken == 2) {
-//                            amountOfCardsTaken = 0;
-//                        }
-
-                        //TODO: refresh fragment view to get rid of buttons
-                        //TODO: get rid of buttons depending on state
-                       // container.findViewById(R.id.keep_allCards).setVisibility(View.VISIBLE); //Makes sure keep all is visible
-                        //PlayerActionPresenter._SINGLETON.rejectDestCard(slidingDeckModel);
                         PlayerActionPresenter._SINGLETON.get_playerState().rejectDestionationCard(slidingDeckModel, amountOfCardsTaken);
-                        //remove(slidingDeckModel);
-
-//                        ClientFacade.SINGLETON.getClientModel().getBoardActivity().turnGetTrainCardButtonOff();
-                       // rejectButton = view;
-                        //notifyDataSetChanged();
                     }
                 });
             }
         });
 
         return view;
-    }
-
-    public View getRejectButton() {
-        return rejectButton;
     }
 }
