@@ -5,6 +5,7 @@
     xmlns:http="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.PlayerActionFragment">
 
+
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,11 +24,11 @@
                 android:layout_gravity="center_vertical" />
 
             <Button
-                android:text="Keep all"
+                android:id="@+id/keep_allCards"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="bottom|left"
-                android:id="@+id/keep_allCards" />
+                android:layout_gravity="bottom|left"
+                android:text="Keep all" />
 
         </android.support.v7.widget.LinearLayoutCompat>
 
@@ -56,17 +57,19 @@
                 android:layout_height="255dp"
                 android:layout_gravity="center_vertical"
                 android:scaleType="centerCrop"
-                android:src="@drawable/randomcard" />
+                android:src="@drawable/randomcard"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
 
             <Button
                 android:id="@+id/trainDeck"
                 style="@android:style/Widget.Material.Button.Borderless"
                 android:layout_width="250dp"
                 android:layout_height="255dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:background="@drawable/randomcard"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:id="@+id/drawDeckText"
@@ -77,11 +80,53 @@
                 android:text="Draw train card from top of deck"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
+            <Button
+                android:id="@+id/getDestCardsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom|left"
+                android:text="Get Dest Cards"
+                android:layout_marginBottom="19dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/textView_turnState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="It's your turn!"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:layout_above="@+id/getDestCardsButton"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/lastTurnText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LAST TURN"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                android:layout_above="@+id/textView_turnState"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:id="@+id/debug_endGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Game"
+                android:layout_below="@+id/textView_turnState"
+                android:layout_alignParentEnd="true" />
+
 
         </RelativeLayout>
 
     </android.support.v7.widget.LinearLayoutCompat>
-
 
 
 </FrameLayout>

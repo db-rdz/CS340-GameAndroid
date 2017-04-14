@@ -1,9 +1,11 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.IClient;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -13,6 +15,19 @@ import java.util.List;
 
 public class KeepAllDestCardsCommand implements ICommand {
 
+    private int gameId;
+    private String authenticationCode;
+    private List<DestCard> cardsKept;
+
+    public KeepAllDestCardsCommand(){}
+
+    public KeepAllDestCardsCommand(int id, String code, List<DestCard> list)
+    {
+        gameId = id;
+        authenticationCode = code;
+        cardsKept = list;
+    }
+
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
         return null;
@@ -20,11 +35,16 @@ public class KeepAllDestCardsCommand implements ICommand {
 
     @Override
     public String getAuthenticationCode() {
-        return null;
+        return authenticationCode;
     }
 
-    @Override
-    public User getUser() {
-        return null;
+    public int getGameId()
+    {
+        return gameId;
+    }
+
+    public List<DestCard> getCardsKept()
+    {
+        return cardsKept;
     }
 }

@@ -17,12 +17,6 @@ public class StartGameCommand implements ICommand {
         authenticationCode = code;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
     @Override
     public List<ICommand> execute(){
         return null;

@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.GUI.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Command.Phase2.EndTurnCommand;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.PageAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.SlidingTrainCardAdapter;
 import com.example.ryanblaser.tickettoride.GUI.CustomWidgets.CanvasImageView;
@@ -124,11 +128,86 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
+    public void notifyCardReceived(final String type) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "You got a " + type, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void notifyPickNewDestCards() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Pick your new Destination Cards", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void notifyDestCardsGotten(final int size) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "You got " + size + "\nDestination Cards", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void notifyDestCardCompleted(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void notifyPickTrainCard() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Pick your 2nd train card", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void notifyLastTurn() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "It's your last turn!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    public void notifyUpcomingLastTurn() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Last round!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void notifySwitchBackToLobby() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), "Back to the games lobby", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void refreshChat() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                chatFragment.refreshChat();
+                if (chatFragment.isVisible()) {
+                    chatFragment.refreshChat();
+                }
             }
         });
     }
@@ -138,7 +217,9 @@ public class BoardActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                gameBoardFragment.refreshBoard();
+                if (gameBoardFragment.isVisible()) {
+                    gameBoardFragment.refreshBoard();
+                }
             }
         });
     }
@@ -148,8 +229,11 @@ public class BoardActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                playerActionFragment.refreshPlayerAction();
+                if (playerActionFragment.isVisible()) {
+                    playerActionFragment.refreshPlayerAction();
+                }
             }
+
         });
     }
 
@@ -158,7 +242,9 @@ public class BoardActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                playersInfoFragment.refreshPlayerInfo();
+                if (playersInfoFragment.isVisible()) {
+                    playersInfoFragment.refreshPlayerInfo();
+                }
             }
         });
     }
@@ -182,6 +268,31 @@ public class BoardActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void removeFromSliddingApadter(final DestCard destCard) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                playerActionFragment.getSlidingAdapter().remove(destCard);
+                playerActionFragment.getSlidingAdapter().notifyDataSetChanged();
+            }
+        });
+    }
+
+
+    public void switchToEndGameView(final String longestPathHolder) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getBaseContext(), longestPathHolder + " had the longest path!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Game over!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        Intent intent = new Intent(getBaseContext(), EndGameActivity.class);
+//        intent.putExtra("LONGEST_PATH", longestPathHolder); //TODO:
+        startActivityForResult(intent, 1);
     }
 
     public ChatFragment getChatFragment() {
@@ -215,4 +326,15 @@ public class BoardActivity extends AppCompatActivity {
     public void setPlayerActionFragment(PlayerActionFragment playerActionFragment) {
         this.playerActionFragment = playerActionFragment;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == 1)
+        {
+            setResult(1);
+            finish();
+        }
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
 import com.example.ryanblaser.tickettoride.GUI.Views.ILobbyView;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class LobbyPresenter implements ILobbyPresenter {
 
     @Override
     public void logout(){
-        ClientFacade.SINGLETON.logout(ClientFacade.SINGLETON.getClientModel().getUser());
+        ClientFacade.SINGLETON.logout(ClientFacade.SINGLETON.getClientModel().getStr_authentication_code());
     }
 
     @Override

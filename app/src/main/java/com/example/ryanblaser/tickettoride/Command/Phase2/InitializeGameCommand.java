@@ -1,19 +1,17 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.IClient;
-import com.example.ryanblaser.tickettoride.Client.Scoreboard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
 import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,9 +44,9 @@ public class InitializeGameCommand implements ICommand {
 	public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
 		ClientFacade.SINGLETON.getClientModel().setCurrent_player(new Player());
         ClientFacade.SINGLETON.getClientModel().getPlayer_hand().initializeHand(hand);
-		ClientFacade.SINGLETON.getClientModel().getPlayer_hand().set_destCards(destinationCards);
+		ClientFacade.SINGLETON.getClientModel().setDestCardsFromServer(destinationCards);
 		ClientFacade.SINGLETON.getClientModel().setState(State.FIRST_TURN); //Pick DestCard on first turn
-		ClientFacade.SINGLETON.getClientModel().setScoreboard(scoreboards);
+		ClientFacade.SINGLETON.getClientModel().setScoreboards(scoreboards);
 
         PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(faceupTrainCards);
 		ClientFacade.SINGLETON.getClientModel().getWaitingActivity().switchToGameBoard();
@@ -58,12 +56,6 @@ public class InitializeGameCommand implements ICommand {
 	@JsonIgnore
 	@Override
 	public String getAuthenticationCode() {
-		return null;
-	}
-
-	@JsonIgnore
-	@Override
-	public com.example.ryanblaser.tickettoride.Client.User getUser() {
 		return null;
 	}
 

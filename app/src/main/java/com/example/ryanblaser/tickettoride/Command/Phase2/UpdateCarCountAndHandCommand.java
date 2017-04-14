@@ -1,9 +1,12 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.GameBoardFragment;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,17 +26,28 @@ public class UpdateCarCountAndHandCommand implements ICommand {
 
     //Data members
     private int int_cars_used;
-    private List<TrainCard> cardsUsed;
+    private List<TrainCard> cardsUsedToClaimRoute;
+    private List<DestCard> allDestCardsOfPlayer;
 
     //Constructor
+    public UpdateCarCountAndHandCommand(){}
     public UpdateCarCountAndHandCommand(int int_used_cars) {
         this.int_cars_used = int_used_cars;
     }
+
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.updateCarCount(int_cars_used);
 
+        ClientFacade.SINGLETON.updateCarCount(int_cars_used);
+        ClientFacade.SINGLETON.removeCardsUsed(cardsUsedToClaimRoute);
+        ClientFacade.SINGLETON.getClientModel().getPlayer_hand().set_destCards(allDestCardsOfPlayer);
+        if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() < 3) {
+            ClientFacade.SINGLETON.initiateLastTurn();
+        }
+
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
         return null;
     }
 
@@ -43,15 +57,16 @@ public class UpdateCarCountAndHandCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
-
-
     public int getInt_cars_used() {
         return int_cars_used;
+    }
+
+    public List<TrainCard> getCardsUsedToClaimRoute()
+    {
+        return cardsUsedToClaimRoute;
+    }
+
+    public List<DestCard> getAllDestCardsOfPlayer() {
+        return allDestCardsOfPlayer;
     }
 }

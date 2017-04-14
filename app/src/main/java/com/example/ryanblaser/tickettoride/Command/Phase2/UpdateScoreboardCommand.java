@@ -1,10 +1,9 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Client.Scoreboard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,8 +31,10 @@ public class UpdateScoreboardCommand implements ICommand {
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.getClientModel().setScoreboard(scoreboards);
-        PlayerInfoPresenter._SINGLETON.refreshPlayerInfo();
+        ClientFacade.SINGLETON.getClientModel().setScoreboards(scoreboards);
+
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
+
         return null;
     }
 
@@ -42,13 +43,6 @@ public class UpdateScoreboardCommand implements ICommand {
     public String getAuthenticationCode() {
         return null;
     }
-
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
 
     public List<Scoreboard> getScoreboards() {
         return scoreboards;

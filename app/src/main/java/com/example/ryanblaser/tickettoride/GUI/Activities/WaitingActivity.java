@@ -19,10 +19,32 @@ import java.util.List;
 public class WaitingActivity extends AppCompatActivity {
 
     private ListView listView_players;
-    private Button button_start_game, button_refresh;
+    private Button button_start_game;
     private TextView textView_waiting_text;
     private ArrayAdapter<String> list_of_users;
 
+    private void debugPlayWithOnePlayer() {
+        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+        int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+        List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
+
+        ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
+        Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void playWithTwoToFivePlayers() {
+        if (isTwoToFivePlayers()) {
+            int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+            int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+            List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
+
+            ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
+            Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,27 +66,8 @@ public class WaitingActivity extends AppCompatActivity {
         button_start_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (isTwoToFivePlayers()) {
-                    int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
-                    int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
-                    List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
-
-                    ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
-                    Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
-//                } //TODO: Uncomment to actually play game with 2-5 players
-
-            }
-        });
-
-        button_refresh = (Button) findViewById(R.id.button_refresh);
-        button_refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Refreshed game lobby", Toast.LENGTH_SHORT).show();
-                refreshList(); //Refreshes the fragment view to show new data.
+//                playWithTwoToFivePlayers();
+                debugPlayWithOnePlayer();
 
             }
         });
@@ -157,11 +160,21 @@ public class WaitingActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getBaseContext(), BoardActivity.class);
-                startActivity(intent);
 
             }
         });
+        Intent intent = new Intent(getBaseContext(), BoardActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == 1)
+        {
+            setResult(1);
+            finish();
+        }
     }
 
 }

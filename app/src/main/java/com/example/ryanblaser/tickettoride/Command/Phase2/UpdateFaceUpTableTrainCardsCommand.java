@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
@@ -29,6 +30,7 @@ public class UpdateFaceUpTableTrainCardsCommand implements ICommand {
     //Data members
     private List<TrainCard> trainCards;
 
+    public UpdateFaceUpTableTrainCardsCommand(){}
     //Constructor
     public UpdateFaceUpTableTrainCardsCommand(List<TrainCard> list) {
         trainCards = list;
@@ -38,19 +40,13 @@ public class UpdateFaceUpTableTrainCardsCommand implements ICommand {
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         PlayerActionPresenter._SINGLETON.set_faceUpTrainCards(trainCards);
-        //Copy The ChatPresenter chatFragment = new ChatFragment()
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
         return null;
     }
 
     @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return null;
-    }
-
-    @JsonIgnore
-    @Override
-    public User getUser() {
         return null;
     }
 

@@ -34,4 +34,9 @@ public class ChatPresenter {
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().setChatFragment(chatFragment);
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
     }
+
+    public void setChatFragment(ChatFragment fragment)
+    {
+        chatFragment = fragment;
+    }
 }

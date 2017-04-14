@@ -37,11 +37,6 @@ public class FirstTurnCommand implements ICommand {
         return authenticationCode;
     }
 
-    @Override
-    public User getUser() {
-        return null;
-    }
-
     public int getGameId() {
         return gameId;
     }

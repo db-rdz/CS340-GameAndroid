@@ -14,6 +14,7 @@ import java.util.List;
 
 public interface IServer {
 
+
     public static class GameIsFullException extends Exception {
     }
 
@@ -22,7 +23,7 @@ public interface IServer {
     public int addJoinableGameToServer(String str_authentication_code);
     public List<ICommand> startGame(int gameId, List<String> usernamesInGame, String authenticationCode);
     public List<ICommand> addPlayerToServerModel(String str_authentication_code, int gameId) throws GameIsFullException;
-    public List<ICommand> logout(User user);
+    public List<ICommand> logout(String authenticationCode);
 
     //PHASE2
     public void claimRoute(Route route, String authenticationCode, int gameId, List<TrainCard> cardsUsed);
@@ -30,5 +31,8 @@ public interface IServer {
     public void getTopDeckTrainCardCommand(int gameId, String authenticationCode, int firstSecondCardPick);
     public void rejectDestCard(int gameId, String authenticationCode, DestCard slidingDeckModel);
     public void firstTurn(int gameId, String authenticationCode, List<DestCard> destCardsToKeep, String type);
-
+    public void getDestCards(int gameId, String authenticationCode);
+    public void lastTurnCompleted(int gameId, String authenticationCode);
+    public void initiateLastTurn(int gameId, String authenticationCode);
+    public void endGame(int gameId, String authenticationCode);
 }

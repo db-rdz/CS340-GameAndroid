@@ -22,9 +22,10 @@ import com.example.ryanblaser.tickettoride.R;
 import com.redbooth.SlidingDeck;
 
 import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN_PICKING_TRAIN_CARD;
 import static com.example.ryanblaser.tickettoride.Client.State.NOT_YOUR_TURN;
-import static com.example.ryanblaser.tickettoride.Client.State.PICKING_1ST_TRAIN;
-import static com.example.ryanblaser.tickettoride.Client.State.PICKING_2ND_TRAIN;
+import static com.example.ryanblaser.tickettoride.Client.State.PICKING_TRAIN_CARD;
 import static com.example.ryanblaser.tickettoride.Client.State.YOUR_TURN;
 
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.FIRST_TURN;
@@ -62,15 +63,6 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
         _trainCardImage = (ImageView) view.findViewById(R.id.trainCard);
         _getButton = (Button)view.findViewById(R.id.getTrainCard);
 
-        //Nathan: If the player's turn just started or is already picking a card,
-        if ((_playerState.equals(YOUR_TURN) || _playerState.equals(PICKING_1ST_TRAIN)) &&
-                !_playerState.equals(FIRST_TURN)) {
-            _getButton.setVisibility(View.VISIBLE); //Player can see the get button
-        }
-        else {
-            _getButton.setVisibility(View.GONE); //Player can't see the get button
-        }
-
         TrainCard item = getItem(position);
         view.setTag(item);
 
@@ -90,24 +82,23 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                         GameBoardPresenter._SINGLETON.set_readyToStart(true);
 
                         int index = parent.indexOfChild(item); //The index of the card chosen
-                        if (slidingDeckModel.getType().equals("RAINBOW")) {
+                        if (slidingDeckModel.getType().equals("rainbowcard")) {
                             PlayerActionPresenter._SINGLETON.get_playerState().getFaceUpTrainCard(amountOfCardsTaken, index, true);
                         }
                         else
                         {
+                            if (ClientFacade.SINGLETON.getClientModel().getState().equals(YOUR_TURN) ||
+                                    ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_TRAIN_CARD)||
+                                    ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN) ||
+                                    ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN_PICKING_TRAIN_CARD)) {
+                                amountOfCardsTaken++; //Doesn't accidentally increment
+                            }
                             PlayerActionPresenter._SINGLETON.get_playerState().getFaceUpTrainCard(amountOfCardsTaken, index, false);
-                            //pickingTrainCard(slidingDeckModel, index);
                         }
+
                         if (amountOfCardsTaken == 2) {
-                            //_getButton.setVisibility(View.INVISIBLE);
                             amountOfCardsTaken = 0;
                         }
-
-                        //TODO: refresh fragment to get rid of some buttons
-//                        ClientFacade.SINGLETON.getClientModel().getBoardActivity().turnKeepAllButtonOff();
-//                        ClientFacade.SINGLETON.getClientModel().getBoardActivity().turnRejectButtonOff();
-
-                        //notifyDataSetChanged();
                     }
                 });
             }
@@ -119,10 +110,7 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
     private void pickingTrainCard(TrainCard slidingDeckModel, int cardIndex) {
         //Can only pick rainbow cards if on first face up train card draw
         if (slidingDeckModel.getType().equals("rainbowcard") && amountOfCardsTaken == 0) {
-            PlayerActionPresenter._SINGLETON.set_playerState(NOT_YOUR_TURN);
-
             PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(amountOfCardsTaken, cardIndex, true);
-            remove(slidingDeckModel);
         }
         else { //Picking any other cards
             if (slidingDeckModel.getType().equals("rainbowcard")) {
@@ -133,24 +121,9 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
                 toast.show();
             }
             else {
-                changePlayerState();
                 amountOfCardsTaken++;
-
                 PlayerActionPresenter._SINGLETON.getFaceUpTableTrainCardCommand(amountOfCardsTaken, cardIndex, false);
-                remove(slidingDeckModel);
             }
-        }
-    }
-
-    /**
-     * Nathan: Determines the state of the player according to how many cards he has draw already
-     */
-    private void changePlayerState() {
-        if (amountOfCardsTaken == 0) {
-            PlayerActionPresenter._SINGLETON.set_playerState(PICKING_1ST_TRAIN);
-        }
-        else if (amountOfCardsTaken == 1) {
-            PlayerActionPresenter._SINGLETON.set_playerState(PICKING_2ND_TRAIN);
         }
     }
 
@@ -160,9 +133,5 @@ public class SlidingTrainCardAdapter extends ArrayAdapter<TrainCard> {
 
     public static void setAmountOfCardsTaken(int amountOfCardsTaken) {
         SlidingTrainCardAdapter.amountOfCardsTaken = amountOfCardsTaken;
-    }
-
-    public Button get_getButton() {
-        return _getButton;
     }
 }

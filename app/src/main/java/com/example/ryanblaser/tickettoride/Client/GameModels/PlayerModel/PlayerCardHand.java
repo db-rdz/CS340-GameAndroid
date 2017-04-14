@@ -1,6 +1,5 @@
 package com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel;
 
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.CardType;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 
@@ -33,9 +32,9 @@ public class PlayerCardHand {
     private List<DestCard> _L_destCards = new ArrayList<>();
 
     //--------------------------------------CLASS FUNCTIONS---------------------------------------//
-    public void subtractToCardCount(String type, int subtractNumber){
+    public void subtractToCardCount(String type){
         int count = _M_typeToCardCount.get(type).intValue();
-        count -= subtractNumber;
+        count -= 1;
         _M_typeToCardCount.put(type, count); //Replaces the integer value with the new updated card count
     }
 

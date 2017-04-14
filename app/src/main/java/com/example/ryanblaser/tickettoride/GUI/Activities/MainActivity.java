@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+
     }
 
     /**
@@ -142,4 +143,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == 1)
+        {
+            setResult(1);
+            finish();
+        }
+    }
 }

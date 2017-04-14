@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.example.ryanblaser.tickettoride.Client.Scoreboard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.List;
@@ -61,13 +61,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView DestinationCards = (TextView) convertView
                 .findViewById(R.id.destinationCards);
 
+        TextView CarCount = (TextView) convertView
+                .findViewById(R.id.carCount);
+
         String pointsText = "Points: " + String.valueOf(childPlayer.getPoints());
         String trainCardsText = "Train Cards: " + String.valueOf(childPlayer.getNumberOfTrainCards());
         String destCardsText = "Destination Cards: " + String.valueOf(childPlayer.getNumberOfDestCards() );
+        String carCountText = "Car amount: " + String.valueOf(childPlayer.getPlayerCarCount());
 
         Points.setText( pointsText );
         TrainCards.setText( trainCardsText );
         DestinationCards.setText( destCardsText );
+        CarCount.setText( carCountText );
 
         return convertView;
     }

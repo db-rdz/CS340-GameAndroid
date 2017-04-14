@@ -32,21 +32,21 @@ public class NotifyTurnCommand implements ICommand {
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
 
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyTurn();
-        ClientFacade.SINGLETON.getClientModel().setState(State.YOUR_TURN);
-        //PlayerActionPresenter._SINGLETON.refreshFragment();
+        if (!ClientFacade.SINGLETON.getClientModel().getState().equals(State.END_GAME)) {
+            ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyTurn();
+            ClientFacade.SINGLETON.getClientModel().setState(ClientFacade.SINGLETON.getClientModel().getState().notifyTurn());
+        }
+
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
         return null;
     }
 
     @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return null;
-    }
-
-    @JsonIgnore
-    @Override
-    public User getUser() {
         return null;
     }
 

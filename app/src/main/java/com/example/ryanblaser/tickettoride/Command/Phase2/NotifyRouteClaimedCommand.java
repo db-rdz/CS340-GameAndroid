@@ -4,7 +4,6 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
-import com.example.ryanblaser.tickettoride.GUI.Activities.BoardActivity;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,6 +24,7 @@ public class NotifyRouteClaimedCommand implements ICommand {
     private Route route;
 
     //Constructor
+    public NotifyRouteClaimedCommand(){}
     public NotifyRouteClaimedCommand(String str_message, Route r) {
         this.str_message = str_message;
         route = r;
@@ -33,21 +33,17 @@ public class NotifyRouteClaimedCommand implements ICommand {
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
+        GameBoardPresenter._SINGLETON.claimRoute(route, str_message);
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyRouteClaimed(str_message);
-//        GameBoardPresenter._SINGLETON.
-        //TODO: Update board with route
+
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
         return null;
     }
 
     @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return null;
-    }
-
-    @JsonIgnore
-    @Override
-    public User getUser() {
         return null;
     }
 

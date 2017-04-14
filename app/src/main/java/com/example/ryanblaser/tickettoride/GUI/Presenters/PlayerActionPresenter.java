@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.security.AccessController.getContext;
+
 /**
  * Created by benjamin on 7/03/17.
  */
@@ -28,10 +30,6 @@ public class PlayerActionPresenter {
     private List<TrainCard> _faceUpTrainCards = new ArrayList<>();
 
     public PlayerActionPresenter(){
-    }
-
-    public void refreshFragment(){
-        _playerActionFragment.refreshPlayerAction();
     }
 
     public int convertImageNameToId(String image){
@@ -82,7 +80,7 @@ public class PlayerActionPresenter {
     }
 
     public List<DestCard> get_destCards() {
-        return ClientFacade.SINGLETON.getClientModel().getPlayer_hand().get_destCards();
+        return ClientFacade.SINGLETON.getClientModel().getDestCardsFromServer();
     }
 
     public State get_playerState() {
@@ -92,16 +90,9 @@ public class PlayerActionPresenter {
         ClientFacade.SINGLETON.getClientModel().setState(_playerState);
     }
 
-    public List<DestCard> getCopy() {
-        return ClientFacade.SINGLETON.getClientModel().getBoardActivity().getPlayerActionFragment().getCopy();
-    }
-    public void setCopy(List<DestCard> destCards) {
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().getPlayerActionFragment().setCopy(destCards);
-    }
-
     public void makeToast(String toast)
     {
-        Toast.makeText(_playerActionFragment.getContext(), toast, Toast.LENGTH_SHORT);
+        Toast.makeText(_playerActionFragment.getContext(), toast, Toast.LENGTH_SHORT).show();
     }
 
     public void set_playerActionFragment(PlayerActionFragment playerActionFragment)
@@ -113,4 +104,6 @@ public class PlayerActionPresenter {
     {
         return _playerActionFragment;
     }
+
+
 }

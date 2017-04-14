@@ -1,5 +1,6 @@
 package com.example.ryanblaser.tickettoride.Command.Phase2;
 
+import com.example.ryanblaser.tickettoride.Client.ServerProxy;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.Server.IServer;
@@ -16,21 +17,25 @@ import java.util.List;
  */
 
 public class GetDestinationCardsCommand implements ICommand {
+
+    private int gameId;
+    private String authenticationCode;
+
+    public GetDestinationCardsCommand(int id, String code) {
+        gameId = id;
+        authenticationCode = code;
+    }
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         return null;
     }
 
-    @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return null;
+        return authenticationCode;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
+    public int getGameId() {
+        return gameId;
     }
-
 }

@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.ClientModel;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.State;
@@ -31,16 +33,16 @@ import java.util.List;
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.PICKING_DEST;
 //import static com.example.ryanblaser.tickettoride.Client.ClientModel.State.YOUR_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.FIRST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN;
+import static com.example.ryanblaser.tickettoride.Client.State.LAST_TURN_PICKING_TRAIN_CARD;
 import static com.example.ryanblaser.tickettoride.Client.State.NOT_YOUR_TURN;
-import static com.example.ryanblaser.tickettoride.Client.State.PICKING_1ST_TRAIN;
-import static com.example.ryanblaser.tickettoride.Client.State.PICKING_2ND_TRAIN;
-import static com.example.ryanblaser.tickettoride.Client.State.PICKING_DEST;
+import static com.example.ryanblaser.tickettoride.Client.State.PICKING_DEST_CARD;
+import static com.example.ryanblaser.tickettoride.Client.State.PICKING_TRAIN_CARD;
+import static com.example.ryanblaser.tickettoride.Client.State.WAITING_FOR_LAST_TURN;
 import static com.example.ryanblaser.tickettoride.Client.State.YOUR_TURN;
 
 
 public class PlayerActionFragment extends Fragment {
-
-    List<DestCard> copy = new ArrayList<>();
 
     public SliddingAdapter getSlidingAdapter() {
         return slidingAdapter;
@@ -58,9 +60,12 @@ public class PlayerActionFragment extends Fragment {
 
     //-----------------------------VIEW VARIABLES-----------------------------//
     private Button _keepAllCards;
+    private Button _getDestCards;
     private SlidingDeck _slidingDeck;
     private SlidingDeck _slidingTrainCards;
     private Button _trainDeck;
+    private TextView _turnState;
+    private TextView _lastTurnText;
     private static PlayerActionFragment _playerActionFragment;
     public static final String ARG_PAGE = "page";
 
@@ -104,6 +109,42 @@ public class PlayerActionFragment extends Fragment {
         hideKeyboard(getContext());
     }
 
+    public void refreshPlayerAction() {
+        decideTurnStateText(_turnState);
+        slidingAdapter  = new SliddingAdapter(getContext());
+        trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
+
+        //Loads the 3 destination cards from the PlayerActionPresenter
+        slidingAdapter.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
+        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());
+
+        _slidingDeck.setAdapter(slidingAdapter);
+        _slidingTrainCards.setAdapter(trainCardAdapter);
+
+        _slidingDeck.invalidate();
+        _slidingTrainCards.invalidate();
+    }
+
+    private void decideTurnStateText(TextView turnState) {
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(FIRST_TURN) ||
+                ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_DEST_CARD)) {
+            _turnState.setText("Pick your destination cards");
+        }
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(NOT_YOUR_TURN) ||
+                ClientFacade.SINGLETON.getClientModel().getState().equals(WAITING_FOR_LAST_TURN)) {
+            _turnState.setText("It's NOT your turn");
+        }
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_TRAIN_CARD)) {
+            _turnState.setText("Get your 2nd train card");
+        }
+        else if (ClientFacade.SINGLETON.getClientModel().getState().equals(YOUR_TURN)) {
+            _turnState.setText("It's your turn!");
+        }
+        if (ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN)) {
+            _lastTurnText.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -116,59 +157,51 @@ public class PlayerActionFragment extends Fragment {
         _slidingTrainCards = (SlidingDeck)v.findViewById(R.id.slidingTrainCards);
         _trainDeck = (Button) v.findViewById(R.id.trainDeck);
         _keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
+        _getDestCards = (Button) v.findViewById(R.id.getDestCardsButton);
+        _turnState = (TextView) v.findViewById(R.id.textView_turnState);
+        _lastTurnText = (TextView) v.findViewById(R.id.lastTurnText);
+        Button debugEndGame = (Button) v.findViewById(R.id.debug_endGame);
+        debugEndGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClientFacade.SINGLETON.initiateLastTurn();
+            }
+        });
+        if (!ClientFacade.SINGLETON.getClientModel().getBoolean_is_creator_of_game()) {
+            debugEndGame.setVisibility(View.INVISIBLE);
+        }
+
+        decideTurnStateText(_turnState);
 
         slidingAdapter  = new SliddingAdapter(getContext());
         trainCardAdapter  = new SlidingTrainCardAdapter(getContext());
 
         //Loads the 3 destination cards from the PlayerActionPresenter
         slidingAdapter.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
-        PlayerActionPresenter._SINGLETON.getCopy().addAll(PlayerActionPresenter._SINGLETON.get_destCards());
         trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());
 
         _slidingDeck.setAdapter(slidingAdapter);
         _slidingTrainCards.setAdapter(trainCardAdapter);
 
-        //Nathan: If the player is picking destination cards,
-//        if(PlayerActionPresenter._SINGLETON.get_playerState().equals(FIRST_TURN) || PlayerActionPresenter._SINGLETON.get_playerState().equals(YOUR_TURN) ||
-//                PlayerActionPresenter._SINGLETON.get_playerState().equals(PICKING_DEST)){
-//            _keepAllCards.setVisibility(View.VISIBLE); //He can see the keep all button
-//        }
-//        else {
-//            _keepAllCards.setVisibility(View.GONE); //He cannot see the keep all button
-//        }
 
-        //Nathan: If the player isn't on his first turn, and is his turn/picking train cards,
-//        if ((PlayerActionPresenter._SINGLETON.get_playerState().equals(PICKING_1ST_TRAIN) || PlayerActionPresenter._SINGLETON.get_playerState().equals(YOUR_TURN)) && !PlayerActionPresenter._SINGLETON.get_playerState().equals(FIRST_TURN)) {
-//            _trainDeck.setVisibility(View.VISIBLE); //Can press the deck to get a card
-//        }
-//        else {
-//            _trainDeck.setVisibility(View.INVISIBLE);
-//        }
+        _getDestCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameBoardPresenter._SINGLETON.set_readyToStart(true);
+
+                ClientFacade.SINGLETON.getClientModel().getState().getDestCards();
+            }
+        });
 
         _keepAllCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 GameBoardPresenter._SINGLETON.set_readyToStart(true);
-
-//                if (_playerState.equals(FIRST_TURN)) {
-//                    //Grab destination cards from view
-                    List<DestCard> destCardsToKeep = new ArrayList<DestCard>();
-                    destCardsToKeep.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
-                    PlayerActionPresenter._SINGLETON.get_playerState().keepAllDestCards(destCardsToKeep);
-//
-//                    PlayerActionPresenter._SINGLETON.firstTurn(destCardsToKeep, "KEEP");
-//                    slidingAdapter.notifyDataSetChanged();
-//                }
-
-                //PlayerActionPresenter._SINGLETON.set_playerState(NOT_YOUR_TURN);
-
-//                v.setVisibility(View.GONE);
-//                container.findViewById(R.id.reject).setVisibility(View.INVISIBLE);
-//                slidingAdapter.getRejectButton().setVisibility(View.INVISIBLE);
-               // slidingAdapter.notifyDataSetChanged();
-
-                //TODO: SEND COMMAND TO SERVER
+//              Grab destination cards from view
+                List<DestCard> destCardsToKeep = new ArrayList<DestCard>();
+                destCardsToKeep.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
+                PlayerActionPresenter._SINGLETON.get_playerState().keepAllDestCards(destCardsToKeep);
             }
         });
 
@@ -179,18 +212,17 @@ public class PlayerActionFragment extends Fragment {
                 if (SlidingTrainCardAdapter.getAmountOfCardsTaken() < 2) { //Check if player can still draw a card
                     //changePlayerState(); //Change player state first before incrementing
 
-                    //Increase the card drawn amount by 1
-                    int count = SlidingTrainCardAdapter.getAmountOfCardsTaken();
-                    count++;
-                    SlidingTrainCardAdapter.setAmountOfCardsTaken(count);
-
+                    int count = 0;
+                    if (ClientFacade.SINGLETON.getClientModel().getState().equals(YOUR_TURN) ||
+                            ClientFacade.SINGLETON.getClientModel().getState().equals(PICKING_TRAIN_CARD)||
+                            ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN) ||
+                            ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN_PICKING_TRAIN_CARD)) {
+                        //Increase the card drawn amount by 1
+                        count = SlidingTrainCardAdapter.getAmountOfCardsTaken();
+                        count++;
+                        SlidingTrainCardAdapter.setAmountOfCardsTaken(count);
+                    }
                     GameBoardPresenter._SINGLETON.set_readyToStart(true);
-                    Toast.makeText(getContext(), "You got a card", Toast.LENGTH_SHORT).show();
-
-                    //TODO: refresh fragment to get rid of buttons
-                    //TODO: get rid of buttons depending on state
-                    //TODO: SEND COMMAND TO SERVER
-                    //PlayerActionPresenter._SINGLETON.getTopDeckTrainCardCommand(SlidingTrainCardAdapter.getAmountOfCardsTaken());
                     PlayerActionPresenter._SINGLETON.get_playerState().getTopDeckTrainCard(count);
                     //Reset the amount of cards drawn back to 0, and change player state
                     if (SlidingTrainCardAdapter.getAmountOfCardsTaken() == 2) {
@@ -200,19 +232,8 @@ public class PlayerActionFragment extends Fragment {
             }
         });
 
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().setPlayerActionFragment(this);
         return v;
-    }
-
-    /**
-     * Nathan: Determines the state of the player according to how many cards he has draw already
-     */
-    private void changePlayerState() {
-        if (SlidingTrainCardAdapter.getAmountOfCardsTaken() == 0) {
-            PlayerActionPresenter._SINGLETON.set_playerState(PICKING_1ST_TRAIN);
-        }
-        else if (SlidingTrainCardAdapter.getAmountOfCardsTaken() == 1) {
-            PlayerActionPresenter._SINGLETON.set_playerState(PICKING_2ND_TRAIN);
-        }
     }
 
     public void invalidate(){
@@ -229,21 +250,10 @@ public class PlayerActionFragment extends Fragment {
         super.onDetach();
     }
 
-    public void refreshPlayerAction() {
-        slidingAdapter.addAll(PlayerActionPresenter._SINGLETON.get_destCards());
-        trainCardAdapter.addAll(PlayerActionPresenter._SINGLETON.get_faceUpTrainCards());
-    }
 
-    public List<DestCard> getCopy() {
-        return copy;
-    }
-
-    public void setCopy(List<DestCard> copy) {
-        this.copy = copy;
-    }
-
-public PlayerActionFragment get_playerActionFragment()
+    public PlayerActionFragment get_playerActionFragment()
 {
     return _playerActionFragment;
 }
+
 }

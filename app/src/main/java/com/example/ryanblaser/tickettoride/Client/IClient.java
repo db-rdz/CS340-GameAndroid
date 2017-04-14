@@ -1,6 +1,7 @@
 package com.example.ryanblaser.tickettoride.Client;
 
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LobbyPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.LoginPresenter;
@@ -15,9 +16,10 @@ public interface IClient {
 
 
 
+
     /*
-             * Created own Exceptions for when checking login authorization
-             */
+     * Created own Exceptions for when checking login authorization
+     */
     public static class InvalidUsername extends Exception {
 
     }
@@ -39,7 +41,7 @@ public interface IClient {
     public void removeGame(int gameId);
     public void startGame(int gameId, List<String> usernamesInGame);
     public void addPlayerToServerModel(String authenticationCode, int gameId);
-    public void logout(User user);
+    public void logout(String authenticationCode);
     public void listJoinableGames(List<Integer> listJoinableGames);
     public void loginRegisterSucceeded(User user);
     public void logoutSucceeded();
@@ -49,18 +51,16 @@ public interface IClient {
 
     // Phase 2 additions - Ryan Blaser
     public void broadcastToChat(String message);
-    public void claimRoute(Route route);
+    public void claimRoute(Route route, String trainCardColor);
     public void getDestinationCards();
     public void firstTurn(List<DestCard> destCardsToKeep, String type);
     public void getFaceUpTableTrainCardCommand(int FirstSecondCardPick, int id, Boolean isWild);
     public void getTopDeckTrainCardCommand(int FirstSecondCardPick);
     public void rejectDestCard(DestCard slidingDeckModel);
     public void updateCarCount(int numOfCarsUsed);
-    public void updateFaceUpTableTrainCards();
-    public void updatePlayerDestinationCards(List<DestCard> rejectedCards);
-    public void updatePlayerTrainCardAmount(int addTrainCardAmount);
-    public void updatePoints(int pointsToAdd);
-
-
+    public void removeCardsUsed(List<TrainCard> cardsUsed);
+    public void lastTurnCompleted();
+    public void initiateLastTurn();
+    public void endGame();
 
 }

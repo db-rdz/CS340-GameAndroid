@@ -23,16 +23,10 @@ public class ListJoinableCommand implements ICommand { // sent to clients after 
     return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-    return null;
-    }
-
     @Override
     public List<ICommand> execute(){
         ClientFacade.SINGLETON.listJoinableGames(list_gameIds);
-
+        ClientFacade.SINGLETON.getClientModel().getMainActivity().refreshLobbyView();
         return null;
     }
 

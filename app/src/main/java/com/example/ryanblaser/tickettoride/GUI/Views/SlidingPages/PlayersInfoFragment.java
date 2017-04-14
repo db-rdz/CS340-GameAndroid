@@ -12,15 +12,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ExpandableListView;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
-import com.example.ryanblaser.tickettoride.Client.Scoreboard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
+import com.example.ryanblaser.tickettoride.GUI.Adapters.DestinationListAdapter;
 import com.example.ryanblaser.tickettoride.GUI.Adapters.ExpandableListAdapter;
-import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
 import com.example.ryanblaser.tickettoride.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 /*
 *   IMPORTANT NOTE:
@@ -34,7 +33,9 @@ public class PlayersInfoFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private final Context context = getContext();
     private ExpandableListView _expListView;
+    private ExpandableListView _playerDestCardsView;
     public static final String ARG_PAGE = "page";
 
     public static PlayersInfoFragment create(int pageNumber){
@@ -45,7 +46,6 @@ public class PlayersInfoFragment extends Fragment {
         return fragment;
     }
 
-    // TODO: Rename and change types and number of parameters
     public static PlayersInfoFragment newInstance() {
         PlayersInfoFragment fragment = new PlayersInfoFragment();
         return fragment;
@@ -76,13 +76,28 @@ public class PlayersInfoFragment extends Fragment {
         hideKeyboard(getContext());
     }
 
+
+    public void refreshPlayerInfo() {
+        Pair<List<String>, List<Scoreboard>> info
+                = ClientFacade.SINGLETON.getClientModel().getInfoForExpandable();
+        ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
+        _expListView.setAdapter(listAdapter);
+
+        Pair<List<DestCard>, List<Integer>> destCardInfo
+                = ClientFacade.SINGLETON.getClientModel().destCardExpandableInfo();
+        if (destCardInfo.first.size() > 0 && destCardInfo.second.size() > 0) {
+            DestinationListAdapter destinationListAdapter = new DestinationListAdapter(getContext(), destCardInfo.first, destCardInfo.second);
+            _playerDestCardsView.setAdapter(destinationListAdapter);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_players_info, container, false);
         _expListView = (ExpandableListView) v.findViewById(R.id.lvExp);
-
+        _playerDestCardsView = (ExpandableListView) v.findViewById(R.id.destCardsList);
 
         List<String> headers = new ArrayList<>();
         headers.add("Players");
@@ -90,12 +105,15 @@ public class PlayersInfoFragment extends Fragment {
         //Nathan: Changed adapter to use the Scoreboard class
         Pair<List<String>, List<Scoreboard>> info
                 = ClientFacade.SINGLETON.getClientModel().getInfoForExpandable();
-
         ExpandableListAdapter listAdapter = new ExpandableListAdapter(getContext(), info.first, info.second);
-
         _expListView.setAdapter(listAdapter);
 
-
+        Pair<List<DestCard>, List<Integer>> destCardInfo
+                = ClientFacade.SINGLETON.getClientModel().destCardExpandableInfo();
+        if (destCardInfo.first.size() > 0 && destCardInfo.second.size() > 0) {
+            DestinationListAdapter destinationListAdapter = new DestinationListAdapter(getContext(), destCardInfo.first, destCardInfo.second);
+            _playerDestCardsView.setAdapter(destinationListAdapter);
+        }
         return v;
     }
 
@@ -114,7 +132,4 @@ public class PlayersInfoFragment extends Fragment {
     }
 
 
-    public void refreshPlayerInfo() {
-
-    }
 }

@@ -4,6 +4,7 @@ import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,19 +32,22 @@ public class UpdatePlayerDestinationCardsCommand implements ICommand {
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        ClientFacade.SINGLETON.getClientModel().getPlayer_hand().rejectDestinationCards(destCards);
+
+        ClientFacade.SINGLETON.getClientModel().getPlayer_hand().get_destCards().addAll(destCards);
+        PlayerActionPresenter._SINGLETON.get_destCards().clear();
+        for (DestCard card : destCards) {
+            ClientFacade.SINGLETON.getClientModel().getBoardActivity().removeFromSliddingApadter(card);
+        }
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyDestCardsGotten(destCards.size());
+
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
         return null;
     }
 
     @JsonIgnore
     @Override
     public String getAuthenticationCode() {
-        return null;
-    }
-
-    @JsonIgnore
-    @Override
-    public User getUser() {
         return null;
     }
 

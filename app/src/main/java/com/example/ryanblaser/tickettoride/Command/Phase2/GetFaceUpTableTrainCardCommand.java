@@ -21,23 +21,26 @@ import java.util.List;
 
 public class GetFaceUpTableTrainCardCommand implements ICommand {
     //Data member
-    private int _i_gameId;
-    private String authenticationCode;
-    private int FirstSecondCardPick;
+    private int gameId;
 
     //Ryan: changed TrainCard to cardIndex to match the model
-    private int _i_cardIndex;
+    private int cardIndex;
     private Boolean isWild; //Is the traincard a wild or normal card?
+    private String authenticationCode;
+    private int turnNumber;
 
     //Constructors
-    public GetFaceUpTableTrainCardCommand(){}
-    public GetFaceUpTableTrainCardCommand(int g, String code, int FirstSecondCardPick, int index, Boolean wild) {
-        _i_cardIndex = index;
-        authenticationCode = code;
-        this.FirstSecondCardPick = FirstSecondCardPick;
-        isWild = wild;
-        _i_gameId = g;
+    public GetFaceUpTableTrainCardCommand() {
     }
+
+    public GetFaceUpTableTrainCardCommand(int g, int index, Boolean wild, String code, int num) {
+        cardIndex = index;
+        isWild = wild;
+        gameId = g;
+        authenticationCode = code;
+        turnNumber = num;
+    }
+
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         return null;
@@ -48,26 +51,19 @@ public class GetFaceUpTableTrainCardCommand implements ICommand {
         return authenticationCode;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
+    public int getGameId() {
+        return gameId;
     }
 
     public int getCardIndex() {
-        return _i_cardIndex;
+        return cardIndex;
     }
 
-    public Boolean getWild() {
+    public Boolean getIsWild() {
         return isWild;
     }
 
-    public int getGameId()
-    {
-        return _i_gameId;
-    }
-
-    public int getFirstSecondCardPick() {
-        return FirstSecondCardPick;
+    public int getTurnNumber() {
+        return turnNumber;
     }
 }

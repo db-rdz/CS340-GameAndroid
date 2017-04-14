@@ -31,7 +31,7 @@ import java.util.TimerTask;
 
 public class LobbyFragment extends Fragment {
 
-    private Button button_logout, button_new_game, button_refresh;
+    private Button button_logout, button_new_game;
     private ListView listView_joinable_games;
     private TextView textView_welcome;
     private static int game_Id;
@@ -39,7 +39,7 @@ public class LobbyFragment extends Fragment {
     private Poller poller;
 
     public LobbyFragment() {
-        ClientFacade.SINGLETON.attachLobbyObserver(this); // does this belong in onCreate?
+//        ClientFacade.SINGLETON.attachLobbyObserver(this); // does this belong in onCreate?
         game_Id = 0;
     }
 
@@ -72,7 +72,6 @@ public class LobbyFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Logging out!", Toast.LENGTH_SHORT).show();
                 LobbyPresenter.SINGLETON.logout();
-                startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
 
@@ -85,20 +84,6 @@ public class LobbyFragment extends Fragment {
                 LobbyPresenter.SINGLETON.addJoinableGame();
             }
         });
-
-        //TODO: Need to connect the Poller to this funtionality!!
-        button_refresh = (Button) view.findViewById(R.id.button_refresh);
-        button_refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Refreshed game lobby", Toast.LENGTH_SHORT).show();
-                onResume(); //Refreshes the fragment view to show new data.
-
-            }
-        });
-
-
-
         return view;
     }
 
@@ -127,30 +112,13 @@ public class LobbyFragment extends Fragment {
             String[] split = gameSelected.split(" ");
             int gameId = Integer.parseInt(split[1]); //gameId is in position 1 of array.
             LobbyPresenter.SINGLETON.addPlayer(gameId);
-
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(getContext(), WaitingActivity.class);
-                    intent.putExtra("GAME", gameSelected);
-                    startActivity(intent);
-                }
-            }, 5000); //Runs the activity AFTER 5 seconds.
-
-
         }
     };
 
     public void switchToWaitingView()
     {
         Intent intent = new Intent(getContext(), WaitingActivity.class);
-        startActivity(intent);
-
-//        MainActivity sudo_mainActivity = ClientFacade.SINGLETON.getClientModel().getMainActivity();
-//        FragmentTransaction ft = sudo_mainActivity.getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.lobbyFragment, sudo_mainActivity.getWaitingFragment()); //TODO: lobby doesn't go away
-//        ft.commit();
+        startActivityForResult(intent, 1);
     }
 
     /**
@@ -170,6 +138,30 @@ public class LobbyFragment extends Fragment {
             listView_joinable_games.setAdapter(list_of_Games);
             listView_joinable_games.setOnItemClickListener(gameItemClickListener);
             list_of_Games.notifyDataSetChanged();
+        }
+        else { //show nothing
+            List<String> empty = new ArrayList<String>();
+            empty.add("There are no available games :(");
+            list_of_Games = new ArrayAdapter<String>(getContext(), R.layout.row_info, empty);
+            listView_joinable_games.setAdapter(list_of_Games);
+//            listView_joinable_games.setOnItemClickListener(gameItemClickListener);
+            list_of_Games.notifyDataSetChanged();
+        }
+    }
+
+    public void logout() {
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == 1)
+        {
+                getActivity().setResult(1);
+                getActivity().finish();
         }
     }
 }

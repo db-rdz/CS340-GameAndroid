@@ -20,6 +20,7 @@ import static com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresen
 
 
 /**
+ * DON'T CHANGE THE ImageView CLASS
  * Created by benjamin on 3/03/17.
  */
 
@@ -28,13 +29,11 @@ public class CanvasImageView extends ImageView {
 
         public CanvasImageView(Context context) {
             super(context);
-            // TODO Auto-generated constructor stub
         }
 
         public CanvasImageView(Context context, AttributeSet attrs)
         {
             super(context, attrs);
-            // TODO Auto-generated constructor stub
         }
 
         @Override
@@ -68,11 +67,15 @@ public class CanvasImageView extends ImageView {
 
                 int pathColor = r.get_Color();
 
-                if(r.get_Owner() == null){
+                int count = -1;
+                if (r.getClaimed()) {
+                    count = 9;
+                }
+                else {
+                    count = -1;
+                }
+                if(!r.getClaimed()){
 
-                    if(r.get_Owner() == "Daniel"){
-                        int asdf = 1;
-                    }
                     float x1 = r.getPoint1().x;
                     float x2 = r.getPoint2().x;
                     float y1 = r.getPoint1().y;

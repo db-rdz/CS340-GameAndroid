@@ -3,17 +3,16 @@ package com.example.ryanblaser.tickettoride.Client;
 import android.content.Intent;
 import android.util.Pair;
 
-import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Board;
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
 import com.example.ryanblaser.tickettoride.GUI.Activities.BoardActivity;
+import com.example.ryanblaser.tickettoride.GUI.Activities.EndGameActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.WaitingActivity;
 import com.example.ryanblaser.tickettoride.GUI.Activities.MainActivity;
-import com.example.ryanblaser.tickettoride.Client.State;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -78,6 +77,8 @@ public class ClientModel{
 
     private BoardActivity boardActivity;
 
+    private EndGameActivity endGameActivity;
+
     /**
      * This determines if a player is the creator of the game.
      * If true, The player can see the Start Game button in the Game Activity Lobby
@@ -89,7 +90,7 @@ public class ClientModel{
      * Nathan
      * Since there's only one game a user can join, we need this variable.
      */
-    private int int_curr_gameId;
+    private int int_curr_gameId; //TODO: Can't have this for joining multiple games
 
     /**
      * This stores the data as a Player once a game is started.
@@ -101,13 +102,15 @@ public class ClientModel{
 
     private PlayerCardHand player_hand;
 
+    private List<DestCard> destCardsFromServer;
+
     /**
      * Nathan:
      * Determines what player action was just completed
      */
     private State state;
 
-    private List<Scoreboard> scoreboard;
+    private List<Scoreboard> scoreboards;
 
     //Constructor
     public ClientModel() {
@@ -121,36 +124,8 @@ public class ClientModel{
         chat = new ArrayList<>();
         player_hand = new PlayerCardHand();
         state = NOT_YOUR_TURN;
-        scoreboard = new ArrayList<>();
+        scoreboards = new ArrayList<>();
     }
-
-    /**
-     * This will be initialized through the ClientFacade in the MainActivty.
-     * <pre>
-     * pre: mainActivity1 can't be null.
-     * post: All the variables in this clrass must be initialized. User and waitingActivity MUST be null.
-     *
-     * </pre>
-     *
-     * @param mainActivity1 the context of the MainActivity
-     *
-     */
-//    public ClientModel(MainActivity mainActivity1){
-//        mainActivity = mainActivity1;
-//        waitingActivity = null;
-//        user = null;
-//        current_player = null;
-//        list_joinable = new ArrayList<>();
-//        gameId_to_usernames = new Hashtable<>();
-//        boolean_is_creator_of_game = false;
-//        int_curr_gameId = 0;
-//        chat = new ArrayList<>();
-//        list_dest_cards = null;
-//        list_players_in_game = null;
-//        player_hand = new PlayerCardHand();
-//        state = NOT_YOUR_TURN;
-//    }
-
 
     /**
      * The method does a deep copy of the list being passed in.
@@ -165,8 +140,7 @@ public class ClientModel{
      *
      */
     public void setJoinableGames(List<Integer> list){
-        for(int gameId : list)
-            addJoinableGame(gameId);
+        this.list_joinable = list;
     }
 
     public List<Integer> getJoinableGames(){
@@ -243,13 +217,12 @@ public class ClientModel{
         player_hand = null;
         user = null;
         gameId_to_usernames.clear();
-        mainActivity.logout();
+//        mainActivity.logout();
         waitingActivity = null;
         str_authentication_code = "";
         list_joinable.clear();
         chat.clear();
         state = NOT_YOUR_TURN;
-
     }
 
     public void backToLogin() {
@@ -268,10 +241,19 @@ public class ClientModel{
         LinkedHashMap<String, Scoreboard> info = new LinkedHashMap<>();
 
         for(int i = 0; i < usernameList.size(); i++){
-            info.put(usernameList.get(i), scoreboard.get(i)); //Each name will be mapped to their scoreboard
+            info.put(usernameList.get(i), scoreboards.get(i)); //Each name will be mapped to their scoreboards
         }
 
-        return new Pair<>(usernameList, scoreboard);
+        return new Pair<>(usernameList, scoreboards);
+    }
+
+    public Pair<List<DestCard>, List<Integer>> destCardExpandableInfo() {
+        List<Integer> cardPoints = new ArrayList<>();
+        for (DestCard card : player_hand.get_destCards()) {
+            cardPoints.add(card.getPoints());
+        }
+        return new Pair<>(player_hand.get_destCards(), cardPoints);
+
     }
 
     //Getters and Setters
@@ -331,6 +313,14 @@ public class ClientModel{
         this.boardActivity = boardActivity;
     }
 
+    public EndGameActivity getEndGameActivity() {
+        return endGameActivity;
+    }
+
+    public void setEndGameActivity(EndGameActivity endGameActivity) {
+        this.endGameActivity = endGameActivity;
+    }
+
     public Boolean getBoolean_is_creator_of_game() {
         return boolean_is_creator_of_game;
     }
@@ -379,11 +369,19 @@ public class ClientModel{
         this.state = state;
     }
 
-    public List<Scoreboard> getScoreboard() {
-        return scoreboard;
+    public List<Scoreboard> getScoreboards() {
+        return scoreboards;
     }
 
-    public void setScoreboard(List<Scoreboard> scoreboard) {
-        this.scoreboard = scoreboard;
+    public void setScoreboards(List<Scoreboard> scoreboards) {
+        this.scoreboards = scoreboards;
+    }
+
+    public List<DestCard> getDestCardsFromServer() {
+        return destCardsFromServer;
+    }
+
+    public void setDestCardsFromServer(List<DestCard> destCardsFromServer) {
+        this.destCardsFromServer = destCardsFromServer;
     }
 }

@@ -2,9 +2,11 @@ package com.example.ryanblaser.tickettoride.Command.Phase2;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.Client.User;
 import com.example.ryanblaser.tickettoride.Command.ICommand;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.GameBoardPresenter;
+import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerActionPresenter;
 import com.example.ryanblaser.tickettoride.GUI.Presenters.PlayerInfoPresenter;
 import com.example.ryanblaser.tickettoride.Server.IServer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,19 +24,20 @@ import java.util.List;
 public class UpdatePlayerTrainCardsCommand implements ICommand {
 
     //Data members
-    private TrainCard trainCard; //TODO: Should be a List? Depends on Client implementation
+    private TrainCard trainCard;
 
     //Constructor
     public UpdatePlayerTrainCardsCommand(){}
-    public UpdatePlayerTrainCardsCommand(TrainCard trainCard) {
-        this.trainCard = trainCard;
-    }
 
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         ClientFacade.SINGLETON.getClientModel().getPlayer_hand().addOneToCardCount(trainCard.getType());
-        GameBoardPresenter._SINGLETON.refreshBoard();
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyCardReceived(trainCard.getType());
+
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
+
         return null;
     }
 
@@ -44,15 +47,8 @@ public class UpdatePlayerTrainCardsCommand implements ICommand {
         return null;
     }
 
-    @JsonIgnore
-    @Override
-    public User getUser() {
-        return null;
-    }
-
-
-
     public TrainCard getTrainCard() {
         return trainCard;
     }
+
 }

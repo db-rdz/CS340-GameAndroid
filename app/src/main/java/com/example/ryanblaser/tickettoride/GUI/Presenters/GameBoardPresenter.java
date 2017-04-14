@@ -2,24 +2,21 @@ package com.example.ryanblaser.tickettoride.GUI.Presenters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 
 import com.example.ryanblaser.tickettoride.Client.ClientFacade;
-import com.example.ryanblaser.tickettoride.Client.ClientModel;
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.DestCard;
-import com.example.ryanblaser.tickettoride.Client.GameModels.CardsModel.TrainCard;
+import com.example.ryanblaser.tickettoride.Client.GameModels.BoardModel.Scoreboard;
 import com.example.ryanblaser.tickettoride.Client.GameModels.CityModel.City;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.Player;
 import com.example.ryanblaser.tickettoride.Client.GameModels.PlayerModel.PlayerCardHand;
+import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.AllRoutes;
 import com.example.ryanblaser.tickettoride.Client.GameModels.RouteModel.Route;
 import com.example.ryanblaser.tickettoride.Client.State;
 import com.example.ryanblaser.tickettoride.GUI.Views.SlidingPages.GameBoardFragment;
-import com.example.ryanblaser.tickettoride.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -39,6 +36,9 @@ public class GameBoardPresenter {
     private Boolean _clickedOnCityTwice = false;
     private Boolean _furtherActionNeeded = false;
     private List<Route> _selectedRouteList = new ArrayList<>();
+    private String _trainCardColor = "";
+    private Boolean _choseTrainCard = false;
+
 
     //---------------------TEST VARIABLES--------------------//
     List<Player> asdf = new ArrayList<>();
@@ -57,7 +57,7 @@ public class GameBoardPresenter {
 
     public List<Route> get_AllRoutes(){
 
-        return Route.get_allRoutes();
+        return AllRoutes.get_allRoutes();
     }
 
     public String playerUsername() {
@@ -68,67 +68,23 @@ public class GameBoardPresenter {
 
     }
 
-    //-----------------------------------------VIEW LOGIC-----------------------------------------//
-
-    public Pair<RESPONSE_STATUS, String> resolveClickEvent(float x, float y) {
-        //----------CONVERT THE CLICK COORDINATES TO BOARD COORDINATES------------//
-        x = _screenToImageRatioX * x;
-        y = _screenToImageRatioY * y;
-
-        City selectedCity = getCityByCoodinates(x, y);
-
-        //If selected city is null then no city was clicked and thus the cards must be toggled.
-        if (selectedCity == null) {
-            resetViewLogicVariables();
-            return new Pair<>(RESPONSE_STATUS.TOGGLE_NEEDED, "Toggle Cards");
-        }
-
-        //If no city have been clicked before then the selected city is the first city clicked
-        if(!_clickedOnCityOnce){
-
-            _firstCityClicked = selectedCity;
-            _clickedOnCityOnce = true;
-
-            return new Pair<>(RESPONSE_STATUS.CITY_CLICKED, "Click a second city adjacent to the first one");
-
-        } //If not second city has been clicked then that means that the selected city is the second city clicked
-        else if(!_clickedOnCityTwice){
-            _secondCityClicked = selectedCity;
-            _clickedOnCityTwice = true;
-            //Get the routes that go from city one to city two.
-            _selectedRouteList = _firstCityClicked.get_M_Routes().get(_secondCityClicked.get_S_name());
-
-
-
-            //If there are more than one routes then further action is required
-            if(_selectedRouteList.size() > 1){
-                return solveDoubleRoutes();
-            }
-            else{
-                if (canClaimRoute(_selectedRouteList.get(0)))
-                {
-                    changePlayerState(State.CLAIMING_ROUTE);
-                    Route selectedRoute = _selectedRouteList.get(0);
-                    //TODO: refresh fragment to get rid of buttons
-                    //TODO: get rid of buttons depending on state
-                    ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                    //ClientFacade.SINGLETON.claimRoute(selectedRoute); //Sends the route claimed
-                    Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
-                    return pair;
-                }
-                else
-                {
-                    Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
-                    resetViewLogicVariables();
-                    return pair;
-                }
-            }
-        }
-        else if(_furtherActionNeeded){
-            return claimUserChoice(selectedCity);
-        }
-        return null;
+    public String get_trainCardColor() {
+        return _trainCardColor;
     }
+
+    public void set_trainCardColor(String _trainCardColor) {
+        this._trainCardColor = _trainCardColor;
+    }
+
+    public Boolean get_choseTrainCard() {
+        return _choseTrainCard;
+    }
+
+    public void set_choseTrainCard(Boolean _choseTrainCard) {
+        this._choseTrainCard = _choseTrainCard;
+    }
+
+    //-----------------------------------------VIEW LOGIC-----------------------------------------//
 
     private City getCityByCoodinates(float x, float y){
         List<City> cities = City.get_allCities();
@@ -147,11 +103,76 @@ public class GameBoardPresenter {
         _selectedRouteList = null;
         _clickedOnCityOnce = false;
         _clickedOnCityTwice = false;
-
+        _choseTrainCard = false;
         _firstCityClicked = null;
         _secondCityClicked = null;
     }
 
+    public Pair<RESPONSE_STATUS, String> resolveClickEvent(float x, float y) {
+        //----------CONVERT THE CLICK COORDINATES TO BOARD COORDINATES------------//
+        x = _screenToImageRatioX * x;
+        y = _screenToImageRatioY * y;
+
+        City selectedCity = getCityByCoodinates(x, y);
+
+        //If selected city is null then no city was clicked and thus the cards must be toggled.
+        if (selectedCity == null) {
+            resetViewLogicVariables();
+            return new Pair<>(RESPONSE_STATUS.TOGGLE_NEEDED, "Toggle Cards");
+        }
+
+        //If no city have been clicked before then the selected city is the first city clicked
+        if(!_clickedOnCityOnce && ClientFacade.SINGLETON.getClientModel().getState().equals(State.YOUR_TURN)){
+
+            _firstCityClicked = selectedCity;
+            _clickedOnCityOnce = true;
+
+            return new Pair<>(RESPONSE_STATUS.CITY_CLICKED, "Click a second city adjacent to the first one");
+
+        } //If not second city has been clicked then that means that the selected city is the second city clicked
+        else if(!_clickedOnCityTwice && ClientFacade.SINGLETON.getClientModel().getState().equals(State.YOUR_TURN)) {
+            _secondCityClicked = selectedCity;
+            if (_secondCityClicked == _firstCityClicked) { //If the same city is picked,
+                _secondCityClicked = null; //reset only the second city and send a toast saying to pick an adjacent city
+                return new Pair<>(RESPONSE_STATUS.CITY_CLICKED, "Click a second city adjacent to the first one");
+            }
+            _clickedOnCityTwice = true;
+            //Get the routes that go from city one to city two.
+            _selectedRouteList = _firstCityClicked.get_M_Routes().get(_secondCityClicked.get_S_name());
+
+//            if (_selectedRouteList == null) { //DEBUG: if it crashes need to fix it!
+//                return null;
+//            }
+            //If there are more than one routes then further action is required
+            if(_selectedRouteList.size() > 1 ) {
+                return solveDoubleRoutes();
+            }
+            else{
+
+                if (_selectedRouteList.get(0).get_S_Color().equals("GRAY")) { //If the route is gray
+                    _furtherActionNeeded = true;
+                    String toast = "Click the color card you would like to use to claim\nRainbow Cards will be used automatically if needed";
+                    return new Pair<>(RESPONSE_STATUS.CLAIM_GRAY_ROUTE, toast);
+                }
+                else if (canClaimRoute(_selectedRouteList.get(0)))
+                {
+                    Route selectedRoute = _selectedRouteList.get(0);
+                    ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
+                    resetViewLogicVariables();
+                    return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
+                }
+                else
+                {
+                    resetViewLogicVariables();
+                    return new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
+                }
+            }
+        }
+        else if(_furtherActionNeeded && ClientFacade.SINGLETON.getClientModel().getState().equals(State.YOUR_TURN)){
+            return claimUserChoice(selectedCity);
+        }
+        return new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "Can't claim route right now");
+    }
 
     private Pair<RESPONSE_STATUS, String> solveDoubleRoutes(){
         //IF BOTH ROUTES ARE THE SAME COLOR THEN CHECK IF ONE IS AVAILABLE
@@ -162,120 +183,186 @@ public class GameBoardPresenter {
     }
 
     private Pair<RESPONSE_STATUS, String> solveRoutesOfSameColor(){
-        if(_selectedRouteList.get(0).get_Owner() == null) {
-            if (canClaimRoute(_selectedRouteList.get(0))) {
+        if(!_selectedRouteList.get(0).getClaimed()) {
+
+            if (_selectedRouteList.get(0).get_S_Color().equals("GRAY")) { //If the route is gray
+                _furtherActionNeeded = true;
+                String toastText = "Click on " + _firstCityClicked.get_S_name() + " to claim the RIGHT route" +
+                        " or click on " + _secondCityClicked.get_S_name() + " to claim the" +
+                        " LEFT route";
+                return new Pair<>(RESPONSE_STATUS.FURTHER_ACTION_NEEDED, toastText);
+            }
+            else if (canClaimRoute(_selectedRouteList.get(0)))
+            {
                 Route selectedRoute = _selectedRouteList.get(0);
-                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
-                return pair;
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
+                resetViewLogicVariables();
+                return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
             }
             else
             {
-                Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
                 resetViewLogicVariables();
-                return pair;
+                return new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
             }
         }
         else if(_selectedRouteList.get(1).get_Owner() == null){
-            if (canClaimRoute(_selectedRouteList.get(1)))
+
+            if (_selectedRouteList.get(1).get_S_Color().equals("GRAY")) { //If the route is gray
+                _furtherActionNeeded = true;
+                String toastText = "Click on " + _firstCityClicked.get_S_name() + " to claim the RIGHT route" +
+                        " or click on " + _secondCityClicked.get_S_name() + " to claim the" +
+                        " LEFT route";
+                return new Pair<>(RESPONSE_STATUS.FURTHER_ACTION_NEEDED, toastText);
+            }
+            else if (canClaimRoute(_selectedRouteList.get(1)))
             {
                 Route selectedRoute = _selectedRouteList.get(1);
-                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
-                return pair;
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
+                resetViewLogicVariables();
+                return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
             }
             else
             {
-                Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
                 resetViewLogicVariables();
-                return pair;
+                return new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
             }
         }
         else{
+            resetViewLogicVariables();
             return new Pair<>(RESPONSE_STATUS.ROUTE_NOT_AVAILABLE,"Routes Already Taken");
         }
     }
 
 
     private Pair<RESPONSE_STATUS, String> solveRoutesOfDifferentColor(){
+        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+        int amountOfPlayers = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+
         //Claim Route if there is only one option.
-        if(_selectedRouteList.get(0).get_Owner() == null && _selectedRouteList.get(1).get_Owner() != null){
+        if(!_selectedRouteList.get(0).getClaimed() && _selectedRouteList.get(1).getClaimed()){
             if (canClaimRoute(_selectedRouteList.get(0)))
             {
                 Route selectedRoute = _selectedRouteList.get(0);
-                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
-                return pair;
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
+                resetViewLogicVariables();
+                return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
             }
             else
             {
-                Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
                 resetViewLogicVariables();
-                return pair;
+                return new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
             }
         }
-        else if(_selectedRouteList.get(0).get_Owner() != null && _selectedRouteList.get(1).get_Owner() == null){
+        else if(_selectedRouteList.get(0).getClaimed() && !_selectedRouteList.get(1).getClaimed()){
             if (canClaimRoute(_selectedRouteList.get(1)))
             {
                 Route selectedRoute = _selectedRouteList.get(1);
-                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute);
-                Pair<RESPONSE_STATUS, String> pair = claimRoute(selectedRoute);
-                return pair;
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
+                resetViewLogicVariables();
+                return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
             }
             else
             {
-                Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
                 resetViewLogicVariables();
-                return pair;
+                return new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
             }
         }
 
         //If none of the Routes are available return error message
-        if(_selectedRouteList.get(0).get_Owner() != null && _selectedRouteList.get(1).get_Owner() != null){
+        if(_selectedRouteList.get(0).getClaimed() && _selectedRouteList.get(1).getClaimed()){ //If route is taken
             resetViewLogicVariables();
             return new Pair<>(RESPONSE_STATUS.ROUTE_NOT_AVAILABLE,"Routes Already Taken");
         }//If both Routes are available then further action is required.
         else{
             _furtherActionNeeded = true;
-            String toastText = "Click on " + _firstCityClicked.get_S_name() + " to claim the " +
-                    _selectedRouteList.get(0).get_S_Color() + " or click on " + _secondCityClicked.get_S_name() + " to Claim the " +
-                    _selectedRouteList.get(1).get_S_Color() + " route";
-
-            return new Pair<>(RESPONSE_STATUS.FURTHER_ACTION_NEEDED,toastText);
+            if (_selectedRouteList.get(0).get_S_Color().equals("GRAY")) { //If the route is gray
+                String toastText = "Click on " + _firstCityClicked.get_S_name() + " to claim the RIGHT route" +
+                        " or click on " + _secondCityClicked.get_S_name() + " to claim the" +
+                        " LEFT route";
+                return new Pair<>(RESPONSE_STATUS.FURTHER_ACTION_NEEDED, toastText);
+            }
+            else {
+                String toastText = "Click on " + _firstCityClicked.get_S_name() + " to claim the " +
+                        _selectedRouteList.get(1).get_S_Color() + " or click on " + _secondCityClicked.get_S_name() + " to Claim the " +
+                        _selectedRouteList.get(0).get_S_Color() + " route";
+                return new Pair<>(RESPONSE_STATUS.FURTHER_ACTION_NEEDED, toastText);
+            }
         }
     }
 
-    private Pair<RESPONSE_STATUS, String> claimRoute(Route route){
-        if(route.get_Owner() == null){
+    private int getPlayerColor(String owner) {
+        int color = -1;
+        int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+        List<String> usernames = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
 
-  //          route.set_Owner(playerUsername());
-            String toastText =  "You have claimed route " + _firstCityClicked.get_S_name() + "-" +
-                    _secondCityClicked.get_S_name();
-//
-//            String broadcast = route.get_Owner() + " has claimed route " + _firstCityClicked.get_S_name() + "-" +
-//                    _secondCityClicked.get_S_name();
-//            ClientFacade.SINGLETON.broadcastToChat(broadcast);
+        int playerIndex = -1;
+        for (int i = 0; i < usernames.size(); i++) {
+            if (owner.equals(usernames.get(i))) {
+                playerIndex = i;
+                break;
+            }
+        }
 
+        if (playerIndex != -1) {
+            Scoreboard scoreboard = ClientFacade.SINGLETON.getClientModel().getScoreboards().get(playerIndex);
+            color = scoreboard.get_stringToAndroidColor();
+        }
+        return color;
+    }
+
+    public Pair<RESPONSE_STATUS, String> claimRoute(Route route, String claimRouteMessage){
+
+        route.set_Color(getPlayerColor(route.get_Owner()));
+        if (AllRoutes.get_RoutesMap().containsKey(route.get_S_MappingName())) { //manually update the route info
+            AllRoutes.get_RoutesMap().get(route.get_S_MappingName()).setClaimed(true);
+            AllRoutes.get_RoutesMap().get(route.get_S_MappingName()).set_Owner(route.get_Owner());
+            AllRoutes.get_RoutesMap().get(route.get_S_MappingName()).set_Color(route.get_Color());
+        }
+//        AllRoutes.get_RoutesMap().put(route.get_S_MappingName(), route); //replace the current route with the updated one
+        Pair<RESPONSE_STATUS, String> pair = new Pair<>(RESPONSE_STATUS.CLAIMED_ROUTE, claimRouteMessage);
+        resetViewLogicVariables();
+        return pair;
+    }
+
+    private Pair<RESPONSE_STATUS, String> claimUserChoice(City c) {
+
+        if(c != _firstCityClicked){
+            if (_selectedRouteList.get(0).get_S_Color().equals("GRAY") && !_choseTrainCard) { //If the route is gray
+                String toast = "Click the color card you would like to use to claim\nRainbow Cards will be used automatically if needed";
+                _choseTrainCard = true;
+                return new Pair<>(RESPONSE_STATUS.CLAIM_GRAY_ROUTE, toast);
+            }
+            else if (canClaimRoute(_selectedRouteList.get(0)))
+            {
+                Route selectedRoute = _selectedRouteList.get(0);
+                ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
+                resetViewLogicVariables();
+                return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
+            }
+            else
+            {
+                resetViewLogicVariables();
+                return new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
+            }
+        }
+
+        if (_selectedRouteList.get(1).get_S_Color().equals("GRAY") && !_choseTrainCard) { //If the route is gray
+            String toast = "Click the color card you would like to use to claim\nRainbow Cards will be used automatically if needed";
+            _choseTrainCard = true;
+            return new Pair<>(RESPONSE_STATUS.CLAIM_GRAY_ROUTE, toast);
+        }
+        else if (canClaimRoute(_selectedRouteList.get(1)))
+        {
+            Route selectedRoute = _selectedRouteList.get(1);
+            ClientFacade.SINGLETON.getClientModel().getState().claimRoute(selectedRoute, _trainCardColor);
             resetViewLogicVariables();
-            return new Pair<>(RESPONSE_STATUS.CLAIMED_ROUTE, toastText);
+            return new Pair<>(RESPONSE_STATUS.CLAIMING_ROUTE, "Claiming route from game server");
         }
-
-        return new Pair<>(RESPONSE_STATUS.ROUTE_NOT_AVAILABLE,"Route Already Taken");
-    }
-
-    private Pair<RESPONSE_STATUS, String> claimUserChoice(City c){
-
-        if(c == _firstCityClicked){
-            Route selectedRoute = _selectedRouteList.get(0);
-            return claimRoute(selectedRoute);
+        else
+        {
+            resetViewLogicVariables();
+            return new Pair<>(RESPONSE_STATUS.CANNOT_CLAIM_ROUTE, "You do not have enough cards to claim this route.");
         }
-
-        Route selectedRoute  = _selectedRouteList.get(1);
-        return claimRoute(selectedRoute);
-    }
-
-    public void refreshCardCounters(){
-        _boardFragment.setPlayerCardViewValues();
     }
 
 
@@ -309,67 +396,136 @@ public class GameBoardPresenter {
 
     //-------------------------------MODEL ACCESSING FUNCTIONS------------------------------------//
 
-    public void changePlayerState(State state) {
-        ClientFacade.SINGLETON.getClientModel().setState(state);
+    @NonNull
+    public Boolean canClaimRoute(Route routeToClaim) {
+
+        if (!routeToClaim.getClaimed()) {
+            PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
+            if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() >= routeToClaim.get_Weight()) {
+                switch (routeToClaim.get_S_Color()) {
+                    case "GRAY":
+                        return selectTrainCardToUseForGrayRoute(routeToClaim, _trainCardColor);
+
+                    case "RED":
+                        if (playerHand.getRedCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "RED";
+                            return true;
+                        }
+                        break;
+                    case "WHITE":
+                        if (playerHand.getWhiteCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "WHITE";
+                            return true;
+                        }
+                        break;
+                    case "ORANGE":
+                        if (playerHand.getOrangeCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "ORANGE";
+                            return true;
+                        }
+                        break;
+                    case "GREEN":
+                        if (playerHand.getGreenCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "GREEN";
+                            return true;
+                        }
+                        break;
+                    case "BLUE":
+                        if (playerHand.getBlueCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "BLUE";
+                            return true;
+                        }
+                        break;
+                    case "BLACK":
+                        if (playerHand.getBlackCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "BLACK";
+                            return true;
+                        }
+                        break;
+                    case "YELLOW":
+                        if (playerHand.getYellowCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "YELLOW";
+                            return true;
+                        }
+                        break;
+                    case "PINK":
+                        if (playerHand.getPinkCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                            _trainCardColor = "PINK";
+                            return true;
+                        }
+                        break;
+                    default:
+                        return false;
+                }
+            }
+        }
+        return false;
     }
 
-    private Boolean canClaimRoute(Route routeToClaim) {
+    /**
+     * Nathan: Checks if a player has enough train cards of the same color to claim a grey route
+     * Same implementation as canClaimRoute();
+     * @param routeToClaim
+     * @param trainCardColor
+     * @return
+     */
+    private Boolean selectTrainCardToUseForGrayRoute(Route routeToClaim, String trainCardColor) {
         PlayerCardHand playerHand = ClientFacade.SINGLETON.getClientModel().getPlayer_hand();
-        switch (routeToClaim.get_S_Color()) {
-            case "GRAY":
+        switch (trainCardColor) {
             case "RED":
-                if (playerHand.getRedCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight())
-                {
+                if (playerHand.getRedCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
                     return true;
                 }
                 break;
             case "WHITE":
-                if (playerHand.getWhiteCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight())
-                {
+                if (playerHand.getWhiteCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
                     return true;
                 }
                 break;
             case "ORANGE":
-                if (playerHand.getOrangeCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight())
-                {
+                if (playerHand.getOrangeCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
                     return true;
                 }
                 break;
             case "GREEN":
-                if (playerHand.getGreenCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight())
-                {
+                if (playerHand.getGreenCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
                     return true;
                 }
                 break;
             case "BLUE":
-                if (playerHand.getBlueCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight())
-                {
+                if (playerHand.getBlueCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
                     return true;
                 }
                 break;
             case "BLACK":
-                if (playerHand.getBlackCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight())
-                {
+                if (playerHand.getBlackCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
                     return true;
                 }
                 break;
             case "YELLOW":
-                if (playerHand.getYellowCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight())
-                {
+                if (playerHand.getYellowCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
                     return true;
                 }
                 break;
             case "PINK":
-                if (playerHand.getPinkCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight())
-                {
+                if (playerHand.getPinkCardAmount() + playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
                     return true;
                 }
                 break;
-            default :
+            case "RAINBOW": //If no colors, then rainbow
+                if (playerHand.getRainbowCardAmount() >= routeToClaim.get_Weight()) {
+                    return true;
+                }
+                break;
+            default:
                 return false;
         }
         return false;
     }
 
 
+    public void switchToEndGameView(String longestPathHolder) {
+        ClientFacade.SINGLETON.getClientModel().getBoardActivity().switchToEndGameView(longestPathHolder);
+
+    }
 }

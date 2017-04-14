@@ -18,21 +18,19 @@ public class EndTurnCommand implements ICommand {
 
 	@Override
 	public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
-		ClientFacade.SINGLETON.getClientModel().setState(State.NOT_YOUR_TURN);
+		ClientFacade.SINGLETON.getClientModel().setState(ClientFacade.SINGLETON.getClientModel().getState().endTurn());
+
+		ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
+		ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
+		ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+		ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
+
 		return null;
 	}
 
 	@JsonIgnore
 	@Override
 	public String getAuthenticationCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@JsonIgnore
-	@Override
-	public User getUser() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
