@@ -59,8 +59,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/randomcard"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="21dp" />
+                android:layout_alignParentStart="true" />
 
             <Button
                 android:id="@+id/trainDeck"
@@ -69,7 +68,7 @@
                 android:layout_height="255dp"
                 android:background="@drawable/randomcard"
                 android:visibility="visible"
-                android:layout_alignTop="@+id/pick_deck"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true" />
 
             <TextView
@@ -101,6 +100,19 @@
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
                 android:layout_above="@+id/getDestCardsButton"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/lastTurnText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LAST TURN"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                android:layout_above="@+id/textView_turnState"
                 android:layout_alignParentStart="true" />
 
             <Button

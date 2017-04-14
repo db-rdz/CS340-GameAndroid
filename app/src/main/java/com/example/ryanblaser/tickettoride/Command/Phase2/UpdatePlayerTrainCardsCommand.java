@@ -32,14 +32,12 @@ public class UpdatePlayerTrainCardsCommand implements ICommand {
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        //Refresh all views
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
-
         ClientFacade.SINGLETON.getClientModel().getPlayer_hand().addOneToCardCount(trainCard.getType());
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyCardReceived(trainCard.getType());
+
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
+
         return null;
     }
 

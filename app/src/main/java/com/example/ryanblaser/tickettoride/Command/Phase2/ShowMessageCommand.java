@@ -33,7 +33,7 @@ public class ShowMessageCommand implements ICommand {
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
         ChatPresenter._SINGLETON.setChat(chatRoom);
-        ChatPresenter._SINGLETON.refreshChat(); //ERROR IN THE ArrayAdapter
+        ChatPresenter._SINGLETON.refreshChat();
         return null;
     }
 

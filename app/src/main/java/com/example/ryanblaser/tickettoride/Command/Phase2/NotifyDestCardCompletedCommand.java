@@ -18,6 +18,8 @@ public class NotifyDestCardCompletedCommand implements ICommand {
 	@Override
 	public List<ICommand> execute() throws IServer.GameIsFullException, IClient.UserAlreadyLoggedIn {
 		ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyDestCardCompleted(message);
+
+//		ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
 		return null;
 	}
 

@@ -34,14 +34,10 @@ public class UpdateCarCountAndHandCommand implements ICommand {
     public UpdateCarCountAndHandCommand(int int_used_cars) {
         this.int_cars_used = int_used_cars;
     }
+
     //Functions
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
-        //Refresh all views
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
 
         ClientFacade.SINGLETON.updateCarCount(int_cars_used);
         ClientFacade.SINGLETON.removeCardsUsed(cardsUsedToClaimRoute);
@@ -49,6 +45,9 @@ public class UpdateCarCountAndHandCommand implements ICommand {
         if (ClientFacade.SINGLETON.getClientModel().getCurrent_player().get_car_count() < 3) {
             ClientFacade.SINGLETON.initiateLastTurn();
         }
+
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
         return null;
     }
 

@@ -26,11 +26,10 @@ public class NotifyTrainCardPickedCommand implements ICommand {
         else {
             ClientFacade.SINGLETON.getClientModel().setState(State.PICKING_TRAIN_CARD);
         }
-        //Refresh all views
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();        return null;
+
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
+        return null;
     }
 
     @JsonIgnore

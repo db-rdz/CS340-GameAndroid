@@ -65,6 +65,7 @@ public class PlayerActionFragment extends Fragment {
     private SlidingDeck _slidingTrainCards;
     private Button _trainDeck;
     private TextView _turnState;
+    private TextView _lastTurnText;
     private static PlayerActionFragment _playerActionFragment;
     public static final String ARG_PAGE = "page";
 
@@ -140,7 +141,7 @@ public class PlayerActionFragment extends Fragment {
             _turnState.setText("It's your turn!");
         }
         if (ClientFacade.SINGLETON.getClientModel().getState().equals(LAST_TURN)) {
-            _turnState.setText("It's your last turn!");
+            _lastTurnText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -158,6 +159,7 @@ public class PlayerActionFragment extends Fragment {
         _keepAllCards = (Button) v.findViewById(R.id.keep_allCards);
         _getDestCards = (Button) v.findViewById(R.id.getDestCardsButton);
         _turnState = (TextView) v.findViewById(R.id.textView_turnState);
+        _lastTurnText = (TextView) v.findViewById(R.id.lastTurnText);
         Button debugEndGame = (Button) v.findViewById(R.id.debug_endGame);
         debugEndGame.setOnClickListener(new View.OnClickListener() {
             @Override

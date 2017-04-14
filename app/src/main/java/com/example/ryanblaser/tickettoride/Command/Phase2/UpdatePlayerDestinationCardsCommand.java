@@ -33,18 +33,15 @@ public class UpdatePlayerDestinationCardsCommand implements ICommand {
     @Override
     public List<ICommand> execute() throws IServer.GameIsFullException {
 
-        //Refresh all views
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshGameBoard();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshChat();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
-        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
-
         ClientFacade.SINGLETON.getClientModel().getPlayer_hand().get_destCards().addAll(destCards);
         PlayerActionPresenter._SINGLETON.get_destCards().clear();
         for (DestCard card : destCards) {
             ClientFacade.SINGLETON.getClientModel().getBoardActivity().removeFromSliddingApadter(card);
         }
         ClientFacade.SINGLETON.getClientModel().getBoardActivity().notifyDestCardsGotten(destCards.size());
+
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerAction();
+//        ClientFacade.SINGLETON.getClientModel().getBoardActivity().refreshPlayerInfo();
         return null;
     }
 

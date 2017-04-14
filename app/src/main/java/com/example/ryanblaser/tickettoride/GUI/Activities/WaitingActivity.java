@@ -32,6 +32,20 @@ public class WaitingActivity extends AppCompatActivity {
         Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
     }
 
+    private void playWithTwoToFivePlayers() {
+        if (isTwoToFivePlayers()) {
+            int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
+            int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
+            List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
+
+            ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
+            Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,18 +66,8 @@ public class WaitingActivity extends AppCompatActivity {
         button_start_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isTwoToFivePlayers()) {
-                    int gameId = ClientFacade.SINGLETON.getClientModel().getInt_curr_gameId();
-                    int playerSize = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId).size();
-                    List<String> usernamesInGame = ClientFacade.SINGLETON.getClientModel().getGameId_to_usernames().get(gameId);
-
-                    ClientFacade.SINGLETON.startGame(gameId, usernamesInGame);
-                    Toast.makeText(getBaseContext(), "Starting Game with " + playerSize + " players!", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getBaseContext(), "Need 2-5 players to start the game", Toast.LENGTH_SHORT).show();
-                }
-//                debugPlayWithOnePlayer();
+//                playWithTwoToFivePlayers();
+                debugPlayWithOnePlayer();
 
             }
         });
